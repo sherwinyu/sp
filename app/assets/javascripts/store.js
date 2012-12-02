@@ -1,4 +1,4 @@
-Mongo.Store = DS.Store.extend({
+Sysys.Store = DS.Store.extend({
   revision: 4,
   adapter: DS.RESTAdapter.create()
 });

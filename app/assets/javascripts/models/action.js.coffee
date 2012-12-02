@@ -1,2 +1,2 @@
-App.Action = DS.Model.extend
+Sysys.Action = DS.Model.extend
   description: DS.attr "string"

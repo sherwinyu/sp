@@ -1,3 +1,3 @@
-Mongo.ApplicationView = Ember.View.extend({
+Sysys.ApplicationView = Ember.View.extend({
   templateName: 'application'
 });

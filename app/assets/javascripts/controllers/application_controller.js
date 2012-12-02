@@ -1,3 +1,3 @@
-Mongo.ApplicationController = Ember.Controller.extend({
+Sysys.ApplicationController = Ember.Controller.extend({
 
 });

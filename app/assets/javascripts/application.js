@@ -16,6 +16,6 @@
 //= require ember
 //= require ember-data
 //= require_self
-//= require mongo
-Mongo = Ember.Application.create();
+//= require sysys
+Sysys = Ember.Application.create();
 //= require_tree .
