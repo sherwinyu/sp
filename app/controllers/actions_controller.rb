@@ -13,7 +13,8 @@ class ActionsController < ApplicationController
   end
 
   def show
+    @action = Action.find params[:id]
     #@pom = Pom.find params[:id]
-    #respond_with @pom
+    respond_with @action
   end
 end
