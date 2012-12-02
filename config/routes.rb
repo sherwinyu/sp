@@ -1,4 +1,4 @@
-Mongo::Application.routes.draw do
+Sysys::Application.routes.draw do
   resources :actions
   root to: 'pages#home'
 
