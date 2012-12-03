@@ -1,15 +1,14 @@
 <h2>Recent SherwinActions</h2>
 
 <div class="span12">
-    {{#each action in arrangedContent}}
-  <div class="action well">
-    start time: {{ action.start_time }} <br>
-    start time: {{ action.start_time_pretty }} <br>
-    end time: {{ action.end_time }} <br>
 
-    {{action.s}}
-    <br> helllo 
-  </div>
+    {{#each action in arrangedContent}}
+      {{#with action}}
+        inside with
+        {{description}}
+        {{debug description}}
+      {{view  Sysys.ActionView contentBinding="action"}}
+      {{/with}}
     {{/each}}
 </div>
 

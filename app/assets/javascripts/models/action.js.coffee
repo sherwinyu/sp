@@ -8,13 +8,12 @@ Sysys.Action = DS.Model.extend
     @pretty_date('start_time')
     ).property('start_time')
 
-    ###
   pretty_date: (date_key) ->
-    date = @get('date_key').getDay()
-    hours = @get('date_key').getHours()
-    minutes = @get('date_key').getMinutes()
+    # debugger
+    date = @get(date_key)?.getDay()
+    hours = @get(date_key)?.getHours()
+    minutes = @get(date_key)?.getMinutes()
     "#{date} #{hours}:#{minutes}"
-    ###
 
 
 
