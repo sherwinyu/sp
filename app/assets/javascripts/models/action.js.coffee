@@ -5,11 +5,7 @@ Sysys.Action = DS.Model.extend
   end_time: DS.attr "date"
 
   start_time_pretty: (->
-    debugger
-    date = @get('start_time')?.getDay()
-    hours = @get('start_time')?.getHours()
-    minutes = @get('start_time')?.getMinutes()
-    "#{date} #{hours}:#{minutes}"
+    @pretty_date('start_time')
     ).property('start_time')
 
     ###
