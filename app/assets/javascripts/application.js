@@ -13,8 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require handlebars
+
 //= require ember
-//= require ember-data
+// require ember-data
+//= require vendor/ember-data-edge
+
 //= require_self
 //= require sysys
 Sysys = Ember.Application.create();
