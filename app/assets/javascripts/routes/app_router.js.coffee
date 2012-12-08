@@ -3,8 +3,8 @@ Sysys.Router = Ember.Router.extend
 
   root: Ember.Route.extend
 
-    contacts: Ember.Route.extend
-      route: '/contacts'
+    actions: Ember.Route.extend
+      route: '/actions'
         
       connectOutlets: (router, context) ->
         router.get('applicationController').connectOutlet('actions', Sysys.store.findAll(Sysys.Action))

@@ -9,7 +9,6 @@ Sysys.Action = DS.Model.extend
     ).property('start_time')
 
   pretty_date: (date_key) ->
-    # debugger
     date = @get(date_key)?.getDay()
     hours = @get(date_key)?.getHours()
     minutes = @get(date_key)?.getMinutes()
@@ -19,7 +18,6 @@ Sysys.Action = DS.Model.extend
 
 
   s: (->
-    # debugger
       # JSON.stringify(@)
      "desc: #{@get('description')}\t duration: #{@get('duration')}\t start_time: #{@get('start_time')}\t end_time: #{@get('end_time')}"
     ).property('description')
