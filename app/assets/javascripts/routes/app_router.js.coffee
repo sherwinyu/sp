@@ -20,7 +20,6 @@ Sysys.Router = Ember.Router.extend
         route: '/action/:action_id'
 
         connectOutlets: (router, action) ->
-          debugger
           router.get('actionsController').connectOutlet('action', action)
 
 

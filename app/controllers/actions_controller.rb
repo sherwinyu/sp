@@ -13,7 +13,11 @@ class ActionsController < ApplicationController
   end
 
   def show
-    @action = Action.find params[:id]
+    id = params[:id]
+    if Integer(id)
+      id = Action.all[Integer(id) - 1].id
+    end
+    @action = Action.find id
     #@pom = Pom.find params[:id]
     respond_with @action
   end
