@@ -20,14 +20,15 @@ Sysys.Router = Ember.Router.extend
 
       action: Ember.Route.extend
         enter: ->
-
+            
         route: '/:action_id'
 
         connectOutlets: (router, action) ->
-          # unless action.get('isLoaded')
-          # router.transitionTo('actions')
-          # else
-          router.get('applicationController').connectOutlet('action', action)
+          # TODO(syu): figure out how to handle case of outlet doesn't exist
+          unless action.get('isLoaded')
+            router.transitionTo('root.actions') 
+          else
+            router.get('applicationController').connectOutlet('action', action)
 
 
 

@@ -1,0 +1,11 @@
+{{#if view.isEditing}}
+  {{view Sysys.TextField valueBinding="view.value" propagatesEvents=true}}
+{{else}}
+  {{#if view.value}}
+    <span class="height of">
+    {{view.value}}
+  </span>
+  {{else}}
+    <span class="">empty</span>
+  {{/if}}
+{{/if}}
