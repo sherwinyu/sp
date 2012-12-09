@@ -4,12 +4,11 @@
 
     {{#each action in arrangedContent}}
       {{#with action}}
-        inside with
-        {{description}}
         {{view  Sysys.ActionView contentBinding="action"}}
       {{/with}}
     {{/each}}
 </div>
+{{outlet action}}
 
 <p>Your content here.</p>
 

@@ -3,6 +3,8 @@ Sysys.Router = Ember.Router.extend
 
   root: Ember.Route.extend
 
+    showAction: Ember.Route.transitionTo('actions.action')
+
     actions: Ember.Route.extend
       route: '/actions'
         
@@ -17,10 +19,15 @@ Sysys.Router = Ember.Router.extend
 
 
       action: Ember.Route.extend
-        route: '/action/:action_id'
+        enter: ->
+
+        route: '/:action_id'
 
         connectOutlets: (router, action) ->
-          router.get('actionsController').connectOutlet('action', action)
+          # unless action.get('isLoaded')
+          # router.transitionTo('actions')
+          # else
+          router.get('applicationController').connectOutlet('action', action)
 
 
 

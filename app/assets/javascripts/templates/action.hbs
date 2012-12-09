@@ -1,8 +1,12 @@
 <div class="action well">
-  start time: {{ debug description }} <br>
-  description: {{ description }} <br>
-  action.description: {{ action.description }} <br>
-  start time: {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br> 
-  start time: {{ dateFormat end_time format="MMM D h:mm a"}} ({{ dateFromNow end_time}}) <br> 
+  <a {{action showAction action href=true}}> # </a>  {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br>
+  <span class="caption">id: </span> {{ id }} <br>
+  <span class="caption">content:</span> {{ content }} <br>
+  <span class="caption">this:</span> {{ this }} <br>
+  <span class="caption">description:</span> {{ description }} <br>
+  <span class="caption">action.description:</span> {{ action.description }} <br>
+  <span class="caption">start time: </span>{{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br> 
+  <span class="caption">start time: </span>{{ dateFormat end_time format="MMM D h:mm a"}} ({{ dateFromNow end_time}}) <br> 
   <br> helllo 
+
 </div>

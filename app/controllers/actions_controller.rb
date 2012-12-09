@@ -14,11 +14,9 @@ class ActionsController < ApplicationController
 
   def show
     id = params[:id]
-    if Integer(id)
-      id = Action.all[Integer(id) - 1].id
-    end
+    # convert gets for ids 1.. n to the appropriate action
+    id = Action.all[Integer(id) - 1].id if Integer(id) rescue id
     @action = Action.find id
-    #@pom = Pom.find params[:id]
     respond_with @action
   end
 end
