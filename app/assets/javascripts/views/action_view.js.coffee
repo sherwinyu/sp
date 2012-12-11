@@ -1,4 +1,4 @@
-Sysys.ActionView = Ember.View.extend
-  templateName: 'action'
+Sysys.ActView = Ember.View.extend
+  templateName: 'act'
   click: (e)->
     Sysys.store.commit()

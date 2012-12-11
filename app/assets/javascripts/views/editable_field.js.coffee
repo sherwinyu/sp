@@ -23,7 +23,6 @@ Sysys.EditableField = Ember.View.extend
   # Any parsing should be done here. Return false if input value is invalid, return true otherwise
   validate: ->
     @set('value', @get('rawValue'))
-    debugger
     true
 
 

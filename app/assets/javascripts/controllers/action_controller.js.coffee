@@ -1,1 +1,1 @@
-Sysys.ActionController = Ember.ObjectController.extend()
+Sysys.ActController = Ember.ObjectController.extend()

@@ -1,4 +1,4 @@
-Sysys.Action = DS.Model.extend
+Sysys.Act = DS.Model.extend
   description: DS.attr "string"
   duration: DS.attr( "number", defaultValue: 50)
   start_time: DS.attr "date"
@@ -48,6 +48,9 @@ Sysys.Action = DS.Model.extend
     d = new Date(@timeRemainingMs())
     "#{d.getUTCHours()}:#{d.getUTCMinutes()}:#{d.getUTCSeconds()}.#{d.getUTCMilliseconds()}"
   ).property('startTime', 'duration2').cacheable()
+
+Sysys.Act.reopenClass
+  url: 'action'
 
 
     #to_s: ->

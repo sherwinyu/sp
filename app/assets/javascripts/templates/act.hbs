@@ -1,5 +1,5 @@
-<div class="action well">
-  <a {{action showAction action href=true}}> # </a>  {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br>
+<div class="act well">
+  <a {{action showAct act href=true}}> # </a>  {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br>
   <span class="caption">id: </span> {{ id }} <br>
   <span class="caption">content:</span> {{view Sysys.EditableField valueBinding="content"}} {{content}} <br>
   <span class="caption">this:</span> {{view Sysys.EditableField valueBinding="start_time"}}{{this}}  <br>

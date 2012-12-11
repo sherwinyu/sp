@@ -1,1 +1,1 @@
-Sysys.ActionsController = Ember.ArrayController.extend()
+Sysys.ActsController = Ember.ArrayController.extend()

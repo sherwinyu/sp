@@ -3,43 +3,43 @@ Sysys.Router = Ember.Router.extend
 
   root: Ember.Route.extend
 
-    showAction: Ember.Route.transitionTo('actions.action')
+    showAct: Ember.Route.transitionTo('acts.act')
 
-    actions: Ember.Route.extend
-      route: '/actions'
+    acts: Ember.Route.extend
+      route: '/acts'
         
       connectOutlets: (router, context) ->
-        router.get('applicationController').connectOutlet('actions', Sysys.store.findAll(Sysys.Action))
+        router.get('applicationController').connectOutlet('acts', Sysys.store.findAll(Sysys.Act))
 
       index: Ember.Route.extend
         route: '/'
 
         connectOutlets: (router, context) ->
-          router.get('applicationController').connectOutlet('actions')
+          router.get('applicationController').connectOutlet('acts')
 
 
-      action: Ember.Route.extend
+      act: Ember.Route.extend
         enter: ->
             
-        route: '/:action_id'
+        route: '/:act_id'
 
-        connectOutlets: (router, action) ->
+        connectOutlets: (router, act) ->
           # TODO(syu): figure out how to handle case of outlet doesn't exist
-          unless action.get('isLoaded')
-            router.transitionTo('root.actions') 
+          unless act.get('isLoaded')
+            router.transitionTo('root.acts') 
           else
-            router.get('applicationController').connectOutlet('action', action)
+            router.get('applicationController').connectOutlet('act', act)
 
 
 
 
 
           ###
-    actions: Ember.Route.extend
-      route: 'actions'
+    acts: Ember.Route.extend
+      route: 'acts'
       
       connectOutlets: (router, context) ->
-        actionController = router.get('actionController')
+        actController = router.get('actController')
       ###
 
   enableLogging: true

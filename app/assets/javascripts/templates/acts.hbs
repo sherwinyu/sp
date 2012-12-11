@@ -1,0 +1,13 @@
+<h2>Recent SherwinActions</h2>
+
+<div class="span12">
+
+    {{#each act in arrangedContent}}
+      {{#with act }}
+        {{view  Sysys.ActView contentBinding="action"}}
+      {{/with}}
+    {{/each}}
+</div>
+{{outlet act}}
+
+<p>Your content here.</p>
