@@ -19,4 +19,9 @@ class ActionsController < ApplicationController
     @action = Action.find id
     respond_with @action
   end
+
+  def update
+    @action = Action.find params[:id]
+    binding.pry
+  end
 end
