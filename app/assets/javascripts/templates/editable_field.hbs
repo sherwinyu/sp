@@ -1,5 +1,5 @@
 {{#if view.isEditing}}
-  {{view Sysys.TextField valueBinding="view.value" propagatesEvents=true}}
+  {{view Sysys.TextField valueBinding="view.rawValue" propagatesEvents=true class="zorger" initialValueBinding="view.value"}}
 {{else}}
   {{#if view.value}}
     <span class="height of">

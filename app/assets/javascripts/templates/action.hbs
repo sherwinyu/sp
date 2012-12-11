@@ -4,6 +4,7 @@
   <span class="caption">content:</span> {{view Sysys.EditableField valueBinding="content"}} {{content}} <br>
   <span class="caption">this:</span> {{view Sysys.EditableField valueBinding="this"}}{{this}}  <br>
   <span class="caption">description:</span> {{view Sysys.EditableField valueBinding="description" }} {{description}} <br>
+  <span class="caption">date_test:</span> {{view Sysys.DatePickerField  valueBinding="start_time" }} 
   <span class="caption">start time: </span>{{ view Sysys.EditableField valueBinding="start_time" }} 
   <span class="caption">start time: </span>{{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br> 
   <span class="caption">start time: </span>{{ dateFormat end_time format="MMM D h:mm a"}} ({{ dateFromNow end_time}}) <br> 
