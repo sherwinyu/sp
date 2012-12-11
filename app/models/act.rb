@@ -1,4 +1,4 @@
-class Action
+class Act
   include Mongoid::Document
   include Mongoid::Timestamps
 

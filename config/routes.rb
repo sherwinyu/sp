@@ -1,5 +1,5 @@
 Sysys::Application.routes.draw do
-  resources :actions
+  resources :acts
   root to: 'pages#home'
 
   # The priority is based upon order of creation:

@@ -50,7 +50,7 @@ Sysys.Act = DS.Model.extend
   ).property('startTime', 'duration2').cacheable()
 
 Sysys.Act.reopenClass
-  url: 'action'
+#url: 'action'
 
 
     #to_s: ->
