@@ -28,6 +28,8 @@ Sysys.NotificationsController = Ember.ArrayController.extend
       Sysys.Notification.create(),
       Sysys.Notification.create(),
     ])
+  add: (title, text, type) ->
+    @content.pushObject Sysys.Notification.create( title: title, text: text, type: type )
 
   
   
@@ -40,9 +42,9 @@ Sysys.Notification = Ember.Object.extend
 
   init: ->
     @_super()
-    @set('text', 'notification text')
-    @set('title', 'notification title')
-    @set('type', 'INFO')
+    unless @get('title') then @set('title', 'notification title')
+    unless @get('text') then @set('text', 'notification text')
+    unless @get('type') then @set('type', 'INFO')
   
 Sysys.zorger = ->
   console.log 'zorging'
