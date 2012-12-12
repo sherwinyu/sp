@@ -6,4 +6,8 @@ class Act
   field :duration,  type: Integer
   field :start_time, type: DateTime
   field :end_time, type: DateTime
+
+  validates_presence_of :description
+
+
 end

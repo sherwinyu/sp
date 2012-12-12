@@ -49,6 +49,21 @@ Sysys.Act = DS.Model.extend
     "#{d.getUTCHours()}:#{d.getUTCMinutes()}:#{d.getUTCSeconds()}.#{d.getUTCMilliseconds()}"
   ).property('startTime', 'duration2').cacheable()
 
+  # TODO(syu): implement these and tie in a visual confirmation
+  becameError: ->
+    console.log('an error occured!')
+    debugger
+
+  didUpdate: ->
+    console.log('chorger!')
+    debugger
+
+  becameInvalid: ->
+    console.log('is invalid!')
+    debugger
+
+
+
 Sysys.Act.reopenClass
 #url: 'action'
 

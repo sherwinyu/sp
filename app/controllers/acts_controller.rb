@@ -25,6 +25,7 @@ class ActsController < ApplicationController
     if @act.update_attributes params[:act]
       respond_with @act
     else
+      # TODO(syu): make sure that the client can actually process these errors and that the code is correct
       respond_with @act.errors, status: :unprocessable_entity
     end
   end

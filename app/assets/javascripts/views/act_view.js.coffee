@@ -4,4 +4,3 @@ Sysys.ActView = Ember.View.extend
 
   submit: (e)->
     Sysys.store.commit()
-    debugger
