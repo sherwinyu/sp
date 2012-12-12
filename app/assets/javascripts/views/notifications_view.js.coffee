@@ -1,10 +1,24 @@
 Sysys.NotificationsView = Ember.View.extend
   templateName: 'notifications'
-  didInsertElement: ->
-    debugger
 
 Sysys.NotificationView = Ember.View.extend
-  didInsertElement: ->
+  classNames: ['alert']
+  classNameBindings: ['type']
+  type: (->
+    switch @content.get('type')
+      when 'INFO' then 'alert-success'
+      when 'ERROR' then 'alert-error'
+      when 'WARNING' then ''
+      else '').property('content.type')
+
+  isInfo: (->
+    @content.get('type') == 'INFO').property('content.type')
+
+  isError: (->
+    @content.get('type') == 'ERROR').property('content.type')
+
+  isWarning: (->
+    @content.get('type') == 'WARNING').property('content.type')
 
 Sysys.NotificationsController = Ember.ArrayController.extend
   init: ->
@@ -23,11 +37,12 @@ Sysys.Notification = Ember.Object.extend
   header: null
   type: null # 'INFO WARNING ERROR'
 
+
   init: ->
     @_super()
     @set('text', 'notification text')
     @set('title', 'notification title')
-    @set('type', 'info')
+    @set('type', 'INFO')
   
 Sysys.zorger = ->
   console.log 'zorging'
