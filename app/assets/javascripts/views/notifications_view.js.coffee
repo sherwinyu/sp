@@ -28,8 +28,13 @@ Sysys.NotificationsController = Ember.ArrayController.extend
       Sysys.Notification.create(),
       Sysys.Notification.create(),
     ])
+
   add: (title, text, type) ->
     @content.pushObject Sysys.Notification.create( title: title, text: text, type: type )
+
+  remove: (e)->
+    @content.removeObject(e.context)
+    
 
   
   
