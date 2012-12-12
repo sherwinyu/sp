@@ -9,13 +9,16 @@ Sysys.Router = Ember.Router.extend
       route: '/acts'
         
       connectOutlets: (router, context) ->
-        router.get('applicationController').connectOutlet('acts', Sysys.store.findAll(Sysys.Act))
+        router.get('applicationController').connectOutlet('acts')
 
       index: Ember.Route.extend
         route: '/'
 
         connectOutlets: (router, context) ->
-          router.get('applicationController').connectOutlet('acts')
+          debugger
+          router.get('applicationController').connectOutlet('acts', Sysys.store.findAll(Sysys.Act))
+          router.get('actsController').connectOutlet('zorger', 'notifications')
+
 
 
       act: Ember.Route.extend
