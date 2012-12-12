@@ -1,0 +1,10 @@
+NOTIFICATIONS
+{{#each notification in view.content}}
+  {{#with notification }}
+    {{#view Sysys.NotificationView contentBinding="notification"}}
+      notification {{notification}}
+      view.content {{view.content}}
+
+    {{/view}}
+  {{/with}}
+{{/each}}

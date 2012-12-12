@@ -13,5 +13,31 @@
   {{! view Ember.TextField valueBinding="description"}}
   {{! view Ember.TextField valueBinding="start_time"}}
   <br> helllo 
+  {{#if isDirty}}
+  <div>
+    You have unsaved changes
+  </div>
+
+  {{/if}}
+
+  <div class="alert alert-success">
+    <br><br>
+    errors: {{notices.errors}} <br>
+    successes {{notices.successes}} <br>
+
+    {{#each el in notices.errors }} 
+      <div class="notice error">
+        {{el}}
+      </div>
+    {{/each}}
+    {{#each el in notices.errors }} 
+      <div class="notice error">
+        {{el}}
+      </div>
+    {{/each}}
+
+    <a class="close" data-dismiss="alert">&#215;</a>
+    choga
+  </div>
 
 </div>
