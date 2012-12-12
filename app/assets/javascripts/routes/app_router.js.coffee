@@ -24,8 +24,9 @@ Sysys.Router = Ember.Router.extend
         route: '/:act_id'
 
         connectOutlets: (router, act) ->
+          debugger
           # TODO(syu): figure out how to handle case of outlet doesn't exist
-          unless act.get('isLoaded')
+          if act.get('isNew')
             router.transitionTo('root.acts') 
           else
             router.get('applicationController').connectOutlet('act', act)

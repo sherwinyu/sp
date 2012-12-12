@@ -5,6 +5,7 @@ Sysys.EditableField = Ember.View.extend
 
   doubleClick: ->
     @set('isEditing', true)
+    debugger
     return false
 
   focusOut: ->

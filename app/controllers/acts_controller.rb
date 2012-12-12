@@ -1,6 +1,6 @@
 class ActsController < ApplicationController
   respond_to :html, :json
-  
+
   def new
   end
 
@@ -22,6 +22,11 @@ class ActsController < ApplicationController
 
   def update
     @act = Act.find params[:id]
-    binding.pry
+    if @act.update_attributes params[:act]
+      respond_with @act
+    else
+      respond_with @act.errors, status: :unprocessable_entity
+    end
   end
+
 end

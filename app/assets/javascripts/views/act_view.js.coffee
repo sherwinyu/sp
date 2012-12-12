@@ -1,4 +1,7 @@
 Sysys.ActView = Ember.View.extend
   templateName: 'act'
-  click: (e)->
+  tagName: 'form'
+
+  submit: (e)->
     Sysys.store.commit()
+    debugger
