@@ -23,13 +23,13 @@ class ActsController < ApplicationController
   def update
     @act = Act.find params[:id]
     ret = @act.update_attributes params[:act]
-    binding.pry
+    puts ret, @act.inspect
     if ret
       respond_with @act
     else
       # TODO(syu): make sure that the client can actually process these errors and that the code is correct
       # respond_with status: 500
-      render text: @act.errors.inspect, status: 403
+      respond_with @act, status: 422 #render text: @act.to_json, status: 422
     end
   end
 

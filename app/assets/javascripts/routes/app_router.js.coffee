@@ -15,7 +15,6 @@ Sysys.Router = Ember.Router.extend
         route: '/'
 
         connectOutlets: (router, context) ->
-          debugger
           router.get('applicationController').connectOutlet('acts', Sysys.store.findAll(Sysys.Act))
           router.get('actsController').connectOutlet( 'notifications', 'notifications')
 

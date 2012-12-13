@@ -11,15 +11,6 @@ Sysys.NotificationView = Ember.View.extend
       when 'WARNING' then ''
       else '').property('content.type')
 
-  isInfo: (->
-    @content.get('type') == 'INFO').property('content.type')
-
-  isError: (->
-    @content.get('type') == 'ERROR').property('content.type')
-
-  isWarning: (->
-    @content.get('type') == 'WARNING').property('content.type')
-
 Sysys.NotificationsController = Ember.ArrayController.extend
   init: ->
     @_super()
@@ -32,28 +23,24 @@ Sysys.NotificationsController = Ember.ArrayController.extend
   add: (title, text, type) ->
     @content.pushObject Sysys.Notification.create( title: title, text: text, type: type )
 
+  addError: (title, text) ->
+    @add(title, text, 'ERROR')
+  addInfo: (title, text) ->
+    @add(title, text, 'INFO')
+  addWarning: (title, text) ->
+    @add(title, text, 'WARNING')
+
   remove: (e)->
     @content.removeObject(e.context)
-    
-
-  
-  
 
 Sysys.Notification = Ember.Object.extend
   text: null
   header: null
-  type: null # 'INFO WARNING ERROR'
+  type: null # one of 'INFO WARNING ERROR'
 
 
   init: ->
     @_super()
-    unless @get('title') then @set('title', 'notification title')
-    unless @get('text') then @set('text', 'notification text')
+    unless @get('title') then @set('title', 'empty notification title')
+    unless @get('text') then @set('text', 'empty notification text')
     unless @get('type') then @set('type', 'INFO')
-  
-Sysys.zorger = ->
-  console.log 'zorging'
-  
-
-  
-  

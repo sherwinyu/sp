@@ -62,19 +62,20 @@ Sysys.Act = DS.Model.extend
     "#{d.getUTCHours()}:#{d.getUTCMinutes()}:#{d.getUTCSeconds()}.#{d.getUTCMilliseconds()}"
   ).property('startTime', 'duration2').cacheable()
 
+
+
   # TODO(syu): implement these and tie in a visual confirmation
   becameError: ->
     console.log('an error occured!')
     Sysys.router.get('notificationsController').add('Oops', 'There was an error!', 'ERROR')
-    debugger
 
   didUpdate: ->
     console.log('chorger!')
-    debugger
+    Sysys.router.get('notificationsController').addInfo('', 'Successfully saved.')
 
-  becameInvalid: ->
-    console.log('is invalid!')
-    debugger
+  becameInvalid: (act) ->
+    for k, v of act.errors
+      Sysys.router.get('notificationsController').addError(k, v)
 
 
 
