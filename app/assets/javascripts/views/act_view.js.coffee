@@ -4,3 +4,7 @@ Sysys.ActView = Ember.View.extend
 
   submit: (e)->
     Sysys.store.commit()
+
+  init: ->
+    @_super()
+

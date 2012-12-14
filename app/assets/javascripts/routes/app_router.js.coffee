@@ -3,12 +3,17 @@ Sysys.Router = Ember.Router.extend
 
   root: Ember.Route.extend
 
+    index: Ember.Route.extend
+      route: '/'
+      redirectsTo: 'root.acts.index'
+
     showAct: Ember.Route.transitionTo('acts.act')
 
     acts: Ember.Route.extend
       route: '/acts'
         
       connectOutlets: (router, context) ->
+        console.log 'zorgr'
         router.get('applicationController').connectOutlet('acts')
 
       index: Ember.Route.extend

@@ -6,5 +6,3 @@
 #= require_tree ./templates
 #= require_tree ./routes
 #= require_self
-
-Sysys.initialize()

@@ -26,6 +26,8 @@ group :development, :test do
   gem 'guard-rspec', '0.5.5'
   gem 'pry', '~> 0.9.9.6'
   gem 'libnotify', '0.5.9'
+  gem 'jasminerice'
+
 end
 
 gem 'jquery-rails'
