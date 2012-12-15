@@ -4,9 +4,7 @@ describe "", ->
   it "it is not bar", ->
     v = new Foo()
     expect(v.bar()).toEqual(false)
-### 
 
-###
 describe "Sysys", ->
   beforeEach ->
     @appRoot = $('<div>')

@@ -3,19 +3,6 @@ Sysys.Act = DS.Model.extend
   duration: DS.attr( "number", defaultValue: 50)
   start_time: DS.attr "date"
   end_time: DS.attr "date"
-  notifications: null
-  notices: null
-
-  init: ->
-    @_super()
-    @set('notifications', [5,6,7])
-    @set('notices', 
-      {
-        errors: ['e1', 'e2'], 
-        successes: ['s1', 's2']
-      }
-    )
-
 
   start_time_pretty: (->
     @pretty_date('start_time')
