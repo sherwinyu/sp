@@ -27,12 +27,13 @@ group :development, :test do
   gem 'pry', '~> 0.9.9.6'
   gem 'libnotify', '0.5.9'
   gem 'jasminerice'
-
 end
 
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem "ember-rails"
+gem 'sinon-rails'
+gem 'jasmine-sinon-rails'
 
 gem "mongoid", "~> 3.0.0"
 

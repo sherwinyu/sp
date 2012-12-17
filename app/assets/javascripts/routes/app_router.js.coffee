@@ -3,6 +3,12 @@ Sysys.Router = Ember.Router.extend
 
   root: Ember.Route.extend
 
+    testing: Ember.Route.extend
+      route: 'testing'
+
+      connectOutlets: (router)->
+        router.get('applicationController').connectOutlet('testing')
+
     index: Ember.Route.extend
       route: '/'
       redirectsTo: 'root.acts.index'
@@ -21,7 +27,7 @@ Sysys.Router = Ember.Router.extend
 
         connectOutlets: (router, context) ->
           router.get('applicationController').connectOutlet('acts', Sysys.store.findAll(Sysys.Act))
-          router.get('actsController').connectOutlet( 'notifications', 'notifications')
+          router.get('actsController').connectOutlet( 'notifications', 'notifications', [Sysys.Notification.create()])
 
               
       # root.acts.act
