@@ -13,8 +13,4 @@
 #
 #
 #= require_self
-#= require sysys
 
-@Sysys = Ember.Application.create(
-  autoinit: !Test
-  )

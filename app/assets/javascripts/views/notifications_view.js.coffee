@@ -2,40 +2,46 @@ Sysys.NotificationsView = Ember.View.extend
   templateName: 'notifications'
 
 Sysys.NotificationView = Ember.View.extend
+  content: null
+  controller: null
+
+  templateName: 'notification'
   classNames: ['alert']
   classNameBindings: ['type']
   type: (->
     switch @content.get('type')
-      when 'INFO' then 'alert-success'
-      when 'ERROR' then 'alert-error'
-      when 'WARNING' then ''
+      when Sysys.Notification.INFO then 'alert-success'
+      when Sysys.Notification.ERROR then 'alert-error'
+      when Sysys.Notification.WARNING then ''
       else '').property('content.type')
-
-Sysys.NotificationsController = Ember.ArrayController.extend
   init: ->
     @_super()
-    @set('content', [
-      Sysys.Notification.create(),
-      Sysys.Notification.create(),
-      Sysys.Notification.create(),
-    ])
+    unless @get('controller')
+      # TODO(syu) probably don't want to permanently set the notificationView.controller to notification_s_Controller
+      @set('controller', Sysys?.router?.get('notificationsController'))
+
+  destroyNotification: (event) ->
+    console.log('destroyNotification')
+    @get('controller').remove(event.context)
+
+Sysys.NotificationsController = Ember.ArrayController.extend
+  content: null
 
   add: (title, text, type) ->
     @content.pushObject Sysys.Notification.create( title: title, text: text, type: type )
 
   addError: (title, text) ->
-    @add(title, text, 'ERROR')
+    @add(title, text, Sysys.Notification.INFO)
   addInfo: (title, text) ->
-    @add(title, text, 'INFO')
+    @add(title, text, Sysys.Notification.INFO)
   addWarning: (title, text) ->
-    @add(title, text, 'WARNING')
+    @add(title, text, Sysys.Notification.ERROR)
 
-  remove: (e)->
-    @content.removeObject(e.context)
+  remove: (notification)->
+    @removeObject(notification)
 
 Sysys.Notification = Ember.Object.extend
   text: null
-  header: null
   type: null # one of 'INFO WARNING ERROR'
 
 
@@ -44,3 +50,9 @@ Sysys.Notification = Ember.Object.extend
     unless @get('title') then @set('title', 'empty notification title')
     unless @get('text') then @set('text', 'empty notification text')
     unless @get('type') then @set('type', 'INFO')
+
+Sysys.Notification.reopenClass(
+  INFO: 'INFO'
+  ERROR: 'ERROR'
+  WARNING: 'WARNING'
+)

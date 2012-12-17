@@ -2,10 +2,6 @@ NOTIFICATIONS
 {{content}}
 {{#each notification in content}}
   {{#with notification }}
-    {{#view Sysys.NotificationView contentBinding="notification"}}
-    <a class="close" {{action remove notification target="controller"}}>&#215;</a>
-      {{notification.title}}<br>
-      {{notification.text}}<br>
-    {{/view}}
+    {{view Sysys.NotificationView contentBinding="notification"}}
   {{/with}}
 {{/each}}

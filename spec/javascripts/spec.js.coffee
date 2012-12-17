@@ -3,13 +3,19 @@
 # spec/javascripts/*_spec.js.coffee
 # spec/javascripts/*_spec.js
 # spec/javascripts/*_spec.js.erb
-
-
-
-
-
-#= require_self
+# require_self
+#
+#= require sinon
+#= require jasmine-sinon
+#= require ../../app/assets/javascripts/vendor/jasmine-jquery
 #= require ../../app/assets/javascripts/dependencies
+#= require_self
+#= require ../../app/assets/javascripts/sysys
 #= require_tree ./
-
 @Test = true
+@Sysys = Ember.Application.create(
+  ready: ->
+    # debugger
+    # Sysys.router.transitionTo('roots.testing')
+  )
+
