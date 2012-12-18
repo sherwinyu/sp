@@ -4,12 +4,11 @@
 
     {{#each act in arrangedContent}}
       {{#with act }}
-        {{view  Sysys.ActView contentBinding="act"}}
+        {{view  Sysys.ActView contentBinding="act" controllerBinding="controller" }}
       {{/with}}
     {{/each}}
 </div>
 {{outlet act}}
-{{!view Sysys.NotificationsView contentBinding="notifications"}}
 
 <p>Your content here.</p>
 {{outlet notifications}}

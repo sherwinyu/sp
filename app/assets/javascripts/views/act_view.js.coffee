@@ -3,7 +3,8 @@ Sysys.ActView = Ember.View.extend
   tagName: 'form'
 
   submit: (e)->
-    Sysys.store.commit()
+    @get('controller')?.commit() # Sysys.store.commit()
+    false
 
   init: ->
     @_super()
