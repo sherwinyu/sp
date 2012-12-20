@@ -16,9 +16,9 @@ Sysys.NotificationView = Ember.View.extend
       else '').property('content.type')
   init: ->
     @_super()
-    unless @get('controller')
+    # unless @get('controller')
       # TODO(syu) probably don't want to permanently set the notificationView.controller to notification_s_Controller
-      @set('controller', Sysys?.router?.get('notificationsController'))
+      # @set('controller', Sysys?.router?.get('notificationsController'))
 
   destroyNotification: (event) ->
     console.log('destroyNotification')
@@ -31,11 +31,11 @@ Sysys.NotificationsController = Ember.ArrayController.extend
     @content.pushObject Sysys.Notification.create( title: title, text: text, type: type )
 
   addError: (title, text) ->
-    @add(title, text, Sysys.Notification.INFO)
+    @add(title, text, Sysys.Notification.ERROR)
   addInfo: (title, text) ->
     @add(title, text, Sysys.Notification.INFO)
   addWarning: (title, text) ->
-    @add(title, text, Sysys.Notification.ERROR)
+    @add(title, text, Sysys.Notification.WARNING)
 
   remove: (notification)->
     @removeObject(notification)

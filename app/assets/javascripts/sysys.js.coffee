@@ -6,6 +6,6 @@
 #= require_tree ./helpers
 #= require_tree ./templates
 #= require_tree ./routes
-unless @sysys then @Sysys = Ember.Application.create(
+unless @Sysys then @Sysys = Ember.Application.create(
   autoinit: !Test
   )

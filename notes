@@ -1,0 +1,92 @@
+what exactly is the nesting relationship between Acts?
+  Act (day)
+    Act (hourly -- automatic) -- generated from RescueTime
+
+  four hour segment
+    individual activties (Acts)
+    and details
+  NEED: ability to extract a detail into a new activity
+
+
+
+Actual use cases:
+  Previously had PLANNED something, now want to track how I'm doing
+  Want to see how I'm doing for the day
+  Want to see how i'm doing for the hour
+
+Act
+  time information
+    start_time
+    duratio
+    end_time
+    canonical day (elided by using children acts?)
+
+  is_concrete?
+  was_auto_generated?
+  details
+  auto (raw source of the 
+  children
+  tags
+
+OPEN QUESTIONS
+--------------
+
+  1.  Do we distinguish between concrete and abstract actions
+
+  2.  After importing auto data, do we ... modify it? store it?
+      thought: should probably have separate collections for auto improted data
+
+  3.  What does a contains_relationship even mean 
+
+  4. Should we explore mongoid trees?
+
+  5. What is the UX for arbitrary data entering gonna look like?
+
+
+Deatils!
+  money:
+    spent
+    made
+    cash
+    credit
+  exercise
+  music
+    song
+    volume?
+  happiness
+  focus
+  sleepiness
+
+aggregation: addition
+
+
+sleepiness:aggregation => average
+
+field naming methodology
+  sleep
+    quality
+    hours
+    time_spent_before_falling_asleep
+    sleepiness
+  sleepiness at time spent
+
+Features
+  automatic conversion from space to underscore (client side
+  button to pull / auto generate hour-long Acts from Rescuetime data
+  auto prompting for activities.
+  auto suggest tagnames, context, activities when filling in stuff
+
+should i have general bucket activities? concrete activities?
+concrete and abstract acts?
+    
+
+
+
+
+Plan is made:: Over next 1.5 hrs, will do three things.
+  Start recording an act#
+  
+
+Record a plan and act together?
+  
+Dashboard should show: active plans

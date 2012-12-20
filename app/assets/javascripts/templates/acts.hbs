@@ -3,8 +3,8 @@
 <div class="span12">
 
     {{#each act in arrangedContent}}
+      {{view  Sysys.ActView contextBinding="act" }}
       {{#with act }}
-        {{view  Sysys.ActView contentBinding="act" controllerBinding="controller" }}
       {{/with}}
     {{/each}}
 </div>

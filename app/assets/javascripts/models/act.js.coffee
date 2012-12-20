@@ -51,14 +51,20 @@ Sysys.Act = DS.Model.extend
 
   # TODO(syu): implement these and tie in a visual confirmation
   becameError: ->
+    debugger
     console.log('an error occured!')
     Sysys.router.get('notificationsController').add('Oops', 'There was an error!', 'ERROR')
 
   didUpdate: ->
+    debugger
     console.log('chorger!')
+    Sysys.router.get('notificationsController').addInfo('', 'Successfully updated.')
+  didCreate: ->
+    debugger
     Sysys.router.get('notificationsController').addInfo('', 'Successfully saved.')
 
   becameInvalid: (act) ->
+    debugger
     for k, v of act.errors
       Sysys.router.get('notificationsController').addError(k, v)
 

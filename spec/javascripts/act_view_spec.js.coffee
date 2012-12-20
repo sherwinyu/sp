@@ -1,16 +1,16 @@
-debugger
-describe "Given a ActView view", ->
+describe "Given a ActView", ->
 
   beforeEach ->
     @params = 
       description: "just a description"
     @act = Sysys.store.createRecord(Sysys.Act, @params)
     controller = {commit: sinon.spy()}
-    @actView = Sysys.ActView.create( content: @act, controller: controller)
+    @actView = Sysys.ActView.create( context: @act, controller: controller)
     Ember.run =>
       @actView.append()
     
   afterEach ->
+    Sysys.store.deleteRecord(@act)
     Ember.run =>
       @actView.remove()
     @actView = null
@@ -22,24 +22,29 @@ describe "Given a ActView view", ->
     expect(@actView.state).toBe('inDOM')
 
   it "should be a form", ->
-    # expect(@actView.$().class()).toBe('form')
+    expect(@actView.$()).toBe('form')
 
   it "should have a submit button", ->
     expect(@actView.$("button.btn-primary")).toExist()
 
   it "should show bindings", ->
-    #expect($('<div>asdfasdf</div>')).toContainHtml('asdf')
     expect(@actView.$('.description').first()).toContainHtml(@act.get('description'))
     expect(@actView.$('.date')).toHaveText(/empty/)
     Ember.run =>
       @act.set('description', 'something else')
     expect(@actView.$('.description').first()).toContainHtml('something else')
 
+  it "should bind dirtiness class", ->
+    expect(@actView.$()).toHaveClass("dirty")
+    Ember. run =>
+      @actView.set('context', Ember.Object.create(isDirty: false))
+    expect(@actView.$()).not.toHaveClass("dirty")
+
   describe "submit button", ->
     it "should tell the store to commit", ->
       submit = sinon.spy(@actView, "submit")
-      debugger
-      @actView.$("button").trigger "click"
+      Ember.run =>
+        @actView.$("button").trigger "click"
       expect(submit).toHaveBeenCalledOnce()
       expect(@actView.get('controller').commit).toHaveBeenCalledOnce()
 

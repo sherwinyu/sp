@@ -1,3 +1,5 @@
-    <a class="close" {{action destroyNotification view.content }}>&#215;</a>
-      {{view.content.title}}<br>
-      {{view.content.text}}<br>
+{{#with view.content}}
+<a class="close" {{action destroyNotification view.content target="view"}}>&#215;</a>
+{{title}}<br>
+{{text}}<br>
+{{/with}}

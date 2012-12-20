@@ -1,7 +1,5 @@
 NOTIFICATIONS
 {{content}}
 {{#each notification in content}}
-  {{#with notification }}
-    {{view Sysys.NotificationView contentBinding="notification"}}
-  {{/with}}
+    {{view Sysys.NotificationView contentBinding="notification" controllerBinding="view.controller"}}
 {{/each}}

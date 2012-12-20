@@ -13,9 +13,8 @@
 #= require ../../app/assets/javascripts/sysys
 #= require_tree ./
 @Test = true
+# @Sysys = {}
 @Sysys = Ember.Application.create(
-  ready: ->
-    # debugger
-    # Sysys.router.transitionTo('roots.testing')
+  autoinit: !!Test
   )
 

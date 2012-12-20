@@ -31,7 +31,7 @@ describe "Notification system", ->
         @notificationsController.add('sample title', 'sample text', 'INFO')
         expect(@notificationsController.get('length')).toBe(2)
         expect(@notificationsController.objectAt(1)).toEqual(spy.returnValues[0])
-        spy.reset()
+        Sysys.Notification.create.restore()
 
     describe "remove", ->
       it "should reomve a notification from content", ->
@@ -45,8 +45,6 @@ describe "notification view", ->
       text: "notificaiton text"
       type: "INFO"
       
-      # controller = { remove: Ember.K }
-      # @spy = sinon.spy(controller, "remove")
     @remove = sinon.spy()
     controller = { remove: @remove }
 

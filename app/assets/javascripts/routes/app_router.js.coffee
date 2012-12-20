@@ -1,10 +1,10 @@
 Sysys.Router = Ember.Router.extend
-  location: 'hash',
+  location: 'hash'
 
   root: Ember.Route.extend
 
     testing: Ember.Route.extend
-      route: 'testing'
+      route: '/testing'
 
       connectOutlets: (router)->
         router.get('applicationController').connectOutlet('testing')
@@ -19,7 +19,6 @@ Sysys.Router = Ember.Router.extend
       route: '/acts'
         
       connectOutlets: (router, context) ->
-        console.log 'zorgr'
         router.get('applicationController').connectOutlet('acts')
 
       index: Ember.Route.extend
