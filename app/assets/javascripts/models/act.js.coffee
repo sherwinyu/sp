@@ -14,9 +14,6 @@ Sysys.Act = DS.Model.extend
     minutes = @get(date_key)?.getMinutes()
     "#{date} #{hours}:#{minutes}"
 
-
-
-
   s: (->
       # JSON.stringify(@)
      "desc: #{@get('description')}\t duration: #{@get('duration')}\t start_time: #{@get('start_time')}\t end_time: #{@get('end_time')}"
@@ -49,32 +46,16 @@ Sysys.Act = DS.Model.extend
     "#{d.getUTCHours()}:#{d.getUTCMinutes()}:#{d.getUTCSeconds()}.#{d.getUTCMilliseconds()}"
   ).property('startTime', 'duration2').cacheable()
 
-  # TODO(syu): implement these and tie in a visual confirmation
   becameError: ->
-    debugger
     console.log('an error occured!')
     Sysys.router.get('notificationsController').add('Oops', 'There was an error!', 'ERROR')
-
   didUpdate: ->
-    debugger
     console.log('chorger!')
     Sysys.router.get('notificationsController').addInfo('', 'Successfully updated.')
   didCreate: ->
-    debugger
-    Sysys.router.get('notificationsController').addInfo('', 'Successfully saved.')
-
+    Sysys.router.get('notificationsController').addInfo('', 'Successfully created.')
   becameInvalid: (act) ->
-    debugger
     for k, v of act.errors
       Sysys.router.get('notificationsController').addError(k, v)
 
-
-
-
 Sysys.Act.reopenClass
-#url: 'action'
-
-
-    #to_s: ->
-    #JSON.stringify(@)
-

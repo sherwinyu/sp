@@ -56,7 +56,7 @@ describe "Acts", ->
       response = JSON.parse(@requests[0].requestBody)
       response.act.id = '12345'
       debugger
-      @requests[0].respond(200, {act: ''}, JSON.stringify(response) ) #{ "Content-Type": "application/json" },  "OK")
+      @requests[0].respond(200, {act: ''}, JSON.stringify(response) )
       expect(actDidCreate).toHaveBeenCalledOnce()
       xhr.restore()
       actDidCreate.restore()
@@ -74,12 +74,8 @@ describe "Acts", ->
       Ember.run =>
         @actView.submit()
 
-      # response = JSON.parse(@requests[0].requestBody)
-      # response.act.errors = [ description : "can't be blank"]
       response = errors: {description: ["can't be blank"]}
       @requests[0].respond(422, {act: ''}, JSON.stringify(response) ) #{ "Content-Type": "application/json" },  "OK")
 
       expect(actBecameInvalid).toHaveBeenCalledOnce()
-      debugger
       expect(actBecameInvalid.args[0][0].errors).toBeDefined()
-

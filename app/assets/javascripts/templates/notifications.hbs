@@ -1,5 +1,4 @@
-NOTIFICATIONS
-{{content}}
+<h2> Notifications </h2>
 {{#each notification in content}}
-    {{view Sysys.NotificationView contentBinding="notification" controllerBinding="view.controller"}}
+    {{view Sysys.NotificationView contextBinding="notification" controllerBinding="view.controller"}}
 {{/each}}

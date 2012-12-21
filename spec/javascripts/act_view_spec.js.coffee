@@ -1,16 +1,13 @@
-describe "Given a ActView", ->
+describe "ActView", ->
 
   beforeEach ->
-    @params = 
-      description: "just a description"
-    @act = Sysys.store.createRecord(Sysys.Act, @params)
+    @act = Ember.object.create( description: "some description")
     controller = {commit: sinon.spy()}
     @actView = Sysys.ActView.create( context: @act, controller: controller)
     Ember.run =>
       @actView.append()
     
   afterEach ->
-    Sysys.store.deleteRecord(@act)
     Ember.run =>
       @actView.remove()
     @actView = null
