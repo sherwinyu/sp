@@ -8,6 +8,64 @@ class Act
   field :start_time, type: DateTime
   field :end_time, type: DateTime
 
+  embeds_many :details
+
   validates_presence_of :description
 
 end
+
+
+=begin
+  details:
+    field name type string
+    embeds_many children_details
+
+details = 
+  name: 
+
+productivity
+
+{ name: all details
+  children: [
+    { }
+    { }
+    { }
+    { name: productivity, value: 100 }
+
+
+  
+}
+
+productivity: 100
+sleep:
+  duration: 8.5
+  time_asleep: 3am
+  time_awake: 11.5pm
+  tiredness_on_sleep: 4
+  dreamed: true
+
+workout:
+  bench_press: [ {weight: 135, reps: 5}, {weight: 135, reps: 5}, {weight: 135, reps: 4, negatives: true} ]
+  cardio: [ {weight: 135, reps: 5}, {weight: 135, reps: 5}, {weight: 135, reps: 4, negatives: true} ]
+  feeling: 8
+
+-->
+  { name: workout
+    details: [
+      { 
+        name: bench_press
+        children: [
+          { name: bench_press set
+            details: 
+            
+          
+      
+
+
+
+THINGS TO TEST
+  ember-data arrays
+  ember-data codecs for 'polymorphic value'
+  how to store arbitrarily complicated data?
+
+=end

@@ -11,4 +11,6 @@ describe "Acts", ->
     expect(findAll).toHaveBeenCalledOnce
 
 
-    # describe "
+describe "validations", ->
+
+
