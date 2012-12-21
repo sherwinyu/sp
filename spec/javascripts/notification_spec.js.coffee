@@ -49,7 +49,7 @@ describe "notification view", ->
     controller = { remove: @remove }
 
     @notification = Sysys.Notification.create @params
-    @notificationView = Sysys.NotificationView.create( content: @notification, controller: controller)
+    @notificationView = Sysys.NotificationView.create( context: @notification, controller: controller)
     Ember.run =>
       @notificationView.append()
 
@@ -68,18 +68,18 @@ describe "notification view", ->
   it "should trigger remove when close button is clicked", ->
     @notificationView.$('a.close').trigger('click')
     expect(@remove).toHaveBeenCalledOnce()
-    expect(@remove).toHaveBeenCalledWith(@notificationView.content)
+    expect(@remove).toHaveBeenCalledWith(@notificationView.get('context'))
 
   describe "bindings", ->
     it "should style based on notification type", ->
       $view = @notificationView.$()
-      @notificationView.content.set('type', Sysys.Notification.INFO)
+      @notificationView.set('context.type', Sysys.Notification.INFO)
       expect($view).toHaveClass('alert-success')
       expect($view).not.toHaveClass('alert-error')
-      @notificationView.content.set('type', Sysys.Notification.ERROR)
+      @notificationView.set('context.type', Sysys.Notification.ERROR)
       expect($view).toHaveClass('alert-error')
       expect($view).not.toHaveClass('alert-success')
-      @notificationView.content.set('type', Sysys.Notification.WARNING)
+      @notificationView.set('context.type', Sysys.Notification.WARNING)
       expect($view).toHaveClass('alert')
       expect($view).not.toHaveClass('alert-error')
       expect($view).not.toHaveClass('alert-success')

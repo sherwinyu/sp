@@ -1,7 +1,7 @@
 describe "ActView", ->
 
   beforeEach ->
-    @act = Ember.object.create( description: "some description")
+    @act = Ember.Object.create( description: "some description")
     controller = {commit: sinon.spy()}
     @actView = Sysys.ActView.create( context: @act, controller: controller)
     Ember.run =>
@@ -32,6 +32,7 @@ describe "ActView", ->
     expect(@actView.$('.description').first()).toContainHtml('something else')
 
   it "should bind dirtiness class", ->
+    @actView.set('context.isDirty', true)
     expect(@actView.$()).toHaveClass("dirty")
     Ember. run =>
       @actView.set('context', Ember.Object.create(isDirty: false))

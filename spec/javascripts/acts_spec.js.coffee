@@ -55,7 +55,6 @@ describe "Acts", ->
         @actView.submit()
       response = JSON.parse(@requests[0].requestBody)
       response.act.id = '12345'
-      debugger
       @requests[0].respond(200, {act: ''}, JSON.stringify(response) )
       expect(actDidCreate).toHaveBeenCalledOnce()
       xhr.restore()

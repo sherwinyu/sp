@@ -2,18 +2,17 @@ Sysys.NotificationsView = Ember.View.extend
   templateName: 'notifications'
 
 Sysys.NotificationView = Ember.View.extend
-  content: null
   controller: null
 
   templateName: 'notification'
   classNames: ['alert']
   classNameBindings: ['type']
   type: (->
-    switch @content.get('type')
+    switch @get('context.type')
       when Sysys.Notification.INFO then 'alert-success'
       when Sysys.Notification.ERROR then 'alert-error'
       when Sysys.Notification.WARNING then ''
-      else '').property('content.type')
+      else '').property('context.type')
   init: ->
     @_super()
     # unless @get('controller')
