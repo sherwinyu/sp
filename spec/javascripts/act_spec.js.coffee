@@ -1,4 +1,4 @@
-store = DS.Store.create( revision: 9)
+store = DS.Store.create( revision: 10)
 describe "Sysys.Act", ->
   beforeEach ->
     @params = 

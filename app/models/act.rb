@@ -68,4 +68,8 @@ THINGS TO TEST
   ember-data codecs for 'polymorphic value'
   how to store arbitrarily complicated data?
 
+  storing everything in the same model (Act.detail = DS.attr... something)
+  having views descend from that model 
+    ember paths for non ember attrs?  arbitrary objects..
+
 =end
