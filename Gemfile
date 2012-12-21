@@ -23,10 +23,11 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '2.10.0'
+  gem 'shoulda', '2.10.0'
   gem 'guard-rspec', '0.5.5'
   gem 'pry', '~> 0.9.9.6'
   gem 'libnotify', '0.5.9'
-  gem 'jasminerice'
+  gem 'jasminerice', '0.0.10'
 end
 
 gem 'jquery-rails'

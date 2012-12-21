@@ -136,6 +136,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    shoulda (2.10.0)
     sinon-rails (1.4.2.1)
       railties (>= 3.1)
     slop (2.4.4)
@@ -164,7 +165,7 @@ DEPENDENCIES
   ember-rails
   guard-rspec (= 0.5.5)
   jasmine-sinon-rails
-  jasminerice
+  jasminerice (= 0.0.10)
   jquery-rails
   libnotify (= 0.5.9)
   mongoid (~> 3.0.0)
@@ -172,6 +173,7 @@ DEPENDENCIES
   rails (= 3.2.8)
   rspec-rails (= 2.10.0)
   sass-rails (~> 3.2.3)
+  shoulda (= 2.10.0)
   sinon-rails
   sqlite3
   uglifier (>= 1.0.3)
