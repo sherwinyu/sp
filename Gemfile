@@ -30,6 +30,11 @@ group :development, :test do
   gem 'jasminerice', '0.0.10'
 end
 
+group :test do
+  gem 'database_cleaner', '0.9.1'
+  gem 'json_spec', '1.1.0'
+end
+
 gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem "ember-rails"
