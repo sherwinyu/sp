@@ -1,3 +1,13 @@
+contentPropertyWillChange = (content, contentKey) ->
+  key = contentKey.slice 8
+  if key in @ then return
+  Ember.propertyWillChange(@, key)
+
+contentPropertyDidChange = (content, contentKey) ->
+  key = contentKey.slice 8
+  if key in @ then return
+  Ember.propertyDidChange @, key
+
 Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
   _magic: null
   _keys: null
@@ -10,29 +20,17 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
   length: (Ember.computed -> @get('_keys.length') ? 0 ).property()
 
   parseFromHash: (object) ->
-    yearsOld = max: 10, ida: 9, tim: 11
-
-    ages = for child, age of yearsOld
-      "#{child} is #{age}"
-
     ret = for own k, v of object
       v
-      
-      
-
     ret
-
 
   init: ->
     @set('content', Ember.Object.create())
     @set('_keys', [])
     for k, v of @get('_magic')
       @set(k, v)
-    debugger
     @_super
 
-    # _getValByKey: (key) ->
-    
   objectAt: (idx) ->
     unless 0 <= idx < @get('_keys.length')
       return undefined
@@ -55,7 +53,14 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
     else
       undefined
 
+  willWatchProperty: (key) ->
+    contentKey = 'content.' + key
+    Ember.addBeforeObserver(@, contentKey, null, contentPropertyWillChange)
+    Ember.addObserver(this, contentKey, null, contentPropertyDidChange)
+
+  didUnwatchProperty: (key) ->
+    contentKey = 'content.' + key
+    Ember.removeBeforeObserver @, contentKey, null, contentPropertyWillChange
+    Ember.removeObserver @, contentKey, null, contentPropertyWillChange
 
 
-    # recursive_init(@_magic)
-    

@@ -75,5 +75,19 @@ THINGS TO TEST
   enumerable (flat) object
 
 
+  detail view.hbs:
+  ===============
+
+  {{#each in key val in json}}
+    ifIsObject val
+    ifIsArray val
+    else
+      key: value
+    
+  {{/each}}
+
+
+Ember.EnumerableJSONObject
+
 
 =end
