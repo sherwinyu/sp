@@ -4,6 +4,13 @@
   {{view Sysys.DetailsView contextBinding="details"}}
   <br>
   <br>
+
+  view.zorger :{{view.zorger}} <Br>
+  each iterator over object
+  {{#each view.zorger}}
+  ...inside each this {{this}} <br>
+  {{/each}}
+
   {{#view contextBinding="details"}}
   {{as_json view.context}}
   {{#with view.context.[0]}}

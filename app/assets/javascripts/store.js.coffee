@@ -11,3 +11,8 @@ DS.JSONTransforms.object =
   serialize: (deserialized) ->
     if Em.isNone(deserialized) then null else deserialized
 
+# Sysys.JSONWrapper = 
+# recursiveDeserialize: (obj) ->
+
+
+
