@@ -6,7 +6,7 @@ Sysys.store = new Sysys.Store
 
 DS.JSONTransforms.object = 
   deserialize: (serialized) -> 
-    if Em.isNone(serialized) then null else serialized
+    if Em.isNone(serialized) then null else Sysys.JSONWrapper.recursiveDeserialize(serialized)
 
   serialize: (deserialized) ->
     if Em.isNone(deserialized) then null else deserialized

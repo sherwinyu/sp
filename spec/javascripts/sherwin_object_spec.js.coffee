@@ -37,14 +37,14 @@ describe "sherwin object", ->
     expect(@sherwinObject.get('d.1')).toEqual 2
   
   describe "set", ->
-    it "should modify exsting values without modifying keys", ->
+    it "when modifying existing values should not modify keys", ->
       keysPushObject = sinon.spy(@sherwinObject.get('_keys'), 'pushObject')
       @sherwinObject.set('a', 'new value')
       expect(keysPushObject).not.toHaveBeenCalled()
       expect(@sherwinObject.get('a')).toEqual 'new value'
       keysPushObject.restore()
 
-    it "should add to keys when setting unknown value", ->
+    it "when setting unknown value should add to keys", ->
       keysPushObject = sinon.spy(@sherwinObject.get('_keys'), 'pushObject')
       @sherwinObject.set('newKey', 'new value')
       expect(keysPushObject).toHaveBeenCalledWith('newKey')

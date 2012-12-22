@@ -44,6 +44,7 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
 
     unless content.hasOwnProperty key
       @get('_keys').pushObject key
+    content.set('_key', key)
     return content.set(key, value)
 
   unknownProperty: (key) ->
@@ -62,5 +63,3 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
     contentKey = 'content.' + key
     Ember.removeBeforeObserver @, contentKey, null, contentPropertyWillChange
     Ember.removeObserver @, contentKey, null, contentPropertyWillChange
-
-
