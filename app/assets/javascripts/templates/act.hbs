@@ -1,4 +1,17 @@
 <div class="act well">
+  details = {{ details }} </br>
+  miniview:: <br>
+  {{view Sysys.DetailsView contextBinding="details"}}
+  <br>
+  <br>
+  {{#view contextBinding="details"}}
+  {{as_json view.context}}
+  {{#with view.context.[0]}}
+  this {{as_json this}} </br>
+object {{as_json object}} </br>
+array {{as_json array}} </br>
+    {{/with}}
+    {{/view}}
   <a {{action showAct act href=true}}> # </a>  {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br>
   <span class="caption">id: </span> {{ id }} <br>
   <span class="caption">content:</span> {{view Sysys.EditableField valueBinding="content"}} {{content}} <br>
