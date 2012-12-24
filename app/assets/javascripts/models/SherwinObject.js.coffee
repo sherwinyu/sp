@@ -13,11 +13,13 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
   _keys: null
   content: null
 
+  isHash: true
+
   nextObject: (indexNumber, previousObject, context) ->
     key = @get('_keys').objectAt(indexNumber)
     @get('content')?.get('key')
 
-  length: (Ember.computed -> @get('_keys.length') ? 0 ).property()
+  length: (Ember.computed -> @get('_keys.length') ? 0 ).property("_keys.@each")
 
   parseFromHash: (object) ->
     ret = for own k, v of object
@@ -37,15 +39,45 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
     key = @get('_keys')[idx]
     @get(key)
 
-  setUnknownProperty: (key, value) ->
+    ###
+  addArrayObserver: (target, opts) ->
+
+var willChange = (opts && opts.willChange) || 'arrayWillChange',
+        didChange  = (opts && opts.didChange) || 'arrayDidChange';
+
+    var hasObservers = get(this, 'hasArrayObservers');
+    if (!hasObservers) Ember.propertyWillChange(this, 'hasArrayObservers');
+    Ember.addListener(this, '@array:before', target, willChange);
+    Ember.addListener(this, '@array:change', target, didChange);
+    if (!hasObservers) Ember.propertyDidChange(this, 'hasArrayObservers');
+    return this;
+    ###
+  pushObj: (key, val) ->
+    @arrayContentWillChange(@get('length'), 0, 1)
+    @get('_keys').pushObject key
+    @get('content').set(key, val)
+    # @arrayContentDidChange(@get('length') - 1,
+    
+  _updateObj: (key, val) ->
+    @arrayContentWillChange(@get('_keys').indexOf(key), 0, 0)
+    @get('content').set(key, val)
+
+  setUnknownProperty: (key, val) ->
     content = @get('content')
 
-    Ember.assert(Ember.String.fmt("Cannot delegate set('%@', %@) to the 'content' property of object proxy %@: its 'content' is undefined.", [key, value, @]), content)
+    Ember.assert(Ember.String.fmt("Cannot delegate set('%@', %@) to the 'content' property of object proxy %@: its 'content' is undefined.", [key, val, @]), content)
 
+    if content.hasOwnProperty key
+      @_updateObj(key, val)
+    else
+      @pushObj(key, val)
+    ###
     unless content.hasOwnProperty key
       @get('_keys').pushObject key
-    content.set('_key', key)
-    return content.set(key, value)
+    content.set(key, value)
+    ###
+    # content.get(key).set('_key', key)
+    #return content.get(key)
 
   unknownProperty: (key) ->
     content = @get('content')

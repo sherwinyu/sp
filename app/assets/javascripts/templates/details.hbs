@@ -1,17 +1,14 @@
-details.view.context:: {{this}} <br>
-as_json details.view.context:: {{as_json this}} <br>
-KEY VALUE
-{{!view Sysys.EditableField view.context.[0].scalar}}
-  {{view Ember.TextField valueBinding="0.scalar" propagatesEvents=true class="zorger" initialValueBinding="view.context.0.scalar"}}
-KEY VALUE
-
-{{#each view.context }}
-  {{!key_value this}}
-  {{this}} <br>
-  {{key}} <br>
-  {{value}} <br>
-  {{!key_value}}
-  inside each :<br> 
-  key: {{as_json this}}  <br>
-  editable textfield:  <br>
-{{/each}}
+{{#if view.parentView.context.isEnumerable }}
+  {{#if view.parentView.context.isHash}}
+    {{view.keyName}}
+  {{else}}
+    [{{view.contentIndex}}]:
+  {{/if}}
+{{/if}}
+<div style="margin-left: 15px; border: 1px solid red">
+  {{#if view.context.isEnumerable}}
+    {{each view.context itemViewClass="Sysys.DetailsView"}}
+  {{else}}
+  <i>{{view.context}}</i>
+  {{/if}}
+</div>

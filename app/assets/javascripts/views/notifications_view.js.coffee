@@ -39,6 +39,11 @@ Sysys.NotificationsController = Ember.ArrayController.extend
   remove: (notification)->
     @removeObject(notification)
 
+  init: ->
+    @_super()
+    unless @get('content')?
+      @set('content', [])
+
 Sysys.Notification = Ember.Object.extend
   text: null
   type: null # one of 'INFO WARNING ERROR'
