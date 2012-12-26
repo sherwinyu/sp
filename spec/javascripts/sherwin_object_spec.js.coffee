@@ -1,4 +1,4 @@
-describe "sherwin object", ->
+describe "sherwin object via object", ->
   beforeEach ->
     args = 
       a: 1
@@ -11,8 +11,6 @@ describe "sherwin object", ->
   afterEach ->
     # @sherwinObject.destroy()
     # @sherwinObject = null
-
-
   describe "on create", ->
     it "should get property values", ->
       expect(@sherwinObject.get('a')).toEqual 1

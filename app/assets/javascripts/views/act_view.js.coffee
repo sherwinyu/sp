@@ -10,4 +10,4 @@ Sysys.ActView = Ember.View.extend
   init: ->
     @_super()
 
-  zorger: Sysys.EnumerableObjectViaObject.create(_magic: {a :1, b: 2, c:3})
+    #zorger: Sysys.EnumerableObjectViaObject.create(_magic: {a :1, b: 2, c:3})

@@ -1,14 +1,16 @@
-{{#if view.parentView.context.isEnumerable }}
-  {{#if view.parentView.context.isHash}}
-    {{view.keyName}}
-  {{else}}
-    [{{view.contentIndex}}]:
-  {{/if}}
-{{/if}}
 <div style="margin-left: 15px; border: 1px solid red">
   {{#if view.context.isEnumerable}}
-    {{each view.context itemViewClass="Sysys.DetailsView"}}
+    {{#each element in view.context}}
+      {{#view}}
+        {{#if view.parentView.context.isHash}}
+          key
+        {{else}}
+        [{{view._parentView.contentIndex}}]
+        {{/if}}
+      {{/view}}
+      {{view Sysys.DetailsView contextBinding="element"}}
+    {{/each}}
   {{else}}
-  <i>{{view.context}}</i>
+  <i>{{view.context}}   {{view.context.val}} {{view Sysys.EditableField valueBinding="view.context.val"}}</i>
   {{/if}}
 </div>

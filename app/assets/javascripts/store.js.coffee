@@ -18,11 +18,12 @@ Sysys.JSONWrapper =
     val? and typeof val is 'object' and val instanceof Array and typeof val.length is 'number'
   isPlain: (val) ->
     val? and typeof val isnt 'object'
+
   recursiveDeserialize: (val) ->
     if Sysys.JSONWrapper.isPlain val
       return val
     if Sysys.JSONWrapper.isHash val
-      a = Sysys.EnumerableObjectViaObject.create()
+      a = Sysys.EnumerableObjectViaArray.create()
       for own k, v of val
         a.set(k, Sysys.JSONWrapper.recursiveDeserialize(v))
       return a

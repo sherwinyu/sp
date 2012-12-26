@@ -1,17 +1,24 @@
 describe "details view (enumerable object", ->
   beforeEach ->
-    @serialized = [
+    @serialized = [ 
           {
-            "array":[1,2,3],
+          "array":[1,2,3],
           "object":{"a": true,"b": false},
           "scalar":"mountains",
           },
           [55, 66, 77]
         ]
+
+        #{a: 0, b: {b0: 5, b1: 7}, c: 1 }
     @details = Sysys.JSONWrapper.recursiveDeserialize(@serialized)
     debugger
     @detailView = Sysys.DetailsView.create context: @details
+    @content = [ {val: 1}, {val: 2}, {val: 3} ]
+    @content = Ember.ArrayProxy.create(content:[1,2,3])
+    # @content = [1, 2, 3]
+    @testView = Sysys.TestView.create content: @content
     Ember.run =>
+      # @testView.append()
       @detailView.append()
 
   it "should insert the dom", ->
@@ -34,6 +41,13 @@ KEY VALUE
 
   {{view Sysys.DetailsView contextBinding="view.context.0"}}
   {{view Sysys.DetailsView contextBinding="view.context.1"}}
+
+  vc.scalar{{view.context.scalar}}<Br>
+  vc.arr{{view.context.array}}<Br>
+  vc.object{{view.context.object}}<Br>
+  vc0{{view.0}}<Br>
+  vc1{{view.1}}<Br>
+  vc2{{view.2}}<Br>
 
 
   {{!if view.context.isEnumearble}}
@@ -59,8 +73,6 @@ KEY VALUE
 
 
 
-
-
     {{#eachO view.context}}
     <br>
     {{#view contentBinding="this" }}
@@ -71,3 +83,12 @@ KEY VALUE
       {{view Sysys.DetailsView contextBinding="this"}}
     {{/view}}
     {{/eachO}}
+
+
+
+  vc.scalar{{view.context.scalar.val}}<Br>
+  vc.arr{{view.context.array}}<Br>
+  vc.object{{view.context.object}}<Br>
+  vc0{{view.context.[0].val}}<Br>
+  vc1{{view.context.[1].val}}<Br>
+  vc2{{view.context.[2].val}}<Br>

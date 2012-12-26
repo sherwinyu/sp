@@ -1,0 +1,11 @@
+{{#each arg in view.content}}
+  {{arg}}
+  {{view Sysys.EditableField valueBinding="arg"}}
+  <br>
+{{/each}}
+{{view.content.[0]}}
+{{view.content.[1]}}
+{{view.content.[2]}}
+{{view.content.[0].val}}
+{{view.content.[1].val}}
+{{view.content.[2].val}}
