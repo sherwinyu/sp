@@ -1,13 +1,13 @@
 describe "details view (enumerable object", ->
   beforeEach ->
-    @serialized = [ 
+    @serialized = [[[ 
           {
           "array":[1,2,3],
           "object":{"a": true,"b": false},
           "scalar":"mountains",
           },
           [55, 66, 77]
-        ]
+        ], 1]]
 
         #{a: 0, b: {b0: 5, b1: 7}, c: 1 }
     @details = Sysys.JSONWrapper.recursiveDeserialize(@serialized)
@@ -85,6 +85,7 @@ KEY VALUE
     {{/eachO}}
 
 
+<a {{action enterEdit target="view" href="true"}} class="details-edit"> [edit] </a>
 
   vc.scalar{{view.context.scalar.val}}<Br>
   vc.arr{{view.context.array}}<Br>

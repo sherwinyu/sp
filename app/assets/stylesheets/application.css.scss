@@ -15,9 +15,61 @@
 
 .caption {
   font-weight: bold;
-  
 }
 
 .dirty {
   border: red 1px dashed;
 }
+
+$detailsSelectBorder: 1px rgba(128, 128, 128, .4) dashed;
+.details.highlighted {
+  border: $detailsSelectBorder;
+  background: whitesmoke;
+}
+
+.details.highlighted .details{
+  border: 1px rgba(128,128,128,.1) solid;
+  background: whitesmoke;
+}
+
+.details {
+  margin-left: 30px;
+  position: relative;
+  border: 1px gray solid;
+}
+
+.details div.detailsbar{
+  top: -18px;
+  position: absolute;
+  border-top: $detailsSelectBorder;
+  border-left: $detailsSelectBorder;
+  border-right: $detailsSelectBorder;
+}
+
+/*
+details-edit{
+  top: -18px;
+  position: absolute;
+  border-top: $detailsSelectBorder;
+  border-left: $detailsSelectBorder;
+  border-right: $detailsSelectBorder;
+}
+*/
+
+.details-iter{
+  border: 1px solid orange;
+}
+
+/*
+.details div {
+  background: transparent;
+}
+
+.details:hover div {
+  background: white;
+}
+
+.details div:hover {
+  background:yellow;
+}
+*/

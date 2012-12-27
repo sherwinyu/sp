@@ -166,7 +166,8 @@ describe "JSONWrapper", ->
         # TODO(syu): add a equals comparison
         # expect(@ret).toEqual Sysys.EnumerableObjectViaObject.create _magic: hash
         expect(@ret.get('a')).toBe 1
-        expect(@ret.get('b') instanceof Sysys.EnumerableObjectViaObject).toBeTruthy()
+        check = @ret.get('b') instanceof Sysys.EnumerableObjectViaObject || @ret.get('b') instanceof Sysys.EnumerableObjectViaArray 
+        expect(check).toBeTruthy()
         expect(@ret.get('b.x')).toBe 'nestedVal'
         expect(@ret.get('c')).toBe 22
 
@@ -191,7 +192,7 @@ describe "JSONWrapper", ->
       beforeEach ->
         @serialized = [
           {
-            "array":[1,2,3],
+          "array":[1,2,3],
           "object":{"a": true,"b": false},
           "scalar":"mountains",
           },

@@ -1,7 +1,12 @@
-<div style="margin-left: 15px; border: 1px solid red">
+{{#if view.hovered}}
+<div class="detailsbar">
+  <a {{action enterEdit target="view" href="true"}} class="details-edit"> [edit] </a>
+  <a {{action collapse target="view" href="true"}} class="details-collapse"> [collapse] </a>
+</div>
+{{/if}}
   {{#if view.context.isEnumerable}}
     {{#each element in view.context}}
-      {{#view}}
+      {{#view tagName="span" className="details-iter"}}
         {{#if view.parentView.context.isHash}}
           key
         {{else}}
@@ -11,6 +16,5 @@
       {{view Sysys.DetailsView contextBinding="element"}}
     {{/each}}
   {{else}}
-  <i>{{view.context}}   {{view.context.val}} {{view Sysys.EditableField valueBinding="view.context.val"}}</i>
+  <i>{{view.context}} ||  {{view.context.val}} || {{view Sysys.EditableField valueBinding="view.context.val"}}</i>
   {{/if}}
-</div>
