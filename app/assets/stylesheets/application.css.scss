@@ -36,6 +36,7 @@ $detailsSelectBorder: 1px rgba(128, 128, 128, .4) dashed;
   margin-left: 30px;
   position: relative;
   border: 1px gray solid;
+  padding: 2px;
 }
 
 .details div.detailsbar{
@@ -44,6 +45,9 @@ $detailsSelectBorder: 1px rgba(128, 128, 128, .4) dashed;
   border-top: $detailsSelectBorder;
   border-left: $detailsSelectBorder;
   border-right: $detailsSelectBorder;
+}
+
+.details div.collapsible {
 }
 
 /*

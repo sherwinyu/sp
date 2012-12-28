@@ -36,6 +36,14 @@ Sysys.DetailsView = Ember.View.extend
 
   exitEdit: ->
 
+  collapse: ->
+    cur = @$('.collapsible').css('display')
+    unless cur == "block"
+      @$('.collapsible').css('display', 'block')
+    else
+      @$('.collapsible').css('display', 'none')
+
+
   commit: ->
     value = [1, 2, 3]
 

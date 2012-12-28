@@ -85,7 +85,6 @@ KEY VALUE
     {{/eachO}}
 
 
-<a {{action enterEdit target="view" href="true"}} class="details-edit"> [edit] </a>
 
   vc.scalar{{view.context.scalar.val}}<Br>
   vc.arr{{view.context.array}}<Br>

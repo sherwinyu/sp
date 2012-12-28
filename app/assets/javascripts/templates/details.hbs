@@ -4,6 +4,7 @@
   <a {{action collapse target="view" href="true"}} class="details-collapse"> [collapse] </a>
 </div>
 {{/if}}
+<div class="collapsible">
   {{#if view.context.isEnumerable}}
     {{#each element in view.context}}
       {{#view tagName="span" className="details-iter"}}
@@ -18,3 +19,4 @@
   {{else}}
   <i>{{view.context}} ||  {{view.context.val}} || {{view Sysys.EditableField valueBinding="view.context.val"}}</i>
   {{/if}}
+</div>
