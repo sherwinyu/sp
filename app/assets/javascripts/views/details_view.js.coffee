@@ -4,10 +4,23 @@ Sysys.DetailsView = Ember.View.extend
   hovered: false
   classNameBindings: ["hovered:highlighted"]
   classNames: ["details"]
+  isEditing: false
+  commitValue: ""
+
+  identification: (->
+    @toString().slice(19, 27)
+  ).property()
+
+
+
+  ###
+  commitValue: ((key, val) ->
+    JSON.parse(@get('context').
+  ).property()
+  ###
 
   recurseUpParentView: ->
     pv = @get('parentView')
-    console.log(pv)
     if pv
       pv.set('hovered', false)
       pv.recurseUpParentView()
@@ -18,6 +31,10 @@ Sysys.DetailsView = Ember.View.extend
     e.preventDefault()
     false
 
+  keyUp: (e) ->
+    if e.keyCode == 13
+      @commit()
+      
     
   mouseLeave: (e)->
 
@@ -26,15 +43,18 @@ Sysys.DetailsView = Ember.View.extend
     if id
       view = Ember.get("Ember.View.views.#{id}")
       view.set('hovered', true)
-    console.log(ele)
     @set('hovered', false)
 
   enterEdit: ->
-    # debugger
     console.log('this.context', @get('context'))
     console.log('this.parentView.context', @get('parentView.context'))
+    if @get('isEditing')
+      @commit()
+    else
+      @set('isEditing', true)
 
   exitEdit: ->
+    @set('isEditing', false)
 
   collapse: ->
     cur = @$('.collapsible').css('display')
@@ -43,9 +63,18 @@ Sysys.DetailsView = Ember.View.extend
     else
       @$('.collapsible').css('display', 'none')
 
-
   commit: ->
-    value = [1, 2, 3]
+    console.log 'comitting, commit val = '
+    console.log @get('commitValue')
+    try 
+      value = JSON.parse(@get('commitValue'))
+      @set('context', value)
+      @exitEdit()
+      @rerender()
+    catch error
+      console.log "invalid JSON!", error
+
+
 
 
 
@@ -62,8 +91,6 @@ Sysys.DetailsView = Ember.View.extend
       @get('keys').get("#{idx}")
     else # setter
       @get('keys').set("#{idx}", value)
-    
-
 
   keyNameForEnumObjects: ((key, value) ->
     idx = @get('contentIndex')
@@ -75,10 +102,4 @@ Sysys.DetailsView = Ember.View.extend
 
   init: ->
     @_super()
-
-
-
-Sysys.KeyField = Sysys.EditableField.extend
-  keysBinding: "parentViewj"
-  
-
+    @set('commitValue', JSON.stringify(@get('context')))

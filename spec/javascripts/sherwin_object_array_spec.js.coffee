@@ -1,4 +1,3 @@
-debugger
 describe "sherwin object via array", ->
   beforeEach ->
     args = 

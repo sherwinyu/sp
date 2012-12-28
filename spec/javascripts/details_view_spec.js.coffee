@@ -24,7 +24,13 @@ describe "details view (enumerable object", ->
   it "should insert the dom", ->
     5
     expect(false).toBeTruthy()
+
+  describe "edit", ->
+  describe "edit", ->
+  describe "edit", ->
+
     ###
+
   this {{this}} <br>
   key {{key}} <br>
   value {{value}} <br>

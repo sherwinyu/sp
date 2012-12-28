@@ -2,21 +2,26 @@
 <div class="detailsbar">
   <a {{action enterEdit target="view" href="true"}} class="details-edit"> [edit] </a>
   <a {{action collapse target="view" href="true"}} class="details-collapse"> [collapse] </a>
+  <span class="detailsIdentification"> {{view.identification}} </span>
 </div>
 {{/if}}
 <div class="collapsible">
-  {{#if view.context.isEnumerable}}
-    {{#each element in view.context}}
-      {{#view tagName="span" className="details-iter"}}
-        {{#if view.parentView.context.isHash}}
-          key
-        {{else}}
-        [{{view._parentView.contentIndex}}]
-        {{/if}}
-      {{/view}}
-      {{view Sysys.DetailsView contextBinding="element"}}
-    {{/each}}
+  {{#if view.isEditing}}
+    {{view Ember.TextArea valueBinding="view.commitValue"}}
   {{else}}
-  <i>{{view.context}} ||  {{view.context.val}} || {{view Sysys.EditableField valueBinding="view.context.val"}}</i>
+    {{#if view.context.isEnumerable}}
+      {{#each element in view.context}}
+        {{#view tagName="span" className="details-iter"}}
+          {{#if view.parentView.context.isHash}}
+            key
+          {{else}}
+          [{{view._parentView.contentIndex}}]
+          {{/if}}
+        {{/view}}
+        {{view Sysys.DetailsView contextBinding="element"}}
+      {{/each}}
+    {{else}}
+    <em>{{view.context}} {{view Sysys.EditableField valueBinding="view.context"}} ||  {{view.context.val}} || {{view Sysys.EditableField valueBinding="view.context.val"}}</em>
+    {{/if}}
   {{/if}}
 </div>

@@ -12,42 +12,49 @@ describe "sherwin object via object", ->
     # @sherwinObject.destroy()
     # @sherwinObject = null
   describe "on create", ->
+    it "should have the proper initial keys", ->
+      expect(@sherwinObject.get('_keys')).toEqual ['a', 'b', 'c', 'd', 'f']
     it "should get property values", ->
       expect(@sherwinObject.get('a')).toEqual 1
       expect(@sherwinObject.get('b')).toEqual 2
       expect(@sherwinObject.get('c')).toEqual 3
-
     it "should get array values", ->
       expect(@sherwinObject.get('d')).toEqual [1, 2, 3]
-
-    it "should have the proper initial keys", ->
-      expect(@sherwinObject.get('_keys')).toEqual ['a', 'b', 'c', 'd', 'f']
-
-    it "should have the proper length", ->
-      expect(@sherwinObject.get('length')).toEqual 5
-
-  it "should be able to get deeply nested attributes", ->
-    expect(@sherwinObject.get('f.deeply')).toEqual 10
-    expect(@sherwinObject.get('f.nested')).toEqual 20
-
-  it "should be able to get array objects", ->
-    expect(@sherwinObject.get('d.0')).toEqual 1
-    expect(@sherwinObject.get('d.1')).toEqual 2
   
-  describe "set", ->
-    it "when modifying existing values should not modify keys", ->
-      keysPushObject = sinon.spy(@sherwinObject.get('_keys'), 'pushObject')
-      @sherwinObject.set('a', 'new value')
-      expect(keysPushObject).not.toHaveBeenCalled()
-      expect(@sherwinObject.get('a')).toEqual 'new value'
-      keysPushObject.restore()
+  describe "interface", ->
+    describe "get", ->
 
-    it "when setting unknown value should add to keys", ->
-      keysPushObject = sinon.spy(@sherwinObject.get('_keys'), 'pushObject')
-      @sherwinObject.set('newKey', 'new value')
-      expect(keysPushObject).toHaveBeenCalledWith('newKey')
-      expect(@sherwinObject.get('newKey')).toEqual 'new value'
-      keysPushObject.restore()
+      it "should be able to get direct attributes", ->
+        expect(@sherwinObject.get('a')).toEqual 1
+        expect(@sherwinObject.get('b')).toEqual 2
+
+      it "should be able to get deeply nested attributes", ->
+        expect(@sherwinObject.get('f.deeply')).toEqual 10
+        expect(@sherwinObject.get('f.nested')).toEqual 20
+
+      it "should be able to get array objects", ->
+        expect(@sherwinObject.get('d.0')).toEqual 1
+        expect(@sherwinObject.get('d.1')).toEqual 2
+
+    describe "set", ->
+      it "when modifying existing values should not modify keys", ->
+        keysPushObject = sinon.spy(@sherwinObject.get('_keys'), 'pushObject')
+        @sherwinObject.set('a', 'new value')
+        expect(keysPushObject).not.toHaveBeenCalled()
+        expect(@sherwinObject.get('a')).toEqual 'new value'
+        keysPushObject.restore()
+      it "when setting unknown value should add to keys", ->
+        keysPushObject = sinon.spy(@sherwinObject.get('_keys'), 'pushObject')
+        @sherwinObject.set('newKey', 'new value')
+        expect(keysPushObject).toHaveBeenCalledWith('newKey')
+        expect(@sherwinObject.get('newKey')).toEqual 'new value'
+
+    describe "length", ->
+      it "should have the proper length", ->
+        expect(@sherwinObject.get('length')).toEqual 5
+
+    describe "replace", ->
+    describe "nextObject", ->
 
   describe "bindings", ->
     it "should work in another object", ->

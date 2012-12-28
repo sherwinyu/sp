@@ -23,7 +23,8 @@ Sysys.JSONWrapper =
     if Sysys.JSONWrapper.isPlain val
       return val
     if Sysys.JSONWrapper.isHash val
-      a = Sysys.EnumerableObjectViaArray.create()
+      # a = Sysys.EnumerableObjectViaArray.create()
+      a = Sysys.EnumerableObjectViaObject.create()
       for own k, v of val
         a.set(k, Sysys.JSONWrapper.recursiveDeserialize(v))
       return a
@@ -33,6 +34,10 @@ Sysys.JSONWrapper =
         a.pushObject Sysys.JSONWrapper.recursiveDeserialize(v)
       return a
     throw new Error("this shoud never happen")
+  
+  recursiveSerialize: (val) ->
+    if Sysys.JSONWrapper.isPlain val
+      val
 
       # iterate isHash
 

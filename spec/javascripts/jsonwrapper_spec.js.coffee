@@ -54,7 +54,7 @@ describe "JSONWrapper", ->
         expect(@jw.isPlain(num)).toBe true
         expect(@jw.isPlain(str)).toBe true
 
-  describe "recursiveDeserialize", ->
+  xdescribe "recursiveDeserialize", ->
     rd = Sysys.JSONWrapper.recursiveDeserialize
 
     beforeEach ->
@@ -254,3 +254,45 @@ describe "JSONWrapper", ->
           expect(otherObject.get('scalar')).toEqual 'old scalar'
 
 
+  describe "recursiveSerialize", ->
+    rs = Sysys.JSONWrapper.recursiveSerialize
+
+    beforeEach ->
+      @spyRs = sinon.spy(Sysys.JSONWrapper, "recursiveSerialize")
+    afterEach ->
+      Sysys.JSONWrapper.recursiveSerialize.restore()
+
+    describe "when called on literal", ->
+      describe "num", ->
+        literal = 5
+        beforeEach ->
+          @ret = rs(literal)
+        it "should not recurse", ->
+          expect(@spyRs).not.toHaveBeenCalled()
+        it "should return the literal", ->
+          expect(@ret).toBe(literal)
+
+      describe "boolean", ->
+        literal = true
+        beforeEach ->
+          @ret = rs(literal)
+        it "should not recurse", ->
+          expect(@spyRs).not.toHaveBeenCalled()
+        it "should return the literal", ->
+          expect(@ret).toBe(literal)
+
+      describe "string", ->
+        literal = "i am a string"
+        beforeEach ->
+          @ret = rs(literal)
+        it "should not recurse", ->
+          expect(@spyRs).not.toHaveBeenCalled()
+        it "should return the literal", ->
+          expect(@ret).toBe(literal)
+
+    describe "when called on flat array", ->
+    describe "when called on flat array", ->
+    describe "when called on EnumerableObjectViaObject", ->
+    xdescribe "when called on EnumerableObjectViaArray", ->
+      
+    
