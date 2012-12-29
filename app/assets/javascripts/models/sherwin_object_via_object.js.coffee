@@ -34,6 +34,11 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
     key = @get('_keys')[idx]
     @get(key)
 
+  keyForIndex: (idx) ->
+    unless 0 <= idx < @get('_keys.length')
+      return undefined
+    key = @get('_keys')[idx]
+
   pushObj: (key, val) ->
     @arrayContentWillChange(@get('length'), 0, 1)
     @get('_keys').pushObject key
@@ -84,7 +89,3 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
       val = @get(key)
       ret[key] = @get(key)
     return ret
-
-
-
-

@@ -11,6 +11,10 @@ Sysys.DetailsView = Ember.View.extend
     @toString().slice(19, 27)
   ).property()
 
+  childrenDetailsViews: ->
+    @$('> div > span > div.details').map (i, ele) ->
+      Sysys.vfi(ele.id)
+
   recurseUpParentView: ->
     pv = @get('parentView.parentView')
     if pv
@@ -23,7 +27,6 @@ Sysys.DetailsView = Ember.View.extend
     e.preventDefault()
     false
 
-    
   mouseLeave: (e)->
     ele = e.toElement
     id = $(ele).closest('.details').attr('id')
@@ -56,21 +59,22 @@ Sysys.DetailsView = Ember.View.extend
     else
       @$('.collapsible').css('display', 'none')
 
+
   commit: ->
-    console.log 'comitting, commit val = '
-    console.log @get('commitValue')
     try 
       # TODO(syu): write a SYSON parser and validator
       json = JSON.parse @get('commitValue')
       value = Sysys.JSONWrapper.recursiveDeserialize json
-      debugger
-      @set('details', value)
+      # @set('details', value)
       upperDetailsView = @get('parentView.parentView')
       index = @get('index')
       Ember.assert("index and upperDetailsView need to coexist", index? == upperDetailsView?)
-      debugger
-      if index? and upperDetailsView? and !upperDetailsView.details.isHash
-        upperDetailsView.set("details.#{index}", value)
+      if index? and upperDetailsView?
+        upperDetails = upperDetailsView.get('details')
+        if upperDetails.isHash?
+          upperDetails.set( upperDetails.keyForIndex(index), value)
+        else
+          upperDetails.set("#{index}", value)
       @exitEdit()
       upperDetailsView.rerender()
       # @rerender()
