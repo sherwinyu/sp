@@ -37,14 +37,12 @@ Sysys.JSONWrapper =
   
   recursiveSerialize: (val) ->
     if Sysys.JSONWrapper.isPlain val
-      val
-
-      # iterate isHash
-
-
-
-
-
-
-
-
+      return val
+    if val.toJson?
+      return val.toJson()
+    if Sysys.JSONWrapper.isArray val
+      ret = []
+      for ele in val
+        ret.pushObject Sysys.JSONWrapper.recursiveSerialize ele
+      return ret
+    undefined

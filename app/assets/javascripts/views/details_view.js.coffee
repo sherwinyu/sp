@@ -34,6 +34,7 @@ Sysys.DetailsView = Ember.View.extend
   keyUp: (e) ->
     if e.keyCode == 13
       @commit()
+    false
       
     
   mouseLeave: (e)->
@@ -68,19 +69,13 @@ Sysys.DetailsView = Ember.View.extend
     console.log 'comitting, commit val = '
     console.log @get('commitValue')
     try 
-      value = JSON.parse(@get('commitValue'))
+      # TODO(syu): write a SYSON parser and validator
+      value = Sysys.JSONWrapper.recursiveDeserialize(@get('commitValue'))
       @set('context', value)
       @exitEdit()
       @rerender()
     catch error
       console.log "invalid JSON!", error
-
-
-
-
-
-
-
 
   keysBinding: "parentView.context._keys"
 
@@ -103,4 +98,3 @@ Sysys.DetailsView = Ember.View.extend
 
   init: ->
     @_super()
-    @set('commitValue', JSON.stringify(@get('context')))
