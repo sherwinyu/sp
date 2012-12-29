@@ -9,3 +9,20 @@
 unless @Sysys then @Sysys = Ember.Application.create(
   autoinit: !Test
   )
+
+Sysys.u =
+
+  viewFromId: (id) ->
+    Ember.get("Ember.View.views.#{id}")
+
+  viewFromElement: (ele) ->
+    Sysys.u.viewFromId($(ele).first().attr('id'))
+
+  viewFromNumber: (num) ->
+    Sysys.u.viewFromId("ember#{num}")
+
+Sysys.vfi = Sysys.u.viewFromId
+Sysys.vfe = Sysys.u.viewFromElement
+Sysys.vf = Sysys.u.viewFromNumber
+    
+
