@@ -25,7 +25,7 @@ Handlebars.registerHelper('as_json',  (object, options) ->
 #
 #
 #
-Ember.Handlebars.registerHelper('eachO', (path, options) ->
+Ember.Handlebars.registerBoundHelper('eachO', (path, options) ->
   console.log 'zugzug'
   debugger
   if arguments.length == 4 
@@ -50,4 +50,15 @@ Ember.Handlebars.registerHelper('eachO', (path, options) ->
   return Ember.Handlebars.helpers.collection.call(@, 'Ember.Handlebars.EachView', options)
   # }
 )
-#})();
+
+
+Ember.Handlebars.registerBoundHelper('repeat', (value, options) ->
+  # count = options.hash.count
+  # a = []
+  # while(a.length < count)
+    # a.push(value)
+    # return a.join('')
+  options.hash.val = value
+
+  return Ember.Handlebars.helpers.view.call(@, Sysys.RepeatView, options);
+)
