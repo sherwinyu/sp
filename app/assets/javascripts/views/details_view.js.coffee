@@ -11,16 +11,8 @@ Sysys.DetailsView = Ember.View.extend
     @toString().slice(19, 27)
   ).property()
 
-
-
-  ###
-  commitValue: ((key, val) ->
-    JSON.parse(@get('context').
-  ).property()
-  ###
-
   recurseUpParentView: ->
-    pv = @get('parentView')
+    pv = @get('parentView.parentView')
     if pv
       pv.set('hovered', false)
       pv.recurseUpParentView()
@@ -31,14 +23,8 @@ Sysys.DetailsView = Ember.View.extend
     e.preventDefault()
     false
 
-  keyUp: (e) ->
-    if e.keyCode == 13
-      @commit()
-    false
-      
     
   mouseLeave: (e)->
-
     ele = e.toElement
     id = $(ele).closest('.details').attr('id')
     if id
@@ -46,10 +32,15 @@ Sysys.DetailsView = Ember.View.extend
       view.set('hovered', true)
     @set('hovered', false)
 
+  keyUp: (e) ->
+    if e.keyCode == 13
+      @commit()
+    false
+
   enterEdit: ->
-    console.log('this.context', @get('context'))
-    console.log('this.parentView.context', @get('parentView.context'))
-    @set('commitValue', Sysys.JSONWrapper.recursiveSerialize(@get('context')))
+    console.log('this.details', @get('details'))
+    console.log('this.parentView.details', @get('parentView.details'))
+    @set('commitValue', Sysys.JSONWrapper.recursiveSerialize(@get('details')))
     if @get('isEditing')
       @commit()
     else
@@ -70,17 +61,26 @@ Sysys.DetailsView = Ember.View.extend
     console.log @get('commitValue')
     try 
       # TODO(syu): write a SYSON parser and validator
-      value = Sysys.JSONWrapper.recursiveDeserialize(@get('commitValue'))
-      @set('context', value)
+      json = JSON.parse @get('commitValue')
+      value = Sysys.JSONWrapper.recursiveDeserialize json
+      debugger
+      @set('details', value)
+      upperDetailsView = @get('parentView.parentView')
+      index = @get('index')
+      Ember.assert("index and upperDetailsView need to coexist", index? == upperDetailsView?)
+      debugger
+      if index? and upperDetailsView? and !upperDetailsView.details.isHash
+        upperDetailsView.set("details.#{index}", value)
       @exitEdit()
-      @rerender()
+      upperDetailsView.rerender()
+      # @rerender()
     catch error
       console.log "invalid JSON!", error
 
-  keysBinding: "parentView.context._keys"
+  keysBinding: "parentView.details._keys"
 
   keyName: (key, value) ->
-    details = @get('context')
+    details = @get('details')
     idx = @get('contentIndex')
     if arguments.length == 1 # getter
       #details.getKeyByVal(

@@ -12,10 +12,10 @@ describe "details view (enumerable object", ->
         #{a: 0, b: {b0: 5, b1: 7}, c: 1 }
     @details = Sysys.JSONWrapper.recursiveDeserialize(@serialized)
     debugger
-    @detailView = Sysys.DetailsView.create context: @details
+    @detailView = Sysys.DetailsView.create details: @details
     @content = [ {val: 1}, {val: 2}, {val: 3} ]
     @content = Ember.ArrayProxy.create(content:[1,2,3])
-    # @content = [1, 2, 3]
+    @content = [1, 2, 3]
     @testView = Sysys.TestView.create content: @content
     Ember.run =>
       # @testView.append()

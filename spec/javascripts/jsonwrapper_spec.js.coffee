@@ -296,8 +296,12 @@ describe "JSONWrapper", ->
         @ret = rs(array)
       it "should return the proper array", ->
         expect(@ret).toEqual array
-      it "should not recurse", ->
-        expect(@spyRs).not.toHaveBeenCalled()
+      it "should recurse one level", ->
+        expect(@spyRs).toHaveBeenCalledWith 3
+        expect(@spyRs).toHaveBeenCalledWith 1
+        expect(@spyRs).toHaveBeenCalledWith 4
+        expect(@spyRs).toHaveBeenCalledWith true
+        expect(@spyRs).toHaveBeenCalledWith "five"
 
     describe "when called on nested flat array", ->
       array = [3, 1, [1, 2, [3]], true, "five"]
@@ -305,7 +309,7 @@ describe "JSONWrapper", ->
         @ret = rs(array)
       it "should return the proper array", ->
         expect(@ret).toEqual array
-      it "should not recurse", ->
+      it "should recurse", ->
         expect(@spyRs).toHaveBeenCalledWith([1, 2, [3]])
         expect(@spyRs).toHaveBeenCalledWith(1)
         expect(@spyRs).toHaveBeenCalledWith(2)

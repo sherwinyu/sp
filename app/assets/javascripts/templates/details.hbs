@@ -9,19 +9,19 @@
   {{#if view.isEditing}}
     {{view Ember.TextArea valueBinding="view.commitValue"}}
   {{else}}
-    {{#if view.context.isEnumerable}}
-      {{#each element in view.context}}
+    {{#if view.details.isEnumerable}}
+      {{#each element in view.details}}
         {{#view tagName="span" className="details-iter"}}
-          {{#if view.parentView.context.isHash}}
+          {{#if view.parentView.details.isHash}}
             key
           {{else}}
           [{{view._parentView.contentIndex}}]
           {{/if}}
+          {{view Sysys.DetailsView detailsBinding="element" indexBinding="view._parentView.contentIndex"}}
         {{/view}}
-        {{view Sysys.DetailsView contextBinding="element"}}
       {{/each}}
     {{else}}
-    <em>{{view.context}} {{view Sysys.EditableField valueBinding="view.context"}} ||  {{view.context.val}} || {{view Sysys.EditableField valueBinding="view.context.val"}}</em>
+    <em>{{view.details}} {{view Sysys.EditableField valueBinding="view.details"}} ||  {{view.details.val}} || {{view Sysys.EditableField valueBinding="view.details.val"}}</em>
     {{/if}}
   {{/if}}
 </div>
