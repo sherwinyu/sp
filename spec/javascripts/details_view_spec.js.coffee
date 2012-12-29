@@ -1,12 +1,12 @@
 describe "details view (enumerable object)", ->
   beforeEach ->
-    @serialized = 
+    @serialized =
       {
-        hash2: 
+        hash2:
           hash1:
             hash0: 0
             hash0b: "b"
-        array2: 
+        array2:
           [
             [
               314
@@ -125,7 +125,7 @@ describe "details view (enumerable object)", ->
     describe "with nested hashes and arrays", ->
       beforeEach ->
         @hash = Sysys.EnumerableObjectViaObject.create content: {arr: [1,2,3]}
-        @value = Sysys.EnumerableObjectViaObject.create content: {hashArray: [@hash, 1]} 
+        @value = Sysys.EnumerableObjectViaObject.create content: {hashArray: [@hash, 1]}
         @rd = sinon.stub(Sysys.JSONWrapper, "recursiveDeserialize").returns @value
         @jsonParse = sinon.stub(JSON, "parse").returns("chogal")
 
@@ -155,7 +155,7 @@ describe "details view (enumerable object)", ->
           expect(childrenViews[0].childrenDetailsViews()[0].childrenDetailsViews()[0].childrenDetailsViews()[2].details).toEqual 3
 
       ###
-commit 
+commit
   with valid json
     should update currentView's context
     should update currentView's display
@@ -168,7 +168,7 @@ enterEdit
   this {{this}} <br>
   key {{key}} <br>
   value {{value}} <br>
-  inside each :<br> 
+  inside each :<br>
   key: {{as_json this}}  <br>
   editable textfield:  <br>
 

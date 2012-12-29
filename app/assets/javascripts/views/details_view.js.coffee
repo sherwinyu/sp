@@ -21,7 +21,7 @@ Sysys.DetailsView = Ember.View.extend
       pv.set('hovered', false)
       pv.recurseUpParentView()
 
-  mouseEnter: (e)-> 
+  mouseEnter: (e)->
     @set('hovered', true)
     @recurseUpParentView()
     e.preventDefault()
@@ -61,7 +61,7 @@ Sysys.DetailsView = Ember.View.extend
 
 
   commit: ->
-    try 
+    try
       # TODO(syu): write a SYSON parser and validator
       json = JSON.parse @get('commitValue')
       value = Sysys.JSONWrapper.recursiveDeserialize json
