@@ -6,7 +6,7 @@ describe "sherwin object via object", ->
       c: 3
       d: [1, 2, 3]
       f: {deeply: 10, nested: 20}
-    @sherwinObject = Sysys.EnumerableObjectViaObject.create(_magic: args)
+    @sherwinObject = Sysys.EnumerableObjectViaObject.create(content: args)
     
   afterEach ->
     # @sherwinObject.destroy()

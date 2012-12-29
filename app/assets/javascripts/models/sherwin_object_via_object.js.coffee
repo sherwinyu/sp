@@ -9,7 +9,6 @@ contentPropertyDidChange = (content, contentKey) ->
   Ember.propertyDidChange @, key
 
 Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
-  _magic: null
   _keys: null
   content: null
 
@@ -21,15 +20,11 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
 
   length: (Ember.computed -> @get('_keys.length') ? 0 ).property("_keys.@each")
 
-  parseFromHash: (object) ->
-    ret = for own k, v of object
-      v
-    ret
-
   init: ->
+    initContent = @get('content')
     @set('content', Ember.Object.create())
     @set('_keys', [])
-    for k, v of @get('_magic')
+    for k, v of initContent
       @set(k, v)
     @_super
 
@@ -39,19 +34,6 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
     key = @get('_keys')[idx]
     @get(key)
 
-    ###
-  addArrayObserver: (target, opts) ->
-
-var willChange = (opts && opts.willChange) || 'arrayWillChange',
-        didChange  = (opts && opts.didChange) || 'arrayDidChange';
-
-    var hasObservers = get(this, 'hasArrayObservers');
-    if (!hasObservers) Ember.propertyWillChange(this, 'hasArrayObservers');
-    Ember.addListener(this, '@array:before', target, willChange);
-    Ember.addListener(this, '@array:change', target, didChange);
-    if (!hasObservers) Ember.propertyDidChange(this, 'hasArrayObservers');
-    return this;
-    ###
   pushObj: (key, val) ->
     @arrayContentWillChange(@get('length'), 0, 1)
     @get('_keys').pushObject key
@@ -95,3 +77,14 @@ var willChange = (opts && opts.willChange) || 'arrayWillChange',
     contentKey = 'content.' + key
     Ember.removeBeforeObserver @, contentKey, null, contentPropertyWillChange
     Ember.removeObserver @, contentKey, null, contentPropertyWillChange
+
+  toJson: ->
+    ret = {}
+    for key in @_keys
+      val = @get(key)
+      ret[key] = @get(key)
+    return ret
+
+
+
+

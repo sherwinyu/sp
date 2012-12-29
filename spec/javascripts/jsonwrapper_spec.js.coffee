@@ -291,6 +291,28 @@ describe "JSONWrapper", ->
           expect(@ret).toBe(literal)
 
     describe "when called on flat array", ->
+      array = [3, 1, 4, true, "five"]
+      beforeEach ->
+        @ret = rs(array)
+      it "should return the proper array", ->
+        expect(@ret).toEqual array
+      it "should not recurse", ->
+        expect(@spyRs).not.toHaveBeenCalled()
+
+    describe "when called on nested flat array", ->
+      array = [3, 1, [1, 2, [3]], true, "five"]
+      beforeEach ->
+        @ret = rs(array)
+      it "should return the proper array", ->
+        expect(@ret).toEqual array
+      it "should not recurse", ->
+        expect(@spyRs).toHaveBeenCalledWith([1, 2, [3]])
+        expect(@spyRs).toHaveBeenCalledWith(1)
+        expect(@spyRs).toHaveBeenCalledWith(2)
+        expect(@spyRs).toHaveBeenCalledWith([3])
+        expect(@spyRs).toHaveBeenCalledWith(3)
+
+
     describe "when called on flat array", ->
     describe "when called on EnumerableObjectViaObject", ->
     xdescribe "when called on EnumerableObjectViaArray", ->
