@@ -57,14 +57,19 @@ describe "sherwin object via object", ->
     describe "nextObject", ->
     describe "renameKey", ->
       it "should fail if the oldkey doens't exist", ->
-        expect(=> @sherwinObject.renameKey "doesntexist", "newkey").toThrow()
+        ret = @sherwinObject.renameKey "doesntexist", "newkey"
+        expect(ret).toBe false
+        expect(@sherwinObject.get "newkey").toEqual undefined
+        expect(@sherwinObject.get "a").toEqual 1
       it "should fail if the newkey is a duplicate", ->
-        expect(=> @sherwinObject.renameKey "a", "b").toThrow()
-      it "should fail if the newkey is not a string", ->
-        expect(=> @sherwinObject.renameKey "a", 555).toThrow()
+        ret = @sherwinObject.renameKey "a", "b"
+        expect(ret).toBe false
+        expect(@sherwinObject.get "b").toEqual 2
+        expect(@sherwinObject.get "a").toEqual 1
       it "should set the new key", ->
         @sherwinObject.renameKey "a", "newkey"
         expect(@sherwinObject.get "newkey").toEqual 1
+        expect(@sherwinObject.get "a").toEqual undefined
 
   describe "bindings", ->
     it "should work in another object", ->

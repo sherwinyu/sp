@@ -10,10 +10,12 @@ Sysys.EditableField = Ember.View.extend
   focusOut: ->
     @set('isEditing', false)
     @finalize()
+    false
 
   keyUp: (evt) ->
     if evt.keyCode == 13
       @finalize()
+    false
 
   finalize: ->
     if (@validate())
@@ -38,8 +40,14 @@ Sysys.DatePickerField = Sysys.EditableField.extend
     true
 
 Sysys.DetailsKeyView = Sysys.EditableField.extend
-  keyName: ->
+  # stores the value of the key
+  value: (->
     details = @get 'details'
     key = details.keyForIndex @get 'index'
+  ).property('index', 'details._keys.@each')
 
   validate: ->
+    details = @get 'details'
+    keyName = @get 'value'
+    ret = details.renameKey keyName, @get('rawValue')
+

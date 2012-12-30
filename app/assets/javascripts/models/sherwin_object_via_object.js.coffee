@@ -41,18 +41,20 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
 
   renameKey: (oldKey, newKey) ->
     idx = @_keys.indexOf oldKey
-    Ember.assert("Cannot rename key that doesn't exist", idx != -1)
-    Ember.assert("Cannot rename to key that already exists", @_keys.indexOf(newKey) == -1)
-    # debugger
-    # Ember.assert("newKey must be a string", newKey instanceof String)
+    # Ember.assert("Cannot rename key that doesn't exist", idx != -1)
+    # Ember.assert("Cannot rename to key that already exists", 
+    unless idx != -1
+      return false
+    if oldKey == newKey
+      return true
+    unless @_keys.indexOf(newKey) == -1
+      return false
     val = @content.get oldKey
     @content.set newKey, val
     delete @content[oldKey]
-    @_keys[idx] = newKey
+    #@_keys[idx] = newKey
+    @_keys.replace idx, 1, newKey
     true
-    #@_keys.map((i, v) -> v == newKey).without(false).length == 1
-
-
 
   pushObj: (key, val) ->
     @arrayContentWillChange(@get('length'), 0, 1)
