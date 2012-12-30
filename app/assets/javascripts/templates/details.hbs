@@ -13,7 +13,7 @@
       {{#each element in view.details}}
         {{#view tagName="span" className="details-iter"}}
           {{#if view.parentView.details.isHash}}
-            key
+            {{view Sysys.DetailsKeyView detailsBinding="element" indexBinding="view._parentView.contentIndex"}}
           {{else}}
           [{{view._parentView.contentIndex}}]
           {{/if}}

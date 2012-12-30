@@ -39,18 +39,33 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
       return undefined
     key = @get('_keys')[idx]
 
+  renameKey: (oldKey, newKey) ->
+    idx = @_keys.indexOf oldKey
+    Ember.assert("Cannot rename key that doesn't exist", idx != -1)
+    Ember.assert("Cannot rename to key that already exists", @_keys.indexOf(newKey) == -1)
+    # debugger
+    # Ember.assert("newKey must be a string", newKey instanceof String)
+    val = @content.get oldKey
+    @content.set newKey, val
+    delete @content[oldKey]
+    @_keys[idx] = newKey
+    true
+    #@_keys.map((i, v) -> v == newKey).without(false).length == 1
+
+
+
   pushObj: (key, val) ->
     @arrayContentWillChange(@get('length'), 0, 1)
     @get('_keys').pushObject key
     @get('content').set(key, val)
     # @arrayContentDidChange(@get('length') - 1,
-    
+
   _updateObj: (key, val) ->
     @arrayContentWillChange(@get('_keys').indexOf(key), 0, 0)
     @get('content').set(key, val)
 
   setUnknownProperty: (key, val) ->
-    content = @get('content') 
+    content = @get('content')
 
     Ember.assert(Ember.String.fmt("Cannot delegate set('%@', %@) to the 'content' property of object proxy %@: its 'content' is undefined.", [key, val, @]), content)
 

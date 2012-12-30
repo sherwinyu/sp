@@ -36,4 +36,10 @@ Sysys.DatePickerField = Sysys.EditableField.extend
   validate: ->
     @set('value', Date.parse(@get('rawValue')))
     true
-   
+
+Sysys.DetailsKeyView = Sysys.EditableField.extend
+  keyName: ->
+    details = @get 'details'
+    key = details.keyForIndex @get 'index'
+
+  validate: ->
