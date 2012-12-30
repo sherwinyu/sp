@@ -83,9 +83,5 @@ Sysys.EnumerableObjectViaObject = Ember.Object.extend Ember.Array,
     Ember.removeBeforeObserver @, contentKey, null, contentPropertyWillChange
     Ember.removeObserver @, contentKey, null, contentPropertyWillChange
 
-  toJson: ->
-    ret = {}
-    for key in @_keys
-      val = @get(key)
-      ret[key] = @get(key)
-    return ret
+  serialize: ->
+    Sysys.JSONWrapper.recursiveSerialize @

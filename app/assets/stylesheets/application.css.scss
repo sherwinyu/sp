@@ -22,14 +22,17 @@
 }
 
 $detailsSelectBorder: 1px rgba(128, 128, 128, .4) dashed;
+
 .details.highlighted {
   border: $detailsSelectBorder;
   background: whitesmoke;
+  color: rgba(128, 128, 128, .8)
 }
 
 .details.highlighted .details{
   border: 1px rgba(128,128,128,.1) solid;
   background: whitesmoke;
+  color: rgba(128, 128, 128, .8)
 }
 
 .details {
@@ -45,6 +48,7 @@ $detailsSelectBorder: 1px rgba(128, 128, 128, .4) dashed;
   border-top: $detailsSelectBorder;
   border-left: $detailsSelectBorder;
   border-right: $detailsSelectBorder;
+  color: black;
 }
 
 .details div.collapsible {

@@ -41,10 +41,11 @@ Sysys.DetailsView = Ember.View.extend
     false
 
   enterEdit: ->
-    console.log('this.details', @get('details'))
-    console.log('this.parentView.details', @get('parentView.details'))
-    @set('commitValue', Sysys.JSONWrapper.recursiveSerialize(@get('details')))
-    if @get('isEditing')
+    val = Sysys.JSONWrapper.recursiveSerialize @get 'details'
+    json = JSON.stringify val
+
+    @set 'commitValue', json
+    if @get 'isEditing'
       @commit()
     else
       @set('isEditing', true)

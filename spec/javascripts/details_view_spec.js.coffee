@@ -25,8 +25,6 @@ describe "details view (enumerable object)", ->
       # @testView.append()
       @detailView.append()
 
-
-
     children = @detailView.childrenDetailsViews()
     @hash2view = children[0]
     @hash1view = @hash2view.childrenDetailsViews()[0]
@@ -40,8 +38,8 @@ describe "details view (enumerable object)", ->
     @scalarView = children[2]
 
   afterEach ->
-    Ember.run => @detailView.remove()
-    @detailView.destroy()
+    # Ember.run => @detailView.remove()
+    # @detailView.destroy()
 
   describe "childrenDetailsViews", ->
     it "get the proper childrenViews", ->
@@ -153,6 +151,31 @@ describe "details view (enumerable object)", ->
           expect(childrenViews[0].childrenDetailsViews()[0].childrenDetailsViews()[0].childrenDetailsViews()[0].details).toEqual 1
           expect(childrenViews[0].childrenDetailsViews()[0].childrenDetailsViews()[0].childrenDetailsViews()[1].details).toEqual 2
           expect(childrenViews[0].childrenDetailsViews()[0].childrenDetailsViews()[0].childrenDetailsViews()[2].details).toEqual 3
+
+  describe "enterEdit", ->
+    beforeEach ->
+      Ember.run => @array2view.enterEdit()
+    it "should set view.isEditing to true", ->
+      expect(@array2view.get('isEditing')).toBe true
+
+    it "should hide children views", ->
+      expect(@array2view.$('.details')).not.toExist()
+
+    it "should display a text area", ->
+      expect(@array2view.$('textarea')).toExist()
+
+    it "should initialize commit value", ->
+      serialized = JSON.stringify Sysys.JSONWrapper.recursiveSerialize @array2view.get 'details'
+      expect(@array2view.get('commitValue')).toEqual serialized
+      expect(@array2view.$('textarea').val()).toEqual serialized
+
+
+
+
+
+
+
+
 
       ###
 commit

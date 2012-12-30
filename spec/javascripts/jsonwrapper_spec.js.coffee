@@ -316,9 +316,38 @@ describe "JSONWrapper", ->
         expect(@spyRs).toHaveBeenCalledWith([3])
         expect(@spyRs).toHaveBeenCalledWith(3)
 
+    describe "when called on flat EnumerableObjectViaObject", ->
+      content = {a: 1, b: 2, c: ["c"] }
+      hash = Sysys.EnumerableObjectViaObject.create content: content
+      beforeEach ->
+        @ret = rs(hash)
+      it "should return the correct vanilla object", ->
+        expect(@ret).toEqual content
+      it "should once for each key and once for the array", ->
+        expect(@spyRs).toHaveBeenCalledWith 1
+        expect(@spyRs).toHaveBeenCalledWith 2
+        expect(@spyRs).toHaveBeenCalledWith ["c"]
+        expect(@spyRs).toHaveBeenCalledWith "c"
+
+    describe "when called on nested EnumerableObjectViaObject", ->
+      nested = Sysys.EnumerableObjectViaObject.create content: {nested1: "nested"}
+      content = {a: 1, b: 2, c: nested  }
+      hash = Sysys.EnumerableObjectViaObject.create content: content
+
+      beforeEach ->
+        @ret = rs(hash)
+      it "should return the correct vanilla object", ->
+        expect(@ret).toEqual {a: 1, b: 2, c: {nested1: "nested"}}
+      it "should once for each key and once for the array", ->
+        expect(@spyRs).toHaveBeenCalledWith 1
+        expect(@spyRs).toHaveBeenCalledWith 2
+        expect(@spyRs).toHaveBeenCalledWith nested
+        expect(@spyRs).toHaveBeenCalledWith "nested"
+        expect(@spyRs.args[0][0]).toEqual 1
+        expect(@spyRs.args[1][0]).toEqual 2
+        expect(@spyRs.args[2][0]).toEqual nested
+        expect(@spyRs.args[3][0]).toEqual "nested"
 
     describe "when called on flat array", ->
     describe "when called on EnumerableObjectViaObject", ->
     xdescribe "when called on EnumerableObjectViaArray", ->
-      
-    

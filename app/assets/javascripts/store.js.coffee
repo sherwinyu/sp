@@ -38,11 +38,14 @@ Sysys.JSONWrapper =
   recursiveSerialize: (val) ->
     if Sysys.JSONWrapper.isPlain val
       return val
-    if val.toJson?
-      return val.toJson()
+    if val.isHash and val instanceof Sysys.EnumerableObjectViaObject
+      ret = {}
+      for key in val._keys
+        ret[key] = Sysys.JSONWrapper.recursiveSerialize val.get(key)
+      return ret
     if Sysys.JSONWrapper.isArray val
       ret = []
       for ele in val
         ret.pushObject Sysys.JSONWrapper.recursiveSerialize ele
       return ret
-    undefined
+    throw new Error("this shoud never happen")
