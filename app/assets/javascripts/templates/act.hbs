@@ -1,5 +1,5 @@
 <div class="act well">
-  details = {{ details }} </br>
+  details = {{ detail }} </br>
   miniview:: <br>
   <br>
   <br>
@@ -33,6 +33,11 @@
   <span class="start-time">
     <span class="caption">start time: </span>{{ dateFormat end_time format="MMM D h:mm a"}} ({{ dateFromNow end_time}}) <br> 
   </span>
+
+  {{view Sysys.DetailsView detailsBinding="detail"}}
+  
+
+
   <button type="submit" class="btn btn-primary"> zorger </button>
 
   {{! view Ember.TextField valueBinding="description"}}

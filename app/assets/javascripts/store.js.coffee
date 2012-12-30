@@ -6,10 +6,14 @@ Sysys.store = new Sysys.Store
 
 DS.JSONTransforms.object = 
   deserialize: (serialized) -> 
-    if Em.isNone(serialized) then null else Sysys.JSONWrapper.recursiveDeserialize(serialized)
+    serialized ?= {}
+    Sysys.JSONWrapper.recursiveDeserialize(serialized)
+    #if Em.isNone(serialized) then Ember.Object.create() else Sysys.JSONWrapper.recursiveDeserialize(serialized)
 
   serialize: (deserialized) ->
-    if Em.isNone(deserialized) then null else deserialized
+    ret = if Em.isNone(deserialized) then null else Sysys.JSONWrapper.recursiveSerialize deserialized
+    debugger
+    ret
 
 Sysys.JSONWrapper = 
   isHash: (val) ->

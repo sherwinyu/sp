@@ -21,8 +21,12 @@ class ActsController < ApplicationController
   end
 
   def update
+    binding.pry
     @act = Act.find params[:id]
+    detail = params[:act].delete :detail
     ret = @act.update_attributes params[:act]
+    detail = {val: detail} if detail.class == Array
+    @act.create_detail detail
     puts ret, @act.inspect
     if ret
       respond_with @act

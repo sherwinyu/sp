@@ -1,7 +1,7 @@
 class DetailSerializer < ActiveModel::Serializer
-  attributes :id
   def attributes
     hash = super
+    hash = {}
     object.attributes.except("_id").merge! hash
   end
 end

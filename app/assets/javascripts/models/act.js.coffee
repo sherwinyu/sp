@@ -3,7 +3,7 @@ Sysys.Act = DS.Model.extend
   duration: DS.attr( "number", defaultValue: 50)
   start_time: DS.attr "date"
   end_time: DS.attr "date"
-  details: DS.attr "object"
+  detail: DS.attr "object"
 
   start_time_pretty: (->
     @pretty_date('start_time')

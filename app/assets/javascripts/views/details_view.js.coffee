@@ -17,7 +17,7 @@ Sysys.DetailsView = Ember.View.extend
 
   recurseUpParentView: ->
     pv = @get('parentView.parentView')
-    if pv
+    if pv and pv instanceof Sysys.DetailsView
       pv.set('hovered', false)
       pv.recurseUpParentView()
 
@@ -66,8 +66,9 @@ Sysys.DetailsView = Ember.View.extend
       # TODO(syu): write a SYSON parser and validator
       json = JSON.parse @get('commitValue')
       value = Sysys.JSONWrapper.recursiveDeserialize json
-      # @set('details', value)
+      @set('details', value)
       upperDetailsView = @get('parentView.parentView')
+      upperDetailsView = undefined unless upperDetailsView instanceof Sysys.DetailsView
       index = @get('index')
       Ember.assert("index and upperDetailsView need to coexist", index? == upperDetailsView?)
       if index? and upperDetailsView?
@@ -77,8 +78,8 @@ Sysys.DetailsView = Ember.View.extend
         else
           upperDetails.set("#{index}", value)
       @exitEdit()
-      upperDetailsView.rerender()
-      # @rerender()
+      @rerender()
+      upperDetailsView?.rerender()
     catch error
       console.log "invalid JSON!", error
 

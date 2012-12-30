@@ -8,7 +8,7 @@ class Act
   field :start_time, type: DateTime
   field :end_time, type: DateTime
 
-  embeds_many :details
+  embeds_one :detail
 
   validates_presence_of :description
 
