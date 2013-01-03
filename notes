@@ -1,3 +1,21 @@
+SYSON
+====
+a key is a string: 
+  la di da di da: what the wumple
+  ladidadida: what the thrumple
+  lumpdidooda: [ ] 
+
+
+STRING INFERENCE
+LIST INFERENCE
+HASH INFERENCE
+  
+
+VALUE: string || list || hash || number || bool
+Transform to a canonical format for inferred strings z
+
+
+
 what exactly is the nesting relationship between Acts?
   Act (day)
     Act (hourly -- automatic) -- generated from RescueTime

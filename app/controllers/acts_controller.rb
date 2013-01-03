@@ -5,6 +5,8 @@ class ActsController < ApplicationController
   end
 
   def create
+    @act = Act.create params[:act]
+    respond_with @act
   end
 
   def index
@@ -21,7 +23,6 @@ class ActsController < ApplicationController
   end
 
   def update
-    binding.pry
     @act = Act.find params[:id]
     detail = params[:act].delete :detail
     ret = @act.update_attributes params[:act]

@@ -1,7 +1,7 @@
 <h2>Recent SherwinActions</h2>
 
-<div class="span12">
-
+<div class="span8">
+<a class="btn" {{action newAct target="controller" href=true}}>New Act</a>
     {{#each act in arrangedContent}}
       {{view  Sysys.ActView contextBinding="act" }}
     {{/each}}

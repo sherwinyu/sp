@@ -1,39 +1,35 @@
 <div class="act well">
-  details = {{ detail }} </br>
-  miniview:: <br>
-  <br>
-  <br>
-
-  view.zorger :{{view.zorger}} <Br>
-  each iterator over object
-  {{#each view.zorger}}
-  ...inside each this {{this}} <br>
-  {{/each}}
-
   <a {{action showAct act href=true}}> # </a>  {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br>
   <span class="caption">id: </span> {{ id }} <br>
-  <span class="caption">content:</span> {{view Sysys.EditableField valueBinding="content"}} {{content}} <br>
-  <span class="this">
-    <span class="caption">this:</span>
-    {{view Sysys.EditableField valueBinding="start_time"}}{{this}}  <br>
-  </span>
+
   <span class="description">
     <span class="caption description">description:</span>
-    {{view Sysys.EditableField valueBinding="description" }} {{description}} <br>
+    {{view Sysys.EditableField valueBinding="description" }} <br>
+  </span>
+  <span class="start-time">
+    <span class="caption">start time: </span> {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br> 
+  </span>
+  <br>
+  <span class="start-time">
+    <span class="caption">start time: </span> {{start_time_pretty }} ({{ dateFromNow start_time}}) <br> 
+  </span>
+  <br>
+  <span class="start-time">
+    <span class="caption">end time: </span>{{ end_time }} ({{ dateFromNow end_time}}) <br> 
+  </span>
+  <br>
+  <span class="duration">
+    <span class="caption">duration: </span> {{pretty_duration}}  <br> 
+  </span>
+  <br>
+
+  <span class="date">
+    <span class="caption">edit start time:</span> {{view Sysys.DatePickerField  valueBinding="start_time" }} 
   </span>
   <span class="date">
-    <span class="caption">date_test:</span> {{view Sysys.DatePickerField  valueBinding="start_time" }} 
+    <span class="caption">edit end time: </span>{{ view Sysys.EditableField valueBinding="end_time" }} 
   </span>
-  <span class="start-time">
-    <span class="caption">start time: </span>{{ view Sysys.EditableField valueBinding="start_time" }} 
-  </span>
-  <span class="start-time">
-    <span class="caption">start time: </span>{{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br> 
-  </span>
-  <span class="start-time">
-    <span class="caption">start time: </span>{{ dateFormat end_time format="MMM D h:mm a"}} ({{ dateFromNow end_time}}) <br> 
-  </span>
-
+  <span class="caption">details: </span>
   {{view Sysys.DetailsView detailsBinding="detail"}}
   
 

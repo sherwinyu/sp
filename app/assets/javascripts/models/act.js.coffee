@@ -1,8 +1,26 @@
 Sysys.Act = DS.Model.extend
   description: DS.attr "string"
-  duration: DS.attr( "number", defaultValue: 50)
   start_time: DS.attr "date"
+
+  # duration in seconds
+  duration: ((key, val)->
+    if val?
+      start = @get 'start_time' 
+      end = moment(start)?.add val * 1000
+      @set 'end_time', end
+    else
+      (@get('end_time') - @get('start_time')) / 1000 || null
+  ).property('start_time', 'end_time')
   end_time: DS.attr "date"
+  ###
+  end_time: ((key, val) ->
+    if val?
+
+
+
+      @get('start_time').toDate
+  ).property 'start_time', 'duration'
+  ###
   detail: DS.attr "object"
 
   start_time_pretty: (->
@@ -15,20 +33,11 @@ Sysys.Act = DS.Model.extend
     minutes = @get(date_key)?.getMinutes()
     "#{date} #{hours}:#{minutes}"
 
-  s: (->
-      # JSON.stringify(@)
-     "desc: #{@get('description')}\t duration: #{@get('duration')}\t start_time: #{@get('start_time')}\t end_time: #{@get('end_time')}"
-    ).property('description')
+  pretty_duration: (->
+    dur = @get('duration')
+    moment.duration(dur*1000).humanize()
+  ).property('duration')
 
-
-
-
-  endTime: (->
-    unless @get('startTime')
-      return new Date()
-    new Date(@get('startTime').getTime() + @get('duration2') * 1000)
-  ).property('startTime', 'duration2').cacheable()
-  
   isActive: -> 
     current = new Date
     t1 = @get('startTime').getTime()  
@@ -58,5 +67,18 @@ Sysys.Act = DS.Model.extend
   becameInvalid: (act) ->
     for k, v of act.errors
       Sysys.router.get('notificationsController').addError(k, v)
+
+  defaultValues: (->
+    # unless @get 'start_time'
+    # @set 'start_time', new Date()
+    # unless @get 'duration'
+    # @set 'duration', 60 * 60 * 1000
+  ).observes('isLoaded')
+
+  init: ->
+    @_super()
+
+      #if @get('isNew')
+
 
 Sysys.Act.reopenClass
