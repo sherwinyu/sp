@@ -1,28 +1,23 @@
 Sysys.Act = DS.Model.extend
   description: DS.attr "string"
   start_time: DS.attr "date"
+  end_time: DS.attr "date"
 
-  # duration in seconds
+  # duration is stored as seconds
   duration: ((key, val)->
     if val?
       start = @get 'start_time' 
-      end = moment(start)?.add val * 1000
+      end = moment(start)?.clone().add(val * 1000).toDate()
       @set 'end_time', end
     else
-      (@get('end_time') - @get('start_time')) / 1000 || null
-  ).property('start_time', 'end_time')
-  end_time: DS.attr "date"
-  ###
-  end_time: ((key, val) ->
-    if val?
+      ret = (@get('end_time') - @get('start_time')) / 1000
+      if ret? then ret else  null
+  ).property('start_time', 'end_time').volatile()
 
 
-
-      @get('start_time').toDate
-  ).property 'start_time', 'duration'
-  ###
   detail: DS.attr "object"
 
+  ###
   start_time_pretty: (->
     @pretty_date('start_time')
     ).property('start_time')
@@ -32,6 +27,7 @@ Sysys.Act = DS.Model.extend
     hours = @get(date_key)?.getHours()
     minutes = @get(date_key)?.getMinutes()
     "#{date} #{hours}:#{minutes}"
+    ###
 
   pretty_duration: (->
     dur = @get('duration')
