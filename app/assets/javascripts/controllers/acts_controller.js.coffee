@@ -6,4 +6,5 @@ Sysys.ActsController = Ember.ArrayController.extend
     @set 'content', Sysys.store.findAll(Sysys.Act)
 
   newAct: ->
-    a = Sysys.store.createRecord(Sysys.Act, {description: "new description"})
+    a = Sysys.store.createRecord(Sysys.Act, description: '5')
+    a.defaultValues()

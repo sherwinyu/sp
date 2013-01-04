@@ -56,29 +56,27 @@ Sysys.Act = DS.Model.extend
     "#{d.getUTCHours()}:#{d.getUTCMinutes()}:#{d.getUTCSeconds()}.#{d.getUTCMilliseconds()}"
   ).property('startTime', 'duration2').cacheable()
 
+  defaultValues: ->
+    debugger
+    @set 'start_time', new Date()  unless @get('start_time')?
+    @set 'duration', 30*60 unless @get('end_time')?
+    @set 'description', "new action" unless @get('description')?
+
+
   becameError: ->
     console.log('an error occured!')
     Sysys.router.get('notificationsController').add('Oops', 'There was an error!', 'ERROR')
   didUpdate: ->
     console.log('chorger!')
     Sysys.router.get('notificationsController').addInfo('', 'Successfully updated.')
+  didLoad: ->
+    @defaultValues() 
   didCreate: ->
+    debugger
+    @defaultValues() 
     Sysys.router.get('notificationsController').addInfo('', 'Successfully created.')
   becameInvalid: (act) ->
     for k, v of act.errors
       Sysys.router.get('notificationsController').addError(k, v)
-
-  defaultValues: (->
-    # unless @get 'start_time'
-    # @set 'start_time', new Date()
-    # unless @get 'duration'
-    # @set 'duration', 60 * 60 * 1000
-  ).observes('isLoaded')
-
-  init: ->
-    @_super()
-
-      #if @get('isNew')
-
 
 Sysys.Act.reopenClass
