@@ -1,5 +1,7 @@
 #= require jquery
 #= require jquery_ujs
+#= require jquery.ui.datepicker
+#= require jquery.ui.slider
 # require handlebars
 #
 #= require vendor/handlebars-1.0.0.beta.6
@@ -13,6 +15,7 @@
 #
 #= require vendor/date
 #= require vendor/moment
+#= require vendor/jquery-ui-timepicker-addon
 #
 #
 #= require_self
