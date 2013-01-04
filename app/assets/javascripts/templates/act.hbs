@@ -7,28 +7,32 @@
     {{view Sysys.EditableField valueBinding="description" }} <br>
   </span>
   <span class="start-time">
-    <span class="caption">start time: </span> {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) <br> 
+    <span class="caption">start time: </span> {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) ||  {{start_time}} <br> 
   </span>
   <br>
   <span class="start-time">
-    <span class="caption">start time: </span> {{start_time_pretty }} ({{ dateFromNow start_time}}) <br> 
+    <span class="caption">start time: </span> {{start_time_pretty }}  <br> 
   </span>
   <br>
   <span class="start-time">
-    <span class="caption">end time: </span>{{ end_time }} ({{ dateFromNow end_time}}) <br> 
+    <span class="caption">end time: </span>{{ end_time }} ({{ dateFromNow end_time}})  || {{end_time}}<br> 
+  </span>
+  <br>
+  <br>
+  <br>
+  <span class="date">
+    <span class="caption">start time:</span> {{view Sysys.DateTimePickerField  valBinding="start_time" }} ({{ dateFromNow start_time}})
+  </span> 
+  <br>
+  <span class="date">
+    <span class="caption">end time: </span>{{ view Sysys.DateTimePickerField valBinding="end_time" }} 
   </span>
   <br>
   <span class="duration">
-    <span class="caption">duration: </span> {{pretty_duration}}  <br> 
+    <span class="caption">duration: </span> {{view Sysys.DurationField valueBinding="duration"}} 
   </span>
   <br>
 
-  <span class="date">
-    <span class="caption">edit start time:</span> {{view Sysys.DatePickerField  valueBinding="start_time" }} 
-  </span>
-  <span class="date">
-    <span class="caption">edit end time: </span>{{ view Sysys.EditableField valueBinding="end_time" }} 
-  </span>
   <span class="caption">details: </span>
   {{view Sysys.DetailsView detailsBinding="detail"}}
   
