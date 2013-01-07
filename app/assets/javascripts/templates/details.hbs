@@ -1,6 +1,6 @@
 {{#if view.hovered}}
 <div class="detailsbar">
-  <a {{action enterEdit target="view" href="true"}} class="details-edit"> [edit] </a>
+  <a {{action edit target="view" href="true"}} class="details-edit"> [edit] </a>
   <a {{action collapse target="view" href="true"}} class="details-collapse"> [collapse] </a>
   <span class="detailsIdentification"> {{view.identification}} </span>
 </div>
@@ -8,6 +8,8 @@
 <div class="collapsible">
   {{#if view.isEditing}}
     {{view Ember.TextArea valueBinding="view.commitValue"}}
+    view.commitValue {{ view.commitValue}} <br>
+    view.isEditing {{ view.isEditing}} <br>
   {{else}}
     {{#if view.details.isEnumerable}}
       {{#each element in view.details}}

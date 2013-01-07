@@ -26,7 +26,6 @@ describe "ActView", ->
 
   it "should show bindings", ->
     expect(@actView.$('.description').first()).toContainHtml(@act.get('description'))
-    expect(@actView.$('.date')).toHaveText(/empty/)
     Ember.run =>
       @act.set('description', 'something else')
     expect(@actView.$('.description').first()).toContainHtml('something else')

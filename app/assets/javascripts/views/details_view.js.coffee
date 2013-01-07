@@ -40,15 +40,18 @@ Sysys.DetailsView = Ember.View.extend
       @commit()
     false
 
-  enterEdit: ->
-    val = Sysys.JSONWrapper.recursiveSerialize @get 'details'
-    json = JSON.stringify val
-
-    @set 'commitValue', json
+  edit: ->
     if @get 'isEditing'
       @commit()
     else
-      @set('isEditing', true)
+      @enterEdit()
+
+  enterEdit: ->
+    val = Sysys.JSONWrapper.recursiveSerialize @get 'details'
+    json = JSON.stringify val
+    debugger
+    @set 'commitValue', json
+    @set('isEditing', true)
 
   exitEdit: ->
     @set('isEditing', false)
@@ -62,6 +65,7 @@ Sysys.DetailsView = Ember.View.extend
 
 
   commit: ->
+    debugger
     try
       # TODO(syu): write a SYSON parser and validator
       json = JSON.parse @get('commitValue')
