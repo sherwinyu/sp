@@ -113,3 +113,29 @@ Plan is made:: Over next 1.5 hrs, will do three things.
 Record a plan and act together?
   
 Dashboard should show: active plans
+
+
+
+===================================================
+DetailsEdit UI
+  Asana notes
+    no inter-line select (each line is a distinct item)
+
+
+
+IDEA:: there will never be invlalid states because implicit string is a catch all
+   force all strings to be on oneline!
+   if want multiline strings, use explicit strings
+
+   actually, should probably handle this in the tokenizing stage
+
+no invalid states == GOOD, closer to asan ux where you're really just inputting strings and that's it.
+
+
+key: nested_val
+
+when nclicking nested_val, converts nested vals to a edit field?
+
+
+
+

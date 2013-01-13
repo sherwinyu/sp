@@ -53,7 +53,6 @@ Sysys.Act = DS.Model.extend
   ).property('startTime', 'duration2').cacheable()
 
   defaultValues: ->
-    debugger
     @set 'start_time', new Date()  unless @get('start_time')?
     @set 'duration', 30*60 unless @get('end_time')?
     @set 'description', "new action" unless @get('description')?
@@ -68,8 +67,6 @@ Sysys.Act = DS.Model.extend
   didLoad: ->
     @defaultValues() 
   didCreate: ->
-    debugger
-    @defaultValues() 
     Sysys.router.get('notificationsController').addInfo('', 'Successfully created.')
   becameInvalid: (act) ->
     for k, v of act.errors

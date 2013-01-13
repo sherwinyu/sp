@@ -12,7 +12,6 @@ DS.JSONTransforms.object =
 
   serialize: (deserialized) ->
     ret = if Em.isNone(deserialized) then null else Sysys.JSONWrapper.recursiveSerialize deserialized
-    debugger
     ret
 
 Sysys.JSONWrapper = 
