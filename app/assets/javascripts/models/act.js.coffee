@@ -3,7 +3,7 @@ Sysys.Act = DS.Model.extend
   start_time: DS.attr "date"
   end_time: DS.attr "date"
 
-  # duration is stored as seconds
+  # duration is stored as seconds and is a computed property
   duration: ((key, val)->
     if val?
       start = @get 'start_time' 
