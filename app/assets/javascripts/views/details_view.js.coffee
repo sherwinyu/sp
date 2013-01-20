@@ -66,8 +66,11 @@ Sysys.DetailsView = Ember.View.extend
   commit: ->
     try
       # TODO(syu): write a SYSON parser and validator
-      json = JSON.parse @get('commitValue')
-      value = Sysys.JSONWrapper.recursiveDeserialize json
+      rawValue = @get('commitValue')
+      value = parse rawValue
+      value = Sysys.JSONWrapper.recursiveDeserialize value
+      # json = JSON.parse @get('commitValue')
+      # value = Sysys.JSONWrapper.recursiveDeserialize json
       @set('details', value)
       upperDetailsView = @get('parentView.parentView')
       upperDetailsView = undefined unless upperDetailsView instanceof Sysys.DetailsView

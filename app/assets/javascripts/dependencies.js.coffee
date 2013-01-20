@@ -15,7 +15,7 @@
 #= require vendor/date
 #= require vendor/moment
 #= require vendor/jquery-ui-timepicker-addon
-#
+#= require vendor/humon
 #
 #= require_self
 
