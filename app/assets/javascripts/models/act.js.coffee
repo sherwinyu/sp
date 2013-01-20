@@ -65,7 +65,8 @@ Sysys.Act = DS.Model.extend
     console.log('chorger!')
     Sysys.router.get('notificationsController').addInfo('', 'Successfully updated.')
   didLoad: ->
-    @defaultValues() 
+    # debugger
+    # @defaultValues() 
   didCreate: ->
     Sysys.router.get('notificationsController').addInfo('', 'Successfully created.')
   becameInvalid: (act) ->
