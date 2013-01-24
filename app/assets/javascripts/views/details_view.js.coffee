@@ -47,9 +47,10 @@ Sysys.DetailsView = Ember.View.extend
       @enterEdit()
 
   enterEdit: ->
-    val = Sysys.JSONWrapper.recursiveSerialize @get 'details'
-    json = JSON.stringify val
-    @set 'commitValue', json
+    json = Sysys.JSONWrapper.recursiveSerialize @get 'details'
+    humon = window.humon.json2humon json
+    # json = JSON.stringify val
+    @set 'commitValue', humon
     @set('isEditing', true)
 
   exitEdit: ->
@@ -67,7 +68,7 @@ Sysys.DetailsView = Ember.View.extend
     try
       # TODO(syu): write a SYSON parser and validator
       rawValue = @get('commitValue')
-      value = parse rawValue
+      value = humon.parse rawValue
       value = Sysys.JSONWrapper.recursiveDeserialize value
       # json = JSON.parse @get('commitValue')
       # value = Sysys.JSONWrapper.recursiveDeserialize json

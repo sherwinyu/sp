@@ -2014,13 +2014,104 @@ require.define("/src/helpers.coffee",function(require,module,exports,__dirname,_
 
 });
 
+require.define("/src/json2humon.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
+  var Recurser,
+    __hasProp = {}.hasOwnProperty;
+
+  Recurser = {
+    isHash: function(val) {
+      return (val != null) && (typeof val === 'object') && !(val instanceof Array);
+    },
+    isArray: function(val) {
+      return (val != null) && typeof val === 'object' && val instanceof Array && typeof val.length === 'number';
+    },
+    isPlain: function(val) {
+      return (val != null) && typeof val !== 'object';
+    },
+    indent: function(str, level) {
+      var ret;
+      ret = Array(level * 1).join("@k") + str;
+      console.log("ret is" + ret);
+      return ret;
+    },
+    json2humon: function(val, level) {
+      var key, str, v;
+      if (level == null) {
+        level = 0;
+      }
+      if (Recurser.isPlain(val)) {
+        return Recurser.indent(val, 0) + "\n";
+      }
+      if (Recurser.isHash(val)) {
+        str = "\n";
+        for (key in val) {
+          if (!__hasProp.call(val, key)) continue;
+          v = val[key];
+          str += Recurser.indent(key, level + 1) + ": " + Recurser.json2humon(v, level + 1);
+        }
+        return str;
+      }
+    }
+    /*
+          # a = Sysys.EnumerableObjectViaArray.create()
+          a = Sysys.EnumerableObjectViaObject.create()
+          for own k, v of val
+            a.set(k, Sysys.JSONWrapper.recursiveDeserialize(v))
+          return a
+        if Sysys.JSONWrapper.isArray val
+          a = []
+          for v in val
+            a.pushObject Sysys.JSONWrapper.recursiveDeserialize(v)
+          return a
+        throw new Error("this shoud never happen")
+    */
+
+  };
+
+  ({
+    recursiveSerialize: function(val) {
+      var ele, key, ret, _i, _j, _len, _len1, _ref;
+      if (Sysys.JSONWrapper.isPlain(val)) {
+        return val;
+      }
+      if (val.isHash && val instanceof Sysys.EnumerableObjectViaObject) {
+        ret = {};
+        _ref = val._keys;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          key = _ref[_i];
+          ret[key] = Sysys.JSONWrapper.recursiveSerialize(val.get(key));
+        }
+        return ret;
+      }
+      if (Sysys.JSONWrapper.isArray(val)) {
+        ret = [];
+        for (_j = 0, _len1 = val.length; _j < _len1; _j++) {
+          ele = val[_j];
+          ret.pushObject(Sysys.JSONWrapper.recursiveSerialize(ele));
+        }
+        return ret;
+      }
+      throw new Error("this shoud never happen");
+    }
+  });
+
+  if (typeof exports !== "undefined" && exports !== null) {
+    exports.recurser = Recurser;
+  }
+
+}).call(this);
+
+});
+
 require.define("/src/humon.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
-  var Lexer, d, lex, parse, parseTokens, parser,
+  var Lexer, d, lex, parse, parseTokens, parser, recurser,
     __slice = [].slice;
 
   parser = require('../lib/parser').parser;
 
   Lexer = require("./humon_lexer.coffee").Lexer;
+
+  recurser = require("./json2humon").recurser;
 
   d = function() {
     var args;
@@ -2074,13 +2165,16 @@ require.define("/src/humon.coffee",function(require,module,exports,__dirname,__f
     exports.parseTokens = parseTokens;
     exports.parse = parse;
     exports.d = d;
+    exports.json2humon = recurser.json2humon;
   }
 
   if (typeof window !== "undefined" && window !== null) {
-    window.lex = lex;
-    window.parseTokens = parseTokens;
-    window.parse = parse;
-    window.d = d;
+    window.humon = {};
+    window.humon.lex = lex;
+    window.humon.parseTokens = parseTokens;
+    window.humon.parse = parse;
+    window.humon.d = d;
+    window.humon.json2humon = recurser.json2humon;
   }
 
 }).call(this);
