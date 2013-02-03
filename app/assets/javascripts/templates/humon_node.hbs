@@ -1,0 +1,26 @@
+{{#if view.content.isLiteral}}
+  {{ view.content.nodeVal }}
+{{else}}
+  {{#if view.content.isHash}}
+    {{#collection contentBinding="view.content.nodeVal"}}
+      {{view.content.key}}: {{view Sysys.HumonNodeView contentBinding="view.content.val"}}
+    {{/collection}}
+    it's a hash!:
+    |
+  {{/if}}
+  {{#if view.content.isList}}
+    {{#each node in view.content.nodeVal}}
+    {{node}}
+    {{/each}}
+
+    __
+
+    {{#collection contentBinding="view.content.nodeVal"}} 
+      {{view Sysys.HumonNodeView contentBinding="view.content"}}
+    {{/collection}}
+    it's a list!
+    __
+  {{/if}}
+  
+{{/if}}
+
