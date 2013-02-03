@@ -2,24 +2,10 @@
   {{ view.content.nodeVal }}
 {{else}}
   {{#if view.content.isHash}}
-    {{#collection contentBinding="view.content.nodeVal"}}
-      {{view.content.key}}: {{view Sysys.HumonNodeView contentBinding="view.content.val"}}
-    {{/collection}}
-    it's a hash!:
-    |
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.KvpItemView"}}
   {{/if}}
   {{#if view.content.isList}}
-    {{#each node in view.content.nodeVal}}
-    {{node}}
-    {{/each}}
-
-    __
-
-    {{#collection contentBinding="view.content.nodeVal"}} 
-      {{view Sysys.HumonNodeView contentBinding="view.content"}}
-    {{/collection}}
-    it's a list!
-    __
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView"}}
   {{/if}}
   
 {{/if}}
