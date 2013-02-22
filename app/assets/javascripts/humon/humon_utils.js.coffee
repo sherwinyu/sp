@@ -48,3 +48,6 @@ Sysys.HumonUtils =
   #TODO(syu): support date literals
   isLiteral: (val) ->
     val? and typeof val isnt 'object'
+
+Sysys.j2hn = Sysys.HumonUtils.json2humonNode
+Sysys.hn2j = Sysys.HumonUtils.humonNode2json

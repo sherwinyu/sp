@@ -2,10 +2,10 @@
   {{ view.content.nodeVal }}
 {{else}}
   {{#if view.content.isHash}}
-    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.KvpItemView"}}
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.KvpItemView" class="kvpcollectionhelper"}}
   {{/if}}
   {{#if view.content.isList}}
-    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView"}}
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView" class="listcollectionhelper"}}
   {{/if}}
   
 {{/if}}

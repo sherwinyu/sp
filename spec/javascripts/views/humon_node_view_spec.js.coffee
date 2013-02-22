@@ -1,6 +1,5 @@
 describe "HumonNodeView", ->
   beforeEach ->
-    ###
     @serialized =
       {
         hash2:
@@ -16,6 +15,7 @@ describe "HumonNodeView", ->
         scalar:
           "scalar"
       }
+    ###
       ###
 
 
@@ -25,6 +25,7 @@ describe "HumonNodeView", ->
     # json = {a: '5', b: 6 }
     # json = true
     json = [1, "lala", {a: 'b'}]
+    json = @serialized
     @humonNode = Sysys.HumonUtils.json2humonNode json 
     @humonNodeView = Sysys.HumonNodeView.create content: @humonNode
     window.wala = @humonNodeView
@@ -40,3 +41,4 @@ describe "HumonNodeView", ->
 
   it "should display nested node views", ->
     console.log 'chogal'
+    debugger
