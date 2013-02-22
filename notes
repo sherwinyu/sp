@@ -14,8 +14,6 @@ HASH INFERENCE
 VALUE: string || list || hash || number || bool
 Transform to a canonical format for inferred strings z
 
-
-
 what exactly is the nesting relationship between Acts?
   Act (day)
     Act (hourly -- automatic) -- generated from RescueTime
@@ -98,14 +96,11 @@ Features
   button to pull / auto generate hour-long Acts from Rescuetime data
   auto prompting for activities.
   auto suggest tagnames, context, activities when filling in stuff
+  Batch renaming on the frontend (of keys), regex replace, regex find
 
 should i have general bucket activities? concrete activities?
 concrete and abstract acts?
     
-
-
-
-
 Plan is made:: Over next 1.5 hrs, will do three things.
   Start recording an act#
   
@@ -138,4 +133,71 @@ when nclicking nested_val, converts nested vals to a edit field?
 
 
 
+
+### Things that need to happen
+!!! Designed such that there's one controller/statemanager to plug into...?
+
+On click:
+
+  enter edit
+    display text area
+    preload input text
+    enter edit
+  
+Cancel
+  remove text area
+  discard changes
+  change state
+  exit edit
+
+Commit
+  remove text area
+  parse changes
+  save changes
+  exit edit?
+
+Exit Edit
+  up
+  down
+  lose focus
+  enter
+
+On select
+  types of select
+    up arrow
+    down arrow
+    click (if not editing)
+  update current node
+
+if
+
+
+
+
+Inactive
+Active
+  Editing
+    enter
+      call currentNodeView.enterEdit
+    exit
+      call currentNodeView.exitEdit
+
+    commit
+    cancel
+      transitionTo active
+
+====
+styling based on isActive
+
+{{is currentNode}}
+{{if isEditing}}
+  show input
+{{else normal}}
+====
+
+Basically have everything be a details object?? allow hooking up a details view up with ANYTHING zugzug
+
+
+entergy
+cirro energy
 

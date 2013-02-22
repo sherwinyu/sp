@@ -1,10 +1,26 @@
 .node-literal {
-  border: 1px red solid;
+  border: none; // 1px red solid;
   display:inline-block;
 }
 
 .node-collection {
-  border: 1px blue solid;
+  border: none; //1px blue solid;
   display:block;
   margin-left: 10px;
+}
+
+textarea.content-field {
+  height: 16px;
+  width: 600px;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+  border: 1px transparent solid;
+}
+
+textarea.content-field:focus {
+  border: 1px white-smoke dashed;
+  background: azure;
+  box-shadow: none;
 }
