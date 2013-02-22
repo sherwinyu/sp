@@ -20,8 +20,5 @@ Sysys.ContentField = Ember.TextArea.extend
     @set('value', @get('rawValue'))
     @$().autogrow()
 
-
-  
-
-
-  
+  willDestroyElement: ->
+    @$().trigger 'remove.autogrow'

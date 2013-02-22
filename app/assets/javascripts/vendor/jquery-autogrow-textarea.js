@@ -122,7 +122,6 @@
             shadow.css( "width", $(this).width() - parseInt($this.css('paddingLeft'),10) - parseInt($this.css('paddingRight'),10) );
             var shadowHeight = shadow.height();
             var newHeight = Math.min( Math.max( shadowHeight, minHeight ), maxHeight );
-            debugger
             $(this).css( "height", newHeight );
             $(this).css( "overflow", newHeight == maxHeight ? "auto" : "hidden" );
           }
