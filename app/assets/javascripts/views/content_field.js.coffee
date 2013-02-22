@@ -5,16 +5,21 @@ Sysys.ContentField = Ember.TextArea.extend
   classNames: ['content-field']
 
   focusIn: ->
+    console.log 'controller:', @get('controller')
     # @$().autogrow()
 
   focusOut: ->
-    # @$().trigger "remove.autogrow"
+    # commit
 
   # enterEdit: ->
     # @$(
 
 
   exitEdit: ->
+
+  commit: ->
+
+  cancel: ->
 
   didInsertElement: ->
     @set('value', @get('rawValue'))
