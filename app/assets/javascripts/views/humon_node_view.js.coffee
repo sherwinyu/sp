@@ -23,9 +23,11 @@ Sysys.DetailController = Ember.Object.extend
           enter: -> console.log 'entering state editing'
           exit: -> console.log 'exiting state editing'
             # @set('stateManager', 
+
           select: (mgr, newNode) ->
             # currentNode.commit()
             # updateNew currentNode to newNode
+            # can't call commit bc can have selects that don't commit!
 
     @set('stateManager', stateMgr)
 
@@ -42,4 +44,7 @@ On select
 enter (commit and insert new line)
   createNode and selectIt
 
-    what bout new nesting?
+    what about new nesting?
+
+
+controller ||| statemgr ||| view 
