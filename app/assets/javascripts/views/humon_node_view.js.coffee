@@ -43,3 +43,48 @@ enter (commit and insert new line)
   createNode and selectIt
 
     what bout new nesting?
+
+
+====
+StateMgr
+  
+Controller
+  currentNode
+  parse current value
+  all functions for modifying the node structure via replaceAt
+
+
+
+HumonNodeView
+  click
+  key events
+    enter
+      -> detailscontroller.commitAndInsert
+        -> detailscontroller.commit (needs to be in editing mode)
+          -> parse current node {
+              case -- "[" --> triggers nesting
+                 -> setCurrentNodeToArrayType
+              case -- "just a literal"
+              }
+         -> insert new entry after current
+         -> select the new line
+    up
+      -> commit
+        -> parse current node
+          -> 
+    esc
+      only if editing::
+      -> detailscontroller.cancel
+        -> transitionTo active
+        -> currentNodeView.cancel
+
+  focus in
+    activate ->
+
+    select ->
+  focus out
+    exit edit
+
+    -> select 
+
+
