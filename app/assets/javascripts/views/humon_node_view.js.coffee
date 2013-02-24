@@ -4,9 +4,15 @@ Sysys.HumonNodeView = Ember.View.extend
   classNameBindings: ['content.isLiteral:node-literal:node-collection']
   classNames: ['node']
 
+  commit: ->
+    val = @$('.content-field').first().val()
+
+  cancel: ->
+
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
   stateManager: null
+
   init: ->
     stateMgr = Ember.StateManager.create
       initialState: 'inactive'
@@ -60,6 +66,26 @@ Controller
   parse current value
   all functions for modifying the node structure via replaceAt
 
+  select: -> 
+  commit: ->
+  commitAndInsert: ->
+
+HNV
+  #applies value to underlying humon node
+  commit: ->
+
+  # resets value of the contentfield
+  cancel: ->
+  
+
+
+    
+
+     
+  
+
+
+
 
 
 HumonNodeView
@@ -75,10 +101,10 @@ HumonNodeView
               }
          -> insert new entry after current
          -> select the new line
-    up
+    up/down
       -> commit
         -> parse current node
-          -> 
+          ->        
     esc
       only if editing::
       -> detailscontroller.cancel

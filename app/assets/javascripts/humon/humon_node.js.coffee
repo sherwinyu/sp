@@ -37,10 +37,24 @@ Sysys.HumonNode = Ember.Object.extend
         # else 
     childNode.get 'json'
 
+
+   # replaceWith: (obj)->
+
+  replaceWithJson: (json)->
+    humonNode = Sysys.j2hn json
+    @replaceWithHumonNode humonNode
+
+  replaceWithHumonNode: (humonNode)->
+    @set('nodeVal', humonNode.get 'nodeVal')
+    @set('nodeType', humonNode.get 'nodeType')
+    if @get 'isHash'
+      for kvp in @get('nodeVal')
+        kvp.val.set('nodeParent', @)
+    if @get 'isList'
+      for node in @get('nodeVal')
+        node.set 'nodeParent', @
+
   replaceAt: (idx, amt, objects) ->
-    debugger
     Em.assert('HumonNode must be a list or an array', @get('isHash') || @get('isList'))
     list = @get 'nodeVal'
     list.replace idx, amt, objects
-
-
