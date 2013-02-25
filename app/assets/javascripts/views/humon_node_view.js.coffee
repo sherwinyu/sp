@@ -72,7 +72,12 @@ Controller
 
 HNV
   #applies value to underlying humon node
+  
+  refresh: ->
+    resync ContentFieldVal with text representation of HN
+
   commit: ->
+    @get content .replaceWithJson @get contentfieldval
 
   # resets value of the contentfield
   cancel: ->
