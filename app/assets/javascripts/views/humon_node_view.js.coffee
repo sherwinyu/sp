@@ -4,10 +4,23 @@ Sysys.HumonNodeView = Ember.View.extend
   classNameBindings: ['content.isLiteral:node-literal:node-collection']
   classNames: ['node']
 
+  keyUp: ->
+    ###
+      enter: ->
+      shift-enter: ->
+      esc: ->
+    ###
+    
+
   commit: ->
     val = @$('.content-field').first().val()
+    json = JSON.parse val
+    @get('content').replaceWithJson json
+    # do we need to rerender?
+    # TODO(syu): redisplay the content field value?
 
   cancel: ->
+
 
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
@@ -90,7 +103,16 @@ HNV
   
 
 
+  =====
+  need an abstraction layer for 
+    single line edit views of:
+      list item (just a literal)
+      kvp item (kvp, literal)
+      kvp label (nest)
+      list item label (nest)
 
+  ===
+  allow controller (detailcontroller) || view abstraction to be general enough to edit ANY mongodb field
 
 
 HumonNodeView
