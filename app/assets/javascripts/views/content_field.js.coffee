@@ -17,13 +17,23 @@ Sysys.ContentField = Ember.TextArea.extend
 
   exitEdit: ->
 
-  commit: ->
-
-  cancel: ->
 
   didInsertElement: ->
     @set('value', @get('rawValue'))
+
     @$().autogrow()
+    parentView = @get('parentView')
+    @$().bind 'keyup', 'x', =>
+      console.log 'walump'
+      parentView.commit()
+
+    @$().bind 'keyup', 'esc', =>
+      console.log 'gajump'
+      parentView.cancel()
+
+    @$().bind 'keyup', 'shift+return', (e) =>
+      console.log 'gajump'
+      parentView.commit()
 
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'

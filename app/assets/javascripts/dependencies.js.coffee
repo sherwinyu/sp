@@ -9,8 +9,9 @@
 #= require vendor/handlebars-1.0.0.beta.6
 #= require vendor/ember
 #= require vendor/ember-data
-# require vendor/jquery-autosize
+#
 #= require vendor/jquery-autogrow-textarea
+#= require vendor/jquery.hotkeys
 #
 # require vendor/ember-1.0.0-pre.2
 # require ember

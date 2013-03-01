@@ -4,7 +4,10 @@ Sysys.HumonNodeView = Ember.View.extend
   classNameBindings: ['content.isLiteral:node-literal:node-collection']
   classNames: ['node']
 
-  keyUp: ->
+  initHotkeys: ->
+
+
+      # keyUp: ->
     ###
       enter: ->
       shift-enter: ->
@@ -16,10 +19,18 @@ Sysys.HumonNodeView = Ember.View.extend
     val = @$('.content-field').first().val()
     json = JSON.parse val
     @get('content').replaceWithJson json
-    # do we need to rerender?
     # TODO(syu): redisplay the content field value?
+    # TODO(syu): interface with "next step", e.g., singleline compact parse; should autohighlight next line.
+    #
+    # is an interface with a state manager really necessary? probably.
+    # next step to implement: "find next node, find previous node"
 
   cancel: ->
+    json = @get('content.json')
+    @$('.content-field').val json
+
+  didInsertElement: ->
+    @initHotkeys()
 
 
 Sysys.DetailController = Ember.Object.extend
