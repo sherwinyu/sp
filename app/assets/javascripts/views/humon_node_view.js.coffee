@@ -19,6 +19,17 @@ Sysys.HumonNodeView = Ember.View.extend
     val = @$('.content-field').first().val()
     json = JSON.parse val
     @get('content').replaceWithJson json
+    debugger
+    parent = @get('content.nodeParent')
+    len = parent.get('nodeVal.length')
+    empty = Sysys.HumonUtils.json2humonNode('')
+    obj = 
+      if parent.get('isHash')
+        {key: '', val: empty}
+      else if parent.get('isList')
+        empty
+    parent.replaceAt(len, 0, [obj])
+
     # TODO(syu): redisplay the content field value?
     # TODO(syu): interface with "next step", e.g., singleline compact parse; should autohighlight next line.
     #

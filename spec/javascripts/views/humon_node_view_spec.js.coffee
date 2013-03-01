@@ -10,7 +10,9 @@ describe "HumonNodeView", ->
           [
             [
               314
+              415
             ]
+            417
           ]
         scalar:
           "scalar"
