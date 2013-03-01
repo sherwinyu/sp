@@ -29,10 +29,6 @@ Sysys.HumonNodeView = Ember.View.extend
     json = @get('content.json')
     @$('.content-field').val json
 
-  didInsertElement: ->
-    @initHotkeys()
-
-
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
   stateManager: null
@@ -63,6 +59,10 @@ Sysys.DetailController = Ember.Object.extend
 
 ###
  EVENTS
+
+Specific behaviors:
+  WHEN I hit enter
+    
 
 On select
   types of select

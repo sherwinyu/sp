@@ -10,7 +10,7 @@
 }
 
 textarea.content-field {
-  height: 16px;
+  height: 20px;
   width: 600px;
   border: none;
   padding: 0px;
@@ -19,7 +19,25 @@ textarea.content-field {
   border: 1px transparent solid;
 }
 
+
 textarea.content-field:focus {
+  border: 1px white-smoke dashed;
+  background: azure;
+  box-shadow: none;
+}
+
+.kvp-item input.key {
+  height: 20px;
+  width: 50px;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+  border: 1px transparent solid;
+}
+
+
+.kvp-item input.key:focus {
   border: 1px white-smoke dashed;
   background: azure;
   box-shadow: none;
