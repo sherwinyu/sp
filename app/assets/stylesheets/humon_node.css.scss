@@ -5,8 +5,13 @@
 
 .node-collection {
   border: none; //1px blue solid;
-  display:block;
+  display: block;
   margin-left: 10px;
+}
+.node-collection.node-collection-flat {
+  display: inline-block;
+  // border: 1px solid red;
+  margin-left: 0px;
 }
 
 textarea.content-field {

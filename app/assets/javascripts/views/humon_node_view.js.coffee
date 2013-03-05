@@ -1,7 +1,9 @@
 Sysys.HumonNodeView = Ember.View.extend
   contentBinding: null
   templateName: 'humon_node'
-  classNameBindings: ['content.isLiteral:node-literal:node-collection']
+  classNameBindings: [
+    'content.isLiteral:node-literal:node-collection',
+    'content.isFlatCollection:node-collection-flat']
   classNames: ['node']
 
   initHotkeys: ->
@@ -20,6 +22,8 @@ Sysys.HumonNodeView = Ember.View.extend
     json = JSON.parse val
     @get('content').replaceWithJson json
     debugger
+
+
     parent = @get('content.nodeParent')
     len = parent.get('nodeVal.length')
     empty = Sysys.HumonUtils.json2humonNode('')
@@ -43,6 +47,19 @@ Sysys.HumonNodeView = Ember.View.extend
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
   stateManager: null
+
+
+  insertNewElement: ->
+    currentNode = @get('currentNode')
+    parent = currentNodeget('nodeParent')
+    len = parent.get('nodeVal.length')
+    empty = Sysys.HumonUtils.json2humonNode('')
+    obj = 
+      if parent.get('isHash')
+        {key: '', val: empty}
+      else if parent.get('isList')
+        empty
+    parent.replaceAt(len, 0, [obj])
 
   init: ->
     stateMgr = Ember.StateManager.create
@@ -168,3 +185,8 @@ HumonNodeView
     exit edit
 
     -> select 
+
+hash:
+  h1: true
+  h2: true
+  c3:

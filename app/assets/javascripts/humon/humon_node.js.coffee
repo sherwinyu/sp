@@ -23,6 +23,15 @@ Sysys.HumonNode = Ember.Object.extend
     @get('nodeType') == 'literal'
   ).property('nodeType')
 
+  isFlatCollection: (->
+    if @get('isLiteral')
+      return true
+    else
+      singlechildren = @get('isHash') and @get('nodeVal.length') == 1
+      debugger
+      return singlechildren and @get('nodeVal.0.val.isFlatCollection')
+  ).property('nodeVal.@each', 'nodeType')
+
   unknownProperty: (key) ->
     console.log 'key:', key
     [idx, remaining...] = key.split '.'
