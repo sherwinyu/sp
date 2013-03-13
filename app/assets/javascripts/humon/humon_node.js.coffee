@@ -28,7 +28,6 @@ Sysys.HumonNode = Ember.Object.extend
       return true
     else
       singlechildren = @get('isHash') and @get('nodeVal.length') == 1
-      debugger
       return singlechildren and @get('nodeVal.0.val.isFlatCollection')
   ).property('nodeVal.@each', 'nodeType')
 

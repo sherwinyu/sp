@@ -6,6 +6,20 @@ Sysys.HumonNodeView = Ember.View.extend
     'content.isFlatCollection:node-collection-flat']
   classNames: ['node']
 
+  willDestroyElement: ->
+    console.log('slipnslide')
+    @$().slideUp 0
+    @$().slideUp 250, "easeInOutQuad"
+  didInsertElement: ->
+    ###@$().
+        var clone = this.$().clone();
+            this.$().replaceWith(clone);
+
+            clone.slideUp(250, "easeInOutQuad");
+            ###
+
+
+
   initHotkeys: ->
 
 
