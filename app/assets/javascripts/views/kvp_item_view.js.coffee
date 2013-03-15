@@ -10,4 +10,4 @@ Sysys.KvpItemView = Ember.View.extend
     console.log('kvp item destroy')
     clone = @$().clone()
     @$().replaceWith clone
-    clone.slideUp 250 #, "easeInOutQuad"
+    clone.slideUp 250 

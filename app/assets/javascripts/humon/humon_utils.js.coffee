@@ -22,7 +22,7 @@ Sysys.HumonUtils =
       node.set('nodeType', 'hash')
       kvps = Em.A()
       for own k, v of json
-        kvp =
+        kvp = Ember.Object.create
           key: k
           val: Sysys.HumonUtils.json2humonNode v, node
         kvps.pushObject kvp

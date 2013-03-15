@@ -31,22 +31,18 @@ Sysys.HumonNode = Ember.Object.extend
       return singlechildren and @get('nodeVal.0.val.isFlatCollection')
   ).property('nodeVal.@each', 'nodeType')
 
-  unknownProperty: (key) ->
-    console.log 'key:', key
-    [idx, remaining...] = key.split '.'
+  getNode: (keyOrIndex) ->
+    Em.assert('HumonNode must be a list or a hash', @get('isHash') || @get('isList'))
     nodeVal = @get('nodeVal')
     childNode = 
       if @get('isHash')
-        nodeVal.findProperty('key', idx).val
+        nodeVal.findProperty('key', keyOrIndex)?.val
       else if @get('isList')
-        nodeVal.get idx
-        # if remaining.length
-        # childNode.get remaining.join '.'
-        # else 
-    childNode.get 'json'
+        nodeVal.get keyOrIndex
+    return childNode
 
-
-   # replaceWith: (obj)->
+  unknownProperty: (key) ->
+    return @getNode(key).get 'json'
 
   replaceWithJson: (json)->
     humonNode = Sysys.j2hn json
@@ -63,6 +59,12 @@ Sysys.HumonNode = Ember.Object.extend
         node.set 'nodeParent', @
 
   replaceAt: (idx, amt, objects) ->
-    Em.assert('HumonNode must be a list or an array', @get('isHash') || @get('isList'))
+    Em.assert('HumonNode must be a list or a hash', @get('isHash') || @get('isList'))
     list = @get 'nodeVal'
     list.replace idx, amt, objects
+
+  editKey: (newKey) ->
+    parent = @get('nodeParent')
+    Em.assert 'Parent must be a hash', parent?.get('isHash')
+    kvp =  parent.get('nodeVal').findProperty('val', @)
+    kvp.set 'key', newKey

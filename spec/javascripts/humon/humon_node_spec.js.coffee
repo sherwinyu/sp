@@ -26,7 +26,7 @@ describe "HumonNode", ->
       expect(parentNode.get('nodeParent')).toEqual null
 
   # hash = {a: 1, b: 2, c: [false, 'lalala', {nested: true}]}
-  describe "modifiers", ->
+  describe "modsngets", ->
     node = nodea = nodeb = nodec = nodec0 = nodec1 = nodec2 = nodec2nested = null
 
     beforeEach ->
@@ -40,6 +40,26 @@ describe "HumonNode", ->
       nodec2 = nodec.get('nodeVal.2')
       nodec2nested = nodec2.get('nodeVal').findProperty('key', 'nested').val
 
+    describe "getNode", ->
+      it "should fail if the node isn't a hash or a list", ->
+        expect(-> nodea.getNode '0').toThrow()
+        expect(-> nodea.getNode 'asdf').toThrow()
+
+      it "should return the proper humonNode object on a list", ->
+        expect(node.getNode 'a').toBe nodea
+        expect(node.getNode 'b').toBe nodeb
+        expect(node.getNode 'c').toBe nodec
+        expect(nodec2.getNode 'nested').toBe nodec2nested
+
+      it "should return the proper humonNode object on a hash", ->
+        expect(nodec.getNode '0').toBe nodec0
+        expect(nodec.getNode '1').toBe nodec1
+        expect(nodec.getNode '2').toBe nodec2
+      #maybe
+      it "should fail when getting non numeric keys on a list"
+      it "should fail when getting numeric keys on a hash"
+
+
     describe "replaceWithJson", ->
       it "should work when replacing with literal", ->
         nodec.replaceWithJson 'imaliteral'
@@ -47,7 +67,6 @@ describe "HumonNode", ->
         expect(nodec.get 'nodeType').toBe 'literal'
         expect(nodec.get 'nodeParent').toBe node
         expect(nodec.get 'nodeVal').toBe 'imaliteral'
-
 
       it "should work when replacing with lists", ->
         nodeb.replaceWithJson [3,1]
@@ -75,3 +94,15 @@ describe "HumonNode", ->
         expect(nodec2nested.get('nodeVal.1.nodeVal')).toBe false
         expect(nodec2nested.get('nodeVal.1.nodeType')).toBe 'literal'
         expect(nodec2nested.get('nodeVal.1.nodeParent')).toBe nodec2nested
+
+    describe "editKey", ->
+      it "should fail if parent doesn't exist", ->
+        expect(-> node.editKey 'new key').toThrow()
+      it "should fail if parent is a list instead of a hash exist", ->
+        expect(-> nodec0.editKey 'new key').toThrow()
+      it "should remove the old key association on the parent", ->
+        nodeb.editKey "new key"
+        expect(node.getNode('b')).not.toBeDefined()
+      it "should add the new key association on the parent", ->
+        nodeb.editKey "new key"
+        expect(node.getNode('new key')).toBe nodeb
