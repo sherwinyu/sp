@@ -12,3 +12,15 @@ Sysys.ListItemView = Ember.View.extend
     clone = @$().clone()
     @.$().replaceWith clone
     clone.slideUp 250
+
+  isActive: (->
+    # @get('content.val.isActive')
+    ret = @get('controller.activeHumonNode') == @get('content')
+    ret
+  ).property('controller.activeHumonNode')
+  ###
+    ###
+
+  focusIn: (e) ->
+    @get('controller').set('activeHumonNode', @get('content'))
+    false

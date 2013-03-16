@@ -3,8 +3,18 @@ Sysys.HumonNodeView = Ember.View.extend
   templateName: 'humon_node'
   classNameBindings: [
     'content.isLiteral:node-literal:node-collection',
-    'content.isFlatCollection:node-collection-flat']
+    'content.isFlatCollection:node-collection-flat',
+    'isActive:active']
   classNames: ['node']
+
+  isActive: (->
+    ret = @get('controller.activeHumonNode') == @get('content')
+
+    # ret = @get('controller.activeHumonNodeView') == @
+    # console.log "isActive? = #{ret}"
+    ret
+
+  ).property('controller.activeHumonNodeView', 'controller.activeHumonNode')
 
   willDestroyElement: ->
     console.log('slipnslide')
@@ -35,8 +45,6 @@ Sysys.HumonNodeView = Ember.View.extend
     val = @$('.content-field').first().val()
     json = JSON.parse val
     @get('content').replaceWithJson json
-    debugger
-
 
     parent = @get('content.nodeParent')
     len = parent.get('nodeVal.length')

@@ -45,3 +45,20 @@ textarea.content-field:focus {
   background: azure;
   box-shadow: none;
 }
+
+// ACTIVS
+.active.node-literal {
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+}
+
+.node-collection-flat.active   .node-literal {
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+}
+
+.active.kvp-item > input{
+  border-top: 1px solid blue;
+  border-bottom: 1px solid blue;
+}
+
