@@ -17,9 +17,14 @@ Sysys.HumonNodeView = Ember.View.extend
   ).property('controller.activeHumonNodeView', 'controller.activeHumonNode')
 
   willDestroyElement: ->
-    console.log('slipnslide')
     @$().slideUp 0
     @$().slideUp 250, "easeInOutQuad"
+    @get('content')?.set 'nodeView', null
+
+  willInsertElement: ->
+    @get('content')?.set 'nodeView', @
+
+
   didInsertElement: ->
     ###@$().
         var clone = this.$().clone();
@@ -27,8 +32,6 @@ Sysys.HumonNodeView = Ember.View.extend
 
             clone.slideUp(250, "easeInOutQuad");
             ###
-
-
 
   initHotkeys: ->
 

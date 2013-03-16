@@ -2,6 +2,7 @@ Sysys.HumonNode = Ember.Object.extend
   nodeVal: null
   nodeType: null
   nodeParent: null
+  nodeView: null
   json: (->
     Sysys.HumonUtils.humonNode2json @
     # val = @get('nodeVal')
@@ -43,7 +44,7 @@ Sysys.HumonNode = Ember.Object.extend
     return childNode
 
   unknownProperty: (key) ->
-    return @getNode(key).get 'json'
+    return @getNode(key)?.get 'json'
 
   replaceWithJson: (json)->
     humonNode = Sysys.j2hn json
