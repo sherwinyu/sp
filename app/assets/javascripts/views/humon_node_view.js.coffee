@@ -9,12 +9,8 @@ Sysys.HumonNodeView = Ember.View.extend
 
   isActive: (->
     ret = @get('controller.activeHumonNode') == @get('content')
-
-    # ret = @get('controller.activeHumonNodeView') == @
-    # console.log "isActive? = #{ret}"
     ret
-
-  ).property('controller.activeHumonNodeView', 'controller.activeHumonNode')
+  ).property('controller.activeHumonNode')
 
   willDestroyElement: ->
     @$().slideUp 0

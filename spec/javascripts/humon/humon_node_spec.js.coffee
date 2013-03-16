@@ -55,9 +55,9 @@ describe "HumonNode", ->
         expect(nodec.getNode '0').toBe nodec0
         expect(nodec.getNode '1').toBe nodec1
         expect(nodec.getNode '2').toBe nodec2
-      #maybe
-      it "should fail when getting non numeric keys on a list"
-      it "should fail when getting numeric keys on a hash"
+      xit "should work for nested paths (e.g. hash.a.0)"
+      xit "should fail when getting non numeric keys on a list"
+      xit "should fail when getting numeric keys on a hash"
 
 
     describe "replaceWithJson", ->
