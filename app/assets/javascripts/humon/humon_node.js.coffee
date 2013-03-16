@@ -24,6 +24,7 @@ Sysys.HumonNode = Ember.Object.extend
   ).property('nodeType')
 
   isFlatCollection: (->
+    false
     if @get('isLiteral')
       return true
     else

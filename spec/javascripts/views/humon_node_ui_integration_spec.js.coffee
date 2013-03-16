@@ -1,6 +1,6 @@
-describe "HumonNodeView", ->
+describe "HumonNode UI integration", ->
   beforeEach ->
-    @serialized = #a: { a: 1, b: 2 }, flat: 5
+    @serialized =
       {
         hash2:
           hash1:
@@ -10,17 +10,10 @@ describe "HumonNodeView", ->
           [
             [
               314
-              415
             ]
-            417
           ]
         scalar:
-          "scalar" 
-        list: [
-          "zup"
-          a: 5
-        ]
-          
+          "scalar"
       }
     ###
       ###
@@ -34,13 +27,11 @@ describe "HumonNodeView", ->
     json = [1, "lala", {a: 'b'}]
     json = @serialized
     @humonNode = Sysys.HumonUtils.json2humonNode json 
-    window.controller = Sysys.DetailController.create()
-    @humonNodeView = Sysys.HumonNodeView.create content: @humonNode, controller: window.controller
-    window.controller.set('activeHumonNodeView', @humonNodeView)
-    window.controller.set('activeHumonNode', @humonNodeView.get('content'))
+    @humonNodeView = Sysys.HumonNodeView.create content: @humonNode
     window.wala = @humonNodeView
 
     Ember.run =>
+      # @testView.append()
       @humonNodeView.append()
 
   afterEach ->
