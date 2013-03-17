@@ -13,7 +13,7 @@ Sysys.HumonUtils =
         key ?= nodeVal.indexOf child
         ret[key] = Sysys.HumonUtils.humonNode2json child
     if node.get('isLiteral')
-      ret = val
+      ret = nodeVal
     ret
 
   json2humonNode: (json, nodeParent=null)->

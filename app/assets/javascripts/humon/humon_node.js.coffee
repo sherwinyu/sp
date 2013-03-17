@@ -29,12 +29,14 @@ Sysys.HumonNode = Ember.Object.extend
   ).property('nodeType')
 
   isFlatCollection: (->
-    false
+    return false
+      ###
     if @get('isLiteral')
       return true
     else
       singlechildren = @get('isHash') and @get('nodeVal.length') == 1
       return singlechildren and @get('nodeVal.0.val.isFlatCollection')
+      ###
   ).property('nodeVal.@each', 'nodeType')
 
   getNode: (keyOrIndex) ->
@@ -69,9 +71,10 @@ Sysys.HumonNode = Ember.Object.extend
     list = @get 'nodeVal'
     list.replace idx, amt, objects
 
+  # different from set nodeKey directly because it will coerce the parent to a hash
   editKey: (newKey) ->
-    # parent = @get('nodeParent')
-    # Em.assert 'Parent must be a hash', parent?.get('isHash')
+    parent = @get('nodeParent')
+    parent.set 'nodeType', 'hash'
     @set 'nodeKey', newKey
     # kvp =  parent.get('nodeVal').findProperty('val', @)
     # kvp.set 'key', newKey

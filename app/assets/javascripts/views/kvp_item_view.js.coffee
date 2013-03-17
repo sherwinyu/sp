@@ -7,14 +7,14 @@ Sysys.KvpItemView = Ember.View.extend
     ]
   isActive: (->
     # @get('content.val.isActive')
-    ret = @get('controller.activeHumonNode') == @get('content.val')
+    ret = @get('controller.activeHumonNode') == @get('content')
     ret
   ).property('controller.activeHumonNode')
   ###
     ###
 
   focusIn: (e) ->
-    @get('controller').set('activeHumonNode', @get('content.val'))
+    @get('controller').set('activeHumonNode', @get('content'))
     false
 
   didInsertElement: ->
