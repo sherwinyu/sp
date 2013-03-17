@@ -4,6 +4,7 @@ Sysys.HumonNode = Ember.Object.extend
   nodeType: null
   nodeParent: null
   nodeView: null
+  keyBinding: 'nodeKey'
   json: (->
     Sysys.HumonUtils.humonNode2json @
   ).property('nodeVal', 'nodeKey')
@@ -41,7 +42,7 @@ Sysys.HumonNode = Ember.Object.extend
     nodeVal = @get('nodeVal')
     childNode = 
       if @get('isHash')
-        nodeVal.findProperty('key', keyOrIndex)?.val
+        nodeVal.findProperty('nodeKey', keyOrIndex)
       else if @get('isList')
         nodeVal.get keyOrIndex
     return childNode

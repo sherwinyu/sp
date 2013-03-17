@@ -1,15 +1,17 @@
 Sysys.HumonUtils = 
   humonNode2json: (node)->
-    val = node.get('nodeVal')
+    nodeVal = node.get('nodeVal')
     ret = undefined
     if node.get('isList')
       ret = []
-      for v in val
-        ret.pushObject Sysys.HumonUtils.humonNode2json v
+      for child in nodeVal
+        ret.pushObject Sysys.HumonUtils.humonNode2json child
     if node.get('isHash')
       ret = {}
-      for kvp in val
-        ret[kvp.key] = Sysys.HumonUtils.humonNode2json kvp.val
+      for child in nodeVal
+        key = child.get('nodeKey')
+        key ?= nodeVal.indexOf child
+        ret[key] = Sysys.HumonUtils.humonNode2json child
     if node.get('isLiteral')
       ret = val
     ret
@@ -20,20 +22,20 @@ Sysys.HumonUtils =
 
     if Sysys.HumonUtils.isHash json
       node.set('nodeType', 'hash')
-      kvps = Em.A()
-      for own k, v of json
-        kvp = Ember.Object.create
-          key: k
-          val: Sysys.HumonUtils.json2humonNode v, node
-        kvps.pushObject kvp
-      node.set('nodeVal', kvps)
+      children = Em.A()
+      for own key, val of json
+        child = Sysys.HumonUtils.json2humonNode val, node
+        child.set 'nodeKey', key
+        children.pushObject child
+      node.set 'nodeVal', children
 
     if Sysys.HumonUtils.isList json
       node.set 'nodeType', 'list'
-      arr = Em.A()
-      for ele in json
-        arr.pushObject Sysys.HumonUtils.json2humonNode ele, node
-      node.set 'nodeVal', arr
+      children = Em.A()
+      for val in json
+        child = Sysys.HumonUtils.json2humonNode val, node
+        children.pushObject child
+      node.set 'nodeVal', children
 
     if Sysys.HumonUtils.isLiteral json
       node.set('nodeType', 'literal')

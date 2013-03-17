@@ -49,16 +49,17 @@ describe 'json2humonNode', ->
       expect(spyj2hn).toHaveBeenCalledWith 3
 
     it "should return a HumonNode with a list of KVPs, each with a HumonNode wrapping a literal as a val", ->
-      expect(node.get('nodeVal').findProperty('key', 'a').val.get('nodeVal')).toBe 1
-      expect(node.get('nodeVal').findProperty('key', 'b').val.get('nodeVal')).toBe 2
-      expect(node.get('nodeVal').findProperty('key', 'c').val.get('nodeVal')).toBe 3
+      expect(node.get('nodeVal').findProperty('nodeKey', 'a').get('nodeVal')).toBe 1
+      expect(node.get('nodeVal').findProperty('nodeKey', 'a').get('nodeVal')).toBe 1
+      expect(node.get('nodeVal').findProperty('nodeKey', 'b').get('nodeVal')).toBe 2
+      expect(node.get('nodeVal').findProperty('nodeKey', 'c').get('nodeVal')).toBe 3
       expect(node.get 'nodeType').toEqual 'hash'
 
     it "should set up nodeParent relations", ->
       expect(node.get('nodeParent')).toBe null
-      expect(node.get('nodeVal').findProperty('key', 'a').val.get('nodeParent')).toBe node
-      expect(node.get('nodeVal').findProperty('key', 'b').val.get('nodeParent')).toBe node
-      expect(node.get('nodeVal').findProperty('key', 'c').val.get('nodeParent')).toBe node
+      expect(node.get('nodeVal').findProperty('nodeKey', 'a').get('nodeParent')).toBe node
+      expect(node.get('nodeVal').findProperty('nodeKey', 'b').get('nodeParent')).toBe node
+      expect(node.get('nodeVal').findProperty('nodeKey', 'c').get('nodeParent')).toBe node
 
 
   describe "when called on nested structure", ->
