@@ -96,10 +96,14 @@ describe "HumonNode", ->
         expect(nodec2nested.get('nodeVal.1.nodeParent')).toBe nodec2nested
 
     describe "editKey", ->
+      ###
       it "should fail if parent doesn't exist", ->
         expect(-> node.editKey 'new key').toThrow()
       it "should fail if parent is a list instead of a hash exist", ->
         expect(-> nodec0.editKey 'new key').toThrow()
+      ###
+      it "should coerce parent to a hash", ->
+        throw "pending"
       it "should remove the old key association on the parent", ->
         nodeb.editKey "new key"
         expect(node.getNode('b')).not.toBeDefined()

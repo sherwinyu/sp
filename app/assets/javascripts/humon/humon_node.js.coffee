@@ -70,7 +70,8 @@ Sysys.HumonNode = Ember.Object.extend
     list.replace idx, amt, objects
 
   editKey: (newKey) ->
-    parent = @get('nodeParent')
-    Em.assert 'Parent must be a hash', parent?.get('isHash')
-    kvp =  parent.get('nodeVal').findProperty('val', @)
-    kvp.set 'key', newKey
+    # parent = @get('nodeParent')
+    # Em.assert 'Parent must be a hash', parent?.get('isHash')
+    @set 'nodeKey', newKey
+    # kvp =  parent.get('nodeVal').findProperty('val', @)
+    # kvp.set 'key', newKey

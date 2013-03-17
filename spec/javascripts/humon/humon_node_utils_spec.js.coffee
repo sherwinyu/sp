@@ -68,13 +68,13 @@ describe 'json2humonNode', ->
 
     beforeEach ->
       node = j2hn hash
-      nodea = node.get('nodeVal').findProperty('key', 'a').val
-      nodeb = node.get('nodeVal').findProperty('key', 'b').val
-      nodec = node.get('nodeVal').findProperty('key', 'c').val
+      nodea = node.get('nodeVal').findProperty('nodeKey', 'a')
+      nodeb = node.get('nodeVal').findProperty('nodeKey', 'b')
+      nodec = node.get('nodeVal').findProperty('nodeKey', 'c')
       nodec0 = nodec.get('nodeVal.0')
       nodec1 = nodec.get('nodeVal.1')
       nodec2 = nodec.get('nodeVal.2')
-      nodec2nested = nodec2.get('nodeVal').findProperty('key', 'nested').val
+      nodec2nested = nodec2.get('nodeVal').findProperty('nodeKey', 'nested')
 
     it "should recurse once for each k,v pair of hash", ->
       expect(spyj2hn).toHaveBeenCalledWith 1
