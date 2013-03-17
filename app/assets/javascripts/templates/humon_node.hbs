@@ -1,5 +1,5 @@
 {{#if view.content.isLiteral}}
-  {{view Sysys.ContentField rawValueBinding="view.content.nodeVal"}}
+  {{view Sysys.ContentField rawValueBinding="view.content.json"}}
 {{else}}
   {{#if view.content.isHash}}
     {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.KvpItemView" class="kvpcollectionhelper"}}
@@ -7,6 +7,8 @@
   {{#if view.content.isList}}
     {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView" class="listcollectionhelper"}}
   {{/if}}
-  
+{{/if}}
+{{#if view.displayStats}}
+  {{view.json_string}}
 {{/if}}
 

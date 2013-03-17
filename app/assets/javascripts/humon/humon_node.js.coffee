@@ -5,12 +5,11 @@ Sysys.HumonNode = Ember.Object.extend
   nodeView: null
   json: (->
     Sysys.HumonUtils.humonNode2json @
-    # val = @get('nodeVal')
-    # 
-    # if @get('isLiteral')
-    # return val
-    # else 5
-  ).property('nodeVal')
+  ).property('nodeVal', 'nodeKey')
+
+  nodeValChanged: (->
+    @get('nodeParent')?.notifyPropertyChange 'nodeVal'
+  ).observes 'nodeVal'
 
   isHash: (-> 
     @get('nodeType') == 'hash'

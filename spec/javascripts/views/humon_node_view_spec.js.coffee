@@ -134,5 +134,3 @@ describe "HumonNodeView", ->
 
   it "should display nested node views", ->
     console.log 'chogal'
-
- 

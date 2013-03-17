@@ -34,7 +34,6 @@ Sysys.DetailController = Ember.Object.extend
         editing: Ember.State.create
           enter: -> console.log 'entering state editing'
           exit: -> console.log 'exiting state editing'
-            # @set('stateManager', 
 
           select: (mgr, newNode) ->
             # currentNode.commit()

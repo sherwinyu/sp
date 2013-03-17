@@ -7,6 +7,10 @@ Sysys.HumonNodeView = Ember.View.extend
     'isActive:active']
   classNames: ['node']
 
+  json_string: (->
+    JSON.stringify @get('content.json')
+  ).property('content.json')
+
   isActive: (->
     ret = @get('controller.activeHumonNode') == @get('content')
     ret
