@@ -12,6 +12,9 @@ Sysys.HumonNode = Ember.Object.extend
     @get('nodeParent')?.notifyPropertyChange 'nodeVal'
   ).observes 'nodeVal'
 
+  hasKey: (->
+    !!@get 'nodeKey'
+  ).property 'nodeKey'
   isHash: (-> 
     @get('nodeType') == 'hash'
   ).property('nodeType')

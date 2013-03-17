@@ -5,7 +5,8 @@
     {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.KvpItemView" class="kvpcollectionhelper"}}
   {{/if}}
   {{#if view.content.isList}}
-    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView" class="listcollectionhelper"}}
+    {{!collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView" class="listcollectionhelper"}}
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.NodeItemView" class="node-item-collection-wrapper"}}
   {{/if}}
 {{/if}}
 {{#if view.displayStats}}

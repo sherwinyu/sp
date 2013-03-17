@@ -30,6 +30,21 @@ textarea.content-field:focus {
   box-shadow: none;
 }
 
+.node-item input.key {
+  height: 20px;
+  width: 50px;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+  border: 1px transparent solid;
+}
+
+.node-item input.key:focus {
+  border: 1px white-smoke dashed;
+  box-shadow: none;
+}
+
 .kvp-item input.key {
   height: 20px;
   width: 50px;
