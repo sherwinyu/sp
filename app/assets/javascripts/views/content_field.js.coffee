@@ -22,18 +22,16 @@ Sysys.ContentField = Ember.TextArea.extend
     @set('value', @get('rawValue'))
 
     @$().autogrow()
+
     parentView = @get('parentView')
-    @$().bind 'keyup', 'x', =>
-      console.log 'walump'
-      parentView.commit()
 
     @$().bind 'keyup', 'esc', =>
       console.log 'gajump'
       parentView.cancel()
 
-    @$().bind 'keyup', 'shift+return', (e) =>
-      console.log 'gajump'
+    @$().bind 'keydown', 'shift+return', (e) =>
       parentView.commit()
+      e.preventDefault()
 
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'

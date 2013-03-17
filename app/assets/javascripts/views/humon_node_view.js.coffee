@@ -26,24 +26,9 @@ Sysys.HumonNodeView = Ember.View.extend
 
 
   didInsertElement: ->
-    ###@$().
-        var clone = this.$().clone();
-            this.$().replaceWith(clone);
-
-            clone.slideUp(250, "easeInOutQuad");
-            ###
 
   initHotkeys: ->
-
-
-      # keyUp: ->
-    ###
-      enter: ->
-      shift-enter: ->
-      esc: ->
-    ###
     
-
   commit: ->
     val = @$('.content-field').first().val()
     json = JSON.parse val

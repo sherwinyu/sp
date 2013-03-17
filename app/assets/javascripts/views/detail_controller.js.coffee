@@ -3,8 +3,19 @@
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
   stateManager: null
-  activeHumonNodeView: null
+  activeHumonNodeView: Ember.Binding.oneWay 'activeHumonNode.nodeView'
   activeHumonNode: null
+
+  commitChanges: ->
+    Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
+    rawString = @get('activeHumonNodeView').$('.content-field').first().val()
+    json = JSON.parse rawString
+    @get('activeHumonNode').replaceWithJson json
+
+  cancelChanges: ->
+
+
+
 
   insertNewElement: ->
     debugger
