@@ -3,19 +3,33 @@
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
   stateManager: null
-  activeHumonNodeView: Ember.Binding.oneWay 'activeHumonNode.nodeView'
+  activeHumonNodeViewBinding: Ember.Binding.oneWay 'activeHumonNode.nodeView'
   activeHumonNode: null
 
+  commitAndContinue: ->
+
+  # precondition: activeNode is a literal
+  # does jsonparsing of current activeHumonNodeView content field
+  # calls replaceWithJson on activeNode
+  # postcondition: all text fields are unfocused
+  # returns: the parsed nodes
   commitChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
     rawString = @get('activeHumonNodeView').$('.content-field').first().val()
     json = JSON.parse rawString
     @get('activeHumonNode').replaceWithJson json
+    @unfocus()
 
   cancelChanges: ->
+    Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
+    rawString = @get('activeHumonNode.json')
+    @get('activeHumonNodeView').$('.content-field').first().val rawString
+    @unfocus()
+    # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
-
-
+  unfocus: ->
+    @get('activeHumonNodeView').$('input').blur()
+    @get('activeHumonNodeView').$('textarea').blur()
 
   insertNewElement: ->
     debugger

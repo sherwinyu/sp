@@ -25,12 +25,12 @@ Sysys.ContentField = Ember.TextArea.extend
 
     parentView = @get('parentView')
 
-    @$().bind 'keyup', 'esc', =>
-      console.log 'gajump'
-      parentView.cancel()
+    @$().bind 'keyup', 'esc',(e) =>
+      @get('controller').cancelChanges()
+      e.preventDefault()
 
     @$().bind 'keydown', 'shift+return', (e) =>
-      parentView.commit()
+      @get('controller').commitChanges()
       e.preventDefault()
 
   willDestroyElement: ->

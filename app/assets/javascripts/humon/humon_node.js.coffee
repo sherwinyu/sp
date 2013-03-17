@@ -1,4 +1,5 @@
 Sysys.HumonNode = Ember.Object.extend
+  nodeKey: null
   nodeVal: null
   nodeType: null
   nodeParent: null
