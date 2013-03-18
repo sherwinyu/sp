@@ -3,7 +3,6 @@ Sysys.HumonNodeView = Ember.View.extend
   templateName: 'humon_node'
   classNameBindings: [
     'content.isLiteral:node-literal:node-collection',
-    'content.isFlatCollection:node-collection-flat',
     'isActive:active']
   classNames: ['node']
 

@@ -81,6 +81,19 @@ describe "HumonNode", ->
         expect(nodeb.get('nodeVal.1.nodeType')).toBe 'literal'
         expect(nodeb.get('nodeVal.1.nodeParent')).toBe nodeb
 
+      it "should work when replacing hashes", ->
+        nodeb.replaceWithJson a: 3, b: 6
+        expect(nodeb.get 'nodeType').toBe 'hash'
+        expect(nodeb.get 'nodeParent').toBe node
+
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'a').get 'nodeVal').toBe 3
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'a').get 'nodeType').toBe 'literal'
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'a').get 'nodeParent').toBe nodeb
+
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'b').get 'nodeVal').toBe 6
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'b').get 'nodeType').toBe 'literal'
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'b').get 'nodeParent').toBe nodeb
+
       it "should work when replacing leafs", ->
         nodec2nested.replaceWithJson [true, false]
 

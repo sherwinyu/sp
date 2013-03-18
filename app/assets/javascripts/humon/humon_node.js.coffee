@@ -5,6 +5,7 @@ Sysys.HumonNode = Ember.Object.extend
   nodeParent: null
   nodeView: null
   keyBinding: 'nodeKey'
+
   json: (->
     Sysys.HumonUtils.humonNode2json @
   ).property('nodeVal', 'nodeKey')
@@ -28,17 +29,6 @@ Sysys.HumonNode = Ember.Object.extend
     @get('nodeType') == 'literal'
   ).property('nodeType')
 
-  isFlatCollection: (->
-    return false
-      ###
-    if @get('isLiteral')
-      return true
-    else
-      singlechildren = @get('isHash') and @get('nodeVal.length') == 1
-      return singlechildren and @get('nodeVal.0.val.isFlatCollection')
-      ###
-  ).property('nodeVal.@each', 'nodeType')
-
   getNode: (keyOrIndex) ->
     Em.assert('HumonNode must be a list or a hash', @get('isHash') || @get('isList'))
     nodeVal = @get('nodeVal')
@@ -60,11 +50,11 @@ Sysys.HumonNode = Ember.Object.extend
     @set('nodeVal', humonNode.get 'nodeVal')
     @set('nodeType', humonNode.get 'nodeType')
     if @get 'isHash'
-      for kvp in @get('nodeVal')
-        kvp.val.set('nodeParent', @)
+      for child in @get('nodeVal')
+        child.set('nodeParent', @)
     if @get 'isList'
-      for node in @get('nodeVal')
-        node.set 'nodeParent', @
+      for child in @get('nodeVal')
+        child.set 'nodeParent', @
 
   replaceAt: (idx, amt, objects) ->
     Em.assert('HumonNode must be a list or a hash', @get('isHash') || @get('isList'))
