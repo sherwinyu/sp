@@ -25,6 +25,10 @@ Sysys.HumonNode = Ember.Object.extend
     @get('nodeType') == 'list'
   ).property('nodeType')
 
+  isCollection: (->
+    @get('isList') || @get('isHash')
+  ).property 'nodeType'
+
   isLiteral: (-> 
     @get('nodeType') == 'literal'
   ).property('nodeType')
@@ -38,6 +42,8 @@ Sysys.HumonNode = Ember.Object.extend
       else if @get('isList')
         nodeVal.get keyOrIndex
     return childNode
+
+  childrenAsList: 
 
   unknownProperty: (key) ->
     return @getNode(key)?.get 'json'
@@ -66,5 +72,3 @@ Sysys.HumonNode = Ember.Object.extend
     parent = @get('nodeParent')
     parent.set 'nodeType', 'hash'
     @set 'nodeKey', newKey
-    # kvp =  parent.get('nodeVal').findProperty('val', @)
-    # kvp.set 'key', newKey
