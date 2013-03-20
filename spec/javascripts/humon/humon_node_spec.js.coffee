@@ -26,7 +26,7 @@ describe "HumonNode", ->
       expect(parentNode.get('nodeParent')).toEqual null
 
   # hash = {a: 1, b: 2, c: [false, 'lalala', {nested: true}]}
-  describe "modsngets", ->
+  describe "methods", ->
     node = nodea = nodeb = nodec = nodec0 = nodec1 = nodec2 = nodec2nested = null
 
     beforeEach ->
@@ -123,3 +123,4 @@ describe "HumonNode", ->
       it "should add the new key association on the parent", ->
         nodeb.editKey "new key"
         expect(node.getNode('new key')).toBe nodeb
+
