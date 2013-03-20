@@ -10,6 +10,7 @@ Sysys.HumonNode = Ember.Object.extend
     Sysys.HumonUtils.humonNode2json @
   ).property('nodeVal', 'nodeKey')
 
+  # make this more generic?
   nodeValChanged: (->
     @get('nodeParent')?.notifyPropertyChange 'nodeVal'
   ).observes 'nodeVal'
@@ -43,7 +44,9 @@ Sysys.HumonNode = Ember.Object.extend
         nodeVal.get keyOrIndex
     return childNode
 
-  childrenAsList: 
+  childrenAsList: (->
+    []
+  ).property('nodeVal', 'nodeType')
 
   unknownProperty: (key) ->
     return @getNode(key)?.get 'json'
