@@ -40,6 +40,29 @@ describe "HumonNode", ->
       nodec2 = nodec.get('nodeVal.2')
       nodec2nested = nodec2.get('nodeVal').findProperty('nodeKey', 'nested')
 
+    describe "nextNode", ->
+      it "should work for the root node", ->
+        expect(node.nextNode()).toBe nodea
+
+      it "should work when going up the tree to a sibling", ->
+        expect(nodea.nextNode()).toBe nodeb
+        expect(nodeb.nextNode()).toBe nodec
+
+      it "should work when diving into the tree", ->
+        expect(nodec.nextNode()).toBe nodec0
+        expect(nodec0.nextNode()).toBe nodec1
+        expect(nodec1.nextNode()).toBe nodec2
+
+      it "should work when diving nested into the tree", ->
+        expect(nodec2.nextNode()).toBe nodec2nested
+
+      it "should return null when there's noting left to recurse", ->
+        expect(nodec2nested.nextNode()).toBe null
+
+      it "should return null on a lone node", ->
+        hn = j2hn 1
+        expect(hn.nextNode()).toBe null
+
     describe "getNode", ->
       it "should fail if the node isn't a hash or a list", ->
         expect(-> nodea.getNode '0').toThrow()
