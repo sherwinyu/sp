@@ -33,5 +33,8 @@ Sysys.ContentField = Ember.TextArea.extend
       @get('controller').commitChanges()
       e.preventDefault()
 
+    @$().bind 'keyup', 'down', (e) =>
+      @get('controller').nextNode()
+
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'

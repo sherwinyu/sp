@@ -31,6 +31,11 @@ Sysys.DetailController = Ember.Object.extend
     @get('activeHumonNodeView').$('input').blur()
     @get('activeHumonNodeView').$('textarea').blur()
 
+  nextNode: ->
+    newNode = @get('activeHumonNode').nextNode()
+    if newNode 
+      @set('activeHumonNode', newNode)
+
   insertNewElement: ->
     debugger
     currentNode = @get('currentNode')

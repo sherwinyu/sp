@@ -30,6 +30,10 @@ Sysys.HumonNode = Ember.Object.extend
     @get('isList') || @get('isHash')
   ).property 'nodeType'
 
+  hasChildren: (->
+    @get('isCollection') and @get('nodeVal').length
+  ).property('isCollection', 'nodeVal')
+
   isLiteral: (-> 
     @get('nodeType') == 'literal'
   ).property('nodeType')
@@ -47,6 +51,21 @@ Sysys.HumonNode = Ember.Object.extend
   childrenAsList: (->
     []
   ).property('nodeVal', 'nodeType')
+
+  nextNode:  ->
+    if @get('hasChildren')
+      return @get('nodeVal')[0]
+    curNode = @
+    isLastChild = (child) ->
+      child.get('nodeParent.nodeVal')[ child.get('nodeParent.nodeVal').length - 1 ] == child
+
+    while curNode.get('nodeParent') and isLastChild(curNode)
+      curNode = curNode.get('nodeParent')
+    i = curNode.get('nodeParent.nodeVal')?.indexOf(curNode) + 1
+    return curNode.get('nodeParent.nodeVal')[i] if i
+    null
+
+  prevNode: ->
 
   unknownProperty: (key) ->
     return @getNode(key)?.get 'json'
