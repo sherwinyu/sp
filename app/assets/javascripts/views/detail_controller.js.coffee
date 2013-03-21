@@ -7,6 +7,11 @@ Sysys.DetailController = Ember.Object.extend
   activeHumonNode: null
 
   commitAndContinue: ->
+    next = @get('activeHumonNode').nextNode()
+    @commitChanges()
+    last = next.prevNode()
+    debugger
+    @set('activeHumonNode', last)
 
   # precondition: activeNode is a literal
   # does jsonparsing of current activeHumonNodeView content field
