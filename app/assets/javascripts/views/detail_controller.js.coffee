@@ -36,6 +36,11 @@ Sysys.DetailController = Ember.Object.extend
     if newNode 
       @set('activeHumonNode', newNode)
 
+  prevNode: ->
+    newNode = @get('activeHumonNode').prevNode()
+    if newNode 
+      @set('activeHumonNode', newNode)
+
   insertNewElement: ->
     debugger
     currentNode = @get('currentNode')
