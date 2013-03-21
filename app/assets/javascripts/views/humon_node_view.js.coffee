@@ -21,11 +21,10 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('content')?.set 'nodeView', null
 
   willInsertElement: ->
-    @initHotkeys()
-    @get('content')?.set 'nodeView', @
-
 
   didInsertElement: ->
+    @initHotkeys()
+    @get('content')?.set 'nodeView', @
 
   initHotkeys: ->
     @$().bind 'keyup', 'up', (e) =>

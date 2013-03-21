@@ -10,7 +10,6 @@ Sysys.DetailController = Ember.Object.extend
     next = @get('activeHumonNode').nextNode()
     @commitChanges()
     last = next.prevNode()
-    debugger
     @set('activeHumonNode', last)
 
   # precondition: activeNode is a literal
@@ -46,8 +45,8 @@ Sysys.DetailController = Ember.Object.extend
     if newNode 
       @set('activeHumonNode', newNode)
 
+      ###
   insertNewElement: ->
-    debugger
     currentNode = @get('currentNode')
     parent = currentNodeget('nodeParent')
     len = parent.get('nodeVal.length')
@@ -58,6 +57,7 @@ Sysys.DetailController = Ember.Object.extend
       else if parent.get('isList')
         empty
     parent.replaceAt(len, 0, obj)
+    ###
 
   init: ->
     stateMgr = Ember.StateManager.create

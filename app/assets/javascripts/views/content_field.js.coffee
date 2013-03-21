@@ -30,7 +30,7 @@ Sysys.ContentField = Ember.TextArea.extend
       e.preventDefault()
 
     @$().bind 'keydown', 'shift+return', (e) =>
-      @get('controller').commitChanges()
+      @get('controller').commitAndContinue()
       e.preventDefault()
 
     @$().bind 'keyup', 'down', (e) =>
