@@ -113,6 +113,57 @@ describe "HumonNode", ->
       xit "should fail when getting numeric keys on a hash"
 
 
+    describe "replaceAt", ->
+      it "should replace at index 0 ", ->
+        newNode = j2hn "wala"
+        node.replaceAt 0, 0, newNode
+        expect(node.get('nodeVal.0')).toBe newNode
+        expect(node.get('nodeVal.1')).toBe nodea
+        node.replaceAt 0, 2, nodec0, nodec1
+        expect(node.get('nodeVal')).toEqual [nodec0, nodec1, nodeb, nodec]
+
+      it "should remove elements", ->
+        nodec.replaceAt 1, 3
+        expect(nodec.get('nodeVal.0')).toBe nodec0
+        expect(nodec.get('nodeVal.1')).toBe undefined
+        expect(nodec.get('nodeVal.2')).toBe undefined
+        expect(nodec.get('nodeVal.length')).toBe 1
+
+        newNode = j2hn "wala"
+        node.replaceAt 1, 2, newNode
+        expect(node.get('nodeVal.0')).toBe nodea
+        expect(node.get('nodeVal.1')).toBe newNode
+        expect(node.get('nodeVal.2')).toBe undefined
+        expect(node.get('nodeVal.length')).toBe 2
+
+      it "should accept a single element as objects", ->
+        newNode = j2hn "wala"
+        node.replaceAt 1, 1, newNode
+        expect(node.get 'nodeVal.1').toBe newNode
+
+      it "should accept a multiple elements as objects", ->
+        newNode0 = j2hn "wala"
+        newNode1 = j2hn "wala"
+        node.replaceAt 1, 2, newNode0, newNode1
+        expect(node.get 'nodeVal.1').toBe newNode0
+        expect(node.get 'nodeVal.2').toBe newNode1
+
+      it 'should set the parent node properly', ->
+        newNode0 = j2hn "wala"
+        newNode1 = j2hn "walb"
+        newNode2 = j2hn "walc"
+        node.replaceAt 1, 2, newNode0, newNode1, newNode2
+        expect(newNode0.get('nodeParent')).toBe node
+        expect(newNode1.get('nodeParent')).toBe node
+        expect(newNode2.get('nodeParent')).toBe node
+
+      it "should throw when element node isn't a collection", ->
+        expect(-> nodea.replaceAt 0, 0).toThrow()
+
+      it "should unset the replaced nodes' nodeParnet", ->
+        throw 'pending'
+
+
     describe "replaceWithJson", ->
       it "should work when replacing with literal", ->
         nodec.replaceWithJson 'imaliteral'
