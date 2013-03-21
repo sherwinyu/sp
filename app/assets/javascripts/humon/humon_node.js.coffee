@@ -105,3 +105,4 @@ Sysys.HumonNode = Ember.Object.extend
     parent = @get('nodeParent')
     parent.set 'nodeType', 'hash'
     @set 'nodeKey', newKey
+

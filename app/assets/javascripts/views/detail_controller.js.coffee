@@ -47,7 +47,7 @@ Sysys.DetailController = Ember.Object.extend
         {key: '', val: empty}
       else if parent.get('isList')
         empty
-    parent.replaceAt(len, 0, [obj])
+    parent.replaceAt(len, 0, obj)
 
   init: ->
     stateMgr = Ember.StateManager.create

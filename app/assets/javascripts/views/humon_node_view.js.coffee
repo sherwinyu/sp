@@ -46,7 +46,7 @@ Sysys.HumonNodeView = Ember.View.extend
         {key: '', val: empty}
       else if parent.get('isList')
         empty
-    parent.replaceAt(len, 0, [obj])
+    parent.replaceAt(len, 0, obj)
 
     # TODO(syu): redisplay the content field value?
     # TODO(syu): interface with "next step", e.g., singleline compact parse; should autohighlight next line.
