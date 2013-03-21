@@ -62,6 +62,36 @@ describe "HumonNode", ->
       it "should return null on a lone node", ->
         hn = j2hn 1
         expect(hn.nextNode()).toBe null
+    describe "prevNode", ->
+      it "should return null on the root", ->
+        expect(node.prevNode()).toBe null
+
+      it "should point up the parent if its a first child", ->
+        expect(nodea.prevNode()).toBe node
+        expect(nodec0.prevNode()).toBe nodec
+        expect(nodec2nested.prevNode()).toBe nodec2
+
+      it "should go to the previous sibling if available", ->
+        expect(nodeb.prevNode()).toBe nodea
+        expect(nodec.prevNode()).toBe nodeb
+        expect(nodec1.prevNode()).toBe nodec0
+        expect(nodec2.prevNode()).toBe nodec1
+
+      it "should go down the tree", ->
+        noded = j2hn 1
+        noded.set 'nodeKey', 'd'
+        node.replaceAt(3, 0, noded)
+        expect(noded.prevNode()).toBe nodec2nested
+
+      it "should go in order", ->
+        expect(node.prevNode()).toBe null
+        expect(nodea.prevNode()).toBe node
+        expect(nodeb.prevNode()).toBe nodea
+        expect(nodec.prevNode()).toBe nodeb
+        expect(nodec0.prevNode()).toBe nodec
+        expect(nodec1.prevNode()).toBe nodec0
+        expect(nodec2.prevNode()).toBe nodec1
+        expect(nodec2nested.prevNode()).toBe nodec2
 
     describe "getNode", ->
       it "should fail if the node isn't a hash or a list", ->

@@ -66,6 +66,15 @@ Sysys.HumonNode = Ember.Object.extend
     null
 
   prevNode: ->
+    console.log 'zup'
+    unless @get('nodeParent')
+      return null
+    if @get('nodeParent.nodeVal')[0] == @ 
+      return @get('nodeParent')
+    curNode = @get('nodeParent.nodeVal')[ @get('nodeParent.nodeVal').indexOf(@) - 1 ] # start at prev sibling
+    while curNode.get('hasChildren')
+      curNode = curNode.get('nodeVal')[ curNode.get('nodeVal').length - 1 ]
+    curNode
 
   unknownProperty: (key) ->
     return @getNode(key)?.get 'json'
