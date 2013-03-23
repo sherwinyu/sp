@@ -3,7 +3,9 @@
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
   stateManager: null
-  activeHumonNodeViewBinding: Ember.Binding.oneWay 'activeHumonNode.nodeView'
+  activeHumonNodeView: (->
+    @get('activeHumonNode.nodeView')
+  ).property 'activeHumonNode'
   activeHumonNode: null
 
   commitAndContinue: ->
@@ -11,6 +13,8 @@ Sysys.DetailController = Ember.Object.extend
     @commitChanges()
     last = next.prevNode()
     @set('activeHumonNode', last)
+    @focusValField()
+    # @unfocus()
 
   # precondition: activeNode is a literal
   # does jsonparsing of current activeHumonNodeView content field
@@ -22,28 +26,35 @@ Sysys.DetailController = Ember.Object.extend
     rawString = @get('activeHumonNodeView').$('.content-field').first().val()
     json = JSON.parse rawString
     @get('activeHumonNode').replaceWithJson json
-    @unfocus()
 
   cancelChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
     rawString = @get('activeHumonNode.json')
     @get('activeHumonNodeView').$('.content-field').first().val rawString
-    @unfocus()
     # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
   unfocus: ->
     @get('activeHumonNodeView').$('input').blur()
     @get('activeHumonNodeView').$('textarea').blur()
 
+  focusValField: ->
+    @unfocus()
+    $cf = @get('activeHumonNodeView').$('.content-field').first()
+    console.log '$cf.val', $cf.val()
+    console.log 'ahn.json', @get('activeHumonNode.json')
+    $cf.trigger 'focus'
+
   nextNode: ->
     newNode = @get('activeHumonNode').nextNode()
     if newNode 
       @set('activeHumonNode', newNode)
+      @focusValField()
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
     if newNode 
       @set('activeHumonNode', newNode)
+      @focusValField()
 
       ###
   insertNewElement: ->
