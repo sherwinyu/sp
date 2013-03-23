@@ -2,14 +2,15 @@
   {{view Sysys.ContentField rawValueBinding="view.content.json"}}
 {{else}}
   {{#if view.content.isHash}}
-    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.KvpItemView" class="kvpcollectionhelper"}}
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.NodeItemView" class="node-item-collection-wrapper hash"}}
   {{/if}}
   {{#if view.content.isList}}
     {{!collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView" class="listcollectionhelper"}}
-    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.NodeItemView" class="node-item-collection-wrapper"}}
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.NodeItemView" class="node-item-collection-wrapper list"}}
   {{/if}}
 {{/if}}
 {{#if view.displayStats}}
-  {{view.json_string}}
+  <strong> JSON STRING</strong>: {{view.json_string}} <br>
+  <strong> Active Humon Node</strong>: {{controller.activeHumonNode.nodeView.json_string}}
 {{/if}}
 

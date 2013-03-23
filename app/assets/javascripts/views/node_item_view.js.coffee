@@ -1,6 +1,13 @@
 Sysys.NodeItemView = Ember.View.extend
   templateName: 'node_item'
   classNames: ['node-item']
+  classNameBindings: [
+    'isActive:active'
+    ]
+  isActive: (->
+    ret = @get('controller.activeHumonNode') == @get('content')
+    ret
+  ).property('controller.activeHumonNode')
 
   willInsertElement: ->
     console.log 'rurp'
@@ -22,5 +29,6 @@ Sysys.NodeItemView = Ember.View.extend
     @_super()
 
   focusIn: (e) ->
-    @get('controller').set('activeHumonNode', @get('content'))
+    @get('controller').activateNode @get('content')
+    # .set('activeHumonNode', @get('content'))
     false

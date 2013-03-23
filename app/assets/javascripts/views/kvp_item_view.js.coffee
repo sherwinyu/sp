@@ -14,7 +14,7 @@ Sysys.KvpItemView = Ember.View.extend
     ###
 
   focusIn: (e) ->
-    @get('controller').set('activeHumonNode', @get('content'))
+    # @get('controller').set('activeHumonNode', @get('content'))
     false
 
   didInsertElement: ->

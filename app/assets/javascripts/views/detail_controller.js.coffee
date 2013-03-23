@@ -12,7 +12,7 @@ Sysys.DetailController = Ember.Object.extend
     next = @get('activeHumonNode').nextNode()
     @commitChanges()
     last = next.prevNode()
-    @set('activeHumonNode', last)
+    @activateNode last 
     @focusValField()
     # @unfocus()
 
@@ -44,19 +44,26 @@ Sysys.DetailController = Ember.Object.extend
     console.log 'ahn.json', @get('activeHumonNode.json')
     $cf.trigger 'focus'
 
+  # sets activeHumonNode to node if node exists
+  activateNode: (node) ->
+    if node
+      @set 'activeHumonNode', node
+
   nextNode: ->
     newNode = @get('activeHumonNode').nextNode()
-    if newNode 
-      @set('activeHumonNode', newNode)
-      @focusValField()
+    @activateNode newNode
+    # if newNode 
+    # @set('activeHumonNode', newNode)
+      # @focusValField()
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
-    if newNode 
-      @set('activeHumonNode', newNode)
-      @focusValField()
+    @activateNode newNode
+    # if newNode 
+    # @set('activeHumonNode', newNode)
+    # @focusValField()
 
-      ###
+   ###
   insertNewElement: ->
     currentNode = @get('currentNode')
     parent = currentNodeget('nodeParent')

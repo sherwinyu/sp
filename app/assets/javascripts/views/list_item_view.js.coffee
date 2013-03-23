@@ -20,5 +20,5 @@ Sysys.ListItemView = Ember.View.extend
     ###
 
   focusIn: (e) ->
-    @get('controller').set('activeHumonNode', @get('content'))
+    # @get('controller').activateNode @get('content') 
     false
