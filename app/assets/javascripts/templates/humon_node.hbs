@@ -1,7 +1,7 @@
 {{#if view.content.hasKey}}
-  {{view Ember.TextField valueBinding="view.content.nodeKey" class="key"}}:
+  {{view Sysys.ContentField  rawValueBinding="view.content.nodeKey" class="key"}}:
 {{else}}
-  {{view Ember.TextField valueBinding="view.contentIndex" class="key"}}:
+  {{view Sysys.ContentField  rawValueBinding="view.contentIndex" class="key"}}:
 {{/if}}
 
 {{#if view.content.isLiteral}}

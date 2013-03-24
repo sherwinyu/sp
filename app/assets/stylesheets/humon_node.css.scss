@@ -1,16 +1,23 @@
-.node-literal {
-  border: none; // 1px red solid;
-  // display:inline-block;
+.node {
+  margin-left: 10px;
+  border: 1px transparent solid; 
+  background: white;
+}
+.node.active {
+  border: 1px rgba(0,0,255, 0.3) solid; 
+  background: rgba(0,0,255, 0.1);
 }
 
-.node-collection {
-  border: none; //1px blue solid;
-  display: block;
-  margin-left: 10px;
+.node.node-literal {
 }
-.node-collection.node-collection-flat {
-  display: inline-block;
-  margin-left: 0px;
+.node.node-literal:hover {
+  border: 1px rgba(255,0,0,0.1) solid; // 1px red solid;
+}
+
+.node.node-collection {
+}
+.node.node-collection:hover {
+  border: 1px rgba(255,0,0,0.1) solid; // 1px red solid;
 }
 
 textarea.content-field {
@@ -20,16 +27,33 @@ textarea.content-field {
   padding: 0px;
   margin: 0px;
   border-radius: 0px;
-  border: 1px transparent solid;
+  box-shadow: none;
+  resize: none;
+  background: none;
 }
 
-
 textarea.content-field:focus {
-  border: 1px white-smoke dashed;
-  background: azure;
+  border: none;
   box-shadow: none;
 }
 
+textarea.content-field.key {
+  height: 20px;
+  width: 50px;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+  box-shadow: none;
+  border:none;
+  resize: none;
+  background: none;
+}
+
+textarea.content-field.key:focus {
+  border:none;
+}
+
+/*
 .node input.key {
   height: 20px;
   width: 50px;
@@ -59,7 +83,8 @@ textarea.content-field:focus {
   border: 1px white-smoke dashed;
   box-shadow: none;
 }
-
+*/
+/*
 .kvp-item input.key {
   height: 20px;
   width: 50px;
@@ -75,8 +100,10 @@ textarea.content-field:focus {
   background: azure;
   box-shadow: none;
 }
+*/
 
 // ACTIVS
+/*
 .active.node-literal {
   border-top: 1px solid red;
   border-bottom: 1px solid red;
@@ -96,4 +123,5 @@ textarea.content-field:focus {
   border-top: 1px solid blue;
   border-bottom: 1px solid blue;
 }
+*/
 
