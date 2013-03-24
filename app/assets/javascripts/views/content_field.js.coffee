@@ -4,17 +4,14 @@ Sysys.ContentField = Ember.TextArea.extend
   border: "5px red solid"
   classNames: ['content-field']
 
-  focusIn: ->
+  focusIn: (e)->
+    @get('controller').activateNode @get('parentView.content')
+    e.stopPropagation()
 
   focusOut: ->
     # commit
 
-  # enterEdit: ->
-    # @$(
-
-
   exitEdit: ->
-
 
   didInsertElement: ->
     @set('value', @get('rawValue'))

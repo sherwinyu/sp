@@ -28,10 +28,8 @@ Sysys.HumonNodeView = Ember.View.extend
 
   initHotkeys: ->
     @$().bind 'keyup', 'up', (e) =>
-      console.log 'zup'
+      'zup'
 
-
-    
   commit: ->
     val = @$('.content-field').first().val()
     json = JSON.parse val

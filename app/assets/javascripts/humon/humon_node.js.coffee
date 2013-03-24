@@ -66,7 +66,6 @@ Sysys.HumonNode = Ember.Object.extend
     null
 
   prevNode: ->
-    console.log 'zup'
     unless @get('nodeParent')
       return null
     if @get('nodeParent.nodeVal')[0] == @ 

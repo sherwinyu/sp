@@ -28,7 +28,12 @@ Sysys.NodeItemView = Ember.View.extend
   init: ->
     @_super()
 
-  focusIn: (e) ->
-    @get('controller').activateNode @get('content')
-    # .set('activeHumonNode', @get('content'))
-    false
+    ###
+  focusIn: (e, {suppress} = {suppress: false}) ->
+
+    suppress = e?.eventData?.suppress
+    console.log 'suppress', suppress 
+
+    unless suppress
+      console.log 'activating...'
+      @get('controller').activateNode @get('content')

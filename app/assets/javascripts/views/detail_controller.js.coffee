@@ -21,15 +21,17 @@ Sysys.DetailController = Ember.Object.extend
   # postcondition: all text fields are unfocused
   # returns: the parsed nodes
   commitChanges: ->
-    Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
-    rawString = @get('activeHumonNodeView').$('.content-field').first().val()
+    Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
+    rawString = @get('activeHumonNodeView').$('> .content-field').first().val()
     json = JSON.parse rawString
-    @get('activeHumonNode').replaceWithJson json
+    Ember.run =>
+      @get('activeHumonNode').replaceWithJson json
 
   cancelChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
     rawString = @get('activeHumonNode.json')
-    @get('activeHumonNodeView').$('.content-field').first().val rawString
+    @get('activeHumonNodeView').$('> .content-field').first().val rawString
+    @unfocus()
     # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
   unfocus: ->
@@ -37,44 +39,33 @@ Sysys.DetailController = Ember.Object.extend
     @get('activeHumonNodeView').$('textarea').blur()
 
   focusValField: ->
-    @unfocus()
-    $cf = @get('activeHumonNodeView').$('.content-field').first()
-    console.log '$cf.val', $cf.val()
-    console.log 'ahn.json', @get('activeHumonNode.json')
-    $cf.trigger 'focus'
+    window.zorg = $cf = @get('activeHumonNodeView').$('> .content-field').first()
+    if $cf.length
+      console.log '$cf.val', $cf.val()
+      console.log 'ahn.json', @get('activeHumonNode.json')
+      e  = jQuery.Event "focus"
+      e.eventData = suppress: true
+      $cf.trigger e
+
+      #setTimeout( (-> $cf.trigger(e))
+      #, 100)
 
   # sets activeHumonNode to node if node exists
-  activateNode: (node) ->
+  activateNode: (node, {focus} = {focus: false}) ->
     if node
       @set 'activeHumonNode', node
+      if focus
+        @focusValField()
 
   nextNode: ->
+    @unfocus()
     newNode = @get('activeHumonNode').nextNode()
-    @activateNode newNode
-    # if newNode 
-    # @set('activeHumonNode', newNode)
-      # @focusValField()
+    @activateNode newNode, focus: true
 
   prevNode: ->
+    @unfocus()
     newNode = @get('activeHumonNode').prevNode()
-    @activateNode newNode
-    # if newNode 
-    # @set('activeHumonNode', newNode)
-    # @focusValField()
-
-   ###
-  insertNewElement: ->
-    currentNode = @get('currentNode')
-    parent = currentNodeget('nodeParent')
-    len = parent.get('nodeVal.length')
-    empty = Sysys.HumonUtils.json2humonNode('')
-    obj = 
-      if parent.get('isHash')
-        {key: '', val: empty}
-      else if parent.get('isList')
-        empty
-    parent.replaceAt(len, 0, obj)
-    ###
+    @activateNode newNode, focus: true
 
   init: ->
     stateMgr = Ember.StateManager.create
