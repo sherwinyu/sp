@@ -66,11 +66,15 @@ Sysys.HumonNode = Ember.Object.extend
     null
 
   prevNode: ->
+    # there can be no previous node if there is no parent (and therefore no siblings)
     unless @get('nodeParent')
       return null
+    # if this is the first child, the previous node is just the parent
     if @get('nodeParent.nodeVal')[0] == @ 
       return @get('nodeParent')
-    curNode = @get('nodeParent.nodeVal')[ @get('nodeParent.nodeVal').indexOf(@) - 1 ] # start at prev sibling
+    # otherwise, start at the previous sibling
+    curNode = @get('nodeParent.nodeVal')[ @get('nodeParent.nodeVal').indexOf(@) - 1 ]
+    # while the sibling we're exploring has children, follow the last child
     while curNode.get('hasChildren')
       curNode = curNode.get('nodeVal')[ curNode.get('nodeVal').length - 1 ]
     curNode

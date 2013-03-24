@@ -53,11 +53,9 @@ Sysys.DetailController = Ember.Object.extend
       e.eventData = suppress: true
       $cf.trigger e
 
-      #setTimeout( (-> $cf.trigger(e))
-      #, 100)
-
   # sets activeHumonNode to node if node exists
   activateNode: (node, {focus} = {focus: false}) ->
+    console.log "activating node #{node.get('json')}"
     if node
       @set 'activeHumonNode', node
       if focus

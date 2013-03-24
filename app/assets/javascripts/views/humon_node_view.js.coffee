@@ -16,45 +16,20 @@ Sysys.HumonNodeView = Ember.View.extend
   ).property('controller.activeHumonNode')
 
   willDestroyElement: ->
-    @$().slideUp 0
-    @$().slideUp 250, "easeInOutQuad"
     @get('content')?.set 'nodeView', null
-
-  willInsertElement: ->
+    clone = @$().clone()
+    @.$().replaceWith clone
+    clone.slideUp 250
 
   didInsertElement: ->
     @initHotkeys()
     @get('content')?.set 'nodeView', @
+    @$().slideUp 0
+    @$().slideDown 250
 
   initHotkeys: ->
     @$().bind 'keyup', 'up', (e) =>
       console.log 'zup'
-
-  commit: ->
-    val = @$('.content-field').first().val()
-    json = JSON.parse val
-    @get('content').replaceWithJson json
-
-    parent = @get('content.nodeParent')
-    len = parent.get('nodeVal.length')
-    empty = Sysys.HumonUtils.json2humonNode('')
-    obj = 
-      if parent.get('isHash')
-        {key: '', val: empty}
-      else if parent.get('isList')
-        empty
-    parent.replaceAt(len, 0, obj)
-
-    # TODO(syu): redisplay the content field value?
-    # TODO(syu): interface with "next step", e.g., singleline compact parse; should autohighlight next line.
-    #
-    # is an interface with a state manager really necessary? probably.
-    # next step to implement: "find next node, find previous node"
-
-  cancel: ->
-    json = @get('content.json')
-    @$('.content-field').val json
-
 
 ###
  EVENTS

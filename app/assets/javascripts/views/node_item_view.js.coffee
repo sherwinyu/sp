@@ -20,12 +20,3 @@ Sysys.NodeItemView = Ember.View.extend
     @.$().replaceWith clone
     clone.slideUp 250
 
-    ###
-  focusIn: (e, {suppress} = {suppress: false}) ->
-
-    suppress = e?.eventData?.suppress
-    console.log 'suppress', suppress 
-
-    unless suppress
-      console.log 'activating...'
-      @get('controller').activateNode @get('content')
