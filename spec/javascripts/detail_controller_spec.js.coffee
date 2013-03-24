@@ -5,6 +5,10 @@ describe "detail controller", ->
     it "should change activeumonNode to the last inserted element"
     it "should not change activeumonNode if commiting a literal"
 
+  describe "activateNode", ->
+    it "should not work when node is null", ->
+    xit "should it guard against nodes that aren't under the domain of this controller?"
+
 describe "content field", ->
   describe "focusOut", ->
     it "should it allow focusing out when there are parse errors?"

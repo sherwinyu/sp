@@ -25,3 +25,23 @@ Sysys.u =
 Sysys.vfi = Sysys.u.viewFromId
 Sysys.vfe = Sysys.u.viewFromElement
 Sysys.vf = Sysys.u.viewFromNumber
+
+window.setCursor = (node, pos) ->
+  node = if typeof node == "string" || node instanceof string
+           document.getElementById node
+         else
+           node
+  unless node
+    return false
+  if node.createTextRange
+    textRange = node.createTextRange()
+    textRange.collapse true
+    textRange.moveEnd pos
+    textRange.select()
+    true
+  else if node.setSelectionRange
+    node.setSelectionRange pos, pos
+    true
+  false
+           
+  

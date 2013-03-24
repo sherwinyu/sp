@@ -14,7 +14,6 @@ Sysys.DetailController = Ember.Object.extend
     last = next.prevNode()
     @activateNode last 
     @focusValField()
-    # @unfocus()
 
   # precondition: activeNode is a literal
   # does jsonparsing of current activeHumonNodeView content field
