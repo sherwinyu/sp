@@ -9,9 +9,7 @@ Sysys.ContentField = Ember.TextArea.extend
     e.stopPropagation()
 
   focusOut: ->
-    # commit
-
-  exitEdit: ->
+    # TODO(syu): silent commit?
 
   didInsertElement: ->
     @set('value', @get('rawValue'))

@@ -5,7 +5,7 @@
 {{/if}}
 
 {{#if view.content.isLiteral}}
-  {{view Sysys.ContentField rawValueBinding="view.content.json"}}
+  {{view Sysys.ContentField rawValueBinding="view.content.json" class="literal"}}
 {{else}}
   {{#if view.content.isHash}}
     {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper hash"}}

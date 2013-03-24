@@ -28,7 +28,7 @@ Sysys.DetailController = Ember.Object.extend
   # returns: the parsed nodes
   commitChanges: ->
     Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
-    rawString = @get('activeHumonNodeView').$('> .content-field').first().val()
+    rawString = @get('activeHumonNodeView').$('> .content-field.literal').first().val()
     json = JSON.parse rawString
     Ember.run =>
       @get('activeHumonNode').replaceWithJson json
@@ -36,8 +36,7 @@ Sysys.DetailController = Ember.Object.extend
   cancelChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
     rawString = @get('activeHumonNode.json')
-    @get('activeHumonNodeView').$('> .content-field').first().val rawString
-    @unfocus()
+    @get('activeHumonNodeView').$('> .content-field.literal').first().val rawString
     # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
   unfocus: ->
@@ -55,19 +54,19 @@ Sysys.DetailController = Ember.Object.extend
 
   # sets activeHumonNode to node if node exists
   activateNode: (node, {focus} = {focus: false}) ->
-    console.log "activating node #{node.get('json')}"
+    console.log "activating node #{node?.get('json')}"
     if node
       @set 'activeHumonNode', node
       if focus
         @focusValField()
 
   nextNode: ->
-    @unfocus()
+    # @unfocus()
     newNode = @get('activeHumonNode').nextNode()
     @activateNode newNode, focus: true
 
   prevNode: ->
-    @unfocus()
+    # @unfocus()
     newNode = @get('activeHumonNode').prevNode()
     @activateNode newNode, focus: true
 
