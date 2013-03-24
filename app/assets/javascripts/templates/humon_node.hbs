@@ -1,12 +1,18 @@
+{{#if view.content.hasKey}}
+  {{view Ember.TextField valueBinding="view.content.nodeKey" class="key"}}:
+{{else}}
+  {{view Ember.TextField valueBinding="view.contentIndex" class="key"}}:
+{{/if}}
+
 {{#if view.content.isLiteral}}
   {{view Sysys.ContentField rawValueBinding="view.content.json"}}
 {{else}}
   {{#if view.content.isHash}}
-    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.NodeItemView" class="node-item-collection-wrapper hash"}}
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper hash"}}
   {{/if}}
   {{#if view.content.isList}}
     {{!collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.ListItemView" class="listcollectionhelper"}}
-    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.NodeItemView" class="node-item-collection-wrapper list"}}
+    {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper list"}}
   {{/if}}
 {{/if}}
 {{#if view.displayStats}}

@@ -1,6 +1,6 @@
 {{#if view.content.hasKey}}
   {{view Ember.TextField valueBinding="view.content.nodeKey" class="key"}}:
 {{else}}
-  ::{{view.contentIndex}}
+  {{view Ember.TextField valueBinding="view.contentIndex" class="key"}}:
 {{/if}}
 {{view Sysys.HumonNodeView contentBinding="view.content"}}
