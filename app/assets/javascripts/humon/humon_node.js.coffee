@@ -92,12 +92,12 @@ Sysys.HumonNode = Ember.Object.extend
       for child in @get('nodeVal')
         child.set 'nodeParent', @
 
-  replaceAt: (idx, amt, objects...) ->
+  replaceAt: (idx, amt, nodes...) ->
     Em.assert('HumonNode must be a list or a hash', @get('isHash') || @get('isList'))
     list = @get 'nodeVal'
-    for o in objects
-      o.set('nodeParent', @)
-    list.replace idx, amt, objects
+    for node in nodes
+      node.set('nodeParent', @)
+    list.replace idx, amt, nodes
 
   # different from set nodeKey directly because it will coerce the parent to a hash
   editKey: (newKey) ->

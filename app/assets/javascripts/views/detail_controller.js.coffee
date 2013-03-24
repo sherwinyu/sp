@@ -12,7 +12,13 @@ Sysys.DetailController = Ember.Object.extend
     next = @get('activeHumonNode').nextNode()
     @commitChanges()
     last = next.prevNode()
-    @activateNode last 
+    parent = next.get('nodeParent')
+    idx = parent.get('nodeVal').indexOf next
+    blank = (Sysys.j2hn " ").set('nodeKey', 'new key')
+    Ember.run =>
+      parent.replaceAt(idx, 0, blank)
+    
+    @activateNode blank
     @focusValField()
 
   # precondition: activeNode is a literal

@@ -2,6 +2,7 @@ describe "HumonNode UI integration", ->
   beforeEach ->
     @serialized =
       {
+        scalar: ["scalar"]
         hash2:
           hash1:
             hash0: 0
@@ -12,8 +13,6 @@ describe "HumonNode UI integration", ->
               314
             ]
           ]
-        scalar:
-          "scalar"
       }
     json = @serialized
     window.dC = Sysys.DetailController.create() 

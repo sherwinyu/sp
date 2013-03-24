@@ -6,7 +6,6 @@ Sysys.NodeItemView = Ember.View.extend
     ]
   isActive: (->
     ret = @get('controller.activeHumonNode') == @get('content')
-    ret
   ).property('controller.activeHumonNode')
 
   willInsertElement: ->
@@ -20,13 +19,6 @@ Sysys.NodeItemView = Ember.View.extend
     clone = @$().clone()
     @.$().replaceWith clone
     clone.slideUp 250
-
-  isActive: (->
-    ret = @get('controller.activeHumonNode') == @get('content')
-  ).property('controller.activeHumonNode')
-
-  init: ->
-    @_super()
 
     ###
   focusIn: (e, {suppress} = {suppress: false}) ->
