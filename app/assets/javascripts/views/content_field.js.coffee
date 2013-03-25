@@ -28,17 +28,19 @@ Sysys.ContentField = Ember.TextArea.extend
 
   initHotKeys: ->
     @$().bind 'keyup', 'esc',(e) =>
-      @cancel()
       e.preventDefault()
+      @cancel()
 
     @$().bind 'keydown', 'return', (e) =>
-      @commitAndContinue()
       e.preventDefault()
+      @commitAndContinue()
 
-    @$().bind 'keyup', 'down', (e) =>
+    @$().bind 'keydown', 'down', (e) =>
+      e.preventDefault()
       @get('controller').nextNode()
 
-    @$().bind 'keyup', 'up', (e) =>
+    @$().bind 'keydown', 'up', (e) =>
+      e.preventDefault()
       @get('controller').prevNode()
 
   willDestroyElement: ->
@@ -46,10 +48,28 @@ Sysys.ContentField = Ember.TextArea.extend
 
 Sysys.ValField = Sysys.ContentField.extend
   classNames: ['val-field']
+  placeholder: 'val'
   commit: ->
     @get('controller').commitVal()
   
 Sysys.KeyField = Sysys.ContentField.extend
   classNames: ['key-field']
+  placeholder: 'key'
   commit: ->
     @get('controller').commitKey()
+
+Sysys.IdxField = Sysys.ContentField.extend
+  classNames: ['idx-field']
+  refresh: Em.K
+  didInsertElement: ->
+    @_super()
+    @$().attr('tabindex', -1)
+
+Sysys.ProxyField =  Sysys.ContentField.extend
+  classNames: ['proxy-field']
+  placeholder: ''
+  focusIn: (e)->
+    @get('controller').activateNode @get('parentView.content'), focus: true
+  didInsertElement: ->
+    @_super()
+    @$().attr('tabindex', -1)

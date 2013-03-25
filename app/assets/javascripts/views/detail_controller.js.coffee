@@ -28,7 +28,7 @@ Sysys.DetailController = Ember.Object.extend
     @commitVal()
 
   commitKey: ->
-    rawString = @get('activeHumonNodeView').$('> .content-field.key')?.first()?.val()
+    rawString = @get('activeHumonNodeView').$('> span > .content-field.key')?.first()?.val()
     if rawString?
       # TODO(syu): validate whether rawString can be a key
       @set('activeHumonNode.nodeKey', rawString)
@@ -39,7 +39,7 @@ Sysys.DetailController = Ember.Object.extend
   # calls replaceWithJson on activeNode
   commitVal: ->
     Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
-    rawString = @get('activeHumonNodeView').$('> .content-field.literal')?.first()?.val()
+    rawString = @get('activeHumonNodeView').$('> span > .content-field.val-field')?.first()?.val()
     if rawString?
       json = JSON.parse rawString
       Ember.run =>
@@ -49,7 +49,7 @@ Sysys.DetailController = Ember.Object.extend
   cancelChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
     rawString = @get('activeHumonNode.json')
-    @get('activeHumonNodeView').$('> .content-field.literal').first().val rawString
+    @get('activeHumonNodeView').$('> span > .content-field.literal').first().val rawString
     # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
   unfocus: ->
@@ -79,10 +79,10 @@ Sysys.DetailController = Ember.Object.extend
       @focusValField()
 
   focusKeyField: ->
-    $kf = @get('activeHumonNodeView').$('> .content-field.key').first()
+    $kf = @get('activeHumonNodeView').$('> span > .content-field.key-field').first()
     $kf.focus()
   focusValField: ->
-    $vf = @get('activeHumonNodeView').$('> .content-field.literal').first()
+    $vf = @get('activeHumonNodeView').$('> span >  .content-field.val-field').first()
     $vf.focus()
     ###
     if $cf.length

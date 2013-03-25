@@ -1,29 +1,46 @@
 .node {
-  // margin-left: px;
   padding-left: 15px;
+  margin-left: 8px;
   border: 1px transparent solid; 
+  border-left: 4px white solid;
   background: white;
 }
 .node.active {
-  // border: 1px rgba(0,0,255, 0.3) solid; 
+  // background: rgba(0,255,255, 0.1);
+}
+
+.node.active > div > .node {
+  border-left: 4px rgba(0,0,255, 0.1) solid;
+}
+
+.node.active > .blocky {
   background: rgba(0,0,255, 0.1);
 }
+
+span.blocky {
+  display: inline-block;
+  width: 100%;
+  border: none;
+}
+
+.proxy-field
 
 .node.node-literal {
 }
 .node.node-literal:hover {
-  border: 1px rgba(255,0,0,0.1) solid; // 1px red solid;
+  // border: 1px rgba(255,0,0,0.1) solid; // 1px red solid;
+  // border-left: 10px transparent solid;
 }
 
 .node.node-collection {
 }
 .node.node-collection:hover {
-  border: 1px rgba(255,0,0,0.1) solid; // 1px red solid;
+  // border: 1px rgba(255,0,0,0.1) solid; // 1px red solid;
+  // border-left: 10px transparent solid;
 }
 
 textarea.content-field {
   height: 20px;
-  width: 600px;
   border: none;
   padding: 0px;
   margin: 0px;
@@ -32,26 +49,29 @@ textarea.content-field {
   resize: none;
   background: none;
 }
-
 textarea.content-field:focus {
   border: none;
   box-shadow: none;
 }
 
-textarea.content-field.key {
+textarea.content-field.val-field {
   height: 20px;
-  width: 50px;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px;
-  box-shadow: none;
-  border:none;
-  resize: none;
-  background: none;
+  width: 600px;
+}
+textarea.content-field.val-field:focus {
 }
 
-textarea.content-field.key:focus {
-  border:none;
+
+textarea.content-field.idx-field {
+  width: 10px;
+}
+textarea.content-field.idx-field:focus {
+}
+
+textarea.content-field.key-field {
+  width: 50px;
+}
+textarea.content-field.key-field:focus {
 }
 
 /*
