@@ -3,14 +3,6 @@ Sysys.ContentField = Ember.TextArea.extend
   # value: ''
   border: "5px red solid"
   classNames: ['content-field']
-  ###
-  contentIndexChanged: (->
-    debugger
-    unless @get('rawValue')
-      @set('value', @get('parentView.content'))
-  ).observes('parentView.contentIndex')
-      ###
-
 
   focusIn: (e)->
     @get('controller').activateNode @get('parentView.content')
