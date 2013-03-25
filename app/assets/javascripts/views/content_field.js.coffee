@@ -1,8 +1,7 @@
 Sysys.ContentField = Ember.TextArea.extend
   rawValueBinding: null
-  # value: ''
-  border: "5px red solid"
   classNames: ['content-field']
+  placeholder: ''
 
   focusIn: (e)->
     @get('controller').activateNode @get('parentView.content')
@@ -12,13 +11,16 @@ Sysys.ContentField = Ember.TextArea.extend
     # TODO(syu): silent commit?
 
   didInsertElement: ->
-    # @set('value', @get('rawValue')) if @get('rawValue')?
     @refresh()
+    @setPlaceHolderText()
     @initHotKeys()
     @$().autogrow()
 
   refresh: ->
     @set 'value', @get('rawValue')
+  setPlaceHolderText: ->
+    console.log "setting placeholder text #{@get 'placeholder'}"
+    @$().attr('placeholder', @get('placeholder'))
   commit: Em.K
   commitAndContinue: ->
     @get('controller').commitAndContinue()

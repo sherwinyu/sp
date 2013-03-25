@@ -12,7 +12,7 @@ Sysys.DetailController = Ember.Object.extend
     ahn = @get('activeHumonNode')
     parent = ahn.get('nodeParent')
     idx = parent.get('nodeVal').indexOf(ahn) + 1
-    nextBlank = (Sysys.j2hn " ")
+    nextBlank = (Sysys.j2hn "")
     unless ahn.get('nodeParent.isList')
       nextBlank.set 'nodeKey', ''
     Ember.run =>
