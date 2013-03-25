@@ -14,12 +14,12 @@ Sysys.DetailController = Ember.Object.extend
     last = next.prevNode()
     parent = next.get('nodeParent')
     idx = parent.get('nodeVal').indexOf next
-    blank = (Sysys.j2hn " ").set('nodeKey', 'new key')
+    blank = (Sysys.j2hn " ").set('nodeKey', '')
     Ember.run =>
       parent.replaceAt(idx, 0, blank)
     
     @activateNode blank
-    @focusValField()
+    @focusActiveNodeView()
 
   # precondition: activeNode is a literal
   # does jsonparsing of current activeHumonNodeView content field
@@ -43,22 +43,48 @@ Sysys.DetailController = Ember.Object.extend
     @get('activeHumonNodeView').$('input').blur()
     @get('activeHumonNodeView').$('textarea').blur()
 
+  focusActiveNodeView: ->
+    ahn = @get('activeHumonNode')
+    ahnv = @get('activeHumonNodeView')
+    nodeKey = ahn.get('nodeKey')
+    nodeVal = ahn.get('nodeVal')
+
+    if nodeKey? && nodeKey == ''
+      console.log 'focusing key field'
+      @focusKeyField()
+
+    if nodeKey? && ahn.get('isCollection')
+      @focusKeyField()
+
+    if nodeKey? && nodeKey != ''
+      console.log 'focusing val field'
+      @focusValField()
+
+    if !nodeKey 
+      console.log 'focusing val field'
+      @focusValField()
+
+  focusKeyField: ->
+    $kf = @get('activeHumonNodeView').$('> .content-field.key').first()
+    $kf.focus()
   focusValField: ->
-    window.zorg = $cf = @get('activeHumonNodeView').$('> .content-field').first()
+    $vf = @get('activeHumonNodeView').$('> .content-field.literal').first()
+    $vf.focus()
+    ###
     if $cf.length
       console.log '$cf.val', $cf.val()
       console.log 'ahn.json', @get('activeHumonNode.json')
       e  = jQuery.Event "focus"
       e.eventData = suppress: true
       $cf.trigger e
+      ###
 
   # sets activeHumonNode to node if node exists
   activateNode: (node, {focus} = {focus: false}) ->
-    console.log "activating node #{node?.get('json')}"
     if node
       @set 'activeHumonNode', node
       if focus
-        @focusValField()
+        @focusActiveNodeView()
 
   nextNode: ->
     # @unfocus()

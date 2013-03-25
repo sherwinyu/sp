@@ -1,10 +1,11 @@
 .node {
-  margin-left: 10px;
+  // margin-left: px;
+  padding-left: 15px;
   border: 1px transparent solid; 
   background: white;
 }
 .node.active {
-  border: 1px rgba(0,0,255, 0.3) solid; 
+  // border: 1px rgba(0,0,255, 0.3) solid; 
   background: rgba(0,0,255, 0.1);
 }
 
