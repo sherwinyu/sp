@@ -15,7 +15,9 @@ Sysys.HumonNode = Ember.Object.extend
     @get('nodeParent')?.notifyPropertyChange 'nodeVal'
   ).observes 'nodeVal'
 
-  nodeIdx: (->
+  nodeIdx: ((key, val)->
+    if arguments.length > 1
+      return
     @get('nodeParent.nodeVal')?.indexOf @
   ).property('nodeParent.nodeVal.@each', 'nodeParent.nodeVal')
 
