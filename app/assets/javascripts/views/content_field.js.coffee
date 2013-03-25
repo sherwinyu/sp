@@ -1,8 +1,16 @@
 Sysys.ContentField = Ember.TextArea.extend
   rawValueBinding: null
-  value: '(empty)'
+  # value: ''
   border: "5px red solid"
   classNames: ['content-field']
+  ###
+  contentIndexChanged: (->
+    debugger
+    unless @get('rawValue')
+      @set('value', @get('parentView.content'))
+  ).observes('parentView.contentIndex')
+      ###
+
 
   focusIn: (e)->
     @get('controller').activateNode @get('parentView.content')
@@ -12,7 +20,7 @@ Sysys.ContentField = Ember.TextArea.extend
     # TODO(syu): silent commit?
 
   didInsertElement: ->
-    @set('value', @get('rawValue'))
+    @set('value', @get('rawValue')) if @get('rawValue')?
 
     @$().autogrow()
 
