@@ -1,7 +1,7 @@
-{{#if view.content.hasKey}}
-  {{view Sysys.ContentField  rawValueBinding="view.content.nodeKey" class="key"}}:
+{{#if view.content.nodeParent.isHash}}
+  {{view Sysys.KeyField rawValueBinding="view.content.nodeKey" class="key"}}:
 {{else}}
-  {{view Sysys.ContentField  valueBinding="view.content.nodeIdx" class="key"}}:
+  {{view Sysys.ContentField valueBinding="view.content.nodeIdx" class="key"}}:
 {{/if}}
 
 {{#if view.content.isLiteral}}

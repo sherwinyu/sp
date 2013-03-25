@@ -12,18 +12,27 @@ Sysys.ContentField = Ember.TextArea.extend
     # TODO(syu): silent commit?
 
   didInsertElement: ->
-    @set('value', @get('rawValue')) if @get('rawValue')?
-
+    # @set('value', @get('rawValue')) if @get('rawValue')?
+    @refresh()
+    @initHotKeys()
     @$().autogrow()
 
-    parentView = @get('parentView')
+  refresh: ->
+    @set 'value', @get('rawValue')
+  commit: Em.K
+  commitAndContinue: ->
+    @get('controller').commitAndContinue()
+    
+  cancel: ->
+    @refresh()
 
+  initHotKeys: ->
     @$().bind 'keyup', 'esc',(e) =>
-      @get('controller').cancelChanges()
+      @cancel()
       e.preventDefault()
 
-    @$().bind 'keydown', 'shift+return', (e) =>
-      @get('controller').commitAndContinue()
+    @$().bind 'keydown', 'return', (e) =>
+      @commitAndContinue()
       e.preventDefault()
 
     @$().bind 'keyup', 'down', (e) =>
@@ -34,3 +43,13 @@ Sysys.ContentField = Ember.TextArea.extend
 
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'
+
+Sysys.ValField = Sysys.ContentField.extend
+  classNames: ['val-field']
+  commit: ->
+    @get('controller').commitVal()
+  
+Sysys.KeyField = Sysys.ContentField.extend
+  classNames: ['key-field']
+  commit: ->
+    @get('controller').commitKey()

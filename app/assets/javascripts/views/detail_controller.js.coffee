@@ -15,25 +15,36 @@ Sysys.DetailController = Ember.Object.extend
     nextBlank = (Sysys.j2hn " ")
     unless ahn.get('nodeParent.isList')
       nextBlank.set 'nodeKey', ''
-
     Ember.run =>
       parent.replaceAt(idx, 0, nextBlank)
-
     @commitChanges()
     @activateNode nextBlank
     @focusActiveNodeView()
 
-  # precondition: activeNode is a literal
-  # does jsonparsing of current activeHumonNodeView content field
-  # calls replaceWithJson on activeNode
-  # postcondition: all text fields are unfocused
-  # returns: the parsed nodes
+  # commits the key changes
+  # commits the val changes
   commitChanges: ->
+    @commitKey()
+    @commitVal()
+
+  commitKey: ->
+    rawString = @get('activeHumonNodeView').$('> .content-field.key')?.first()?.val()
+    if rawString?
+      # TODO(syu): validate whether rawString can be a key
+      @set('activeHumonNode.nodeKey', rawString)
+    # TODO(syu): refresh key field
+
+  # precondition: activeNode is a literal
+  # does jsonparsing of current activeHumonNodeView content-field.literal
+  # calls replaceWithJson on activeNode
+  commitVal: ->
     Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
-    rawString = @get('activeHumonNodeView').$('> .content-field.literal').first().val()
-    json = JSON.parse rawString
-    Ember.run =>
-      @get('activeHumonNode').replaceWithJson json
+    rawString = @get('activeHumonNodeView').$('> .content-field.literal')?.first()?.val()
+    if rawString?
+      json = JSON.parse rawString
+      Ember.run =>
+        @get('activeHumonNode').replaceWithJson json
+    # TODO(syu): refresh val field
 
   cancelChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
