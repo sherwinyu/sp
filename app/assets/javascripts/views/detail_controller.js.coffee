@@ -9,16 +9,18 @@ Sysys.DetailController = Ember.Object.extend
   activeHumonNode: null
 
   commitAndContinue: ->
-    next = @get('activeHumonNode').nextNode()
-    @commitChanges()
-    last = next.prevNode()
-    parent = next.get('nodeParent')
-    idx = parent.get('nodeVal').indexOf next
-    blank = (Sysys.j2hn " ").set('nodeKey', '')
+    ahn = @get('activeHumonNode')
+    parent = ahn.get('nodeParent')
+    idx = parent.get('nodeVal').indexOf(ahn) + 1
+    nextBlank = (Sysys.j2hn " ")
+    unless ahn.get('nodeParent.isList')
+      nextBlank.set 'nodeKey', ''
+
     Ember.run =>
-      parent.replaceAt(idx, 0, blank)
-    
-    @activateNode blank
+      parent.replaceAt(idx, 0, nextBlank)
+
+    @commitChanges()
+    @activateNode nextBlank
     @focusActiveNodeView()
 
   # precondition: activeNode is a literal
@@ -50,18 +52,19 @@ Sysys.DetailController = Ember.Object.extend
     nodeVal = ahn.get('nodeVal')
 
     if nodeKey? && nodeKey == ''
-      console.log 'focusing key field'
+      console.log 'focusing key field: key length 0'
       @focusKeyField()
 
     if nodeKey? && ahn.get('isCollection')
+      console.log 'focusing key field: is a collection'
       @focusKeyField()
 
     if nodeKey? && nodeKey != ''
-      console.log 'focusing val field'
+      console.log 'focusing val field: key already filled'
       @focusValField()
 
-    if !nodeKey 
-      console.log 'focusing val field'
+    if !nodeKey?
+      console.log 'focusing val field: no key, is list'
       @focusValField()
 
   focusKeyField: ->
