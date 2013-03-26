@@ -120,15 +120,33 @@ Sysys.HumonNode = Ember.Object.extend
         child.set 'nodeParent', @
 
   replaceAt: (idx, amt, nodes...) ->
-    Em.assert("HumonNode must be a list or a hash to replaceAt(#{idx},#{amt},#{nodes})", @get('isHash') || @get('isList'))
+    @replaceAtWithArray(idx, amt, nodes)
+
+  replaceAtWithArray: (idx, amt, nodes) ->
+    Em.assert("HumonNode must be a list or a hash to replaceAt(#{idx},#{amt},#{nodes})", @get('isCollection'))
     list = @get 'nodeVal'
-    for node in nodes
-      node.set('nodeParent', @)
+    if nodes?
+      for node in nodes
+        node.set('nodeParent', @)
     list.replace idx, amt, nodes
+
+
+  insertAt: (idx, nodes...) ->
+    Em.assert("HumonNode must be a list or a hash to insertAt(#{idx},#{nodes})", @get('isCollection'))
+    @replaceAtWithArray(idx, 0, nodes)
+
+  deleteAt: (idx, amt) ->
+    Em.assert("HumonNode must be a list or a hash to deleteAt(#{idx},#{amt})", @get('isCollection'))
+    @replaceAtWithArray(idx, amt)
+
+  deleteChild: (node)->
+    Em.assert('Child argument must be a child of this node for deleteChild', node.get('nodeParent') == @)
+    idx = node.get('nodeIdx')
+    @deleteAt(idx, 1)
+    node.set 'nodeParent', null
 
   # different from set nodeKey directly because it will coerce the parent to a hash
   editKey: (newKey) ->
     parent = @get('nodeParent')
     parent.set 'nodeType', 'hash'
     @set 'nodeKey', newKey
-
