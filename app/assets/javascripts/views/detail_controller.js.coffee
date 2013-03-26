@@ -128,6 +128,7 @@ Sysys.DetailController = Ember.Object.extend
     ahn = @get('activeHumonNode')
     Em.assert("can only bubble literals", ahn.get('isLiteral'))
     dest = @get('activeHumonNode').prevNode()
+    return unless dest?.get('nodeParent')
     @get('anims').destroy = 'slideUp'
     @get('anims').insert  = 'fadeIn'
     Ember.run =>
@@ -136,6 +137,15 @@ Sysys.DetailController = Ember.Object.extend
     @focusActiveNodeView()
 
   bubbleDown: ->
+    ahn = @get 'activeHumonNode'
+    Em.assert("can only bubble literals", ahn.get('isLiteral'))
+    dest = @get('activeHumonNode').nextNode()
+    return unless dest?.get('nodeParent')
+    Ember.run =>
+      ahn.get('nodeParent').deleteChild ahn
+      dest.get('nodeParent').insertAt(dest.get('nodeIdx') + 1, ahn)
+    @focusActiveNodeView()
+
 
 
   anims: {}
