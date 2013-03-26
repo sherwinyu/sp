@@ -1,9 +1,9 @@
 <span class="blocky">
   {{#if view.content.nodeParent.isHash}}
-    {{view Sysys.KeyField rawValueBinding="view.content.nodeKey"}}
+    {{view Sysys.KeyField rawValueBinding="view.content.nodeKey"}} :
   {{else}}
-   {{view Sysys.IdxField valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}} 
-  {{/if}}: 
+    {{view Sysys.IdxField valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}} 
+  {{/if}}
 
   {{#if view.content.isLiteral}}
     {{view Sysys.ValField rawValueBinding="view.content.json" }}
@@ -12,16 +12,13 @@
   {{/if}}
 </span>
 
-{{#if view.content.isHash}}
-  {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper hash"}}
-{{/if}}
-{{#if view.content.isList}}
-  {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper list"}}
+{{#if view.content.isCollection}}
+  {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper"}}
 {{/if}}
 
 {{#if view.displayStats}}
-  <strong> JSON STRING</strong>: {{view.json_string}} <br>
-  <strong> Active Humon Node</strong>: {{controller.activeHumonNode.nodeView.json_string}} <br>
-  <strong> Active Humon Node Key</strong> {{controller.activeHumonNode.nodeKey}} <br>
-  <strong> Active Humon Node Idx</strong> {{controller.activeHumonNode.nodeIdx}} <br>
+<strong> JSON STRING</strong>: {{view.json_string}} <br>
+<strong> Active Humon Node</strong>: {{controller.activeHumonNode.nodeView.json_string}} <br>
+<strong> Active Humon Node Key</strong> {{controller.activeHumonNode.nodeKey}} <br>
+<strong> Active Humon Node Idx</strong> {{controller.activeHumonNode.nodeIdx}} <br>
 {{/if}}
