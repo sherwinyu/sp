@@ -3,9 +3,12 @@
 Sysys.DetailController = Ember.Object.extend
   enableLogging: true
   stateManager: null
+  ###
   activeHumonNodeView: (->
     @get('activeHumonNode.nodeView')
   ).property 'activeHumonNode'
+  ###
+  activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
   activeHumonNode: null
 
   commitAndContinue: ->
@@ -57,6 +60,7 @@ Sysys.DetailController = Ember.Object.extend
     # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
   focusActiveNodeView: ->
+    Ember.run.sync()
     ahn = @get('activeHumonNode')
     ahnv = @get('activeHumonNodeView')
     nodeKey = ahn.get('nodeKey')
@@ -118,8 +122,23 @@ Sysys.DetailController = Ember.Object.extend
       ahn.convertToList()
     if ahn.get('isLiteral') && ahn.get('nodeParent.isHash')
       ahn.get('nodeParent')?.convertToList()
-      
-      
+
+  # TODO(syu): test me
+  bubbleUp: ->
+    ahn = @get('activeHumonNode')
+    Em.assert("can only bubble literals", ahn.get('isLiteral'))
+    dest = @get('activeHumonNode').prevNode()
+    @get('anims').destroy = 'slideUp'
+    @get('anims').insert  = 'fadeIn'
+    Ember.run =>
+      ahn.get('nodeParent').deleteChild ahn
+      dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
+    @focusActiveNodeView()
+
+  bubbleDown: ->
+
+
+  anims: {}
 
   init: ->
     stateMgr = Ember.StateManager.create

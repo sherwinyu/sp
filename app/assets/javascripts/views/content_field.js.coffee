@@ -48,6 +48,10 @@ Sysys.ContentField = Ember.TextArea.extend
       e.preventDefault()
       @get('controller').prevNode()
 
+    @$().bind 'keydown', 'ctrl+up', (e) =>
+      e.preventDefault()
+      @get('controller').bubbleUp()
+
     @$().bind 'keydown', 'ctrl+shift+l', (e) =>
       console.log 'ctrl shift l'
       @get('controller').forceList()
