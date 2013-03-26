@@ -28,3 +28,13 @@ Sysys.HumonNodeView = Ember.View.extend
 
   initHotkeys: ->
     @$().bind 'keyup', 'up', (e) =>
+
+  $keyField: ->
+    @$('> span > .content-field.key-field')?.first()
+  $idxField: ->
+    @$('> span > .content-field.idx-field')?.first()
+  $valField: ->
+    @$('> span > .content-field.val-field')?.first()
+  $proxyField: ->
+    @$('> span > .content-field.proxy-field')?.first()
+
