@@ -19,7 +19,6 @@ Sysys.ContentField = Ember.TextArea.extend
   refresh: ->
     @set 'value', @get('rawValue')
   setPlaceHolderText: ->
-    console.log "setting placeholder text #{@get 'placeholder'}"
     @$().attr('placeholder', @get('placeholder'))
   commit: Em.K
   commitAndContinue: ->
@@ -44,6 +43,14 @@ Sysys.ContentField = Ember.TextArea.extend
     @$().bind 'keydown', 'up', (e) =>
       e.preventDefault()
       @get('controller').prevNode()
+
+    @$().bind 'keydown', 'ctrl+shift+l', (e) =>
+      console.log 'ctrl shift l'
+      @get('controller').forceList()
+
+    @$().bind 'keydown', 'ctrl+shift+h', (e) =>
+      console.log 'ctrl+shift+h'
+      @get('controller').forceHash()
 
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'

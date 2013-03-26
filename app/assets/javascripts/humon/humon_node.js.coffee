@@ -86,6 +86,23 @@ Sysys.HumonNode = Ember.Object.extend
       curNode = curNode.get('nodeVal')[ curNode.get('nodeVal').length - 1 ]
     curNode
 
+  #TODO(syu): test me
+  convertToHash: ->
+    Em.assert('HumonNode must be a collection to convert to hash', @get('isCollection'))
+    return if @get('isHash')
+    @set('nodeType', 'hash')
+    ###
+    for node, idx in @get('nodeVal')
+      # set the key unless nodeKey 1) exists 2) is nonempty
+      node.set 'nodeKey', "#{idx}" unless @get('nodeKey')
+    ###
+
+  #TODO(syu): test me
+  convertToList: ->
+    Em.assert('HumonNode must be a collection to convert to hash', @get('isCollection'))
+    return if @get('isList')
+    @set 'nodeType', 'list'
+
   unknownProperty: (key) ->
     return @getNode(key)?.get 'json'
 

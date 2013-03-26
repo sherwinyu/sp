@@ -62,36 +62,31 @@ Sysys.DetailController = Ember.Object.extend
     nodeKey = ahn.get('nodeKey')
     nodeVal = ahn.get('nodeVal')
 
+    # if there's a key and it's blank
     if nodeKey? && nodeKey == ''
-      console.log 'focusing key field: key length 0'
       @focusKeyField()
 
+    # if it's a collection
     if nodeKey? && ahn.get('isCollection')
-      console.log 'focusing key field: is a collection'
       @focusKeyField()
 
+    # if it's a 
     if nodeKey? && nodeKey != ''
-      console.log 'focusing val field: key already filled'
       @focusValField()
 
     if !nodeKey?
-      console.log 'focusing val field: no key, is list'
       @focusValField()
 
   focusKeyField: ->
     $kf = @get('activeHumonNodeView').$('> span > .content-field.key-field').first()
     $kf.focus()
+    unless $kf.length
+      $idxf = @get('activeHumonNodeView').$('> span > .content-field.idx-field').first()
+      $idxf.focus()
+
   focusValField: ->
     $vf = @get('activeHumonNodeView').$('> span >  .content-field.val-field').first()
     $vf.focus()
-    ###
-    if $cf.length
-      console.log '$cf.val', $cf.val()
-      console.log 'ahn.json', @get('activeHumonNode.json')
-      e  = jQuery.Event "focus"
-      e.eventData = suppress: true
-      $cf.trigger e
-      ###
 
   # sets activeHumonNode to node if node exists
   activateNode: (node, {focus} = {focus: false}) ->
@@ -109,6 +104,26 @@ Sysys.DetailController = Ember.Object.extend
     # @unfocus()
     newNode = @get('activeHumonNode').prevNode()
     @activateNode newNode, focus: true
+
+  #TODO(syu): test me
+  forceHash: ->
+    debugger
+    ahn = @get('activeHumonNode')
+    if ahn.get('isCollection') && ahn.get('isList')
+      ahn.convertToHash()
+    if ahn.get('isLiteral') && ahn.get('nodeParent.isList')
+      ahn.get('nodeParent')?.convertToHash()
+
+  #TODO(syu): test me
+  forceList: ->
+    debugger
+    ahn = @get('activeHumonNode')
+    if ahn.get('isCollection') && ahn.get('isHash')
+      ahn.convertToList()
+    if ahn.get('isLiteral') && ahn.get('nodeParent.isHash')
+      ahn.get('nodeParent')?.convertToList()
+      
+      
 
   init: ->
     stateMgr = Ember.StateManager.create
