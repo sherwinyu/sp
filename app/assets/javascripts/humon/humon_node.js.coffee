@@ -8,12 +8,13 @@ Sysys.HumonNode = Ember.Object.extend
 
   json: (->
     Sysys.HumonUtils.humonNode2json @
-  ).property('nodeVal', 'nodeKey')
+  ).property('nodeVal', 'nodeKey', 'nodeType')
 
   # make this more generic?
   nodeValChanged: (->
     @get('nodeParent')?.notifyPropertyChange 'nodeVal'
-  ).observes 'nodeVal'
+    console.log 'change'
+  ).observes 'nodeVal', 'nodeType', 'nodeKey'
 
   nodeIdx: ((key, val)->
     if arguments.length > 1
@@ -46,7 +47,7 @@ Sysys.HumonNode = Ember.Object.extend
   ).property('nodeType')
 
   getNode: (keyOrIndex) ->
-    Em.assert('HumonNode must be a list or a hash', @get('isHash') || @get('isList'))
+    Em.assert("HumonNode must be a list or a hash to getNode(#{keyOrIndex})", @get('isHash') || @get('isList'))
     nodeVal = @get('nodeVal')
     childNode = 
       if @get('isHash')
@@ -91,11 +92,9 @@ Sysys.HumonNode = Ember.Object.extend
     Em.assert('HumonNode must be a collection to convert to hash', @get('isCollection'))
     return if @get('isHash')
     @set('nodeType', 'hash')
-    ###
     for node, idx in @get('nodeVal')
       # set the key unless nodeKey 1) exists 2) is nonempty
-      node.set 'nodeKey', "#{idx}" unless @get('nodeKey')
-    ###
+      node.set 'nodeKey', "#{idx}" unless node.get('nodeKey')
 
   #TODO(syu): test me
   convertToList: ->
@@ -121,7 +120,7 @@ Sysys.HumonNode = Ember.Object.extend
         child.set 'nodeParent', @
 
   replaceAt: (idx, amt, nodes...) ->
-    Em.assert('HumonNode must be a list or a hash', @get('isHash') || @get('isList'))
+    Em.assert("HumonNode must be a list or a hash to replaceAt(#{idx},#{amt},#{nodes})", @get('isHash') || @get('isList'))
     list = @get 'nodeVal'
     for node in nodes
       node.set('nodeParent', @)

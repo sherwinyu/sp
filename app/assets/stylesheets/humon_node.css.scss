@@ -1,4 +1,7 @@
+$copygray: #505050;
+
 .node {
+  color: $copygray;
   padding-left: 15px;
   margin-left: 8px;
   border: 1px transparent solid; 
@@ -40,6 +43,7 @@ span.blocky {
 }
 
 textarea.content-field {
+  color: $copygray;
   height: 20px;
   border: none;
   padding: 0px;
@@ -62,9 +66,13 @@ textarea.content-field.val-field:focus {
 }
 
 
+
 textarea.content-field.idx-field {
   width: 10px;
+  font-style: bold;
+  color: lighten($copygray, 25%);
 }
+
 textarea.content-field.idx-field:focus {
 }
 

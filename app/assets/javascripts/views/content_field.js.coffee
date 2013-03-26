@@ -52,6 +52,8 @@ Sysys.ContentField = Ember.TextArea.extend
       console.log 'ctrl+shift+h'
       @get('controller').forceHash()
 
+
+
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'
 
@@ -65,6 +67,7 @@ Sysys.KeyField = Sysys.ContentField.extend
   classNames: ['key-field']
   placeholder: 'key'
   commit: ->
+    console.log 'commiting key'
     @get('controller').commitKey()
 
 Sysys.IdxField = Sysys.ContentField.extend

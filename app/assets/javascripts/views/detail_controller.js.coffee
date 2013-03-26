@@ -96,18 +96,15 @@ Sysys.DetailController = Ember.Object.extend
         @focusActiveNodeView()
 
   nextNode: ->
-    # @unfocus()
     newNode = @get('activeHumonNode').nextNode()
     @activateNode newNode, focus: true
 
   prevNode: ->
-    # @unfocus()
     newNode = @get('activeHumonNode').prevNode()
     @activateNode newNode, focus: true
 
   #TODO(syu): test me
   forceHash: ->
-    debugger
     ahn = @get('activeHumonNode')
     if ahn.get('isCollection') && ahn.get('isList')
       ahn.convertToHash()
@@ -116,7 +113,6 @@ Sysys.DetailController = Ember.Object.extend
 
   #TODO(syu): test me
   forceList: ->
-    debugger
     ahn = @get('activeHumonNode')
     if ahn.get('isCollection') && ahn.get('isHash')
       ahn.convertToList()
