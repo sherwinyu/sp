@@ -79,4 +79,3 @@ Sysys.HumonNodeView = Ember.View.extend
     @$('> span > .content-field.val-field')?.first()
   $proxyField: ->
     @$('> span > .content-field.proxy-field')?.first()
-

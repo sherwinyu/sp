@@ -1,13 +1,7 @@
 # TODO(syu): naming still subject to change...
 
 Sysys.DetailController = Ember.Object.extend
-  enableLogging: true
-  stateManager: null
-  ###
-  activeHumonNodeView: (->
-    @get('activeHumonNode.nodeView')
-  ).property 'activeHumonNode'
-  ###
+  anims: {}
   activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
   activeHumonNode: null
 
@@ -81,6 +75,9 @@ Sysys.DetailController = Ember.Object.extend
     if !nodeKey?
       @focusValField()
 
+    if ahn.get('nodeParent.isList') and ahn.get('isCollection')
+      @focusIdxField()
+
   focusKeyField: ->
     $kf = @get('activeHumonNodeView').$('> span > .content-field.key-field').first()
     $kf.focus()
@@ -91,6 +88,10 @@ Sysys.DetailController = Ember.Object.extend
   focusValField: ->
     $vf = @get('activeHumonNodeView').$valField()
     $vf.focus()
+
+  focusIdxField: ->
+    $if = @get('activeHumonNodeView').$idxField()
+    $if.focus()
 
   # sets activeHumonNode to node if node exists
   activateNode: (node, {focus} = {focus: false}) ->
@@ -147,28 +148,3 @@ Sysys.DetailController = Ember.Object.extend
     @focusActiveNodeView()
 
 
-
-  anims: {}
-
-  init: ->
-    stateMgr = Ember.StateManager.create
-      initialState: 'inactive'
-
-      inactive: Ember.State.create
-        enter: -> console.log 'entering state inactive'
-        exit: -> console.log 'exiting state inactive'
-
-      active: Ember.State.create
-        enter: -> console.log 'entering state active'
-        exit: -> console.log 'exiting state active'
-
-        editing: Ember.State.create
-          enter: -> console.log 'entering state editing'
-          exit: -> console.log 'exiting state editing'
-
-          select: (mgr, newNode) ->
-            # currentNode.commit()
-            # updateNew currentNode to newNode
-            # can't call commit bc can have selects that don't commit!
-
-    @set('stateManager', stateMgr)

@@ -13,8 +13,7 @@ Sysys.HumonNode = Ember.Object.extend
   # make this more generic?
   nodeValChanged: (->
     @get('nodeParent')?.notifyPropertyChange 'nodeVal'
-    console.log 'change'
-  ).observes 'nodeVal', 'nodeType', 'nodeKey'
+  ).observes 'nodeVal', 'nodeKey', 'nodeType'
 
   nodeIdx: ((key, val)->
     if arguments.length > 1
@@ -129,7 +128,6 @@ Sysys.HumonNode = Ember.Object.extend
       for node in nodes
         node.set('nodeParent', @)
     list.replace idx, amt, nodes
-
 
   insertAt: (idx, nodes...) ->
     Em.assert("HumonNode must be a list or a hash to insertAt(#{idx},#{nodes})", @get('isCollection'))

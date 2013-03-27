@@ -43,5 +43,7 @@ window.setCursor = (node, pos) ->
     node.setSelectionRange pos, pos
     true
   false
+
+window.delay = (ms, callback) -> setTimeout(ms, callback)
            
   
