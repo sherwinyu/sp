@@ -152,4 +152,11 @@ Sysys.DetailController = Ember.Object.extend
         dest.insertAt(0, ahn)
     @focusActiveNodeView()
 
+  deleteActive: ->
+    ahn = @get('activeHumonNode')
+    @set('activeHumonNode', null)
+    Ember.run.sync()
+    next = ahn.nextNode() || ahn.prevNode()
+    @activateNode(next, focus: true)
+    Ember.run => ahn.get('nodeParent')?.deleteChild ahn
 
