@@ -25,43 +25,49 @@ Sysys.HumonNodeView = Ember.View.extend
 
   animInsert: ->
     anims = @get('controller.anims')
+    $el = @$()
     if @get('isActive') and anims?.insert
-      if anims['insert'] == 'slideDown'
-        @$().hide 0
-        @$().slideDown 250
-        anims.destroy = undefined
-        return
-      if anims['insert'] == 'slideUp'
-        @$().slideDown 0
-        @$().slideUp 250
-        anims.destroy = undefined
-        return
-      if anims['insert'] == 'fadeIn'
-        @$().hide 0
-        @$().fadeIn 250
-        anims.destroy = undefined
-        return
-    @$().hide 0
-    @$().slideDown 250
+      switch anims['insert'] 
+        when 'slideDown'
+          $el.animate bottom: $el.css('height'), 0
+          $el.animate bottom: 0, 185
+        when 'slideUp'
+          $el.css 'z-index', 555
+          $el.animate top: $el.css('height'), 0
+          $el.animate top: 0, 185, ->
+            $el.css 'z-index', 0
+        when 'fadeIn'
+          $el.hide 0
+          $el.fadeIn 185
+        when 'appear'
+          Em.K
+      anims.insert = undefined
+      return
+    $el.hide 0
+    $el.slideDown 375
 
   animDestroy: ->
-    clone = @$().clone()
-    @.$().replaceWith clone
     anims = @get('controller.anims')
+    $el = @$().clone()
+    @.$().replaceWith $el
     if @get('isActive') and anims?.destroy
-      if anims['destroy'] == 'slideDown'
-        clone.slideDown 250
-        return
-        anims.destroy = undefined
-      if anims['destroy'] == 'slideUp'
-        clone.slideUp 250
-        anims.destroy = undefined
-        return
-      if anims['destroy'] == 'fadeOut'
-        clone.fadeOut 250
-        anims.destroy = undefined
-        return
-    clone.slideUp 250
+      switch anims.destroy
+        when 'slideDown'
+          $el.slideDown 185
+        when 'slideUp'
+          # $el.animate bottom: $el.css('height'), 185
+          $el.slideUp 185
+        when 'fadeOut'
+          $el.fadeOut 185
+        when 'disappear'
+          $el.addClass 'tracker'
+          $el.hide 0
+      anims.destroy = undefined
+      delay 185, -> $el.remove()
+      return
+    console.log 'sliding up'
+    $el.slideUp 250, ->
+      $el.remove()
 
   didDestroyElement: ->
     @get('content')?.set 'nodeView', null
