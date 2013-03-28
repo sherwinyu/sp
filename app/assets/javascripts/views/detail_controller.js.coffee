@@ -36,6 +36,7 @@ Sysys.DetailController = Ember.Object.extend
   # does jsonparsing of current activeHumonNodeView content-field.literal
   # calls replaceWithJson on activeNode
   commitVal: ->
+    return unless @get('activeHumonNode.isLiteral')
     Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
     rawString =  @get('activeHumonNodeView').$valField().val()
     # rawString = @get('activeHumonNodeView').$('> span > .content-field.val-field')?.first()?.val()
@@ -132,7 +133,6 @@ Sysys.DetailController = Ember.Object.extend
     @get('anims').destroy = 'disappear'
     @get('anims').insert  = 'slideUp'
     Ember.run =>
-      debugger
       ahn.get('nodeParent').deleteChild ahn
       dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
     @focusActiveNodeView()

@@ -23,7 +23,7 @@ Sysys.ContentField = Ember.TextArea.extend
   commit: Em.K
   commitAndContinue: ->
     @get('controller').commitAndContinue()
-    
+
   cancel: ->
     @refresh()
 
@@ -79,7 +79,7 @@ Sysys.ValField = Sysys.ContentField.extend
   placeholder: 'val'
   commit: ->
     @get('controller').commitVal()
-  
+
 Sysys.KeyField = Sysys.ContentField.extend
   classNames: ['key-field', 'key']
   placeholder: 'key'

@@ -1,8 +1,11 @@
 $copygray: #505050;
 $activecolor: rgb(72, 137, 255);
-$glyphcolor: lighten($copygray, 25%); 
+$glyphcolor: lighten($copygray, 25%);
 $glyphsize: 14px;
 $lineheight: 20px;
+@mixin imp {
+  border: 1px solid red;
+}
 
 span.blocky {
   display: inline-block;
@@ -14,7 +17,7 @@ span.blocky {
   color: $copygray;
   position: relative;
   padding-left: 15px;
-  border: 1px transparent solid; 
+  border: 1px transparent solid;
   border-left: 4px white solid;
   background: white;
 }
@@ -83,12 +86,14 @@ textarea.content-field.idx-field {
 textarea.content-field.idx-field:focus { }
 
 textarea.content-field.key-field {
-  width: 50px;
+  width: 60px;
   padding-left: 15px;
 }
 textarea.content-field.key-field:focus { }
 
-textarea.content-field.proxy-field { }
+textarea.content-field.proxy-field {
+  padding-left: 5px;
+}
 
 span.open-glyph:before {
   font-size: $glyphsize;
@@ -104,6 +109,7 @@ span.open-glyph:before {
 
 
 span.close-glyph {
+  z-index: 1001;
 }
 
 span.close-glyph:after {
@@ -111,7 +117,7 @@ span.close-glyph:after {
   color: $glyphcolor;
   position: absolute;
   padding-left: 15px;
-  z-index: 100;
+  z-index: 1001;
 }
 .node.active > span.close-glyph:after {
   border-left: 4px rgba(0,0,255, 0.05) solid;

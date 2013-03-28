@@ -8,16 +8,16 @@ Sysys.HumonNode = Ember.Object.extend
 
   json: (->
     Sysys.HumonUtils.humonNode2json @
-  ).property('nodeVal', 'nodeKey', 'nodeType')
+  ).property('nodeVal', 'nodeKey', 'nodeType').cacheable false
 
   # make this more generic?
   nodeValChanged: (->
     @get('nodeParent')?.notifyPropertyChange 'nodeVal'
-  ).observes 'nodeVal', 'nodeKey', 'nodeType'
+  ).observes 'nodeVal', 'nodeKey', 'nodeType', 'nodeVal.@each'
 
   nodeIdx: ((key, val)->
     if arguments.length > 1
-      return
+      @get('nodeParent.nodeVal')?.indexOf @
     @get('nodeParent.nodeVal')?.indexOf @
   ).property('nodeParent.nodeVal.@each', 'nodeParent.nodeVal')
 
@@ -25,11 +25,11 @@ Sysys.HumonNode = Ember.Object.extend
     @get('nodeKey')?
   ).property 'nodeKey'
 
-  isHash: (-> 
+  isHash: (->
     @get('nodeType') == 'hash'
   ).property('nodeType')
 
-  isList: (-> 
+  isList: (->
     @get('nodeType') == 'list'
   ).property('nodeType')
 
@@ -41,14 +41,14 @@ Sysys.HumonNode = Ember.Object.extend
     @get('isCollection') and @get('nodeVal').length
   ).property('isCollection', 'nodeVal')
 
-  isLiteral: (-> 
+  isLiteral: (->
     @get('nodeType') == 'literal'
   ).property('nodeType')
 
   getNode: (keyOrIndex) ->
     Em.assert("HumonNode must be a list or a hash to getNode(#{keyOrIndex})", @get('isHash') || @get('isList'))
     nodeVal = @get('nodeVal')
-    childNode = 
+    childNode =
       if @get('isHash')
         nodeVal.findProperty('nodeKey', keyOrIndex)
       else if @get('isList')
@@ -77,7 +77,7 @@ Sysys.HumonNode = Ember.Object.extend
     unless @get('nodeParent')
       return null
     # if this is the first child, the previous node is just the parent
-    if @get('nodeParent.nodeVal')[0] == @ 
+    if @get('nodeParent.nodeVal')[0] == @
       return @get('nodeParent')
     # otherwise, start at the previous sibling
     curNode = @get('nodeParent.nodeVal')[ @get('nodeParent.nodeVal').indexOf(@) - 1 ]
