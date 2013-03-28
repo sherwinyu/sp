@@ -21,27 +21,40 @@ span.blocky {
 /*
  * Active node styling
  */
-.node.active { }
+.node.active {
+}
 
 .node.active > .blocky {
-  background: rgba(0,0,255, 0.2);
+  background: rgba($activecolor, 0.3)
 }
 .node.active > div > .node {
-  border-left: 4px rgba(0,0,255, 0.05) solid;
+  border-left: 4px rgba($activecolor, 0.10) solid;
 }
 
 .node.node-literal { }
 .node.node-literal:hover { }
 
-.node.node-collection { }
+.node.node-collection {
+  padding-bottom: 10px;
+}
 .node.node-collection:hover { }
+
+/*
+ * Active child styling
+ */
+.node.activeChild > span.blocky > textarea.content-field.key {
+  font-weight: bold;
+  color: rgba($activecolor, 0.8)
+}
+
+
 
 /*
  * Content Fields
  */
 textarea.content-field {
   color: $copygray;
-  height: 20px;
+  height: $lineheight;
   border: none;
   padding: 0px;
   margin: 0px;
@@ -76,3 +89,43 @@ textarea.content-field.key-field {
 textarea.content-field.key-field:focus { }
 
 textarea.content-field.proxy-field { }
+
+span.open-glyph:before {
+  font-size: $glyphsize;
+  color: lighten($copygray, 25%);
+  position: absolute;
+}
+.node.active.node-hash > span.blocky > span.open-glyph:before{
+  content: '{';
+}
+.node.active.node-list > span.blocky > span.open-glyph:before{
+  content: '[';
+}
+
+
+span.close-glyph {
+}
+
+span.close-glyph:after {
+  font-size: $glyphsize;
+  color: $glyphcolor;
+  position: absolute;
+  padding-left: 15px;
+  z-index: 100;
+}
+.node.active > span.close-glyph:after {
+  border-left: 4px rgba(0,0,255, 0.05) solid;
+}
+.node.active.node-hash > span.close-glyph:after{
+  content: '}';
+}
+.node.active.node-list > span.close-glyph:after{
+  content: ']';
+}
+
+.node.node-collection.addGap {
+  padding-bottom: 0px;// transparent solid;
+  margin-bottom: 0px;// transparent solid;
+  margin-top: 0px;// transparent solid;
+}
+
