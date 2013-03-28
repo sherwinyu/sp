@@ -81,14 +81,14 @@ Sysys.ValField = Sysys.ContentField.extend
     @get('controller').commitVal()
   
 Sysys.KeyField = Sysys.ContentField.extend
-  classNames: ['key-field']
+  classNames: ['key-field', 'key']
   placeholder: 'key'
   commit: ->
     console.log 'commiting key'
     @get('controller').commitKey()
 
 Sysys.IdxField = Sysys.ContentField.extend
-  classNames: ['idx-field']
+  classNames: ['idx-field', 'key']
   refresh: Em.K
   didInsertElement: ->
     @_super()

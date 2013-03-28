@@ -2,7 +2,7 @@
   {{#if view.content.nodeParent.isHash}}
     {{view Sysys.KeyField rawValueBinding="view.content.nodeKey"}} :
   {{else}}
-    {{view Sysys.IdxField valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}} 
+    {{view Sysys.IdxField valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}}
   {{/if}}
 
   {{#if view.content.isLiteral}}
@@ -17,8 +17,10 @@
 {{/if}}
 
 {{#if view.displayStats}}
+<br><br>
 <strong> JSON STRING</strong>: {{view.json_string}} <br>
 <strong> Active Humon Node</strong>: {{controller.activeHumonNode.nodeView.json_string}} <br>
 <strong> Active Humon Node Key</strong> {{controller.activeHumonNode.nodeKey}} <br>
 <strong> Active Humon Node Idx</strong> {{controller.activeHumonNode.nodeIdx}} <br>
 {{/if}}
+

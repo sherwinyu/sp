@@ -3,7 +3,11 @@ Sysys.HumonNodeView = Ember.View.extend
   templateName: 'humon_node'
   classNameBindings: [
     'content.isLiteral:node-literal:node-collection',
-    'isActive:active']
+    'content.isHash:node-hash',
+    'content.isList:node-list',
+    'isActive:active',
+    'parentActive:activeChild',
+    'addGap:addGap']
   classNames: ['node']
 
   json_string: (->
@@ -13,6 +17,14 @@ Sysys.HumonNodeView = Ember.View.extend
   isActive: (->
     ret = @get('controller.activeHumonNode') == @get('content')
   ).property('controller.activeHumonNode')
+
+  parentActive: (->
+    ret = @get('controller.activeHumonNode') == @get('content.nodeParent')
+  ).property('controller.activeHumonNode')
+
+  addGap: (->
+    @get('content.nodeParent.nodeVal.lastObject') == @get('content')
+  ).property('content.nodeParent.nodeVal.lastObject')
 
   willDestroyElement: ->
     @animDestroy()
@@ -27,7 +39,7 @@ Sysys.HumonNodeView = Ember.View.extend
     anims = @get('controller.anims')
     $el = @$()
     if @get('isActive') and anims?.insert
-      switch anims['insert'] 
+      switch anims['insert']
         when 'slideDown'
           $el.animate bottom: $el.css('height'), 0
           $el.animate bottom: 0, 185

@@ -10,7 +10,7 @@ describe "HumonNode UI integration", ->
         array2:
           [
             [
-              314
+              [1,2,[1,2],[1,2],[1,2,[1,2,[1,2]]]]
             ]
           ]
       }

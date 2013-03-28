@@ -68,7 +68,7 @@ Sysys.DetailController = Ember.Object.extend
     if nodeKey? && ahn.get('isCollection')
       @focusKeyField()
 
-    # if it's a 
+    # if it's a
     if nodeKey? && nodeKey != ''
       @focusValField()
 
@@ -159,4 +159,3 @@ Sysys.DetailController = Ember.Object.extend
     next = ahn.nextNode() || ahn.prevNode()
     @activateNode(next, focus: true)
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
-

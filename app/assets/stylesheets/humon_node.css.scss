@@ -1,4 +1,8 @@
 $copygray: #505050;
+$activecolor: rgb(72, 137, 255);
+$glyphcolor: lighten($copygray, 25%); 
+$glyphsize: 14px;
+$lineheight: 20px;
 
 span.blocky {
   display: inline-block;
