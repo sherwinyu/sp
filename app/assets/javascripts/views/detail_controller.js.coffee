@@ -156,6 +156,7 @@ Sysys.DetailController = Ember.Object.extend
     ahn = @get('activeHumonNode')
     @set('activeHumonNode', null)
     Ember.run.sync()
-    next = ahn.nextNode() || ahn.prevNode()
-    @activateNode(next, focus: true)
+    next = ahn.prevNode() || ahn.nextNode()
+    return unless next
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
+    @activateNode(next, focus: true)

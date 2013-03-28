@@ -39,7 +39,7 @@ Sysys.HumonNode = Ember.Object.extend
 
   hasChildren: (->
     @get('isCollection') and @get('nodeVal').length
-  ).property('isCollection', 'nodeVal')
+  ).property('isCollection', 'nodeVal', 'nodeVal.@each')
 
   isLiteral: (->
     @get('nodeType') == 'literal'
