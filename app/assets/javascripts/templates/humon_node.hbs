@@ -8,13 +8,16 @@
   {{#if view.content.isLiteral}}
     {{view Sysys.ValField rawValueBinding="view.content.json" }}
   {{else}}
-    {{view Sysys.ProxyField }}
+
+    <span class="open-glyph"> </span>{{view Sysys.ProxyField }}
   {{/if}}
 </span>
 
 {{#if view.content.isCollection}}
   {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper"}}
-{{/if}}
+  {{/if}}
+<span class="buffer"></span>
+<span class="close-glyph"></span>
 
 {{#if view.displayStats}}
 <br><br>
