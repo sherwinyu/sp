@@ -79,6 +79,12 @@ Sysys.DetailController = Ember.Object.extend
     if ahn.get('nodeParent.isList') and ahn.get('isCollection')
       @focusIdxField()
 
+    if ahn.get('nodeParent.isHash') and ahn.get('isCollection')
+      @focusKeyField()
+
+    if ahn.get('isCollection') and not ahn.get('hasChildren')
+      @focusProxyField()
+
   focusKeyField: ->
     $kf = @get('activeHumonNodeView').$('> span > .content-field.key-field').first()
     $kf.focus()
@@ -93,6 +99,10 @@ Sysys.DetailController = Ember.Object.extend
   focusIdxField: ->
     $if = @get('activeHumonNodeView').$idxField()
     $if.focus()
+
+  focusProxyField: ->
+    $pf = @get('activeHumonNodeView').$proxyField()
+    $pf.focus()
 
   # sets activeHumonNode to node if node exists
   activateNode: (node, {focus} = {focus: false}) ->
@@ -160,3 +170,10 @@ Sysys.DetailController = Ember.Object.extend
     return unless next
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
     @activateNode(next, focus: true)
+
+  insertChild: ->
+    ahn = @get('activeHumonNode')
+    Em.assert 'humon node should be a collection', ahn.get('isCollection')
+    nextBlank = (Sysys.j2hn "")
+    Em.run => ahn.insertAt 0, nextBlank
+    @activateNode(nextBlank, focus: true)

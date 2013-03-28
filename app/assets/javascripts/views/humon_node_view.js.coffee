@@ -47,7 +47,7 @@ Sysys.HumonNodeView = Ember.View.extend
           $el.css 'z-index', 555
           $el.animate top: $el.css('height'), 0
           $el.animate top: 0, 185, ->
-            $el.css 'z-index', 0
+            $el.css 'z-index', ''
         when 'fadeIn'
           $el.hide 0
           $el.fadeIn 185

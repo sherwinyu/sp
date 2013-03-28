@@ -97,8 +97,8 @@ Sysys.IdxField = Sysys.ContentField.extend
 Sysys.ProxyField =  Sysys.ContentField.extend
   classNames: ['proxy-field']
   placeholder: ''
-  focusIn: (e)->
-    @get('controller').activateNode @get('parentView.content'), focus: true
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)
+  commitAndContinue: ->
+    @get('controller').insertChild()
