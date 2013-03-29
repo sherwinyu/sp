@@ -1,6 +1,15 @@
-$copygray: #505050;
-$activecolor: rgb(72, 137, 255);
-$glyphcolor: lighten($copygray, 25%);
+$copygray: #555555;
+$grayDark: darken($copygray, 15%);
+$grayDarker: darken($copygray, 30%);
+$grayLight: lighten($copygray, 15%);
+$grayLighter: lighten($copygray, 30%);
+$grayLightest: lighten($copygray, 45%);
+
+$activeColor: rgb(72, 137, 255);
+$activeColorDark: darken($activeColor, 30%);
+$activeColorLight: lighten($activeColor, 30%);
+
+$glyphcolor: darken($grayLightest, 5%);
 $glyphsize: 14px;
 $lineheight: 20px;
 @mixin imp {
@@ -21,6 +30,13 @@ span.blocky {
   border-left: 4px white solid;
   background: white;
 }
+
+.node.node-literal { }
+.node.node-literal:hover { }
+.node.node-collection {
+  padding-bottom: 5px;
+}
+.node.node-collection:hover { }
 /*
  * Active node styling
  */
@@ -28,26 +44,22 @@ span.blocky {
 }
 
 .node.active > .blocky {
-  background: rgba($activecolor, 0.3)
+  background: $activeColorLight
 }
 .node.active > div > .node {
-  border-left: 4px rgba($activecolor, 0.10) solid;
+  border-left: 4px $activeColorLight solid;
 }
-
-.node.node-literal { }
-.node.node-literal:hover { }
-
-.node.node-collection {
-  padding-bottom: 10px;
+.node.active > span.blocky > textarea.content-field.key {
+  color: $activeColorDark;
+  text-decoration: underline;
 }
-.node.node-collection:hover { }
 
 /*
  * Active child styling
  */
 .node.activeChild > span.blocky > textarea.content-field.key {
-  font-weight: bold;
-  color: rgba($activecolor, 0.8)
+  color: lighten($grayDark, 5%);
+  text-decoration: underline;
 }
 
 
@@ -81,7 +93,7 @@ textarea.content-field.idx-field {
   width: 25px;
   padding-left: 15px;
   font-style: bold;
-  color: lighten($copygray, 25%);
+  color: $grayLight;
 }
 textarea.content-field.idx-field:focus { }
 
@@ -97,7 +109,7 @@ textarea.content-field.proxy-field {
 
 span.open-glyph:before {
   font-size: $glyphsize;
-  color: lighten($copygray, 25%);
+  color: $glyphcolor;
   position: absolute;
 }
 .node.active.node-hash > span.blocky > span.open-glyph:before{
@@ -117,10 +129,11 @@ span.close-glyph:after {
   color: $glyphcolor;
   position: absolute;
   padding-left: 15px;
+  bottom: -6px;
   z-index: 1001;
 }
 .node.active > span.close-glyph:after {
-  border-left: 4px rgba(0,0,255, 0.05) solid;
+  border-left: 4px $activeColorLight solid;
 }
 .node.active.node-hash > span.close-glyph:after{
   content: '}';
