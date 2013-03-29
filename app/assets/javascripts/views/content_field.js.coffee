@@ -64,10 +64,8 @@ Sysys.ContentField = Ember.TextArea.extend
       e.preventDefault()
       @get('controller').indent()
 
-
     @$().bind 'keydown', 'ctrl+backspace', (e) =>
       e.preventDefault()
-      console.log 'ctrl backspace'
       @get('controller').deleteActive()
 
     @$().bind 'keydown', 'ctrl+shift+l', (e) =>
@@ -77,8 +75,6 @@ Sysys.ContentField = Ember.TextArea.extend
     @$().bind 'keydown', 'ctrl+shift+h', (e) =>
       console.log 'ctrl+shift+h'
       @get('controller').forceHash()
-
-
 
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'
@@ -95,6 +91,14 @@ Sysys.KeyField = Sysys.ContentField.extend
   commit: ->
     console.log 'commiting key'
     @get('controller').commitKey()
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'right', (e) =>
+      @moveRight()
+
+  moveRight: ->
+    if getCursor(@$()) ==  @$().val().length
+      @get('controller').focusValField()
 
 Sysys.IdxField = Sysys.ContentField.extend
   classNames: ['idx-field', 'key']
@@ -102,6 +106,15 @@ Sysys.IdxField = Sysys.ContentField.extend
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)
+
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'right', (e) =>
+      @moveRight()
+
+  moveRight: ->
+    if getCursor(@$()) ==  @$().val().length
+      @get('controller').focusValField()
 
 Sysys.ProxyField =  Sysys.ContentField.extend
   classNames: ['proxy-field']

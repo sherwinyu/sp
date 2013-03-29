@@ -70,7 +70,6 @@ Sysys.HumonNode = Ember.Object.extend
     arr = @flatten()
     arr[arr.length-1]
 
-
   nextNode:  ->
     if @get('hasChildren')
       return @get('nodeVal')[0]
