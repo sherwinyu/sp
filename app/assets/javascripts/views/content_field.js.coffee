@@ -56,6 +56,15 @@ Sysys.ContentField = Ember.TextArea.extend
       e.preventDefault()
       @get('controller').bubbleDown()
 
+    @$().bind 'keydown', 'ctrl+left', (e) =>
+      e.preventDefault()
+      @get('controller').outdent()
+
+    @$().bind 'keydown', 'ctrl+right', (e) =>
+      e.preventDefault()
+      @get('controller').indent()
+
+
     @$().bind 'keydown', 'ctrl+backspace', (e) =>
       e.preventDefault()
       console.log 'ctrl backspace'
