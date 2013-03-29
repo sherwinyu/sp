@@ -55,9 +55,21 @@ Sysys.HumonNode = Ember.Object.extend
         nodeVal.get keyOrIndex
     return childNode
 
-  childrenAsList: (->
-    []
-  ).property('nodeVal', 'nodeType')
+  # TODO(syu): test me
+  flatten: ->
+    if @get('isLiteral')
+     [ @ ]
+    else
+      # @get('nodeVal').map( (node) -> node.flatten()).reduce (x, y) -> x.concat y
+      @get('nodeVal').reduce (x, y) ->
+        x.concat(y.flatten())
+      , [ @ ]
+
+  # TODO(syu): test me
+  lastFlattenedChild: ->
+    arr = @flatten()
+    arr[arr.length-1]
+
 
   nextNode:  ->
     if @get('hasChildren')

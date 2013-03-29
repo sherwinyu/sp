@@ -149,8 +149,8 @@ Sysys.DetailController = Ember.Object.extend
 
   bubbleDown: ->
     ahn = @get 'activeHumonNode'
-    Em.assert("can only bubble literals", ahn.get('isLiteral'))
-    dest = @get('activeHumonNode').nextNode()
+    # Em.assert("can only bubble literals", ahn.get('isLiteral'))
+    dest = @get('activeHumonNode').lastFlattenedChild().nextNode()
     return unless dest?.get('nodeParent')
     @get('anims').destroy = 'disappear'
     @get('anims').insert  = 'slideDown'
