@@ -149,8 +149,8 @@ Sysys.DetailController = Ember.Object.extend
 
   bubbleDown: ->
     ahn = @get 'activeHumonNode'
-    Em.assert("can only bubble literals", ahn.get('isLiteral'))
-    dest = @get('activeHumonNode').nextNode()
+    # Em.assert("can only bubble literals", ahn.get('isLiteral'))
+    dest = @get('activeHumonNode').lastFlattenedChild().nextNode()
     return unless dest?.get('nodeParent')
     @get('anims').destroy = 'disappear'
     @get('anims').insert  = 'slideDown'
@@ -177,3 +177,23 @@ Sysys.DetailController = Ember.Object.extend
     nextBlank = (Sysys.j2hn "")
     Em.run => ahn.insertAt 0, nextBlank
     @activateNode(nextBlank, focus: true)
+
+  outdent: ->
+    ahn = @get 'activeHumonNode'
+    newSibling = ahn.get 'nodeParent'
+    newParent = newSibling?.get 'nodeParent'
+    return unless newParent and newSibling
+    Ember.run => 
+      newSibling.deleteChild ahn
+      newParent.insertAt newSibling.get('nodeIdx') + 1, ahn
+    @focusActiveNodeView()
+
+  indent: ->
+    ahn = @get 'activeHumonNode'
+    parent = ahn.get('nodeParent')
+    prevSib = parent?.get('nodeVal')[ ahn.get('nodeIdx') - 1]
+    return unless prevSib && prevSib.get('isCollection')
+    Ember.run =>
+      parent.deleteChild ahn
+      prevSib.insertAt prevSib.get('nodeVal.length'), ahn
+    @focusActiveNodeView()
