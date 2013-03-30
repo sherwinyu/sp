@@ -31,8 +31,6 @@ Sysys.DetailController = Ember.Object.extend
     rawString =  @get('activeHumonNodeView').$valField().val()
     @commitVal rawString
 
-
-
   commitKey: ->
     rawString =  @get('activeHumonNodeView').$keyField().val()
     if rawString?
@@ -45,17 +43,17 @@ Sysys.DetailController = Ember.Object.extend
   # calls replaceWithJson on activeNode
   commitVal: (rawString) ->
     return unless @get('activeHumonNode.isLiteral')
-    Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
-    # rawString =  @get('activeHumonNodeView').$valField().val()
+    json =
+      try 
+        humon.parse rawString
+      catch error
+        try
+          JSON.parse rawString
+        catch error
+          ""
     if rawString?
-      json =
-        if rawString.length == 0
-          {}
-        else
-          humon.parse rawString
       Ember.run =>
         @get('activeHumonNode').replaceWithJson json
-    # TODO(syu): refresh val field
 
   cancelChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')

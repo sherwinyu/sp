@@ -29,6 +29,7 @@ Sysys.HumonNodeView = Ember.View.extend
   willDestroyElement: ->
     @animDestroy()
     @unbindHotkeys()
+    @get('content')?.set 'nodeView', null
 
   didInsertElement: ->
     @animInsert()
@@ -81,8 +82,6 @@ Sysys.HumonNodeView = Ember.View.extend
     $el.slideUp 250, ->
       $el.remove()
 
-  didDestroyElement: ->
-    @get('content')?.set 'nodeView', null
 
   unbindHotkeys: Em.K
 

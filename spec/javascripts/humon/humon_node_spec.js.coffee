@@ -120,7 +120,10 @@ describe "HumonNode", ->
         expect(node.get('nodeVal.0')).toBe newNode
         expect(node.get('nodeVal.1')).toBe nodea
         node.replaceAt 0, 2, nodec0, nodec1
-        expect(node.get('nodeVal')).toEqual [nodec0, nodec1, nodeb, nodec]
+        expect(node.get('nodeVal')[0]).toEqual nodec0
+        expect(node.get('nodeVal')[1]).toEqual nodec1 
+        expect(node.get('nodeVal')[2]).toEqual nodeb,
+        expect(node.get('nodeVal')[3]).toEqual nodec
 
       it "should remove elements", ->
         nodec.replaceAt 1, 3
