@@ -52,7 +52,6 @@ Sysys.DetailController = Ember.Object.extend
     # ahnv.cancelChanges
     rawString = @get('activeHumonNode.json')
     @get('activeHumonNodeView').$('> span > .content-field.val-field').first().val rawString
-    # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
   focusActiveNodeView: ->
     Ember.run.sync()
@@ -183,7 +182,7 @@ Sysys.DetailController = Ember.Object.extend
     newSibling = ahn.get 'nodeParent'
     newParent = newSibling?.get 'nodeParent'
     return unless newParent and newSibling
-    Ember.run => 
+    Ember.run =>
       newSibling.deleteChild ahn
       newParent.insertAt newSibling.get('nodeIdx') + 1, ahn
     @focusActiveNodeView()

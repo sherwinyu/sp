@@ -21,6 +21,10 @@ Sysys.ContentField = Ember.TextArea.extend
   setPlaceHolderText: ->
     @$().attr('placeholder', @get('placeholder'))
   commit: Em.K
+
+  enter: ->
+    @commitAndContinue()
+
   commitAndContinue: ->
     @get('controller').commitAndContinue()
 
@@ -38,7 +42,7 @@ Sysys.ContentField = Ember.TextArea.extend
 
     @$().bind 'keydown', 'return', (e) =>
       e.preventDefault()
-      @commitAndContinue()
+      @enter()
 
     @$().bind 'keydown', 'down', (e) =>
       e.preventDefault()
@@ -79,42 +83,42 @@ Sysys.ContentField = Ember.TextArea.extend
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'
 
+Sysys.AbstractKeyField = Sysys.ContentField.extend
+  classNames: ['key']
+  enter: ->
+    if @get('controller.activeHumonNode.isCollection')
+      @get('controller').insertChild()
+    else
+      @commitAndContinue()
+
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'right', (e) =>
+      @moveRight()
+
+  moveRight: ->
+    if getCursor(@$()) ==  @$().val().length
+      @get('controller').focusValField()
+
 Sysys.ValField = Sysys.ContentField.extend
   classNames: ['val-field']
   placeholder: 'val'
   commit: ->
     @get('controller').commitVal()
 
-Sysys.KeyField = Sysys.ContentField.extend
-  classNames: ['key-field', 'key']
+Sysys.KeyField = Sysys.AbstractKeyField.extend
+  classNames: ['key-field']
   placeholder: 'key'
   commit: ->
     console.log 'commiting key'
     @get('controller').commitKey()
-  initHotKeys: ->
-    @_super()
-    @$().bind 'keydown', 'right', (e) =>
-      @moveRight()
 
-  moveRight: ->
-    if getCursor(@$()) ==  @$().val().length
-      @get('controller').focusValField()
-
-Sysys.IdxField = Sysys.ContentField.extend
-  classNames: ['idx-field', 'key']
+Sysys.IdxField = Sysys.AbstractKeyField.extend
+  classNames: ['idx-field']
   refresh: Em.K
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)
-
-  initHotKeys: ->
-    @_super()
-    @$().bind 'keydown', 'right', (e) =>
-      @moveRight()
-
-  moveRight: ->
-    if getCursor(@$()) ==  @$().val().length
-      @get('controller').focusValField()
 
 Sysys.ProxyField =  Sysys.ContentField.extend
   classNames: ['proxy-field']
