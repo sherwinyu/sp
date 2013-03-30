@@ -108,6 +108,13 @@ Sysys.AbstractLabel = Sysys.ContentField.extend
       debugger
       e.preventDefault()
       @get('controller').focusValField()
+  keyDown: (e) ->
+    console.log e.which
+    if e.which ==  186 # colon
+      e.preventDefault()
+      @get('controller').focusValField()
+
+
 
   moveRight: ->
     if getCursor(@$()) ==  @$().val().length
