@@ -7,9 +7,6 @@ Sysys.ContentField = Ember.TextArea.extend
     @get('controller').activateNode @get('parentView.content')
     e.stopPropagation()
 
-  focusOut: ->
-    @commit()
-
   didInsertElement: ->
     @refresh()
     @setPlaceHolderText()
@@ -20,6 +17,13 @@ Sysys.ContentField = Ember.TextArea.extend
     @set 'value', @get('rawValue')
   setPlaceHolderText: ->
     @$().attr('placeholder', @get('placeholder'))
+
+  checkAndSave: ->
+    # TODO(syu) -- convert to string!
+    Ember.run =>
+      if @get('rawValue') + "" != @$().val()
+        @commit()
+
   commit: Em.K
 
   enter: ->
@@ -45,12 +49,16 @@ Sysys.ContentField = Ember.TextArea.extend
       @enter()
 
     @$().bind 'keydown', 'down', (e) =>
+      ctrl = @get 'controller'
       e.preventDefault()
-      @get('controller').nextNode()
+      @checkAndSave()
+      ctrl.nextNode()
 
     @$().bind 'keydown', 'up', (e) =>
+      ctrl = @get 'controller'
       e.preventDefault()
-      @get('controller').prevNode()
+      @checkAndSave()
+      ctrl.prevNode()
 
     @$().bind 'keydown', 'ctrl+up', (e) =>
       e.preventDefault()

@@ -19,13 +19,13 @@ Sysys.DetailController = Ember.Object.extend
     blank = (Sysys.j2hn "")
     Ember.run =>
       parent.replaceAt(idx, 0, blank)
-    @activateNode blank, focus: true
+    @activateNode blank, focus: true, unfocus: false
 
   # commits the key changes
   # commits the val changes
   commitChanges: ->
     @commitKey()
-    @commitVal()
+    @commit
 
   commit: ->
     rawString =  @get('activeHumonNodeView').$valField().val()
@@ -130,11 +130,14 @@ Sysys.DetailController = Ember.Object.extend
     $pf.focus()
 
   # sets activeHumonNode to node if node exists
-  activateNode: (node, {focus} = {focus: false}) ->
+  activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
     if node
       @set 'activeHumonNode', node
       if focus
         @focusActiveNodeView()
+      if unfocus
+        @commit()
+        @commitKey()
 
   nextNode: ->
     newNode = @get('activeHumonNode').nextNode()
@@ -142,7 +145,7 @@ Sysys.DetailController = Ember.Object.extend
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
-    @activateNode newNode, focus: true
+    @activateNode newNode, focus: true 
 
   #TODO(syu): test me
   forceHash: ->
@@ -194,14 +197,14 @@ Sysys.DetailController = Ember.Object.extend
     next = ahn.prevNode() || ahn.nextNode()
     return unless next
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
-    @activateNode(next, focus: true)
+    @activateNode(next, focus: true, unfocus: false)
 
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
     nextBlank = (Sysys.j2hn "")
     Em.run => ahn.insertAt 0, nextBlank
-    @activateNode(nextBlank, focus: true)
+    @activateNode(nextBlank, focus: true, unfocus: false)
 
   outdent: ->
     ahn = @get 'activeHumonNode'
