@@ -6,17 +6,20 @@ Sysys.DetailController = Ember.Object.extend
   activeHumonNode: null
 
   commitAndContinue: ->
-    ahn = @get('activeHumonNode')
-    parent = ahn.get('nodeParent')
-    idx = parent.get('nodeVal').indexOf(ahn) + 1
-    nextBlank = (Sysys.j2hn "")
-    unless ahn.get('nodeParent.isList')
-      nextBlank.set 'nodeKey', ''
+    ahn = @get 'activeHumonNode'
+    rawString =  @get('activeHumonNodeView').$valField().val() || '{}'
+    @commitKey()
+    @commitVal(rawString)
+    Ember.run.sync()
+    parent = ahn.get 'nodeParent'
+    idx = ahn.get('nodeIdx') + 1
+    if ahn.get 'isCollection'
+      parent = ahn
+      idx = ahn.get('nodeVal').length
+    blank = (Sysys.j2hn "")
     Ember.run =>
-      parent.replaceAt(idx, 0, nextBlank)
-    @commitChanges()
-    @activateNode nextBlank
-    @focusActiveNodeView()
+      parent.replaceAt(idx, 0, blank)
+    @activateNode blank, focus: true
 
   # commits the key changes
   # commits the val changes
@@ -33,15 +36,18 @@ Sysys.DetailController = Ember.Object.extend
     # TODO(syu): refresh key field
 
   # precondition: activeNode is a literal
-  # does jsonparsing of current activeHumonNodeView content-field.literal
+  # params: rawString -- the rawString to parse and replace ahn with
   # calls replaceWithJson on activeNode
-  commitVal: ->
+  commitVal: (rawString) ->
     return unless @get('activeHumonNode.isLiteral')
     Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
-    rawString =  @get('activeHumonNodeView').$valField().val()
-    # rawString = @get('activeHumonNodeView').$('> span > .content-field.val-field')?.first()?.val()
+    # rawString =  @get('activeHumonNodeView').$valField().val()
     if rawString?
-      json = JSON.parse rawString
+      json =
+        if rawString.length == 0
+          {}
+        else
+          JSON.parse rawString
       Ember.run =>
         @get('activeHumonNode').replaceWithJson json
     # TODO(syu): refresh val field
