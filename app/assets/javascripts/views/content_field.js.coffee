@@ -8,7 +8,7 @@ Sysys.ContentField = Ember.TextArea.extend
     e.stopPropagation()
 
   focusOut: ->
-    # TODO(syu): silent commit?
+    @commit()
 
   didInsertElement: ->
     @refresh()
@@ -83,8 +83,8 @@ Sysys.ContentField = Ember.TextArea.extend
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'
 
-Sysys.AbstractKeyField = Sysys.ContentField.extend
-  classNames: ['key']
+Sysys.AbstractLabel = Sysys.ContentField.extend
+  classNames: ['label-field']
   enter: ->
     if @get('controller.activeHumonNode.isCollection')
       @get('controller').insertChild()
@@ -96,6 +96,11 @@ Sysys.AbstractKeyField = Sysys.ContentField.extend
     @$().bind 'keydown', 'right', (e) =>
       @moveRight()
 
+    @$().bind 'keydown', 'colon', (e) =>
+      debugger
+      e.preventDefault()
+      @get('controller').focusValField()
+
   moveRight: ->
     if getCursor(@$()) ==  @$().val().length
       @get('controller').focusValField()
@@ -104,16 +109,26 @@ Sysys.ValField = Sysys.ContentField.extend
   classNames: ['val-field']
   placeholder: 'val'
   commit: ->
-    @get('controller').commitVal()
+    @get('controller').commit()
 
-Sysys.KeyField = Sysys.AbstractKeyField.extend
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'left', (e) =>
+      @moveLeft()
+
+  moveLeft: ->
+    if getCursor(@$()) ==  0
+      @get('controller').focusLabelField()
+
+
+Sysys.KeyField = Sysys.AbstractLabel.extend
   classNames: ['key-field']
   placeholder: 'key'
   commit: ->
     console.log 'commiting key'
     @get('controller').commitKey()
 
-Sysys.IdxField = Sysys.AbstractKeyField.extend
+Sysys.IdxField = Sysys.AbstractLabel.extend
   classNames: ['idx-field']
   refresh: Em.K
   didInsertElement: ->

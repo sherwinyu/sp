@@ -89,6 +89,8 @@ Sysys.HumonNodeView = Ember.View.extend
   initHotkeys: ->
     @$().bind 'keyup', 'up', (e) =>
 
+  $labelField: ->
+    @$('> span> .content-field.label-field')?.first()
   $keyField: ->
     @$('> span > .content-field.key-field')?.first()
   $idxField: ->

@@ -27,9 +27,14 @@ Sysys.DetailController = Ember.Object.extend
     @commitKey()
     @commitVal()
 
+  commit: ->
+    rawString =  @get('activeHumonNodeView').$valField().val()
+    @commitVal rawString
+
+
+
   commitKey: ->
     rawString =  @get('activeHumonNodeView').$keyField().val()
-    # rawString = @get('activeHumonNodeView').$('> span > .content-field.key-field')?.first()?.val()
     if rawString?
       # TODO(syu): validate whether rawString can be a key
       @set('activeHumonNode.nodeKey', rawString)
@@ -47,7 +52,7 @@ Sysys.DetailController = Ember.Object.extend
         if rawString.length == 0
           {}
         else
-          JSON.parse rawString
+          humon.parse rawString
       Ember.run =>
         @get('activeHumonNode').replaceWithJson json
     # TODO(syu): refresh val field
@@ -63,39 +68,54 @@ Sysys.DetailController = Ember.Object.extend
     Ember.run.sync()
     ahn = @get('activeHumonNode')
     ahnv = @get('activeHumonNodeView')
+    context = ahn.get('nodeParent.nodeType')
     nodeKey = ahn.get('nodeKey')
     nodeVal = ahn.get('nodeVal')
 
-    # if there's a key and it's blank
-    if nodeKey? && nodeKey == ''
+    if context == 'hash' 
+      if nodeKey.length == 0
+        @focusKeyField()
+      else
+        @focusValField()
+    else if context == 'list'
+      if ahn.get 'hasChildren'
+        @focusLabelField()
+      else
+        @focusValField()
+    if ahn.get('isCollection')
+      if not ahn.get('hasChildren')
+        @focusProxyField()
+      else
+        @focusLabelField()
+
+      ###
+    # if it's a hash with an empty key"
+    if context == 'hash' && nodeKey.length == 0
       @focusKeyField()
 
-    # if it's a collection
-    if nodeKey? && ahn.get('isCollection')
+    # if it's a hash with children
+    if context == 'hash' && ahn.get('isCollection') && ahn.get('hasChildren')
       @focusKeyField()
 
-    # if it's a
-    if nodeKey? && nodeKey != ''
-      @focusValField()
-
-    if !nodeKey?
-      @focusValField()
-
-    if ahn.get('nodeParent.isList') and ahn.get('isCollection')
-      @focusIdxField()
-
-    if ahn.get('nodeParent.isHash') and ahn.get('isCollection')
-      @focusKeyField()
-
+    # if it's a hash  without children
     if ahn.get('isCollection') and not ahn.get('hasChildren')
       @focusProxyField()
 
+    # if it's a hash with an non empty key"
+    if context == 'hash' && nodeKey.length
+      @focusValField()
+
+
+      # if nodeKey? && nodeKey != ''
+      # @focusValField()
+      # ###
+
+  focusLabelField : ->
+    $lf = @get('activeHumonNodeView').$labelField().focus()
+
   focusKeyField: ->
-    $kf = @get('activeHumonNodeView').$('> span > .content-field.key-field').first()
+    $kf = @get('activeHumonNodeView').$keyField()
     $kf.focus()
-    unless $kf.length
-      $idxf = @get('activeHumonNodeView').$idxField()
-      $idxf.focus()
 
   focusValField: ->
     $vf = @get('activeHumonNodeView').$valField()
