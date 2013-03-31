@@ -11,6 +11,7 @@
 #= require vendor/ember-data
 #
 #= require vendor/jquery-autogrow-textarea
+#= require vendor/jquery-autogrow-textarea-plus
 #= require vendor/jquery.hotkeys
 #
 # require vendor/ember-1.0.0-pre.2

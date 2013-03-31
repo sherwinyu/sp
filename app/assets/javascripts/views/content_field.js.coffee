@@ -11,7 +11,7 @@ Sysys.ContentField = Ember.TextArea.extend
     @refresh()
     @setPlaceHolderText()
     @initHotKeys()
-    @$().autogrow()
+    # @$().autogrow horizontal: true 
 
   refresh: ->
     @set 'value', @get('rawValue')
@@ -108,13 +108,11 @@ Sysys.AbstractLabel = Sysys.ContentField.extend
       debugger
       e.preventDefault()
       @get('controller').focusValField()
+
   keyDown: (e) ->
-    console.log e.which
     if e.which ==  186 # colon
       e.preventDefault()
       @get('controller').focusValField()
-
-
 
   moveRight: ->
     if getCursor(@$()) ==  @$().val().length
@@ -158,3 +156,16 @@ Sysys.ProxyField =  Sysys.ContentField.extend
     @$().attr('tabindex', -1)
   commitAndContinue: ->
     @get('controller').insertChild()
+
+Sysys.AutogrowField = Sysys.ValField.extend
+  classNames: ['autogrow-field']
+  didInsertElement: ->
+    @_super()
+
+  ag: ->
+    @$().autogrowplus()
+
+  ng: ->
+    5
+
+

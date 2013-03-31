@@ -148,3 +148,11 @@ span.close-glyph:after {
   margin-top: 0px;// transparent solid;
 }
 
+/*
+ * Autogrow Tests
+ */
+
+textarea.autogrow-field.content-field {
+  @include imp;
+  overflow: hidden;
+}
