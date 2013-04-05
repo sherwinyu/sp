@@ -31,6 +31,8 @@ Sysys.ContentField = Ember.TextArea.extend
 
   refresh: ->
     @set 'value', @get('rawValue')
+    @autogrow()
+    @removeAutogrow()
 
   setPlaceHolderText: ->
     @$().attr('placeholder', @get('placeholder'))
@@ -184,5 +186,3 @@ Sysys.AutogrowField = Sysys.ValField.extend
 
   ng: ->
     5
-
-

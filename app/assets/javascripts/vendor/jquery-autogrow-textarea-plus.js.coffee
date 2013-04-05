@@ -68,6 +68,7 @@
       maxHeight = $el.attr("maxHeight")
       lineHeight = $el.css("lineHeight")
       minWidth = (if typeof ($el.attr("minWidth")) is "undefined" then 0 else $el.attr("minWidth"))
+      minWidth ?= $el.css 'min-width'
       maxHeight = 1000000  if typeof (maxHeight) is "undefined"
 
       shadow = $('<div class="autogrowplus-shadow"></div>').css(
@@ -96,7 +97,6 @@
 
         val = @value
         if options.vertical
-          debugger
           val = val.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/\n$/, "<br/>&nbsp;").replace(/\n/g, "<br/>").replace(RegExp(" {2,}", "g"), (space) ->
             times("&nbsp;", space.length - 1) + " "
           )

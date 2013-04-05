@@ -15,7 +15,6 @@ describe "HumonNode UI integration", ->
           ]
       }
     json = @serialized
-    debugger
     window.dC = Sysys.DetailController.create() 
     window.hn = @humonNode = Sysys.HumonUtils.json2humonNode json 
     window.hnv = @humonNodeView = Sysys.HumonNodeView.create content: @humonNode, controller: window.dC,  displayStats: true
