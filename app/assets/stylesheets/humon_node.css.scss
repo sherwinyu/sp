@@ -77,14 +77,20 @@ textarea.content-field {
   box-shadow: none;
   resize: none;
   background: none;
+  overflow: hidden;
 }
 textarea.content-field:focus {
   border: none;
   box-shadow: none;
 }
 
+textarea.content-field.label-field {
+  float: left;
+  width: auto;
+}
 textarea.content-field.val-field {
-  width: 600px;
+  float: left;
+  width: auto;
 }
 textarea.content-field.val-field:focus { }
 
@@ -92,14 +98,13 @@ textarea.content-field.val-field:focus { }
 textarea.content-field.idx-field {
   width: 25px;
   padding-left: 15px;
-  font-style: bold;
   color: $grayLight;
 }
 textarea.content-field.idx-field:focus { }
 
 textarea.content-field.key-field {
-  width: 60px;
   padding-left: 15px;
+  width: 200px;
 }
 textarea.content-field.key-field:focus { }
 
@@ -155,4 +160,9 @@ span.close-glyph:after {
 textarea.autogrow-field.content-field {
   @include imp;
   overflow: hidden;
+  height: 150px;
+  padding-top: 50px;
+  border-top: 15px red solid;
+  border-bottom: 15px red solid;
+  padding-bottom: 50px;
 }

@@ -1,4 +1,5 @@
-#= require jquery
+# require jquery
+#= require vendor/jquery-1.9.1
 #= require jquery_ujs
 #= require jquery.ui.datepicker
 #= require jquery.ui.slider

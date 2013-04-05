@@ -55,6 +55,7 @@
   #
   #     * Auto-growing textareas; technique ripped from Facebook
   #     
+
   $.fn.autogrowplus = (options) ->
     options = $.extend(
       vertical: true
@@ -71,12 +72,15 @@
 
       shadow = $('<div class="autogrowplus-shadow"></div>').css(
         position: "absolute"
-        top: -10000
-        left: -10000
+        bottom: 400
+        left: 400
         fontSize: $el.css("fontSize")
         fontFamily: $el.css("fontFamily")
         fontWeight: $el.css("fontWeight")
         lineHeight: $el.css("lineHeight")
+        border: $el.css('border')
+        padding: $el.css('padding')
+        margin: $el.css('margin')
         resize: "none"
       ).appendTo(document.body)
 
@@ -92,27 +96,43 @@
 
         val = @value
         if options.vertical
+          debugger
           val = val.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/\n$/, "<br/>&nbsp;").replace(/\n/g, "<br/>").replace(RegExp(" {2,}", "g"), (space) ->
             times("&nbsp;", space.length - 1) + " "
           )
         
         #if( options.horizontal )
         #      val = $.trim( val );
+
+        # set the shadow's internal shit
         shadow.html(val).css "width", "auto"
-        if options.horizontal
+        if options.horizontal and shadow.parent().length
           maxWidth = options.maxWidth
           maxWidth = $el.parent().width() - 12  if typeof (maxWidth) is "undefined"
-          $(this).css "width", Math.min(Math.max(shadow.width() + 9, minWidth), maxWidth)
+          otherWidth = parseInt($el.css('width')) - $el.width() + 12
+          width = Math.min(Math.max(shadow.width() + otherWidth, minWidth), maxWidth)
+          console.log "setting ##{$el.attr 'id'}.width=#{width}"
+          $(@).css "width", width
+
+        ###
         if options.vertical
           shadow.css "width", $(this).width() - parseInt($el.css("paddingLeft"), 10) - parseInt($el.css("paddingRight"), 10)
           shadowHeight = shadow.height()
           newHeight = Math.min(Math.max(shadowHeight, minHeight), maxHeight)
           $(this).css "height", newHeight
           $(this).css "overflow", (if newHeight is maxHeight then "auto" else "hidden")
+        ###
 
-      $(this).change(update).keyup(update).keydown(update).bind "remove.autogrowplus", (e) ->
+      #### set it up
+      $(@).on 'remove.autogrowplus', (e)->
         e.preventDefault()
+        $(this).off '.autogrowplus'
+        console.log('removing')
         shadow.remove()
+      $(this).on 'change.autogrowplus', update
+      $(this).on 'keyup.autogrowplus', update
+      $(this).on 'keydown.autogrowplus', update
+      # change(update).keyup(update).keydown(update).bind "remove.autogrowplus", (e) ->
 
       update.apply this
 

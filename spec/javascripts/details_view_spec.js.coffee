@@ -16,7 +16,6 @@ xdescribe "details view (enumerable object)", ->
           "scalar"
       }
 
-
         #{a: 0, b: {b0: 5, b1: 7}, c: 1 }
     @details = Sysys.JSONWrapper.recursiveDeserialize(@serialized)
     @detailView = Sysys.DetailsView.create details: @details
@@ -168,12 +167,3 @@ xdescribe "details view (enumerable object)", ->
       serialized = JSON.stringify Sysys.JSONWrapper.recursiveSerialize @array2view.get 'details'
       expect(@array2view.get('commitValue')).toEqual serialized
       expect(@array2view.$('textarea').val()).toEqual serialized
-
-
-
-
-
-
-
-
-

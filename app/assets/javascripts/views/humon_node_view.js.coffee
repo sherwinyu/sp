@@ -10,6 +10,10 @@ Sysys.HumonNodeView = Ember.View.extend
     'addGap:addGap']
   classNames: ['node']
 
+  click: (e)->
+    @get('controller').activateNode @get('content')
+    e.stopPropagation()
+
   json_string: (->
     JSON.stringify @get('content.json')
   ).property('content.json')

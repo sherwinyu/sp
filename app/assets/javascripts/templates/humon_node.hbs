@@ -1,6 +1,6 @@
 <span class="blocky">
   {{#if view.content.nodeParent.isHash}}
-    {{view "Sysys.KeyField" rawValueBinding="view.content.nodeKey"}} :
+    {{view "Sysys.KeyField" rawValueBinding="view.content.nodeKey"}}
   {{else}}
     {{view "Sysys.IdxField" valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}}
   {{/if}}
@@ -26,4 +26,3 @@
 <strong> Active Humon Node Idx</strong> {{controller.activeHumonNode.nodeIdx}} <br>
 <strong> Active Humon Node Parent</strong> {{controller.activeHumonNode.nodeParent.nodeView.json_string}} <br>
 {{/if}}
-

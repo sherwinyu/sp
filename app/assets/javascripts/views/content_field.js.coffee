@@ -2,19 +2,36 @@ Sysys.ContentField = Ember.TextArea.extend
   rawValueBinding: null
   classNames: ['content-field']
   placeholder: ''
+  autogrowing: false
 
   focusIn: (e)->
     @get('controller').activateNode @get('parentView.content')
+
+    unless @get('autogrowing')
+      @autogrow()
     e.stopPropagation()
+
+  focusOut: (e)->
+    if @get('autogrowing')
+      @removeAutogrow()
+
+  autogrow: ->
+    @$().autogrowplus horizontal: true, vertical: false
+    @set('autogrowing', true)
+
+  removeAutogrow: ->
+    @$().trigger 'remove.autogrowplus'
+    @set('autogrowing', false)
+
 
   didInsertElement: ->
     @refresh()
     @setPlaceHolderText()
     @initHotKeys()
-    # @$().autogrow horizontal: true 
 
   refresh: ->
     @set 'value', @get('rawValue')
+
   setPlaceHolderText: ->
     @$().attr('placeholder', @get('placeholder'))
 
