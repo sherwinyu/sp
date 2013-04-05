@@ -1,15 +1,14 @@
 <span class="blocky">
   {{#if view.content.nodeParent.isHash}}
-    {{view Sysys.KeyField rawValueBinding="view.content.nodeKey"}} :
+    {{view "Sysys.KeyField" rawValueBinding="view.content.nodeKey"}} :
   {{else}}
-    {{view Sysys.IdxField valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}}
+    {{view "Sysys.IdxField" valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}}
   {{/if}}
 
   {{#if view.content.isLiteral}}
-    {{view Sysys.ValField rawValueBinding="view.content.json" }}
+    {{view "Sysys.ValField" rawValueBinding="view.content.json" }}
   {{else}}
-
-    <span class="open-glyph"> </span>{{view Sysys.ProxyField }}
+    <span class="open-glyph"> </span>{{view "Sysys.ProxyField" }}
   {{/if}}
 </span>
 

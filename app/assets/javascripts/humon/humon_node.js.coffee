@@ -112,8 +112,8 @@ Sysys.HumonNode = Ember.Object.extend
     return if @get('isList')
     @set 'nodeType', 'list'
 
-  unknownProperty: (key) ->
-    return @getNode(key)?.get 'json'
+    # unknownProperty: (key) ->
+    # return @getNode(key)?.get 'json'
 
   replaceWithJson: (json)->
     humonNode = Sysys.j2hn json

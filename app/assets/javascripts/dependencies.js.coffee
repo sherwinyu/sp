@@ -6,8 +6,12 @@
 # require vendor/handlebars-1.0.rc.2
 # require vendor/ember-1.0.0.4
 # require vendor/ember-data-1.0.0.4
-#= require vendor/handlebars-1.0.0.beta.6
-#= require vendor/ember
+# require vendor/handlebars-1.0.0.beta.6
+# require vendor/ember
+# require vendor/ember-data
+#
+#= require vendor/handlebars-1.0.0-rc.3
+#= require vendor/ember-1.0.0-rc.2
 #= require vendor/ember-data
 #
 #= require vendor/jquery-autogrow-textarea
