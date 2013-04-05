@@ -111,7 +111,7 @@
           maxWidth = $el.parent().width() - 12  if typeof (maxWidth) is "undefined"
           otherWidth = parseInt($el.css('width')) - $el.width() + 12
           width = Math.min(Math.max(shadow.width() + otherWidth, minWidth), maxWidth)
-          console.log "setting ##{$el.attr 'id'}.width=#{width}"
+          # console.log "setting ##{$el.attr 'id'}.width=#{width}"
           $(@).css "width", width
 
         ###
@@ -127,12 +127,10 @@
       $(@).on 'remove.autogrowplus', (e)->
         e.preventDefault()
         $(this).off '.autogrowplus'
-        console.log('removing')
         shadow.remove()
       $(this).on 'change.autogrowplus', update
       $(this).on 'keyup.autogrowplus', update
       $(this).on 'keydown.autogrowplus', update
-      # change(update).keyup(update).keydown(update).bind "remove.autogrowplus", (e) ->
 
       update.apply this
 
