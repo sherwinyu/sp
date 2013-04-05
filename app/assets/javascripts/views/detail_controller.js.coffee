@@ -6,45 +6,54 @@ Sysys.DetailController = Ember.Object.extend
   activeHumonNode: null
 
   commitAndContinue: ->
-    ahn = @get('activeHumonNode')
-    parent = ahn.get('nodeParent')
-    idx = parent.get('nodeVal').indexOf(ahn) + 1
-    nextBlank = (Sysys.j2hn "")
-    unless ahn.get('nodeParent.isList')
-      nextBlank.set 'nodeKey', ''
+    ahn = @get 'activeHumonNode'
+    rawString =  @get('activeHumonNodeView').$valField().val() || '{}'
+    @commitKey()
+    @commitVal(rawString)
+    Ember.run.sync()
+    parent = ahn.get 'nodeParent'
+    idx = ahn.get('nodeIdx') + 1
+    if ahn.get 'isCollection'
+      parent = ahn
+      idx = ahn.get('nodeVal').length
+    blank = (Sysys.j2hn "")
     Ember.run =>
-      parent.replaceAt(idx, 0, nextBlank)
-    @commitChanges()
-    @activateNode nextBlank
-    @focusActiveNodeView()
+      parent.replaceAt(idx, 0, blank)
+    @activateNode blank, focus: true, unfocus: false
 
   # commits the key changes
   # commits the val changes
   commitChanges: ->
     @commitKey()
-    @commitVal()
+    @commit
+
+  commit: ->
+    rawString =  @get('activeHumonNodeView').$valField().val()
+    @commitVal rawString
 
   commitKey: ->
     rawString =  @get('activeHumonNodeView').$keyField().val()
-    # rawString = @get('activeHumonNodeView').$('> span > .content-field.key-field')?.first()?.val()
     if rawString?
       # TODO(syu): validate whether rawString can be a key
       @set('activeHumonNode.nodeKey', rawString)
     # TODO(syu): refresh key field
 
   # precondition: activeNode is a literal
-  # does jsonparsing of current activeHumonNodeView content-field.literal
+  # params: rawString -- the rawString to parse and replace ahn with
   # calls replaceWithJson on activeNode
-  commitVal: ->
+  commitVal: (rawString) ->
     return unless @get('activeHumonNode.isLiteral')
-    Em.assert 'activeHumonNode needs to be a literal to commitChanges', @get('activeHumonNode.isLiteral')
-    rawString =  @get('activeHumonNodeView').$valField().val()
-    # rawString = @get('activeHumonNodeView').$('> span > .content-field.val-field')?.first()?.val()
+    json =
+      try 
+        humon.parse rawString
+      catch error
+        try
+          JSON.parse rawString
+        catch error
+          ""
     if rawString?
-      json = JSON.parse rawString
       Ember.run =>
         @get('activeHumonNode').replaceWithJson json
-    # TODO(syu): refresh val field
 
   cancelChanges: ->
     Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
@@ -52,45 +61,59 @@ Sysys.DetailController = Ember.Object.extend
     # ahnv.cancelChanges
     rawString = @get('activeHumonNode.json')
     @get('activeHumonNodeView').$('> span > .content-field.val-field').first().val rawString
-    # @get('activeHumonNodeView').$('.content-field').trigger 'focusOut' # TODO(syu): use a generic thirdperson "unfocus" command?
 
   focusActiveNodeView: ->
     Ember.run.sync()
     ahn = @get('activeHumonNode')
     ahnv = @get('activeHumonNodeView')
+    context = ahn.get('nodeParent.nodeType')
     nodeKey = ahn.get('nodeKey')
     nodeVal = ahn.get('nodeVal')
 
-    # if there's a key and it's blank
-    if nodeKey? && nodeKey == ''
+    if context == 'hash' 
+      if nodeKey.length == 0
+        @focusKeyField()
+      else
+        @focusValField()
+    else if context == 'list'
+      if ahn.get 'hasChildren'
+        @focusLabelField()
+      else
+        @focusValField()
+    if ahn.get('isCollection')
+      if not ahn.get('hasChildren')
+        @focusProxyField()
+      else
+        @focusLabelField()
+
+      ###
+    # if it's a hash with an empty key"
+    if context == 'hash' && nodeKey.length == 0
       @focusKeyField()
 
-    # if it's a collection
-    if nodeKey? && ahn.get('isCollection')
+    # if it's a hash with children
+    if context == 'hash' && ahn.get('isCollection') && ahn.get('hasChildren')
       @focusKeyField()
 
-    # if it's a
-    if nodeKey? && nodeKey != ''
-      @focusValField()
-
-    if !nodeKey?
-      @focusValField()
-
-    if ahn.get('nodeParent.isList') and ahn.get('isCollection')
-      @focusIdxField()
-
-    if ahn.get('nodeParent.isHash') and ahn.get('isCollection')
-      @focusKeyField()
-
+    # if it's a hash  without children
     if ahn.get('isCollection') and not ahn.get('hasChildren')
       @focusProxyField()
 
+    # if it's a hash with an non empty key"
+    if context == 'hash' && nodeKey.length
+      @focusValField()
+
+
+      # if nodeKey? && nodeKey != ''
+      # @focusValField()
+      # ###
+
+  focusLabelField : ->
+    $lf = @get('activeHumonNodeView').$labelField().focus()
+
   focusKeyField: ->
-    $kf = @get('activeHumonNodeView').$('> span > .content-field.key-field').first()
+    $kf = @get('activeHumonNodeView').$keyField()
     $kf.focus()
-    unless $kf.length
-      $idxf = @get('activeHumonNodeView').$idxField()
-      $idxf.focus()
 
   focusValField: ->
     $vf = @get('activeHumonNodeView').$valField()
@@ -105,11 +128,14 @@ Sysys.DetailController = Ember.Object.extend
     $pf.focus()
 
   # sets activeHumonNode to node if node exists
-  activateNode: (node, {focus} = {focus: false}) ->
+  activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
     if node
       @set 'activeHumonNode', node
       if focus
         @focusActiveNodeView()
+      if unfocus
+        @commit()
+        @commitKey()
 
   nextNode: ->
     newNode = @get('activeHumonNode').nextNode()
@@ -117,7 +143,7 @@ Sysys.DetailController = Ember.Object.extend
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
-    @activateNode newNode, focus: true
+    @activateNode newNode, focus: true 
 
   #TODO(syu): test me
   forceHash: ->
@@ -169,21 +195,21 @@ Sysys.DetailController = Ember.Object.extend
     next = ahn.prevNode() || ahn.nextNode()
     return unless next
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
-    @activateNode(next, focus: true)
+    @activateNode(next, focus: true, unfocus: false)
 
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
     nextBlank = (Sysys.j2hn "")
     Em.run => ahn.insertAt 0, nextBlank
-    @activateNode(nextBlank, focus: true)
+    @activateNode(nextBlank, focus: true, unfocus: false)
 
   outdent: ->
     ahn = @get 'activeHumonNode'
     newSibling = ahn.get 'nodeParent'
     newParent = newSibling?.get 'nodeParent'
     return unless newParent and newSibling
-    Ember.run => 
+    Ember.run =>
       newSibling.deleteChild ahn
       newParent.insertAt newSibling.get('nodeIdx') + 1, ahn
     @focusActiveNodeView()

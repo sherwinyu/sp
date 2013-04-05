@@ -23,6 +23,7 @@ span.blocky {
 }
 
 .node {
+  cursor: text;
   color: $copygray;
   position: relative;
   padding-left: 15px;
@@ -49,7 +50,7 @@ span.blocky {
 .node.active > div > .node {
   border-left: 4px $activeColorLight solid;
 }
-.node.active > span.blocky > textarea.content-field.key {
+.node.active > span.blocky > textarea.content-field.label-field {
   color: $activeColorDark;
   text-decoration: underline;
 }
@@ -57,7 +58,7 @@ span.blocky {
 /*
  * Active child styling
  */
-.node.activeChild > span.blocky > textarea.content-field.key {
+.node.activeChild > span.blocky > textarea.content-field.label-field {
   color: lighten($grayDark, 5%);
   text-decoration: underline;
 }
@@ -77,29 +78,33 @@ textarea.content-field {
   box-shadow: none;
   resize: none;
   background: none;
+  overflow: hidden;
 }
 textarea.content-field:focus {
   border: none;
   box-shadow: none;
 }
 
+textarea.content-field.label-field {
+}
 textarea.content-field.val-field {
-  width: 600px;
+  min-width: 100px;
 }
 textarea.content-field.val-field:focus { }
 
 
 textarea.content-field.idx-field {
   width: 25px;
+  min-width: 25px;
   padding-left: 15px;
-  font-style: bold;
   color: $grayLight;
 }
 textarea.content-field.idx-field:focus { }
 
 textarea.content-field.key-field {
-  width: 60px;
   padding-left: 15px;
+  width: 200px;
+  min-width: 50px;
 }
 textarea.content-field.key-field:focus { }
 
@@ -148,3 +153,16 @@ span.close-glyph:after {
   margin-top: 0px;// transparent solid;
 }
 
+/*
+ * Autogrow Tests
+ */
+
+textarea.autogrow-field.content-field {
+  @include imp;
+  overflow: hidden;
+  height: 150px;
+  padding-top: 50px;
+  border-top: 15px red solid;
+  border-bottom: 15px red solid;
+  padding-bottom: 50px;
+}

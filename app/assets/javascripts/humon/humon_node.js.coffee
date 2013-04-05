@@ -1,5 +1,5 @@
 Sysys.HumonNode = Ember.Object.extend
-  nodeKey: null
+  nodeKey: ''
   nodeVal: null
   nodeType: null
   nodeParent: null
@@ -70,7 +70,6 @@ Sysys.HumonNode = Ember.Object.extend
     arr = @flatten()
     arr[arr.length-1]
 
-
   nextNode:  ->
     if @get('hasChildren')
       return @get('nodeVal')[0]
@@ -113,8 +112,8 @@ Sysys.HumonNode = Ember.Object.extend
     return if @get('isList')
     @set 'nodeType', 'list'
 
-  unknownProperty: (key) ->
-    return @getNode(key)?.get 'json'
+    # unknownProperty: (key) ->
+    # return @getNode(key)?.get 'json'
 
   replaceWithJson: (json)->
     humonNode = Sysys.j2hn json

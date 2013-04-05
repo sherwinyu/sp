@@ -7,9 +7,8 @@
 #= require_tree ./templates
 #= require_tree ./routes
 #= require_tree ./humon
-unless @Sysys then @Sysys = Ember.Application.create(
-  autoinit: !Test
-  )
+unless @Sysys 
+  @Sysys = Ember.Application.create()
 
 Sysys.u =
 
@@ -44,6 +43,7 @@ window.setCursor = (node, pos) ->
     true
   false
 
+window.getCursor = (node) ->
+  $(node).prop('selectionStart')
+
 window.delay = (ms, callback) -> setTimeout(ms, callback)
-           
-  

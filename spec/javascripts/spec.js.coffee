@@ -13,8 +13,6 @@
 #= require ../../app/assets/javascripts/sysys
 #= require_tree ./
 @Test = true
-# @Sysys = {}
-@Sysys = Ember.Application.create(
-  autoinit: !!Test
-  )
+
+@Sysys = Ember.Application.create()
 

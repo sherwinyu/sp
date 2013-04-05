@@ -1,5 +1,6 @@
 Sysys.Router = Ember.Router.extend
   location: 'hash'
+###
 
   root: Ember.Route.extend
 
@@ -44,14 +45,5 @@ Sysys.Router = Ember.Router.extend
 
 
 
-
-
-          ###
-    acts: Ember.Route.extend
-      route: 'acts'
-      
-      connectOutlets: (router, context) ->
-        actController = router.get('actController')
-      ###
-
   enableLogging: true
+###

@@ -10,6 +10,10 @@ Sysys.HumonNodeView = Ember.View.extend
     'addGap:addGap']
   classNames: ['node']
 
+  click: (e)->
+    @get('controller').activateNode @get('content')
+    e.stopPropagation()
+
   json_string: (->
     JSON.stringify @get('content.json')
   ).property('content.json')
@@ -29,6 +33,7 @@ Sysys.HumonNodeView = Ember.View.extend
   willDestroyElement: ->
     @animDestroy()
     @unbindHotkeys()
+    @get('content')?.set 'nodeView', null
 
   didInsertElement: ->
     @animInsert()
@@ -81,14 +86,14 @@ Sysys.HumonNodeView = Ember.View.extend
     $el.slideUp 250, ->
       $el.remove()
 
-  didDestroyElement: ->
-    @get('content')?.set 'nodeView', null
 
   unbindHotkeys: Em.K
 
   initHotkeys: ->
     @$().bind 'keyup', 'up', (e) =>
 
+  $labelField: ->
+    @$('> span> .content-field.label-field')?.first()
   $keyField: ->
     @$('> span > .content-field.key-field')?.first()
   $idxField: ->
