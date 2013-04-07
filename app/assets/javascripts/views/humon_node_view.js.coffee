@@ -11,7 +11,7 @@ Sysys.HumonNodeView = Ember.View.extend
   classNames: ['node']
 
   click: (e)->
-    @get('controller').activateNode @get('content')
+    @get('controller').activateNode @get('content'), focus: true
     e.stopPropagation()
 
   json_string: (->
