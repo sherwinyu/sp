@@ -73,8 +73,8 @@
 
       shadow = $('<div class="autogrowplus-shadow"></div>').css(
         position: "absolute"
-        bottom: 400
-        left: 400
+        bottom: -3000
+        left: -3000
         fontSize: $el.css("fontSize")
         fontFamily: $el.css("fontFamily")
         fontWeight: $el.css("fontWeight")
@@ -104,12 +104,14 @@
         #if( options.horizontal )
         #      val = $.trim( val );
 
-        # set the shadow's internal shit
+        # set the shadow's internal value
+        if val == '' 
+          val = $el.attr 'placeholder'
         shadow.html(val).css "width", "auto"
         if options.horizontal and shadow.parent().length
           maxWidth = options.maxWidth
           maxWidth = $el.parent().width() - 12  if typeof (maxWidth) is "undefined"
-          otherWidth = parseInt($el.css('width')) - $el.width() + 12
+          otherWidth = parseInt($el.css('width')) - $el.width() + 14
           width = Math.min(Math.max(shadow.width() + otherWidth, minWidth), maxWidth)
           # console.log "setting ##{$el.attr 'id'}.width=#{width}"
           $(@).css "width", width

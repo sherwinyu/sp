@@ -12,5 +12,3 @@ describe "Acts", ->
 
 
 describe "validations", ->
-
-

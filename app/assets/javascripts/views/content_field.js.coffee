@@ -125,11 +125,6 @@ Sysys.AbstractLabel = Sysys.ContentField.extend
     @$().bind 'keydown', 'right', (e) =>
       @moveRight()
 
-    @$().bind 'keydown', 'colon', (e) =>
-      debugger
-      e.preventDefault()
-      @get('controller').focusValField()
-
   keyDown: (e) ->
     if e.which ==  186 # colon
       e.preventDefault()
@@ -154,12 +149,10 @@ Sysys.ValField = Sysys.ContentField.extend
     if getCursor(@$()) ==  0
       @get('controller').focusLabelField()
 
-
 Sysys.KeyField = Sysys.AbstractLabel.extend
   classNames: ['key-field']
   placeholder: 'key'
   commit: ->
-    console.log 'commiting key'
     @get('controller').commitKey()
 
 Sysys.IdxField = Sysys.AbstractLabel.extend
@@ -177,14 +170,3 @@ Sysys.ProxyField =  Sysys.ContentField.extend
     @$().attr('tabindex', -1)
   commitAndContinue: ->
     @get('controller').insertChild()
-
-Sysys.AutogrowField = Sysys.ValField.extend
-  classNames: ['autogrow-field']
-  didInsertElement: ->
-    @_super()
-
-  ag: ->
-    @$().autogrowplus()
-
-  ng: ->
-    5

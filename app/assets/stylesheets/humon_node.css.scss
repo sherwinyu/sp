@@ -95,7 +95,7 @@ textarea.content-field.val-field:focus { }
 
 textarea.content-field.idx-field {
   width: 25px;
-  min-width: 25px;
+  min-width: 20px;
   padding-left: 15px;
   color: $grayLight;
 }
@@ -104,12 +104,16 @@ textarea.content-field.idx-field:focus { }
 textarea.content-field.key-field {
   padding-left: 15px;
   width: 200px;
-  min-width: 50px;
+  min-width: 25px;
 }
 textarea.content-field.key-field:focus { }
 
 textarea.content-field.proxy-field {
   padding-left: 5px;
+}
+span.colon-glyph {
+  position: relative;
+  left: -10px;
 }
 
 span.open-glyph:before {
@@ -156,7 +160,6 @@ span.close-glyph:after {
 /*
  * Autogrow Tests
  */
-
 textarea.autogrow-field.content-field {
   @include imp;
   overflow: hidden;

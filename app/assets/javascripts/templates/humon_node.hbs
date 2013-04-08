@@ -1,6 +1,6 @@
 <span class="blocky">
   {{#if view.content.nodeParent.isHash}}
-    {{view "Sysys.KeyField" rawValueBinding="view.content.nodeKey"}}:
+  {{view "Sysys.KeyField" rawValueBinding="view.content.nodeKey"}}<span class="colon-glyph">:</span>
   {{else}}
     {{view "Sysys.IdxField" valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}}
   {{/if}}
