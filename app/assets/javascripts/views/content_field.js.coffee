@@ -21,9 +21,9 @@ Sysys.ContentField = Ember.TextArea.extend
   autogrow: ->
     @$().autogrowplus horizontal: true, vertical: false
     @set('autogrowing', true)
-
   removeAutogrow: ->
     @$().trigger 'remove.autogrowplus'
+    console.log 'removing autogrow'
     @set('autogrowing', false)
 
   didInsertElement: ->
@@ -171,17 +171,20 @@ Sysys.BigValField = Sysys.ValField.extend
   focusOut: (e)->
     @_super(e)
     @get('parentView').exitEditing()
+  cancel: ->
+    @removeAutogrow()
+    @get('parentView').exitEditing()
+
   createHotKeys: ->
     @_super()
     hotkeys = @get('hotkeys')
     hotkeys['return'] = Em.K
     hotkeys['up'] = Em.K
     hotkeys['down'] = Em.K
+  autosize: Em.K
 
 Sysys.ProxyField = Sysys.ContentField.extend
   classNames: ['proxy-field']
-  classNameBindings: ['editing']
-  editing: false
 
   placeholder: ''
   didInsertElement: ->
@@ -189,16 +192,6 @@ Sysys.ProxyField = Sysys.ContentField.extend
     @$().attr('tabindex', -1)
   commitAndContinue: ->
     @get('controller').insertChild()
-    ###
-  autogrow: ->
-    @$().autogrowplus horizontal: true, vertical: true
-    @set('autogrowing', true)
-  createHotKeys: ->
-    @_super()
-    hotkeys = @get('hotkeys')
-    hotkeys['return'] = ->
-      console.log ' GOOOOOOOOOOOOOOOOOOALLLLLLLL '
-      ###
   focusIn: (e)->
     @_super(e)
     @get('parentView').enterEditing()

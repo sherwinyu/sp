@@ -64,17 +64,22 @@
 
     @filter("textarea").each ->
       $el = $(this)
-      minHeight = $el.height()
+      # minHeight = $el.height()
+      minHeight = parseInt $el.css 'min-height'
+      minHeight ?= 0
+
       maxHeight = $el.attr("maxHeight")
       lineHeight = $el.css("lineHeight")
+
       minWidth = (if typeof ($el.attr("minWidth")) is "undefined" then 0 else $el.attr("minWidth"))
       minWidth ?= $el.css 'min-width'
-      maxHeight = 1000000  if typeof (maxHeight) is "undefined"
+
+      maxHeight ?= 1000000
 
       shadow = $('<div class="autogrowplus-shadow"></div>').css(
         position: "absolute"
-        bottom: -3000
-        left: -3000
+        bottom: 400
+        left: 400
         fontSize: $el.css("fontSize")
         fontFamily: $el.css("fontFamily")
         fontWeight: $el.css("fontWeight")
@@ -117,7 +122,8 @@
           $(@).css "width", width
 
         if options.vertical
-          shadow.css "width", $(this).width() - parseInt($el.css("paddingLeft"), 10) - parseInt($el.css("paddingRight"), 10)
+          # what is this line for ??? 
+          # shadow.css "width", $(this).width() - parseInt($el.css("paddingLeft"), 10) - parseInt($el.css("paddingRight"), 10)
           shadowHeight = shadow.height()
           newHeight = Math.min(Math.max(shadowHeight, minHeight), maxHeight)
           $(this).css "height", newHeight

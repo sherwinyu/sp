@@ -108,6 +108,7 @@ Sysys.HumonNodeView = Ember.View.extend
     @$('> .content-field.big-val-field')?.first()
 
   enterEditing: ->
+    console.log 'entering editing'
     x = @$bigValField()
     @set 'editing', true
     @$('.big-val-field').addClass 'editing'
@@ -117,6 +118,8 @@ Sysys.HumonNodeView = Ember.View.extend
     x.focus()
 
   exitEditing:->
+    console.log 'exiting editing'
     @set('editing', false)
     @$('.big-val-field').removeClass 'editing'
     @$('.node-item-collection-wrapper').removeClass 'editing'
+    @get('controller').smartFocus()

@@ -32,7 +32,7 @@ span.blocky {
   color: $copygray;
   position: relative;
   padding-left: $nodeWhiteIndent;
-  border: 1px transparent solid;
+  border: 0px transparent solid;
   border-left: $nodeLeftBorder white solid;
   background: white;
 }
@@ -104,7 +104,8 @@ textarea.content-field.val-field.big-val-field {
 }
 textarea.content-field.val-field.big-val-field.editing {
   display: block;
-  background: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  background: lighten($activeColorLight, 4%);
   position: relative;
   border-left: $nodeLeftBorder $activeColorLight solid;
   padding: 2px;
