@@ -12,6 +12,11 @@ $activeColorLight: lighten($activeColor, 30%);
 $glyphcolor: darken($grayLightest, 5%);
 $glyphsize: 14px;
 $lineheight: 20px;
+
+$nodeWhiteIndent: 15px;
+$nodeLeftBorder: 4px;
+$fieldWhiteIndent: 15px;
+
 @mixin imp {
   border: 1px solid red;
 }
@@ -26,9 +31,9 @@ span.blocky {
   cursor: text;
   color: $copygray;
   position: relative;
-  padding-left: 15px;
+  padding-left: $nodeWhiteIndent;
   border: 1px transparent solid;
-  border-left: 4px white solid;
+  border-left: $nodeLeftBorder white solid;
   background: white;
 }
 
@@ -49,7 +54,7 @@ span.blocky {
   background: $activeColorLight
 }
 .node.active > div > .node {
-  border-left: 4px $activeColorLight solid;
+  border-left: $nodeLeftBorder $activeColorLight solid;
 }
 .node.active > span.blocky > textarea.content-field.label-field {
   color: $activeColorDark;
@@ -86,8 +91,6 @@ textarea.content-field:focus {
   box-shadow: none;
 }
 
-textarea.content-field.label-field {
-}
 textarea.content-field.val-field {
   min-width: 100px;
 }
@@ -109,14 +112,16 @@ textarea.content-field.key-field {
 }
 textarea.content-field.key-field:focus { }
 
-textarea.content-field.proxy-field {
-  padding-left: 5px;
-}
+/*********************
+ * Glyphs
+ ********************/
 span.colon-glyph {
   position: relative;
   left: -10px;
 }
-
+/*
+ * open glyph
+ */
 span.open-glyph:before {
   font-size: $glyphsize;
   color: $glyphcolor;
@@ -128,8 +133,9 @@ span.open-glyph:before {
 .node.active.node-list > span.blocky > span.open-glyph:before{
   content: '[';
 }
-
-
+/*
+ * close glyph
+ */
 span.close-glyph {
   z-index: 1001;
 }
@@ -143,7 +149,7 @@ span.close-glyph:after {
   z-index: 1001;
 }
 .node.active > span.close-glyph:after {
-  border-left: 4px $activeColorLight solid;
+  border-left: $nodeLeftBorder $activeColorLight solid;
 }
 .node.active.node-hash > span.close-glyph:after{
   content: '}';

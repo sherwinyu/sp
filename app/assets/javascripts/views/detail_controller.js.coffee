@@ -62,7 +62,7 @@ Sysys.DetailController = Ember.Object.extend
   ######################################
   ##  Manipulating focus
   #####################################
-  #
+
   smartFocus: ->
     Ember.run.sync()
     ahn = @get('activeHumonNode')

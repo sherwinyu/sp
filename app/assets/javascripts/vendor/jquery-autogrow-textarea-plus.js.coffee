@@ -116,14 +116,12 @@
           # console.log "setting ##{$el.attr 'id'}.width=#{width}"
           $(@).css "width", width
 
-        ###
         if options.vertical
           shadow.css "width", $(this).width() - parseInt($el.css("paddingLeft"), 10) - parseInt($el.css("paddingRight"), 10)
           shadowHeight = shadow.height()
           newHeight = Math.min(Math.max(shadowHeight, minHeight), maxHeight)
           $(this).css "height", newHeight
           $(this).css "overflow", (if newHeight is maxHeight then "auto" else "hidden")
-        ###
 
       #### set it up
       $(@).on 'remove.autogrowplus', (e)->
