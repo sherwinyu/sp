@@ -13,8 +13,9 @@
 </span>
 
 {{#if view.content.isCollection}}
+  {{view "Sysys.BigValField"}}
   {{collection contentBinding="view.content.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper"}}
-  {{/if}}
+{{/if}}
 <span class="buffer"></span>
 <span class="close-glyph"></span>
 

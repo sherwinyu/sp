@@ -97,15 +97,34 @@ textarea.content-field.val-field {
 textarea.content-field.val-field:focus { }
 
 /*
+ * BigValField
+ */
+textarea.content-field.val-field.big-val-field {
+  display: none
+}
+textarea.content-field.val-field.big-val-field.editing {
+  display: block;
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  border-left: $nodeLeftBorder $activeColorLight solid;
+  padding: 2px;
+  padding-left: $fieldWhiteIndent*2;
+  // left: $fieldWhiteIndent + $fieldWhiteIndent 
+}
+.node-item-collection-wrapper.editing {
+  display: none;
+}
+
+/*
  * Proxy Field
  */
 textarea.content-field.proxy-field {
-  padding-left: $fieldWhiteIndent;
+  padding-left: 2* $fieldWhiteIndent;
+  position: absolute;
 }
 textarea.content-field.proxy-field.editing {
   background: rgba(255, 0, 0, 0.5);
-  z-index: 1000;
-  position: absolute;
+  // z-index: 1000;
   top: $lineheight;
   left: $fieldWhiteIndent + $fieldWhiteIndent + $nodeLeftBorder
 }

@@ -89,7 +89,6 @@ Sysys.HumonNodeView = Ember.View.extend
     $el.slideUp 250, ->
       $el.remove()
 
-
   unbindHotkeys: Em.K
 
   initHotkeys: ->
@@ -105,3 +104,19 @@ Sysys.HumonNodeView = Ember.View.extend
     @$('> span > .content-field.val-field')?.first()
   $proxyField: ->
     @$('> span > .content-field.proxy-field')?.first()
+  $bigValField: ->
+    @$('> .content-field.big-val-field')?.first()
+
+  enterEditing: ->
+    x = @$bigValField()
+    @set 'editing', true
+    @$('.big-val-field').addClass 'editing'
+    @$('.node-item-collection-wrapper').addClass 'editing'
+    hmn = humon.json2humon @get 'content.json'
+    @$bigValField().val hmn
+    x.focus()
+
+  exitEditing:->
+    @set('editing', false)
+    @$('.big-val-field').removeClass 'editing'
+    @$('.node-item-collection-wrapper').removeClass 'editing'

@@ -164,6 +164,45 @@ Sysys.ValField = Sysys.ContentField.extend
     if getCursor(@$()) ==  0
       @get('controller').focusLabelField()
 
+Sysys.BigValField = Sysys.ValField.extend
+  classNames: ['big-val-field']
+  autogrow: ->
+    @$().autogrowplus horizontal: true, vertical: true
+  focusOut: (e)->
+    @_super(e)
+    @get('parentView').exitEditing()
+  createHotKeys: ->
+    @_super()
+    hotkeys = @get('hotkeys')
+    hotkeys['return'] = Em.K
+    hotkeys['up'] = Em.K
+    hotkeys['down'] = Em.K
+
+Sysys.ProxyField = Sysys.ContentField.extend
+  classNames: ['proxy-field']
+  classNameBindings: ['editing']
+  editing: false
+
+  placeholder: ''
+  didInsertElement: ->
+    @_super()
+    @$().attr('tabindex', -1)
+  commitAndContinue: ->
+    @get('controller').insertChild()
+    ###
+  autogrow: ->
+    @$().autogrowplus horizontal: true, vertical: true
+    @set('autogrowing', true)
+  createHotKeys: ->
+    @_super()
+    hotkeys = @get('hotkeys')
+    hotkeys['return'] = ->
+      console.log ' GOOOOOOOOOOOOOOOOOOALLLLLLLL '
+      ###
+  focusIn: (e)->
+    @_super(e)
+    @get('parentView').enterEditing()
+
 Sysys.KeyField = Sysys.AbstractLabel.extend
   classNames: ['key-field']
   placeholder: 'key'
@@ -177,44 +216,4 @@ Sysys.IdxField = Sysys.AbstractLabel.extend
     @_super()
     @$().attr('tabindex', -1)
 
-Sysys.ProxyField =  Sysys.ContentField.extend
-  classNames: ['proxy-field']
-  classNameBindings: ['editing']
-  editing: false
 
-  placeholder: ''
-  didInsertElement: ->
-    @_super()
-    @$().attr('tabindex', -1)
-  commitAndContinue: ->
-    @get('controller').insertChild()
-  autogrow: ->
-    @$().autogrowplus horizontal: true, vertical: true
-    @set('autogrowing', true)
-  createHotKeys: ->
-    @_super()
-    hotkeys = @get('hotkeys')
-    hotkeys['return'] = ->
-      console.log ' GOOOOOOOOOOOOOOOOOOALLLLLLLL '
-  focusIn: (e)->
-    @_super(e)
-    @enterEdit()
-
-  focusOut: (e)->
-    @_super(e)
-    @exitEdit()
-
-  cancel: ->
-    @_super()
-    @set('editing', false)
-
-  enterEdit: ->
-    @set('editing', true)
-    hmn = humon.json2humon(@get 'parentView.content.json')
-    @$().parent().addClass 'editing'
-    @set 'value', hmn
-    
-  exitEdit: ->
-    @set('editing', false)
-    @$().parent().removeClass 'editing'
-    @cancel()
