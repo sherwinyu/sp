@@ -7,7 +7,7 @@ Sysys.HumonNodeView = Ember.View.extend
     'content.isList:node-list',
     'isActive:active',
     'parentActive:activeChild',
-    'addGap:addGap']
+    'suppressGap']
   classNames: ['node']
 
   click: (e)->
@@ -26,7 +26,10 @@ Sysys.HumonNodeView = Ember.View.extend
     ret = @get('controller.activeHumonNode') == @get('content.nodeParent')
   ).property('controller.activeHumonNode')
 
-  addGap: (->
+  # normally, there is a 5px gap at the bottom of node-collections to make room for the [ ] and { } glyphs.
+  # However, if multiple collections all exit, we don't want a ton of white space, so we only show the gap
+  # if this nodeCollection has an additional sibling after it
+  suppressGap: (->
     @get('content.nodeParent.nodeVal.lastObject') == @get('content')
   ).property('content.nodeParent.nodeVal.lastObject')
 

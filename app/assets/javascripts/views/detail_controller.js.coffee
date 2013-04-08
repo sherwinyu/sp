@@ -5,6 +5,10 @@ Sysys.DetailController = Ember.Object.extend
   activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
   activeHumonNode: null
 
+  ######################################
+  ##  Committing (keys and values)
+  #####################################
+
   commitAndContinue: ->
     ahn = @get 'activeHumonNode'
     rawString =  @get('activeHumonNodeView').$valField().val() || '{}'
@@ -55,14 +59,11 @@ Sysys.DetailController = Ember.Object.extend
       Ember.run =>
         @get('activeHumonNode').replaceWithJson json
 
-  cancelChanges: ->
-    Em.assert 'activeHumonNode needs to be a literal', @get('activeHumonNode.isLiteral')
-    ahnv = @get('activeHumonNodeView')
-    # ahnv.cancelChanges
-    rawString = @get('activeHumonNode.json')
-    @get('activeHumonNodeView').$('> span > .content-field.val-field').first().val rawString
-
-  focusActiveNodeView: ->
+  ######################################
+  ##  Manipulating focus
+  #####################################
+  #
+  smartFocus: ->
     Ember.run.sync()
     ahn = @get('activeHumonNode')
     ahnv = @get('activeHumonNodeView')
@@ -86,48 +87,22 @@ Sysys.DetailController = Ember.Object.extend
       else
         @focusLabelField()
 
-      ###
-    # if it's a hash with an empty key"
-    if context == 'hash' && nodeKey.length == 0
-      @focusKeyField()
-
-    # if it's a hash with children
-    if context == 'hash' && ahn.get('isCollection') && ahn.get('hasChildren')
-      @focusKeyField()
-
-    # if it's a hash  without children
-    if ahn.get('isCollection') and not ahn.get('hasChildren')
-      @focusProxyField()
-
-    # if it's a hash with an non empty key"
-    if context == 'hash' && nodeKey.length
-      @focusValField()
-
-
-      # if nodeKey? && nodeKey != ''
-      # @focusValField()
-      # ###
-
   focusLabelField : ->
     $lf = @get('activeHumonNodeView').$labelField().focus()
-
   focusKeyField: ->
-    $kf = @get('activeHumonNodeView').$keyField()
-    $kf.focus()
-
+    $kf = @get('activeHumonNodeView').$keyField().focus()
   focusValField: ->
-    $vf = @get('activeHumonNodeView').$valField()
-    $vf.focus()
-
+    $vf = @get('activeHumonNodeView').$valField().focus()
   focusIdxField: ->
-    $if = @get('activeHumonNodeView').$idxField()
-    $if.focus()
-
+    $if = @get('activeHumonNodeView').$idxField().focus()
   focusProxyField: ->
-    $pf = @get('activeHumonNodeView').$proxyField()
-    $pf.focus()
+    $pf = @get('activeHumonNodeView').$proxyField().focus()
 
-  # sets activeHumonNode to node if node exists
+
+######################################
+##  Setting Active Node
+######################################
+
   activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
     if node
       @set 'activeHumonNode', node
@@ -145,7 +120,13 @@ Sysys.DetailController = Ember.Object.extend
     newNode = @get('activeHumonNode').prevNode()
     @activateNode newNode, focus: true 
 
-  #TODO(syu): test me
+##################################
+## Manipulating humon node tree
+##################################
+
+  # Changes context to a hash
+  # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
+  # If activeNode is a list, convert it to a hash
   forceHash: ->
     ahn = @get('activeHumonNode')
     if ahn.get('isCollection') && ahn.get('isList')
@@ -153,7 +134,9 @@ Sysys.DetailController = Ember.Object.extend
     if ahn.get('isLiteral') && ahn.get('nodeParent.isList')
       ahn.get('nodeParent')?.convertToHash()
 
-  #TODO(syu): test me
+  # Changes context to a hash
+  # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
+  # If activeNode is a list, convert it to a hash
   forceList: ->
     ahn = @get('activeHumonNode')
     if ahn.get('isCollection') && ahn.get('isHash')
