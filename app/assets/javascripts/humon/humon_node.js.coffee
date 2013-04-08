@@ -6,24 +6,22 @@ Sysys.HumonNode = Ember.Object.extend
   nodeView: null
   keyBinding: 'nodeKey'
 
-  json: (->
-    Sysys.HumonUtils.humonNode2json @
-  ).property('nodeVal', 'nodeKey', 'nodeType').cacheable false
-
-  # make this more generic?
-  nodeValChanged: (->
-    @get('nodeParent')?.notifyPropertyChange 'nodeVal'
-  ).observes 'nodeVal', 'nodeKey', 'nodeType', 'nodeVal.@each'
-
+  # finds the index of this node in its parentNode's nodeVal (children)
+  # if parentNode does not exist, returns undefined
+  # otherwise, returns the index (as an int)
   nodeIdx: ((key, val)->
     if arguments.length > 1
       @get('nodeParent.nodeVal')?.indexOf @
     @get('nodeParent.nodeVal')?.indexOf @
   ).property('nodeParent.nodeVal.@each', 'nodeParent.nodeVal')
 
-  hasKey: (->
-    @get('nodeKey')?
-  ).property 'nodeKey'
+  json: (->
+    Sysys.HumonUtils.humonNode2json @
+  ).property('nodeVal', 'nodeKey', 'nodeType').cacheable false
+
+  nodeValChanged: (->
+    @get('nodeParent')?.notifyPropertyChange 'nodeVal'
+  ).observes 'nodeVal', 'nodeKey', 'nodeType', 'nodeVal.@each'
 
   isHash: (->
     @get('nodeType') == 'hash'
@@ -38,38 +36,49 @@ Sysys.HumonNode = Ember.Object.extend
   ).property 'nodeType'
 
   hasChildren: (->
-    @get('isCollection') and @get('nodeVal').length
+    !!(@get('isCollection') && @get('nodeVal').length)
   ).property('isCollection', 'nodeVal', 'nodeVal.@each')
 
   isLiteral: (->
     @get('nodeType') == 'literal'
   ).property('nodeType')
 
+  # Retrieves a node by key or by index.
+  # If keyOrIndex has type number, retrieves the keyOrIndex'th element of nodeVal
+  # Otherwise, if this node is a list, attempts to get the keyOrIndex on the nodeVal
+  # Otherwise, if this node is a hash, searches nodeVal for an element with nodeKey equal to keyOrIndex
+  # otherwise, return undefined
+  # Precondition: this node is a collection
   getNode: (keyOrIndex) ->
     Em.assert("HumonNode must be a list or a hash to getNode(#{keyOrIndex})", @get('isHash') || @get('isList'))
     nodeVal = @get('nodeVal')
     childNode =
-      if @get('isHash')
-        nodeVal.findProperty('nodeKey', keyOrIndex)
-      else if @get('isList')
+      if @get('isList') || typeof keyOrIndex == "number"
         nodeVal.get keyOrIndex
+      else if @get('isHash')
+        nodeVal.findProperty('nodeKey', keyOrIndex)
     return childNode
 
-  # TODO(syu): test me
+  # returns a flat array representing this node and its contents
+  # literals return an array with a single element
+  # node-collections return an array with the first element as the node
   flatten: ->
     if @get('isLiteral')
      [ @ ]
     else
-      # @get('nodeVal').map( (node) -> node.flatten()).reduce (x, y) -> x.concat y
       @get('nodeVal').reduce (x, y) ->
         x.concat(y.flatten())
       , [ @ ]
 
-  # TODO(syu): test me
+  # calls flatten then gets the last child
+  # flatten should never be empty
   lastFlattenedChild: ->
     arr = @flatten()
     arr[arr.length-1]
 
+  # Public
+  # returns the next node in the 'flattened' representation of the the entire node tree
+  # if no such node exists, returns null
   nextNode:  ->
     if @get('hasChildren')
       return @get('nodeVal')[0]
@@ -83,6 +92,9 @@ Sysys.HumonNode = Ember.Object.extend
     return curNode.get('nodeParent.nodeVal')[i] if i
     null
 
+  # public
+  # returns the previous node in the 'flattened' representation of the the entire node tree
+  # if no such node exists, returns null
   prevNode: ->
     # there can be no previous node if there is no parent (and therefore no siblings)
     unless @get('nodeParent')
@@ -112,50 +124,73 @@ Sysys.HumonNode = Ember.Object.extend
     return if @get('isList')
     @set 'nodeType', 'list'
 
-    # unknownProperty: (key) ->
-    # return @getNode(key)?.get 'json'
-
+  # replaces the CURRENT NODE with the json value
+  # calls @replaceWithHumonNode underlying
   replaceWithJson: (json)->
     humonNode = Sysys.j2hn json
     @replaceWithHumonNode humonNode
 
-  replaceWithHumonNode: (humonNode)->
-    @set('nodeVal', humonNode.get 'nodeVal')
-    @set('nodeType', humonNode.get 'nodeType')
-    if @get 'isHash'
+  # Private
+  # precondition: newNode has no parent
+  # replaces the CURRENT NODE's  nodeVal with newNode's nodeVal by REFERENCE
+  # this.nodeVal will point to newnNode.nodeVal
+  # If newNode is a collection, sets each of the children's nodeParent to this node
+  # If thisNode is a collection, sets each of this children's nodeParent to null
+  replaceWithHumonNode: (newNode)->
+    Em.assert "replaceWithHumonNode(newNode): newNode must be parent less", !newNode.get('nodeParent')
+    if @get 'hasChildren'
       for child in @get('nodeVal')
-        child.set('nodeParent', @)
-    if @get 'isList'
+        child.set 'nodeParent', null
+    @set('nodeVal', newNode.get 'nodeVal')
+    @set('nodeType', newNode.get 'nodeType')
+    if @get 'hasChildren'
       for child in @get('nodeVal')
         child.set 'nodeParent', @
 
+  # Public
+  # precondition: node is a collection node
+  # replaces objects in 
   replaceAt: (idx, amt, nodes...) ->
-    @replaceAtWithArray(idx, amt, nodes)
-
-  replaceAtWithArray: (idx, amt, nodes) ->
     Em.assert("HumonNode must be a list or a hash to replaceAt(#{idx},#{amt},#{nodes})", @get('isCollection'))
     list = @get 'nodeVal'
+
+    # set the `nodeParent` for the removed nodes to null 
+    end = Math.min(idx + amt, list.length)
+    for i in [idx...end]
+      list[i]?.set('nodeParent', null)
+
+    # set the nodeParent for the inserted nodes to this node
     if nodes?
       for node in nodes
         node.set('nodeParent', @)
+
     list.replace idx, amt, nodes
 
+  # Public
+  # inserts nodes... into the nodeVal array immediately before idx
+  # sets the nodeParent for inserted children to this node
+  # precondition: this node is a collection
   insertAt: (idx, nodes...) ->
     Em.assert("HumonNode must be a list or a hash to insertAt(#{idx},#{nodes})", @get('isCollection'))
-    @replaceAtWithArray(idx, 0, nodes)
+    args = [idx, 0].concat nodes
+    @replaceAt.apply @, args
 
+  # Public
+  # deletes `amt` elements from the nodeVal array, starting at idx, inclusive.
+  # if amt is not specified, a single element is deleted
+  # if the number of elements to be deleted is greater than the remaining elements in the array, the remaining elemtns are deleted
+  # sets the nodeParent for deleted nodes to null
   deleteAt: (idx, amt) ->
+    Em.assert("deleteAt(idx, amt) requires idx to be an number", typeof idx == "number")
+    amt ?= 1
     Em.assert("HumonNode must be a list or a hash to deleteAt(#{idx},#{amt})", @get('isCollection'))
-    @replaceAtWithArray(idx, amt)
+    @replaceAt(idx, amt)
 
+  # Public
+  # precondition: node must be a child of this node
+  # removes the child node from this.nodeVal array
+  # sets node's nodeParent to null
   deleteChild: (node)->
     Em.assert('Child argument must be a child of this node for deleteChild', node.get('nodeParent') == @)
     idx = node.get('nodeIdx')
-    @deleteAt(idx, 1)
-    node.set 'nodeParent', null
-
-  # different from set nodeKey directly because it will coerce the parent to a hash
-  editKey: (newKey) ->
-    parent = @get('nodeParent')
-    parent.set 'nodeType', 'hash'
-    @set 'nodeKey', newKey
+    @deleteAt(idx)
