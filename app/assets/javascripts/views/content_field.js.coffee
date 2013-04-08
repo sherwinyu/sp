@@ -28,11 +28,14 @@ Sysys.ContentField = Ember.TextArea.extend
 
   didInsertElement: ->
     @refresh()
+    @autosize()
     @setPlaceHolderText()
     @initHotKeys()
 
   refresh: ->
     @set 'value', @get('rawValue')
+
+  autosize: ->
     @autogrow()
     @removeAutogrow()
 
@@ -139,6 +142,9 @@ Sysys.ValField = Sysys.ContentField.extend
   placeholder: 'val'
   commit: ->
     @get('controller').commit()
+  focusOut: ->
+    @_super()
+    @checkAndSave()
 
   initHotKeys: ->
     @_super()

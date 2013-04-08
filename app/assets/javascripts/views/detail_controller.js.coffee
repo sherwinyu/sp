@@ -107,10 +107,7 @@ Sysys.DetailController = Ember.Object.extend
     if node
       @set 'activeHumonNode', node
       if focus
-        @focusActiveNodeView()
-      if unfocus
-        @commit()
-        @commitKey()
+        @smartFocus()
 
   nextNode: ->
     newNode = @get('activeHumonNode').nextNode()
@@ -133,6 +130,7 @@ Sysys.DetailController = Ember.Object.extend
       ahn.convertToHash()
     if ahn.get('isLiteral') && ahn.get('nodeParent.isList')
       ahn.get('nodeParent')?.convertToHash()
+    @smartFocus()
 
   # Changes context to a hash
   # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
@@ -143,6 +141,7 @@ Sysys.DetailController = Ember.Object.extend
       ahn.convertToList()
     if ahn.get('isLiteral') && ahn.get('nodeParent.isHash')
       ahn.get('nodeParent')?.convertToList()
+    @smartFocus()
 
   # TODO(syu): test me
   bubbleUp: ->
@@ -154,7 +153,7 @@ Sysys.DetailController = Ember.Object.extend
     Ember.run =>
       ahn.get('nodeParent').deleteChild ahn
       dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
-    @focusActiveNodeView()
+    @smartFocus()
 
   bubbleDown: ->
     ahn = @get 'activeHumonNode'
@@ -169,7 +168,7 @@ Sysys.DetailController = Ember.Object.extend
         dest.get('nodeParent').insertAt(dest.get('nodeIdx') + 1, ahn)
       else
         dest.insertAt(0, ahn)
-    @focusActiveNodeView()
+    @smartFocus()
 
   deleteActive: ->
     ahn = @get('activeHumonNode')
@@ -195,7 +194,7 @@ Sysys.DetailController = Ember.Object.extend
     Ember.run =>
       newSibling.deleteChild ahn
       newParent.insertAt newSibling.get('nodeIdx') + 1, ahn
-    @focusActiveNodeView()
+    @smartFocus()
 
   indent: ->
     ahn = @get 'activeHumonNode'
@@ -205,4 +204,4 @@ Sysys.DetailController = Ember.Object.extend
     Ember.run =>
       parent.deleteChild ahn
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
-    @focusActiveNodeView()
+    @smartFocus()
