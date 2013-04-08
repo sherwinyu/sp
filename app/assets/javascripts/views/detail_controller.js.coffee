@@ -9,9 +9,10 @@ Sysys.DetailController = Ember.Object.extend
   ##  Committing (keys and values)
   #####################################
 
-  commitAndContinue: ->
+  commitAndContinue: (rawString)->
     ahn = @get 'activeHumonNode'
-    rawString =  @get('activeHumonNodeView').$valField().val() || '{}'
+    # rawString =  @get('activeHumonNodeView').$valField().val() || '{}'
+    rawString ||= '{}'
     @commitKey()
     @commitVal(rawString)
     Ember.run.sync()
@@ -31,8 +32,8 @@ Sysys.DetailController = Ember.Object.extend
     @commitKey()
     @commit
 
-  commit: ->
-    rawString =  @get('activeHumonNodeView').$valField().val()
+  commit: (rawString)->
+    # rawString =  @get('activeHumonNodeView').$valField().val()
     @commitVal rawString
 
   commitKey: ->
@@ -45,8 +46,8 @@ Sysys.DetailController = Ember.Object.extend
   # precondition: activeNode is a literal
   # params: rawString -- the rawString to parse and replace ahn with
   # calls replaceWithJson on activeNode
-  commitVal: (rawString) ->
-    return unless @get('activeHumonNode.isLiteral')
+  commitVal: (rawString, {rerender}={rerender: false}) ->
+    # return unless @get('activeHumonNode.isLiteral')
     json =
       try 
         humon.parse rawString
@@ -58,6 +59,12 @@ Sysys.DetailController = Ember.Object.extend
     if rawString?
       Ember.run =>
         @get('activeHumonNode').replaceWithJson json
+        if rerender
+          @get('activeHumonNodeView').rerender()
+
+  commitWithRerender: (rawString) ->
+    @commitVal rawString, rerender:true
+    @smartFocus()
 
   ######################################
   ##  Manipulating focus

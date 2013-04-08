@@ -108,18 +108,27 @@ Sysys.HumonNodeView = Ember.View.extend
     @$('> .content-field.big-val-field')?.first()
 
   enterEditing: ->
+    return if @get 'editing'
     console.log 'entering editing'
     x = @$bigValField()
     @set 'editing', true
-    @$('.big-val-field').addClass 'editing'
-    @$('.node-item-collection-wrapper').addClass 'editing'
+    @$bigValField().addClass 'editing'
+    @$('> .node-item-collection-wrapper').first().addClass 'editing'
     hmn = humon.json2humon @get 'content.json'
     @$bigValField().val hmn
     x.focus()
 
   exitEditing:->
+    return unless @get 'editing'
+    Em.assert 'must already be editing to exit', @get 'editing'
     console.log 'exiting editing'
     @set('editing', false)
-    @$('.big-val-field').removeClass 'editing'
-    @$('.node-item-collection-wrapper').removeClass 'editing'
+    @$bigValField().removeClass 'editing'
+    @$('> .node-item-collection-wrapper').first().removeClass 'editing'
+    Em.View.views[ @$bigValField().attr 'id' ].removeAutogrow()
     @get('controller').smartFocus()
+
+  commitAndContinue: ->
+    if @$valField().val() == ''
+      @$valField().val '{}'
+    @get('controller').commitAndContinue( @$valField().val())

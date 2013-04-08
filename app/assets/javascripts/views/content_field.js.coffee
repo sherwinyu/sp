@@ -54,7 +54,7 @@ Sysys.ContentField = Ember.TextArea.extend
     @commitAndContinue()
 
   commitAndContinue: ->
-    @get('controller').commitAndContinue()
+    @get('parentView').commitAndContinue()
 
   cancel: ->
     @refresh()
@@ -66,60 +66,49 @@ Sysys.ContentField = Ember.TextArea.extend
 
   createHotKeys: ->
     @set 'hotkeys',
-      'ctrl+shift+return': (e) =>
-        e.preventDefault()
-
       'esc': (e) =>
         e.preventDefault()
         @cancel()
-
       'ctrl+shift+return': (e) =>
         e.preventDefault()
         @commit()
-
       'return': (e) =>
         e.preventDefault()
         @enter()
-
       'down': (e) =>
         ctrl = @get 'controller'
         e.preventDefault()
         @checkAndSave()
         ctrl.nextNode()
-
       'up': (e) =>
         ctrl = @get 'controller'
         e.preventDefault()
         @checkAndSave()
         ctrl.prevNode()
-
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').bubbleUp()
-
       'ctrl+down': (e) =>
         e.preventDefault()
         @get('controller').bubbleDown()
-
       'ctrl+left': (e) =>
         e.preventDefault()
         @get('controller').outdent()
-
       'ctrl+right': (e) =>
         e.preventDefault()
         @get('controller').indent()
-
       'ctrl+backspace': (e) =>
         e.preventDefault()
         @get('controller').deleteActive()
-
       'ctrl+shift+l': (e) =>
         console.log 'ctrl shift l'
         @get('controller').forceList()
-
       'ctrl+shift+h': (e) =>
         console.log 'ctrl+shift+h'
         @get('controller').forceHash()
+      'ctrl+space': (e) =>
+        @get('parentView').enterEditing()
+        e.preventDefault()
 
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'
@@ -150,7 +139,7 @@ Sysys.ValField = Sysys.ContentField.extend
   classNames: ['val-field']
   placeholder: 'val'
   commit: ->
-    @get('controller').commit()
+    @get('controller').commit(@get 'value')
   focusOut: ->
     @_super()
     @checkAndSave()
@@ -168,11 +157,13 @@ Sysys.BigValField = Sysys.ValField.extend
   classNames: ['big-val-field']
   autogrow: ->
     @$().autogrowplus horizontal: true, vertical: true
+  # TODO(syu): merge this with valfield
   focusOut: (e)->
-    @_super(e)
     @get('parentView').exitEditing()
+    e.stopPropagation()
+  commit: ->
+    @get('controller').commitWithRerender @get 'value'
   cancel: ->
-    @removeAutogrow()
     @get('parentView').exitEditing()
 
   createHotKeys: ->
@@ -182,6 +173,8 @@ Sysys.BigValField = Sysys.ValField.extend
     hotkeys['up'] = Em.K
     hotkeys['down'] = Em.K
   autosize: Em.K
+  willDestroyElement: ->
+    @removeAutogrow()
 
 Sysys.ProxyField = Sysys.ContentField.extend
   classNames: ['proxy-field']
@@ -194,7 +187,8 @@ Sysys.ProxyField = Sysys.ContentField.extend
     @get('controller').insertChild()
   focusIn: (e)->
     @_super(e)
-    @get('parentView').enterEditing()
+    # @get('parentView').enterEditing()
+    e.stopPropagation()
 
 Sysys.KeyField = Sysys.AbstractLabel.extend
   classNames: ['key-field']
