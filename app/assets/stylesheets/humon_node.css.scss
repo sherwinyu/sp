@@ -96,19 +96,43 @@ textarea.content-field.val-field {
 }
 textarea.content-field.val-field:focus { }
 
-
-textarea.content-field.idx-field {
-  width: 25px;
+/*
+ * Proxy Field
+ */
+textarea.content-field.proxy-field {
+  padding-left: $fieldWhiteIndent;
+}
+textarea.content-field.proxy-field.editing {
+  background: rgba(255, 0, 0, 0.5);
+  z-index: 1000;
+  position: absolute;
+  top: $lineheight;
+  left: $fieldWhiteIndent + $fieldWhiteIndent + $nodeLeftBorder
+}
+.blocky.editing ~ .node-item-collection-wrapper {
+  // display: none;
+}
+/*
+ * Label Field
+ */
+textarea.content-field.label-field {
+  padding-left: $fieldWhiteIndent;
   min-width: 20px;
-  padding-left: 15px;
+}
+/*
+ * index field
+ */
+textarea.content-field.idx-field {
+  width: 20px;
   color: $grayLight;
 }
 textarea.content-field.idx-field:focus { }
-
+/*
+ * Key Field
+ */
 textarea.content-field.key-field {
-  padding-left: 15px;
-  width: 200px;
   min-width: 25px;
+  width: 200px;
 }
 textarea.content-field.key-field:focus { }
 

@@ -60,57 +60,66 @@ Sysys.ContentField = Ember.TextArea.extend
     @refresh()
 
   initHotKeys: ->
-    @$().bind 'keyup', 'esc',(e) =>
-      e.preventDefault()
-      @cancel()
+    @createHotKeys()
+    for own combo, func of @get 'hotkeys'
+      @$().bind 'keydown', combo, func
 
-    @$().bind 'keydown', 'ctrl+shift+return', (e) =>
-      e.preventDefault()
-      @commit()
+  createHotKeys: ->
+    @set 'hotkeys',
+      'ctrl+shift+return': (e) =>
+        e.preventDefault()
 
-    @$().bind 'keydown', 'return', (e) =>
-      e.preventDefault()
-      @enter()
+      'esc': (e) =>
+        e.preventDefault()
+        @cancel()
 
-    @$().bind 'keydown', 'down', (e) =>
-      ctrl = @get 'controller'
-      e.preventDefault()
-      @checkAndSave()
-      ctrl.nextNode()
+      'ctrl+shift+return': (e) =>
+        e.preventDefault()
+        @commit()
 
-    @$().bind 'keydown', 'up', (e) =>
-      ctrl = @get 'controller'
-      e.preventDefault()
-      @checkAndSave()
-      ctrl.prevNode()
+      'return': (e) =>
+        e.preventDefault()
+        @enter()
 
-    @$().bind 'keydown', 'ctrl+up', (e) =>
-      e.preventDefault()
-      @get('controller').bubbleUp()
+      'down': (e) =>
+        ctrl = @get 'controller'
+        e.preventDefault()
+        @checkAndSave()
+        ctrl.nextNode()
 
-    @$().bind 'keydown', 'ctrl+down', (e) =>
-      e.preventDefault()
-      @get('controller').bubbleDown()
+      'up': (e) =>
+        ctrl = @get 'controller'
+        e.preventDefault()
+        @checkAndSave()
+        ctrl.prevNode()
 
-    @$().bind 'keydown', 'ctrl+left', (e) =>
-      e.preventDefault()
-      @get('controller').outdent()
+      'ctrl+up': (e) =>
+        e.preventDefault()
+        @get('controller').bubbleUp()
 
-    @$().bind 'keydown', 'ctrl+right', (e) =>
-      e.preventDefault()
-      @get('controller').indent()
+      'ctrl+down': (e) =>
+        e.preventDefault()
+        @get('controller').bubbleDown()
 
-    @$().bind 'keydown', 'ctrl+backspace', (e) =>
-      e.preventDefault()
-      @get('controller').deleteActive()
+      'ctrl+left': (e) =>
+        e.preventDefault()
+        @get('controller').outdent()
 
-    @$().bind 'keydown', 'ctrl+shift+l', (e) =>
-      console.log 'ctrl shift l'
-      @get('controller').forceList()
+      'ctrl+right': (e) =>
+        e.preventDefault()
+        @get('controller').indent()
 
-    @$().bind 'keydown', 'ctrl+shift+h', (e) =>
-      console.log 'ctrl+shift+h'
-      @get('controller').forceHash()
+      'ctrl+backspace': (e) =>
+        e.preventDefault()
+        @get('controller').deleteActive()
+
+      'ctrl+shift+l': (e) =>
+        console.log 'ctrl shift l'
+        @get('controller').forceList()
+
+      'ctrl+shift+h': (e) =>
+        console.log 'ctrl+shift+h'
+        @get('controller').forceHash()
 
   willDestroyElement: ->
     @$().trigger 'remove.autogrow'
@@ -170,9 +179,42 @@ Sysys.IdxField = Sysys.AbstractLabel.extend
 
 Sysys.ProxyField =  Sysys.ContentField.extend
   classNames: ['proxy-field']
+  classNameBindings: ['editing']
+  editing: false
+
   placeholder: ''
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)
   commitAndContinue: ->
     @get('controller').insertChild()
+  autogrow: ->
+    @$().autogrowplus horizontal: true, vertical: true
+    @set('autogrowing', true)
+  createHotKeys: ->
+    @_super()
+    hotkeys = @get('hotkeys')
+    hotkeys['return'] = ->
+      console.log ' GOOOOOOOOOOOOOOOOOOALLLLLLLL '
+  focusIn: (e)->
+    @_super(e)
+    @enterEdit()
+
+  focusOut: (e)->
+    @_super(e)
+    @exitEdit()
+
+  cancel: ->
+    @_super()
+    @set('editing', false)
+
+  enterEdit: ->
+    @set('editing', true)
+    hmn = humon.json2humon(@get 'parentView.content.json')
+    @$().parent().addClass 'editing'
+    @set 'value', hmn
+    
+  exitEdit: ->
+    @set('editing', false)
+    @$().parent().removeClass 'editing'
+    @cancel()
