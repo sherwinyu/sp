@@ -124,16 +124,17 @@ Sysys.AbstractLabel = Sysys.ContentField.extend
   initHotKeys: ->
     @_super()
     @$().bind 'keydown', 'right', (e) =>
-      @moveRight()
+      @moveRight(e)
 
   keyDown: (e) ->
     if e.which ==  186 # colon
       e.preventDefault()
       @get('controller').focusValField()
 
-  moveRight: ->
+  moveRight: (e)->
     if getCursor(@$()) ==  @$().val().length
       @get('controller').focusValField()
+      e.preventDefault()
 
 Sysys.ValField = Sysys.ContentField.extend
   classNames: ['val-field']
@@ -147,11 +148,12 @@ Sysys.ValField = Sysys.ContentField.extend
   initHotKeys: ->
     @_super()
     @$().bind 'keydown', 'left', (e) =>
-      @moveLeft()
+      @moveLeft(e)
 
-  moveLeft: ->
+  moveLeft: (e)->
     if getCursor(@$()) ==  0
       @get('controller').focusLabelField()
+      e.preventDefault()
 
 Sysys.BigValField = Sysys.ValField.extend
   classNames: ['big-val-field']
