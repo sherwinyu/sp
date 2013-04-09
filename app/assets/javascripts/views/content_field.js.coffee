@@ -23,7 +23,6 @@ Sysys.ContentField = Ember.TextArea.extend
     @set('autogrowing', true)
   removeAutogrow: ->
     @$().trigger 'remove.autogrowplus'
-    console.log 'removing autogrow'
     @set('autogrowing', false)
 
   didInsertElement: ->

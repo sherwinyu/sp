@@ -34,12 +34,12 @@ Sysys.HumonNodeView = Ember.View.extend
   ).property('content.nodeParent.nodeVal.lastObject')
 
   willDestroyElement: ->
-    @animDestroy()
+    # @animDestroy()
     @unbindHotkeys()
     @get('content')?.set 'nodeView', null
 
   didInsertElement: ->
-    @animInsert()
+    # @animInsert()
     @initHotkeys()
     @get('content')?.set 'nodeView', @
 

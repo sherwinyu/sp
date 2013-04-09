@@ -19,9 +19,11 @@ Sysys.HumonNode = Ember.Object.extend
     Sysys.HumonUtils.humonNode2json @
   ).property('nodeVal', 'nodeKey', 'nodeType').cacheable false
 
+  ###
   nodeValChanged: (->
     @get('nodeParent')?.notifyPropertyChange 'nodeVal'
   ).observes 'nodeVal', 'nodeKey', 'nodeType', 'nodeVal.@each'
+    ###
 
   isHash: (->
     @get('nodeType') == 'hash'
