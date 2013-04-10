@@ -42,6 +42,9 @@ gem "ember-rails"
 gem 'sinon-rails'
 gem 'jasmine-sinon-rails'
 
+gem 'figaro', '0.6.3'
+gem 'mixpanel'
+
 gem "mongoid", "~> 3.0.0"
 
 gem "active_model_serializers", :git => "git://github.com/rails-api/active_model_serializers.git"
