@@ -82,7 +82,7 @@ describe "HumonNode", ->
         expect(nodee.get('hasChildren')).toBe false
     describe "isLiteral", ->
       it "should return true when nodeType is list or hash, false otherwise", ->
-        expect(node.get('isliteral')).toBe false
+        expect(node.get('isLiteral')).toBe false
         expect(nodea.get('isLiteral')).toBe true
         expect(nodec.get('isLiteral')).toBe false
         expect(noded.get('isLiteral')).toBe false
@@ -443,4 +443,4 @@ describe "HumonNode", ->
         expect(nodec2nested.lastFlattenedChild()).toBe nodec2nested
       it "shouldwork on empty collections", ->
         expect(noded.lastFlattenedChild()).toBe noded
-        expect(nodee.lastFlattenedChild()).toBe noded
+        expect(nodee.lastFlattenedChild()).toBe nodee
