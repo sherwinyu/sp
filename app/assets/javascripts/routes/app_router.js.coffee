@@ -1,5 +1,23 @@
-Sysys.Router = Ember.Router.extend
-  location: 'hash'
+Sysys.Router.map ->
+  @resource "acts", ->
+    @route "new"
+
+Sysys.ActsRoute = Ember.Route.extend
+  model: ->
+    [ Sysys.Act.createRecord() ]
+
+Sysys.ActsNewRoute = Ember.Route.extend
+  model: ->
+
+Sysys.ActsIndexRoute = Ember.Route.extend
+  model: ->
+    [ Sysys.Act.createRecord() ]
+    
+  
+
+    # = Ember.Router.extend
+    # location: 'hash'
+
 ###
 
   root: Ember.Route.extend

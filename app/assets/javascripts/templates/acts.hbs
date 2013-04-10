@@ -3,7 +3,7 @@
 <div class="span8">
 <a class="btn" {{action newAct target="controller" href=true}}>New Act</a>
     {{#each act in arrangedContent}}
-      {{view  Sysys.ActView contextBinding="act" }}
+      {{view  Sysys.ActView}}
     {{/each}}
 </div>
 {{outlet act}}
