@@ -1,9 +1,18 @@
 Sysys.Store = DS.Store.extend
-  revision: 10,
-  adapter: DS.RESTAdapter.create()
+  revision: 12,
+    # adapter: DS.RESTAdapter.create()
 
-Sysys.store = new Sysys.Store
+    # Sysys.store = new Sysys.Store
+DS.RESTAdapter.registerTransform 'humon', 
+  serialize: (humonNode) ->
+    humonNode.get('json')
+  deserialize: (json) ->
+    Sysys.j2hn json
+    
 
+
+
+###
 DS.JSONTransforms.object = 
   deserialize: (serialized) -> 
     serialized ?= {}
@@ -52,3 +61,4 @@ Sysys.JSONWrapper =
         ret.pushObject Sysys.JSONWrapper.recursiveSerialize ele
       return ret
     throw new Error("this shoud never happen")
+###

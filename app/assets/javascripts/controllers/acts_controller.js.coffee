@@ -4,5 +4,4 @@ Sysys.ActsController = Ember.ArrayController.extend
     Sysys.store.commit()
 
   newAct: ->
-    a = Sysys.store.createRecord(Sysys.Act, description: '5')
-    a.defaultValues()
+    a = Sysys.Act.createRecord description: 'empty'

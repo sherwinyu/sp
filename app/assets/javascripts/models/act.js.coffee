@@ -2,6 +2,7 @@ Sysys.Act = DS.Model.extend
   description: DS.attr "string"
   start_time: DS.attr "date"
   end_time: DS.attr "date"
+  detail: DS.attr "humon"
 
   # duration is stored as seconds and is a computed property
   duration: ((key, val)->
@@ -15,7 +16,6 @@ Sysys.Act = DS.Model.extend
   ).property('start_time', 'end_time').volatile()
 
 
-  detail: DS.attr "object"
 
   ###
   start_time_pretty: (->

@@ -9,8 +9,8 @@
 #= require_tree ./humon
 @Sysys = Ember.Application.create
   LOG_TRANSITIONS: true
-if @TESTING
-  Sysys.deferReadiness()
+  # if @TESTING
+  # Sysys.deferReadiness()
 
 Sysys.u =
   viewFromId: (id) -> Ember.get("Ember.View.views.#{id}")

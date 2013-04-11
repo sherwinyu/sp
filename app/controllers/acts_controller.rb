@@ -17,8 +17,13 @@ class ActsController < ApplicationController
   def show
     id = params[:id]
     # convert gets for ids 1.. n to the appropriate act
-    id = Act.all[Integer(id) - 1].id if Integer(id) rescue id
+    # id = Act.all[Integer(id) - 1].id if Integer(id) rescue id
     @act = Act.find id
+    @act ||= Act.find_by(seq_id: Integer(id)) rescue nil
+    # raise Mongoid::Errors::DocumentNotFound unless @act 
+    raise Mongoid::Errors::DocumentNotFound.new(Act, params[:id], id) unless @act
+    # @current_account.users.first(:conditions => {:name => params[:name]})
+
     respond_with @act
   end
 

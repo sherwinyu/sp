@@ -46,7 +46,7 @@ gem 'figaro', '0.6.3'
 gem 'mixpanel'
 
 gem "mongoid", "~> 3.0.0"
-
+gem "mongoid_auto_increment"
 gem "active_model_serializers", :git => "git://github.com/rails-api/active_model_serializers.git"
 
 

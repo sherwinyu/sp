@@ -7,6 +7,18 @@ class Act
   field :canonical_day, type: Date
   field :start_time, type: DateTime
   field :end_time, type: DateTime
+  # field :seq_id, type: Integer
+  auto_increment :seq_id
+
+  # before_create :set_seq_id
+  def set_seq_id
+    # if self.id.class == BSON::ObjectId
+    counter = Mongoid.database["counters"].find_and_modify(
+      query: { _id:  "act" },
+      update: { "$inc" => {count: 1} })
+    self.seq_id = Integer(counter["count"])
+    #end
+  end
 
   embeds_one :detail
 

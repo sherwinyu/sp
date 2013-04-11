@@ -67,10 +67,10 @@ module Sysys
 
     ##
     # config.mixpanel.token = 'XYZ'
-    config.mixpanel.middleware.use = true
-    config.mixpanel.middleware.persist = false
-    config.mixpanel.middlware.insert_js_last = true
-    config.mixpanel.middleware.config = {:cookie_name => 'mixpanel_cookie' }
+    # config.mixpanel.middleware.use = true
+    # config.mixpanel.middleware.persist = false
+    # config.mixpanel.middlware.insert_js_last = true
+    # config.mixpanel.middleware.config = {:cookie_name => 'mixpanel_cookie' }
     ##
   end
 end

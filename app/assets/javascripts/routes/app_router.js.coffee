@@ -4,7 +4,7 @@ Sysys.Router.map ->
 
 Sysys.ActsRoute = Ember.Route.extend
   model: ->
-    [ Sysys.Act.createRecord() ]
+    Sysys.Act.find()
 
 Sysys.ActsNewRoute = Ember.Route.extend
   model: ->

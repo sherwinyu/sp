@@ -1,8 +1,12 @@
 # TODO(syu): naming still subject to change...
 
-Sysys.DetailController = Ember.Object.extend
+Sysys.DetailController = Ember.ObjectController.extend
+  init: ->
+    @_super()
+
   anims: {}
   activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
+  activeHumonNodeView: null
   activeHumonNode: null
 
   ######################################
