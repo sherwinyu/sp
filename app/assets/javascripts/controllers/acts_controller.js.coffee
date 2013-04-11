@@ -1,9 +1,7 @@
 Sysys.ActsController = Ember.ArrayController.extend
+  content: null
   commit: ->
     Sysys.store.commit()
-
-  init:->
-    @set 'content', Sysys.store.findAll(Sysys.Act)
 
   newAct: ->
     a = Sysys.store.createRecord(Sysys.Act, description: '5')

@@ -12,7 +12,5 @@
 #= require_self
 #= require ../../app/assets/javascripts/sysys
 #= require_tree ./
-@Test = true
-
-@Sysys = Ember.Application.create()
+@TESTING = true
 
