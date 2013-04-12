@@ -60,17 +60,20 @@ Sysys.Act = DS.Model.extend
 
   becameError: ->
     console.log('an error occured!')
-    Sysys.router.get('notificationsController').add('Oops', 'There was an error!', 'ERROR')
+    # Sysys.router.get('notificationsController').add('Oops', 'There was an error!', 'ERROR')
   didUpdate: ->
-    console.log('chorger!')
-    Sysys.router.get('notificationsController').addInfo('', 'Successfully updated.')
+    console.log("updated!");
+    # Sysys.router.get('notificationsController').addInfo('', 'Successfully updated.')
   didLoad: ->
-    # debugger
-    # @defaultValues() 
+    console.log 'loaded!'
   didCreate: ->
-    Sysys.router.get('notificationsController').addInfo('', 'Successfully created.')
+    console.log 'created!'
+    # Sysys.router.get('notificationsController').addInfo('', 'Successfully created.')
+  didCommit: ->
+    console.log 'commited!'
   becameInvalid: (act) ->
     for k, v of act.errors
-      Sysys.router.get('notificationsController').addError(k, v)
+      console.log 'error!'
+      # Sysys.router.get('notificationsController').addError(k, v)
 
 Sysys.Act.reopenClass

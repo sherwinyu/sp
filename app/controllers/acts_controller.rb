@@ -6,7 +6,7 @@ class ActsController < ApplicationController
 
   def create
     @act = Act.create params[:act]
-    respond_with @act
+    respond_with @act, status: :created
   end
 
   def index
@@ -36,7 +36,7 @@ class ActsController < ApplicationController
     @act.create_detail detail
     puts ret, @act.inspect
     if ret
-      respond_with @act
+      respond_with @act, status: :ok
     else
       # TODO(syu): make sure that the client can actually process these errors and that the code is correct
       # respond_with status: 500
