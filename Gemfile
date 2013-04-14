@@ -38,7 +38,12 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
-gem "ember-rails"
+gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
+gem 'jquery-rails'
+gem 'handlebars-source', '1.0.0.rc3'
+gem 'ember-rails', github: 'emberjs/ember-rails'
+
+
 gem 'sinon-rails'
 gem 'jasmine-sinon-rails'
 
@@ -47,7 +52,7 @@ gem 'mixpanel'
 
 gem "mongoid", "~> 3.0.0"
 gem "mongoid_auto_increment"
-gem "active_model_serializers", :git => "git://github.com/rails-api/active_model_serializers.git"
+# gem "active_model_serializers", :git => "git://github.com/rails-api/active_model_serializers.git"
 
 
 # To use ActiveModel has_secure_password
