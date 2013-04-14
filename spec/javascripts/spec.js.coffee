@@ -12,5 +12,14 @@
 #= require_self
 #= require ../../app/assets/javascripts/sysys
 #= require_tree ./
+#
+#
+#= require ../../app/assets/javascripts/vendor/jquery-autogrow-textarea
+#= require ../../app/assets/javascripts/vendor/jquery-autogrow-textarea-plus
+#= require ../../app/assets/javascripts/vendor/jquery.hotkeys
+#= require ../../app/assets/javascripts/vendor/date
+#= require ../../app/assets/javascripts/vendor/moment
+#= require ../../app/assets/javascripts/vendor/jquery-ui-timepicker-addon
+#= require ../../app/assets/javascripts/vendor/humon
 @TESTING = true
 
