@@ -11,7 +11,6 @@ Sysys.ActsNewRoute = Ember.Route.extend
 
 Sysys.ActsIndexRoute = Ember.Route.extend
   model: ->
-    [ Sysys.Act.createRecord() ]
     
   
 

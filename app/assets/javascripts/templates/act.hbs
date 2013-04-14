@@ -35,14 +35,10 @@
 
   <span class="caption">details: </span>
   {{view Sysys.HumonNodeView contentBinding="detail"}}
-  {{detail.json}}
-  
-
 
   <button type="submit" class="btn btn-primary"> zorger </button>
+  <a {{action commitAct}} > wala </a>
 
-  {{! view Ember.TextField valueBinding="description"}}
-  {{! view Ember.TextField valueBinding="start_time"}}
   {{#if isDirty}}
   <div>
     You have unsaved changes

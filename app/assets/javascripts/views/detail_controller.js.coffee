@@ -9,6 +9,17 @@ Sysys.DetailController = Ember.ObjectController.extend
   activeHumonNodeView: null
   activeHumonNode: null
 
+  setTransaction: (->
+    if @get('content').transaction.get('isDefault') 
+      @set('tx', @get('store').transaction())
+      @get('tx').add @get('content')
+  ).observes('content')
+
+  commitAct: ->
+    if @get('content.isDirty')
+      @get('content').transaction.commit()
+      # @get('content').save()
+
   ######################################
   ##  Committing (keys and values)
   #####################################
