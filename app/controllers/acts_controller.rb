@@ -28,7 +28,6 @@ class ActsController < ApplicationController
   end
 
   def update
-    debugger
     @act = Act.find params[:id]
     detail = params[:act].delete :detail
     ret = @act.update_attributes params[:act]

@@ -1,8 +1,8 @@
 <span class="blocky">
-  {{#if view.content.nodeParent.isHash}}
-  {{view "Sysys.KeyField" rawValueBinding="view.content.nodeKey"}}<span class="colon-glyph">:</span>
-  {{else}}
+  {{#if view.content.nodeParent.isList}}
     {{view "Sysys.IdxField" valueBinding="view.content.nodeIdx" rawValueBinding="view.content.nodeIdx"}}
+  {{else}}
+    {{view "Sysys.KeyField" rawValueBinding="view.content.nodeKey"}}<span class="colon-glyph">:</span>
   {{/if}}
 
   {{#if view.content.isLiteral}}

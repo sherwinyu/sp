@@ -2,18 +2,16 @@
 
 <div class="span8">
 <a class="btn" {{action newAct target="controller" href=true}}>New Act</a>
-  {{#if content.isLoaded}}
+  {{#if content.isUpdating}}
+  <div>
+    loading...
+  </div>
+  {{else}}
     {{#each act in arrangedContent itemController=detail}}
       {{! partial "act" }}
       {{view Sysys.ActView contentBinding="act"}}
       {{!render "act" act}}
     {{/each}}
-  {{else}}
-    loading...
-    loading...
-    loading...
-    loading...
-    loading...
   {{/if}}
 </div>
 {{outlet act}}
