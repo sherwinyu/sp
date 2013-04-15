@@ -126,9 +126,8 @@ Sysys.DetailController = Ember.ObjectController.extend
 ######################################
 
   activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
-    if node
-      @set 'activeHumonNode', node
-      if focus
+    @set 'activeHumonNode', node
+    if node and focus
         @smartFocus()
 
   nextNode: ->
