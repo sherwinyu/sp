@@ -1,13 +1,22 @@
 Sysys.Router.map ->
   @resource "acts", ->
     @route "new"
+    @route "activeAct"
 
 Sysys.ActsRoute = Ember.Route.extend
   model: ->
     Sysys.Act.find()
+  events:
+    wala: ->
+      console.log @controllerFor('acts')
+      console.log 'wala'
 
 Sysys.ActsNewRoute = Ember.Route.extend
   model: ->
+
+Sysys.ActsActiveAct = Ember.Route.extend
+  model: ->
+    @controllerFor('acts').objectAt(0)
 
 Sysys.ActsIndexRoute = Ember.Route.extend
   model: ->
