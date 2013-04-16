@@ -8,3 +8,6 @@ Sysys.ActView = Ember.View.extend
 
   init: ->
     @_super()
+  click: ->
+    console.log 'click!'
+    @get('controller').transitionToRoute('acts.activeAct', @get('content'))
