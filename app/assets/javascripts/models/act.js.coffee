@@ -1,7 +1,7 @@
 Sysys.Act = DS.Model.extend
-  description: DS.attr "string"
-  start_time: DS.attr "date"
-  end_time: DS.attr "date"
+  description: DS.attr "humon"
+  start_time: DS.attr "humon"
+  end_time: DS.attr "humon"
   detail: DS.attr "humon"
 
   # duration is stored as seconds and is a computed property
