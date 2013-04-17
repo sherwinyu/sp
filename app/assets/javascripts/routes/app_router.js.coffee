@@ -19,12 +19,22 @@ Sysys.ActsNewRoute = Ember.Route.extend
 Sysys.ActsActiveActRoute = Ember.Route.extend
   enter: ->
     console.log 'enter acts active route'
-    debugger
   model: (params)->
-    debugger
     model = @controllerFor('acts').objectAt(0)
     console.log model, params
     model
+  setupController: (ctrl, model) ->
+    chain = Sysys.j2hn({})
+    description = model.get 'description'
+    description.set 'nodeKey', 'description'
+    start_time = model.get 'start_time'
+    start_time.set 'nodeKey', 'start time'
+    end_time = model.get 'end_time'
+    end_time.set 'nodeKey', 'end time'
+    detail = model.get 'detail'
+    detail.set 'nodeKey', 'details'
+    chain.insertAt 0, description, start_time, end_time, detail
+    ctrl.chain = chain
 
 Sysys.ActsIndexRoute = Ember.Route.extend
   model: ->

@@ -1,8 +1,8 @@
   {{view Sysys.EditableField valueBinding="description" }}
-  {{view Sysys.MetaNodeView contentBinding="content.description"}}
-  <span class="caption">start time: </span> {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) ||  {{start_time}} <br>
+  {{!view Sysys.MetaNodeView contentBinding="content.description"}}
+  <!--span class="caption">start time: </span> {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) ||  {{start_time}} <br>
   <span class="caption">start time:</span> {{view Sysys.DateTimePickerField  valBinding="start_time" }} ({{ dateFromNow start_time}})
-  <span class="caption">duration: </span> {{view Sysys.DurationField valueBinding="duration"}}
+    <span class="caption">duration: </span> {{view Sysys.DurationField valueBinding="duration"}} -->
 description:
 {{view Sysys.HumonNodeView contentBinding="description"}}
 start_time:
