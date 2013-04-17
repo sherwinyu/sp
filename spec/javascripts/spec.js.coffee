@@ -4,7 +4,11 @@
 # spec/javascripts/*_spec.js
 # spec/javascripts/*_spec.js.erb
 # require_self
-#
+#= require jquery
+#= require handlebars
+#= require ember
+#= require ember-data
+
 #= require sinon
 #= require jasmine-sinon
 #= require ../../app/assets/javascripts/vendor/jasmine-jquery

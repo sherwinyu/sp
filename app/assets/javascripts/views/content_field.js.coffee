@@ -83,7 +83,7 @@ Sysys.ContentField = Ember.TextArea.extend
         ctrl = @get 'controller'
         e.preventDefault()
         @checkAndSave()
-        ctrl.prevNode()
+        ctrl.send 'prevNode'
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').bubbleUp()

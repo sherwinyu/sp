@@ -1,4 +1,4 @@
-Sysys.HumonUtils = 
+Sysys.HumonUtils =
   humonNode2json: (node)->
     nodeVal = node.get('nodeVal')
     ret = undefined
@@ -28,24 +28,40 @@ Sysys.HumonUtils =
         child.set 'nodeKey', key
         children.pushObject child
       node.set 'nodeVal', children
-
-    if Sysys.HumonUtils.isList json
+    else if Sysys.HumonUtils.isList json
       node.set 'nodeType', 'list'
       children = Em.A()
       for val in json
         child = Sysys.HumonUtils.json2humonNode val, node
         children.pushObject child
       node.set 'nodeVal', children
-
-    if Sysys.HumonUtils.isLiteral json
+    else if Sysys.HumonUtils.isLiteral json
       node.set('nodeType', 'literal')
       node.set('nodeVal', json)
+    else if Sysys.HumonUtils.isNull json
+      node.set('nodeType', 'literal')
+      node.set('nodeVal', null)
+    else
+      Em.assert "unrecognized type for json2humonNode: #{json}", false
     node
-    
+
   isHash: (val) ->
     val? and (typeof val is 'object') and !(val instanceof Array)
   isList: (val) ->
     val? and typeof val is 'object' and val instanceof Array and typeof val.length is 'number'
+  isNull: (val) ->
+    val == null
+  isBoolean: (val) ->
+    typeof val is "boolean"
+  isString: (val) ->
+    typeof val is "string"
+  isNumber: (val) ->
+    typeof val is "number"
+  isDate: (val) ->
+    typeof val is "object" && val.constructor == Date
+
+
+
 
   #TODO(syu): support date literals
   isLiteral: (val) ->
