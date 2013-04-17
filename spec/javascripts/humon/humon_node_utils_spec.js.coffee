@@ -1,5 +1,5 @@
 shu = Sysys.HumonUtils
-describe 'json2humonNode', ->
+describe 'HumonNode json2humon', ->
   json = null
   j2hn = shu.json2humonNode
   spyj2hn = null
@@ -36,6 +36,9 @@ describe 'json2humonNode', ->
       expect(node.get 'nodeVal.0.nodeParent').toBe node
       expect(node.get 'nodeVal.1.nodeParent').toBe node
       expect(node.get 'nodeVal.2.nodeParent').toBe node
+
+    it "should work on different literal types", ->
+      throw 'pending'
   
   describe "when called on flat hash", ->
     hash = {a: 1, b: 2, c: 3}
@@ -45,7 +48,7 @@ describe 'json2humonNode', ->
     it "should recurse once for each k,v pair of hash", ->
       expect(spyj2hn).toHaveBeenCalledThrice()
       expect(spyj2hn).toHaveBeenCalledWith 1
-      expect(spyj2hn).toHaveBeenCalledWith 2 
+      expect(spyj2hn).toHaveBeenCalledWith 2
       expect(spyj2hn).toHaveBeenCalledWith 3
 
     it "should return a HumonNode with a list of KVPs, each with a HumonNode wrapping a literal as a val", ->
@@ -78,7 +81,7 @@ describe 'json2humonNode', ->
 
     it "should recurse once for each k,v pair of hash", ->
       expect(spyj2hn).toHaveBeenCalledWith 1
-      expect(spyj2hn).toHaveBeenCalledWith 2 
+      expect(spyj2hn).toHaveBeenCalledWith 2
       expect(spyj2hn).toHaveBeenCalledWith [false, 'lalala', {nested: true}]
       expect(spyj2hn).toHaveBeenCalledWith false
       expect(spyj2hn).toHaveBeenCalledWith 'lalala'
@@ -174,7 +177,7 @@ describe "type checkers", ->
       expect(shu.isList(num)).toBe false
       expect(shu.isList(str)).toBe false
 
-  describe "literal", ->
+  describe "isLiteral", ->
     it "should respond false for arrrays", ->
       expect(shu.isLiteral(hash1)).toBe false
       expect(shu.isLiteral(hash2)).toBe false
@@ -187,4 +190,5 @@ describe "type checkers", ->
       expect(shu.isLiteral(bool)).toBe true
       expect(shu.isLiteral(num)).toBe true
       expect(shu.isLiteral(str)).toBe true
-
+    it "should fail for date objects", ->
+      expect(-> shu.isLiteral(new Date())).toThrow()
