@@ -58,10 +58,10 @@ Sysys.HumonUtils =
   isNumber: (val) ->
     typeof val is "number"
   isDate: (val) ->
-    typeof val is "object" && val.constructor == Date
-
-
-
+    ret = false
+    ret ||= (typeof val is "object" && val.constructor == Date)
+    ret ||=  new Date(val)
+    !!ret
 
   #TODO(syu): support date literals
   isLiteral: (val) ->
