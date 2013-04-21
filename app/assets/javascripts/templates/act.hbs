@@ -11,7 +11,8 @@ end_time:
 {{view Sysys.HumonNodeView contentBinding="end_time"}}
 
 <span class="caption">details: </span>
-{{view Sysys.HumonNodeView contentBinding="detail"}}
+{{!!view Sysys.HumonNodeView contentBinding="detail"}}
+{{render "detail" detail}}
 
 
 {{#if isDirty}}

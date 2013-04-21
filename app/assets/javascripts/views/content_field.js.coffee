@@ -4,9 +4,6 @@ Sysys.ContentField = Ember.TextArea.extend
   placeholder: ''
   autogrowing: false
 
-  click: (e)->
-    e.stopPropagation()
-
   focusIn: (e)->
     @get('controller').activateNode @get('parentView.content')
 

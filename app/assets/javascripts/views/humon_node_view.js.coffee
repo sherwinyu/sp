@@ -1,5 +1,4 @@
 Sysys.HumonNodeView = Ember.View.extend
-  contentBinding: null
   templateName: 'humon_node'
   classNameBindings: [
     'content.isLiteral:node-literal:node-collection',
@@ -14,7 +13,8 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('controller').activateNode @get('content'), focus: true
     e.stopPropagation()
   focusOut: (e) ->
-    @get('controller').activateNode null
+    # TODO(syu): bug -- when the view is DELETED, this focusOut triggers!
+    # @get('controller').activateNode null
 
 
   json_string: (->
@@ -135,3 +135,5 @@ Sysys.HumonNodeView = Ember.View.extend
     if @$valField().val() == ''
       @$valField().val '{}'
     @get('controller').commitAndContinue( @$valField().val())
+
+Sysys.DetailView = Sysys.HumonNodeView.extend()

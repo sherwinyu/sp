@@ -1,6 +1,6 @@
 # TODO(syu): naming still subject to change...
 
-Sysys.DetailController = Ember.ObjectController.extend
+Sysys.ActController = Ember.ObjectController.extend
   init: ->
     @_super()
 
@@ -226,3 +226,6 @@ Sysys.DetailController = Ember.ObjectController.extend
       parent.deleteChild ahn
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
     @smartFocus()
+
+Sysys.DetailController = Sysys.ActController.extend
+  setTransaction: null
