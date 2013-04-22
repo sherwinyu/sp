@@ -99,17 +99,17 @@ Sysys.HumonNodeView = Ember.View.extend
     @$().bind 'keyup', 'up', (e) =>
 
   $labelField: ->
-    @$('> span> .nodeContent-field.label-field')?.first()
+    @$('> span> .content-field.label-field')?.first()
   $keyField: ->
-    @$('> span > .nodeContent-field.key-field')?.first()
+    @$('> span > .content-field.key-field')?.first()
   $idxField: ->
-    @$('> span > .nodeContent-field.idx-field')?.first()
+    @$('> span > .content-field.idx-field')?.first()
   $valField: ->
-    @$('> span > .nodeContent-field.val-field')?.first()
+    @$('> span > .content-field.val-field')?.first()
   $proxyField: ->
-    @$('> span > .nodeContent-field.proxy-field')?.first()
+    @$('> span > .content-field.proxy-field')?.first()
   $bigValField: ->
-    @$('> .nodeContent-field.big-val-field')?.first()
+    @$('> .content-field.big-val-field')?.first()
 
   enterEditing: ->
     return if @get 'editing'

@@ -15,7 +15,9 @@
 {{#if view.nodeContent.isCollection}}
   {{view "Sysys.BigValField"}}
   {{#each nodeChild in view.nodeContent.nodeVal}}
+    {{#with nodeChild}}
     {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
+    {{/with}}
   {{/each}}
   {{!collection contentBinding="view.nodeContent.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper"}}
 {{/if}}

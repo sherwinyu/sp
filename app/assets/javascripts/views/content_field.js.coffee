@@ -5,7 +5,7 @@ Sysys.ContentField = Ember.TextArea.extend
   autogrowing: false
 
   focusIn: (e)->
-    @get('controller').activateNode @get('parentView.content')
+    @get('controller').activateNode @get('parentView.nodeContent')
 
     unless @get('autogrowing')
       @autogrow()
