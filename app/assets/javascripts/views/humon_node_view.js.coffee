@@ -1,16 +1,17 @@
 Sysys.HumonNodeView = Ember.View.extend
   templateName: 'humon_node'
+  nodeContentBinding: Ember.Binding.oneWay('context.content')
   classNameBindings: [
-    'content.isLiteral:node-literal:node-collection',
-    'content.isHash:node-hash',
-    'content.isList:node-list',
+    'nodeContent.isLiteral:node-literal:node-collection',
+    'nodeContent.isHash:node-hash',
+    'nodeContent.isList:node-list',
     'isActive:active',
     'parentActive:activeChild',
     'suppressGap']
   classNames: ['node']
 
   click: (e)->
-    @get('controller').activateNode @get('content'), focus: true
+    @get('controller').activateNode @get('nodeContent'), focus: true
     e.stopPropagation()
   focusOut: (e) ->
     # TODO(syu): bug -- when the view is DELETED, this focusOut triggers!
@@ -18,33 +19,33 @@ Sysys.HumonNodeView = Ember.View.extend
 
 
   json_string: (->
-    JSON.stringify @get('content.json')
-  ).property('content.json')
+    JSON.stringify @get('nodeContent.json')
+  ).property('nodeContent.json')
 
   isActive: (->
-    ret = @get('controller.activeHumonNode') == @get('content')
+    ret = @get('controller.activeHumonNode') == @get('nodeContent')
   ).property('controller.activeHumonNode')
 
   parentActive: (->
-    ret = @get('controller.activeHumonNode') == @get('content.nodeParent')
+    ret = @get('controller.activeHumonNode') == @get('nodeContent.nodeParent')
   ).property('controller.activeHumonNode')
 
   # normally, there is a 5px gap at the bottom of node-collections to make room for the [ ] and { } glyphs.
   # However, if multiple collections all exit, we don't want a ton of white space, so we only show the gap
   # if this nodeCollection has an additional sibling after it
   suppressGap: (->
-    @get('content.nodeParent.nodeVal.lastObject') == @get('content')
-  ).property('content.nodeParent.nodeVal.lastObject')
+    @get('nodeContent.nodeParent.nodeVal.lastObject') == @get('nodeContent')
+  ).property('nodeContent.nodeParent.nodeVal.lastObject')
 
   willDestroyElement: ->
     # @animDestroy()
     @unbindHotkeys()
-    @get('content')?.set 'nodeView', null
+    @get('nodeContent')?.set 'nodeView', null
 
   didInsertElement: ->
     # @animInsert()
     @initHotkeys()
-    @get('content')?.set 'nodeView', @
+    @get('nodeContent')?.set 'nodeView', @
 
   animInsert: ->
     anims = @get('controller.anims')
@@ -98,17 +99,17 @@ Sysys.HumonNodeView = Ember.View.extend
     @$().bind 'keyup', 'up', (e) =>
 
   $labelField: ->
-    @$('> span> .content-field.label-field')?.first()
+    @$('> span> .nodeContent-field.label-field')?.first()
   $keyField: ->
-    @$('> span > .content-field.key-field')?.first()
+    @$('> span > .nodeContent-field.key-field')?.first()
   $idxField: ->
-    @$('> span > .content-field.idx-field')?.first()
+    @$('> span > .nodeContent-field.idx-field')?.first()
   $valField: ->
-    @$('> span > .content-field.val-field')?.first()
+    @$('> span > .nodeContent-field.val-field')?.first()
   $proxyField: ->
-    @$('> span > .content-field.proxy-field')?.first()
+    @$('> span > .nodeContent-field.proxy-field')?.first()
   $bigValField: ->
-    @$('> .content-field.big-val-field')?.first()
+    @$('> .nodeContent-field.big-val-field')?.first()
 
   enterEditing: ->
     return if @get 'editing'
@@ -117,7 +118,7 @@ Sysys.HumonNodeView = Ember.View.extend
     @set 'editing', true
     @$bigValField().addClass 'editing'
     @$('> .node-item-collection-wrapper').first().addClass 'editing'
-    hmn = humon.json2humon @get 'content.json'
+    hmn = humon.json2humon @get 'nodeContent.json'
     @$bigValField().val hmn
     x.focus()
 

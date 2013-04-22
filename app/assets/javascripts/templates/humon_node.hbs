@@ -1,20 +1,23 @@
 <span class="blocky">
-  {{#if nodeParent.isList}}
-    {{view "Sysys.IdxField" valueBinding="nodeIdx" rawValueBinding="nodeIdx"}}
+  {{#if view.nodeContent.nodeParent.isList}}
+    {{view "Sysys.IdxField" valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"}}
   {{else}}
-    {{view "Sysys.KeyField" rawValueBinding="nodeKey"}}<span class="colon-glyph">:</span>
+    {{view "Sysys.KeyField" rawValueBinding="view.nodeContent.nodeKey"}}<span class="colon-glyph">:</span>
   {{/if}}
 
-  {{#if isLiteral}}
-    {{view "Sysys.ValField" rawValueBinding="json" }}
+  {{#if view.nodeContent.isLiteral}}
+    {{view "Sysys.ValField" rawValueBinding="view.nodeContent.json" }}
   {{else}}
     <span class="open-glyph"> </span>{{view "Sysys.ProxyField" }}
   {{/if}}
 </span>
 
-{{#if isCollection}}
+{{#if view.nodeContent.isCollection}}
   {{view "Sysys.BigValField"}}
-  {{collection contentBinding="nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper"}}
+  {{#each nodeChild in view.nodeContent.nodeVal}}
+    {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
+  {{/each}}
+  {{!collection contentBinding="view.nodeContent.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper"}}
 {{/if}}
 <span class="buffer"></span>
 <span class="close-glyph"></span>
