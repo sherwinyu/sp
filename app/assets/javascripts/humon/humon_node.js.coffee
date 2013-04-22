@@ -42,7 +42,8 @@ Sysys.HumonNode = Ember.Object.extend
   ).property('isCollection', 'nodeVal', 'nodeVal.@each')
 
   isLiteral: (->
-    @get('nodeType') == 'literal'
+    ['literal', 'date']
+    @get('nodeType') == 'literal' || @get('nodeType') == 'date'
   ).property('nodeType')
 
   # Retrieves a node by key or by index.

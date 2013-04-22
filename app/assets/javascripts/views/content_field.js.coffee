@@ -22,6 +22,7 @@ Sysys.ContentField = Ember.TextArea.extend
     @$().trigger 'remove.autogrowplus'
     @set('autogrowing', false)
 
+
   didInsertElement: ->
     @refresh()
     @autosize()
@@ -41,6 +42,7 @@ Sysys.ContentField = Ember.TextArea.extend
   checkAndSave: ->
     # TODO(syu) -- convert to string!
     Ember.run =>
+      debugger
       if @get('rawValue') + "" != @$().val()
         @commit()
 

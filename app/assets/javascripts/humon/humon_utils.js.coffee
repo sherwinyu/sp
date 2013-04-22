@@ -2,18 +2,23 @@ Sysys.HumonUtils =
   humonNode2json: (node)->
     nodeVal = node.get('nodeVal')
     ret = undefined
-    if node.get('isList')
-      ret = []
-      for child in nodeVal
-        ret.pushObject Sysys.HumonUtils.humonNode2json child
-    if node.get('isHash')
-      ret = {}
-      for child in nodeVal
-        key = child.get('nodeKey')
-        key ?= nodeVal.indexOf child
-        ret[key] = Sysys.HumonUtils.humonNode2json child
-    if node.get('isLiteral')
-      ret = nodeVal
+    switch node.get('nodeType')
+      when 'list'
+        ret = []
+        for child in nodeVal
+          ret.pushObject Sysys.HumonUtils.humonNode2json child
+      when 'hash'
+        ret = {}
+        for child in nodeVal
+          key = child.get('nodeKey')
+          key ?= nodeVal.indexOf child
+          ret[key] = Sysys.HumonUtils.humonNode2json child
+      when 'date'
+        ret = node.get('nodeVal').toString()
+      when 'literal'
+        ret = nodeVal
+      else
+        0/0
     ret
 
   json2humonNode: (json, nodeParent=null)->
@@ -35,6 +40,14 @@ Sysys.HumonUtils =
         child = Sysys.HumonUtils.json2humonNode val, node
         children.pushObject child
       node.set 'nodeVal', children
+    else if Sysys.HumonUtils.isDate json
+      node.set('nodeType', 'date')
+      val =
+        if json instanceof Date
+          json
+        else
+          new Date(json)
+      node.set('nodeVal', val)
     else if Sysys.HumonUtils.isLiteral json
       node.set('nodeType', 'literal')
       node.set('nodeVal', json)
@@ -46,7 +59,7 @@ Sysys.HumonUtils =
     node
 
   isHash: (val) ->
-    val? and (typeof val is 'object') and !(val instanceof Array)
+    val? and (typeof val is 'object') and !(val instanceof Array) and val.constructor == Object
   isList: (val) ->
     val? and typeof val is 'object' and val instanceof Array and typeof val.length is 'number'
   isNull: (val) ->
@@ -59,9 +72,14 @@ Sysys.HumonUtils =
     typeof val is "number"
   isDate: (val) ->
     ret = false
-    ret ||= (typeof val is "object" && val.constructor == Date)
-    ret ||=  new Date(val)
-    !!ret
+    try
+      ret ||= (typeof val is "object" && val.constructor == Date)
+      # if it's an ISO date
+      ret ||= (new Date(val.substring 0, 19)).toISOString().substring( 0, 19) == val.substring(0, 19)
+    catch error
+      ret = false
+    finally
+      !!ret
 
   #TODO(syu): support date literals
   isLiteral: (val) ->
