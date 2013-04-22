@@ -1,6 +1,6 @@
 Sysys.HumonNodeView = Ember.View.extend
   templateName: 'humon_node'
-  nodeContentBinding: Ember.Binding.oneWay('context.content')
+  nodeContentBinding: Ember.Binding.oneWay('controller.content')
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.isHash:node-hash',
