@@ -45,7 +45,6 @@ Sysys.HumonNodeView = Ember.View.extend
   didInsertElement: ->
     # @animInsert()
     @initHotkeys()
-    Ember.run.sync()
     @get('nodeContent')?.set 'nodeView', @
 
   animInsert: ->
@@ -138,4 +137,7 @@ Sysys.HumonNodeView = Ember.View.extend
       @$valField().val '{}'
     @get('controller').commitAndContinue( @$valField().val())
 
-Sysys.DetailView = Sysys.HumonNodeView.extend()
+Sysys.DetailView = Sysys.HumonNodeView.extend
+  init: ->
+    Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
+    @_super()
