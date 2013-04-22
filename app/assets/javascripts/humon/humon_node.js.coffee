@@ -1,10 +1,20 @@
-Sysys.HumonNode = Ember.Object.extend
+Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   nodeKey: ''
   nodeVal: null
   nodeType: null
   nodeParent: null
   nodeView: null
   keyBinding: 'nodeKey'
+  compare: (hna, hnb) -> 
+    a = hna.get('nodeVal')
+    b = hnb.get('nodeVal')
+    as = bs = null
+    ret = 
+      if hna.get('nodeType') == 'date' || hnb.get('nodeType') == 'date'
+        Ember.compare(a, b)
+      else
+        0
+    ret
 
   # finds the index of this node in its parentNode's nodeVal (children)
   # if parentNode does not exist, returns undefined
