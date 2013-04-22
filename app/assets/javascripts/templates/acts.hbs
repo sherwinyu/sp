@@ -7,7 +7,7 @@
     loading...
   </div>
   {{else}}
-    {{#each act in arrangedContent itemController=detail}}
+    {{#each act in arrangedContent itemController=act}}
       {{! partial "act" }}
       {{view Sysys.ActView contentBinding="act"}}
       {{!render "act" act}}

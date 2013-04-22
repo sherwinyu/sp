@@ -45,6 +45,7 @@ Sysys.HumonNodeView = Ember.View.extend
   didInsertElement: ->
     # @animInsert()
     @initHotkeys()
+    Ember.run.sync()
     @get('nodeContent')?.set 'nodeView', @
 
   animInsert: ->

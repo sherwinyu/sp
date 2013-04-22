@@ -23,6 +23,7 @@ Sysys.ActsActiveActRoute = Ember.Route.extend
     model = @controllerFor('acts').objectAt(0)
     console.log model, params
     model
+    ###
   setupController: (ctrl, model) ->
     chain = Sysys.j2hn({})
     description = model.get 'description'
@@ -35,6 +36,7 @@ Sysys.ActsActiveActRoute = Ember.Route.extend
     detail.set 'nodeKey', 'details'
     chain.insertAt 0, description, start_time, end_time, detail
     ctrl.chain = chain
+    ###
 
 Sysys.ActsIndexRoute = Ember.Route.extend
   model: ->

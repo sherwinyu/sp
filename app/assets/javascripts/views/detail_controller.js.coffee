@@ -1,6 +1,6 @@
 # TODO(syu): naming still subject to change...
 
-Sysys.ActController = Ember.ObjectController.extend
+Sysys.DetailController = Ember.ObjectController.extend
   init: ->
     @_super()
 
@@ -9,16 +9,6 @@ Sysys.ActController = Ember.ObjectController.extend
   activeHumonNodeView: null
   activeHumonNode: null
 
-  setTransaction: (->
-    if @get('content').transaction.get('isDefault') 
-      @set('tx', @get('store').transaction())
-      @get('tx').add @get('content')
-  ).observes('content')
-
-  commitAct: ->
-    if @get('content.isDirty')
-      @get('content').transaction.commit()
-      # @get('content').save()
 
   ######################################
   ##  Committing (keys and values)
@@ -227,5 +217,32 @@ Sysys.ActController = Ember.ObjectController.extend
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
     @smartFocus()
 
-Sysys.DetailController = Sysys.ActController.extend
-  setTransaction: null
+Sysys.ActController = Sysys.DetailController.extend
+  content: null
+  contentDidChange: (->
+    console.log "content changing: #{@get('content.json')}"
+
+    chain = Sysys.j2hn({})
+    model = @get('content')
+    description = model.get 'description'
+    description.set 'nodeKey', 'description'
+    start_time = model.get 'start_time'
+    start_time.set 'nodeKey', 'start time'
+    end_time = model.get 'end_time'
+    end_time.set 'nodeKey', 'end time'
+    detail = model.get 'detail'
+    detail.set 'nodeKey', 'details'
+    chain.insertAt 0, description, start_time, end_time, detail
+    @set 'chain', chain
+  ).observes 'content'
+
+  setTransaction: (->
+    if @get('content').transaction.get('isDefault') 
+      @set('tx', @get('store').transaction())
+      @get('tx').add @get('content')
+  ).observes('content')
+
+  commitAct: ->
+    if @get('content.isDirty')
+      @get('content').transaction.commit()
+      # @get('content').save()
