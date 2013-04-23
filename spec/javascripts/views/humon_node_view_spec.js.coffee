@@ -23,8 +23,8 @@ describe "HumonNodeView", ->
       }
     json = @serialized
     @hn = Sysys.HumonUtils.json2humonNode json 
-    @detailController = Sysys.DetailController.create()
-    @hnv = Sysys.HumonNodeView.create content: @hn, controller: @detailController
+    @detailController = Sysys.DetailController.create content: @hn
+    @hnv = Sysys.HumonNodeView.create controller: @detailController
     Ember.run => @hnv.append()
 
   afterEach ->
@@ -34,12 +34,14 @@ describe "HumonNodeView", ->
   describe "humon node bindings", ->
     it "should not set it before insertion", ->
       @hn = Sysys.HumonUtils.json2humonNode a: 5
-      @hnv_noninserted = Sysys.HumonNodeView.create content: @hn
+      @hnv_noninserted = Sysys.HumonNodeView.create nodeContent: @hn
+      # controller: Ember.ObjectController.create(content: @hn)
       expect(@hn.get 'nodeView').toBeNull()
 
     it "should set it after insertion", ->
       @hn = Sysys.HumonUtils.json2humonNode a: 5
-      @hnv_inserted = Sysys.HumonNodeView.create content: @hn
+      @hnv_inserted = Sysys.HumonNodeView.create node: @hn, nodeContentBinding: 'node'
+      # controller: Ember.ObjectController.create(content: @hn)
       Ember.run => @hnv_inserted.append()
       expect(@hn.get 'nodeView').toBe @hnv_inserted
       Ember.run =>
@@ -48,7 +50,7 @@ describe "HumonNodeView", ->
 
     it "should remove it after removal", ->
       @hn = Sysys.HumonUtils.json2humonNode a: 5
-      @hnv_insert = Sysys.HumonNodeView.create content: @hn
+      @hnv_insert = Sysys.HumonNodeView.create node: @hn, nodeContentBinding: 'node'
       Ember.run => @hnv_insert.append()
       Ember.run => @hnv_insert.remove(); @hnv_insert.destroy()
       expect(@hn.get 'nodeView').toBeNull()
@@ -59,18 +61,19 @@ describe "HumonNodeView", ->
       @hn_a0 = @hn_a.getNode '0'
       @hn_a1 = @hn_a.getNode '1'
       @hn_a1b = @hn_a1.getNode 'b'
-      @hnv_root = Sysys.HumonNodeView.create content: @hn
+      debugger
+      @hnv_root = Sysys.HumonNodeView.create node: @hn, nodeContentBinding: 'node'
       expect(@hn.get 'nodeView').toBeNull()
       expect(@hn_a.get 'nodeView').toBeNull()
       expect(@hn_a0.get 'nodeView').toBeNull()
       expect(@hn_a1.get 'nodeView').toBeNull()
       expect(@hn_a1b.get 'nodeView').toBeNull()
       Ember.run => @hnv_root.append()
-      expect(@hn.get 'nodeView.content').toEqual @hn
-      expect(@hn_a.get 'nodeView.content').toBe @hn_a
-      expect(@hn_a0.get('nodeView.content') == @hn_a0).toBeTruthy
-      expect(@hn_a1.get 'nodeView.content').toBe @hn_a1
-      expect(@hn_a1b.get 'nodeView.content').toBe @hn_a1b
+      expect(@hn.get 'nodeView.nodeContent').toEqual @hn
+      expect(@hn_a.get 'nodeView.nodeContent').toBe @hn_a
+      expect(@hn_a0.get('nodeView.nodeContent') == @hn_a0).toBeTruthy
+      expect(@hn_a1.get 'nodeView.nodeContent').toBe @hn_a1
+      expect(@hn_a1b.get 'nodeView.nodeContent').toBe @hn_a1b
       Ember.run => @hnv_root.remove(); @hnv_root.destroy()
       expect(@hn.get 'nodeView').toBeNull()
       expect(@hn_a.get 'nodeView').toBeNull()

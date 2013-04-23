@@ -1,48 +1,17 @@
-<div class="act well">
-  <span class="title"><a {{action showAct act href=true}}> # </a>  {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) </span><br>
-  <span class="caption">id: </span> {{ id }} <br>
+  {{! view Sysys.EditableField valueBinding="description" }}
+  {{!view Sysys.MetaNodeView contentBinding="content.description"}}
+  <!--span class="caption">start time: </span> {{! dateFormat start_time format="MMM D h:mm a"}} ({{! dateFromNow start_time}}) ||  {{!start_time}} <br>
+  <span class="caption">start time:</span> {{!view Sysys.DateTimePickerField  valBinding="start_time" }} ({{! dateFromNow start_time}})
+    <span class="caption">duration: </span> {{!view Sysys.DurationField valueBinding="duration"}} -->
+{{view Sysys.HumonNodeView nodeContentBinding="description"}}
+{{view Sysys.HumonNodeView nodeContentBinding="start_time"}}
+{{view Sysys.HumonNodeView nodeContentBinding="end_time"}}
+{{render "detail" detail}}
 
-  <span class="description">
-    <span class="caption description">description:</span>
-    {{view Sysys.EditableField valueBinding="description" }} <br>
-  </span>
-  <span class="start-time">
-    <span class="caption">start time: </span> {{ dateFormat start_time format="MMM D h:mm a"}} ({{ dateFromNow start_time}}) ||  {{start_time}} <br> 
-  </span>
-  <br>
-  <span class="start-time">
-    <span class="caption">start time: </span> {{start_time_pretty }}  <br> 
-  </span>
-  <br>
-  <span class="start-time">
-    <span class="caption">end time: </span>{{ end_time }} ({{ dateFromNow end_time}})  || {{end_time}}<br> 
-  </span>
-  <br>
-  <br>
-  <br>
-  <span class="date">
-    <span class="caption">start time:</span> {{view Sysys.DateTimePickerField  valBinding="start_time" }} ({{ dateFromNow start_time}})
-  </span> 
-  <br>
-  <span class="date">
-    <span class="caption">end time: </span>{{ view Sysys.DateTimePickerField valBinding="end_time" }} 
-  </span>
-  <br>
-  <span class="duration">
-    <span class="caption">duration: </span> {{view Sysys.DurationField valueBinding="duration"}} 
-  </span>
-  <br>
 
-  <span class="caption">details: </span>
-  {{view Sysys.HumonNodeView contentBinding="detail"}}
-
-  <button type="submit" class="btn btn-primary"> zorger </button>
-  <a {{action commitAct}} > wala </a>
-
-  {{#if isDirty}}
-  <div>
-    You have unsaved changes
-  </div>
-  {{/if}}
-
+{{#if isDirty}}
+<div>
+  You have unsaved changes. <br>
+<a {{action commitAct}} class="btn btn-primary"> save? </a>
 </div>
+{{/if}}

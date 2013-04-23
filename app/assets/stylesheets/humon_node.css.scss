@@ -53,7 +53,7 @@ span.blocky {
 .node.active > .blocky {
   background: $activeColorLight
 }
-.node.active > div > .node {
+.node.active > .node {
   border-left: $nodeLeftBorder $activeColorLight solid;
 }
 .node.active > span.blocky > textarea.content-field.label-field {

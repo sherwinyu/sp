@@ -15,9 +15,9 @@ describe "HumonNode UI integration", ->
           ]
       }
     json = @serialized
-    window.dC = Sysys.DetailController.create() 
     window.hn = @humonNode = Sysys.HumonUtils.json2humonNode json 
-    window.hnv = @humonNodeView = Sysys.HumonNodeView.create content: @humonNode, controller: window.dC,  displayStats: true
+    window.dC = Sysys.DetailController.create( content: hn) 
+    window.hnv = @humonNodeView = Sysys.HumonNodeView.create controller: window.dC,  displayStats: true
 
     Ember.run =>
       @humonNodeView.append()

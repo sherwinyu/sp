@@ -1,5 +1,3 @@
-# TODO(syu): naming still subject to change...
-
 Sysys.DetailController = Ember.ObjectController.extend
   init: ->
     @_super()
@@ -8,17 +6,6 @@ Sysys.DetailController = Ember.ObjectController.extend
   activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
   activeHumonNodeView: null
   activeHumonNode: null
-
-  setTransaction: (->
-    if @get('content').transaction.get('isDefault') 
-      @set('tx', @get('store').transaction())
-      @get('tx').add @get('content')
-  ).observes('content')
-
-  commitAct: ->
-    if @get('content.isDirty')
-      @get('content').transaction.commit()
-      # @get('content').save()
 
   ######################################
   ##  Committing (keys and values)
@@ -64,7 +51,7 @@ Sysys.DetailController = Ember.ObjectController.extend
   commitVal: (rawString, {rerender}={rerender: false}) ->
     # return unless @get('activeHumonNode.isLiteral')
     json =
-      try 
+      try
         humon.parse rawString
       catch error
         try
@@ -93,7 +80,7 @@ Sysys.DetailController = Ember.ObjectController.extend
     nodeKey = ahn.get('nodeKey')
     nodeVal = ahn.get('nodeVal')
 
-    if context == 'hash' 
+    if context == 'hash'
       if nodeKey.length == 0
         @focusKeyField()
       else
@@ -126,9 +113,8 @@ Sysys.DetailController = Ember.ObjectController.extend
 ######################################
 
   activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
-    if node
-      @set 'activeHumonNode', node
-      if focus
+    @set 'activeHumonNode', node
+    if node and focus
         @smartFocus()
 
   nextNode: ->
@@ -137,7 +123,7 @@ Sysys.DetailController = Ember.ObjectController.extend
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
-    @activateNode newNode, focus: true 
+    @activateNode newNode, focus: true
 
 ##################################
 ## Manipulating humon node tree
@@ -227,3 +213,49 @@ Sysys.DetailController = Ember.ObjectController.extend
       parent.deleteChild ahn
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
     @smartFocus()
+
+Sysys.ActController = Sysys.DetailController.extend
+  content: null
+  contentDidChange: (->
+    console.log "content changing: #{@get('content.json')}"
+
+    chain = Sysys.j2hn({})
+    model = @get('content')
+    description = model.get 'description'
+    description.set 'nodeKey', 'description'
+    start_time = model.get 'start_time'
+    start_time.set 'nodeKey', 'start time'
+    end_time = model.get 'end_time'
+    end_time.set 'nodeKey', 'end time'
+    detail = model.get 'detail'
+    detail.set 'nodeKey', 'details'
+    chain.insertAt 0, description, start_time, end_time, detail
+    @set 'chain', chain
+  ).observes 'content'
+
+  setTransaction: (->
+    if @get('content').transaction.get('isDefault')
+      @set('tx', @get('store').transaction())
+      @get('tx').add @get('content')
+  ).observes('content')
+
+  commitAct: ->
+    if @get('content.isDirty')
+      @get('content').transaction.commit()
+      # @get('content').save()
+  forceDirty: (attributeName) ->
+    # TODO(syu): refactor to take a 'mid back' function,
+    # sandwiched between the willSetProperty and didSetProperty calls
+    record = @get('content')
+    ctx =
+      name: attributeName
+      reference: record.get('_reference')
+      store: record.store
+    record.send 'willSetProperty', ctx
+    ctx = name: attributeName
+    record.send 'didSetProperty', ctx
+
+  commit: (rawString)->
+    @_super(rawString)
+    key = @get('activeHumonNode.nodeKey')
+    @forceDirty key.replace(' ', '_')

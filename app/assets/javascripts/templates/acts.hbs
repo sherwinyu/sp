@@ -1,13 +1,13 @@
 <h2>Recent SherwinActions</h2>
 
-<div class="span8">
+<div class="span12">
 <a class="btn" {{action newAct target="controller" href=true}}>New Act</a>
   {{#if content.isUpdating}}
   <div>
     loading...
   </div>
   {{else}}
-    {{#each act in arrangedContent itemController=detail}}
+    {{#each act in arrangedContent itemController=act}}
       {{! partial "act" }}
       {{view Sysys.ActView contentBinding="act"}}
       {{!render "act" act}}

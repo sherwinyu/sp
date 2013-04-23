@@ -4,11 +4,8 @@ Sysys.ContentField = Ember.TextArea.extend
   placeholder: ''
   autogrowing: false
 
-  click: (e)->
-    e.stopPropagation()
-
   focusIn: (e)->
-    @get('controller').activateNode @get('parentView.content')
+    @get('controller').activateNode @get('parentView.nodeContent')
 
     unless @get('autogrowing')
       @autogrow()
@@ -24,6 +21,7 @@ Sysys.ContentField = Ember.TextArea.extend
   removeAutogrow: ->
     @$().trigger 'remove.autogrowplus'
     @set('autogrowing', false)
+
 
   didInsertElement: ->
     @refresh()
@@ -83,7 +81,7 @@ Sysys.ContentField = Ember.TextArea.extend
         ctrl = @get 'controller'
         e.preventDefault()
         @checkAndSave()
-        ctrl.prevNode()
+        ctrl.send 'prevNode'
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').bubbleUp()
