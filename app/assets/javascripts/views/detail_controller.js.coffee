@@ -243,21 +243,19 @@ Sysys.ActController = Sysys.DetailController.extend
     if @get('content.isDirty')
       @get('content').transaction.commit()
       # @get('content').save()
+  forceDirty: (attributeName) ->
+    # TODO(syu): refactor to take a 'mid back' function,
+    # sandwiched between the willSetProperty and didSetProperty calls
+    record = @get('content')
+    ctx =
+      name: attributeName
+      reference: record.get('_reference')
+      store: record.store
+    record.send 'willSetProperty', ctx
+    ctx = name: attributeName
+    record.send 'didSetProperty', ctx
 
   commit: (rawString)->
     @_super(rawString)
     key = @get('activeHumonNode.nodeKey')
-    record = @get('content')
-    # val = @get('content').get(key)
-    # @get('content').set(key, val)
-    # key = @get('activeHumonNode.nodeKey')
-    # https://github.com/emberjs/data/blob/master/packages/ember-data/lib/system/adapter.js#L464
-    ctx =
-      name: key
-      reference: record.get('_reference')
-      store: record.store
-    @get('content').send 'willSetProperty', ctx
-    @_super(rawString)
-    ctx = name: key
-    @get('content').send 'didSetProperty', ctx
-    #.notifyPropertyChange key
+    @forceDirty key.replace(' ', '_')
