@@ -1,5 +1,3 @@
-# TODO(syu): naming still subject to change...
-
 Sysys.DetailController = Ember.ObjectController.extend
   init: ->
     @_super()
@@ -8,7 +6,6 @@ Sysys.DetailController = Ember.ObjectController.extend
   activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
   activeHumonNodeView: null
   activeHumonNode: null
-
 
   ######################################
   ##  Committing (keys and values)
@@ -54,7 +51,7 @@ Sysys.DetailController = Ember.ObjectController.extend
   commitVal: (rawString, {rerender}={rerender: false}) ->
     # return unless @get('activeHumonNode.isLiteral')
     json =
-      try 
+      try
         humon.parse rawString
       catch error
         try
@@ -83,7 +80,7 @@ Sysys.DetailController = Ember.ObjectController.extend
     nodeKey = ahn.get('nodeKey')
     nodeVal = ahn.get('nodeVal')
 
-    if context == 'hash' 
+    if context == 'hash'
       if nodeKey.length == 0
         @focusKeyField()
       else
@@ -126,7 +123,7 @@ Sysys.DetailController = Ember.ObjectController.extend
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
-    @activateNode newNode, focus: true 
+    @activateNode newNode, focus: true
 
 ##################################
 ## Manipulating humon node tree
@@ -237,7 +234,7 @@ Sysys.ActController = Sysys.DetailController.extend
   ).observes 'content'
 
   setTransaction: (->
-    if @get('content').transaction.get('isDefault') 
+    if @get('content').transaction.get('isDefault')
       @set('tx', @get('store').transaction())
       @get('tx').add @get('content')
   ).observes('content')
@@ -246,3 +243,21 @@ Sysys.ActController = Sysys.DetailController.extend
     if @get('content.isDirty')
       @get('content').transaction.commit()
       # @get('content').save()
+
+  commit: (rawString)->
+    @_super(rawString)
+    key = @get('activeHumonNode.nodeKey')
+    record = @get('content')
+    # val = @get('content').get(key)
+    # @get('content').set(key, val)
+    # key = @get('activeHumonNode.nodeKey')
+    # https://github.com/emberjs/data/blob/master/packages/ember-data/lib/system/adapter.js#L464
+    ctx =
+      name: key
+      reference: record.get('_reference')
+      store: record.store
+    @get('content').send 'willSetProperty', ctx
+    @_super(rawString)
+    ctx = name: key
+    @get('content').send 'didSetProperty', ctx
+    #.notifyPropertyChange key

@@ -1,20 +1,28 @@
-Sysys.Store = DS.Store.extend
-  revision: 12,
-    # adapter: DS.RESTAdapter.create()
+Sysys.Adapter = DS.RESTAdapter.extend
+  # @overrides dirtyRecordsForAttributeChange
+  dirtyRecordsForAttributeChange: (dirtySet, record, attributeName, newValue, oldValue) ->
+    @_super()
+    # Need to do this to check cases when newValue == oldValue (by object reference comparison)
+    if record.constructor?.metaForProperty(attributeName).type == 'humon'
+      # and newValue == oldValue
+      @dirtyRecordsForRecordChange(dirtySet, record)
 
-    # Sysys.store = new Sysys.Store
-DS.RESTAdapter.registerTransform 'humon', 
+Sysys.Adapter.registerTransform 'humon',
   serialize: (humonNode) ->
     humonNode.get('json')
   deserialize: (json) ->
     Sysys.j2hn json
-    
+
+Sysys.Store = DS.Store.extend
+  revision: 12,
+  adapter: Sysys.Adapter.create()
+
 
 
 
 ###
-DS.JSONTransforms.object = 
-  deserialize: (serialized) -> 
+DS.JSONTransforms.object =
+  deserialize: (serialized) ->
     serialized ?= {}
     Sysys.JSONWrapper.recursiveDeserialize(serialized)
     #if Em.isNone(serialized) then Ember.Object.create() else Sysys.JSONWrapper.recursiveDeserialize(serialized)
@@ -23,7 +31,7 @@ DS.JSONTransforms.object =
     ret = if Em.isNone(deserialized) then null else Sysys.JSONWrapper.recursiveSerialize deserialized
     ret
 
-Sysys.JSONWrapper = 
+Sysys.JSONWrapper =
   isHash: (val) ->
     val? and (typeof val is 'object') and !(val instanceof Array)
   isArray: (val) ->
@@ -46,7 +54,7 @@ Sysys.JSONWrapper =
         a.pushObject Sysys.JSONWrapper.recursiveDeserialize(v)
       return a
     throw new Error("this shoud never happen")
-  
+
   recursiveSerialize: (val) ->
     if Sysys.JSONWrapper.isPlain val
       return val
