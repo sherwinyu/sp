@@ -138,7 +138,10 @@ Sysys.DetailView = Sysys.HumonNodeView.extend
     Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
     @_super()
 
+  didInsertElement: ->
+    Ember.run.sync()
+    @_super()
+
   focusOut: (e) ->
-    # TODO(syu): bug -- when the view is DELETED, this focusOut triggers!
     if @get('controller')
       @get('controller').activateNode null

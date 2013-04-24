@@ -107,7 +107,6 @@ Sysys.DetailController = Ember.ObjectController.extend
   focusProxyField: ->
     $pf = @get('activeHumonNodeView').$proxyField().focus()
 
-
 ######################################
 ##  Setting Active Node
 ######################################
