@@ -161,11 +161,11 @@ Sysys.DetailController = Ember.ObjectController.extend
     Ember.run =>
       ahn.get('nodeParent').deleteChild ahn
       dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
+    @activateNode ahn
     @smartFocus()
 
   bubbleDown: ->
     ahn = @get 'activeHumonNode'
-    # Em.assert("can only bubble literals", ahn.get('isLiteral'))
     dest = @get('activeHumonNode').lastFlattenedChild().nextNode()
     return unless dest?.get('nodeParent')
     @get('anims').destroy = 'disappear'
@@ -176,6 +176,7 @@ Sysys.DetailController = Ember.ObjectController.extend
         dest.get('nodeParent').insertAt(dest.get('nodeIdx') + 1, ahn)
       else
         dest.insertAt(0, ahn)
+    @activateNode ahn
     @smartFocus()
 
   deleteActive: ->

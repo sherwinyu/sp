@@ -76,7 +76,7 @@ Sysys.ContentField = Ember.TextArea.extend
         ctrl = @get 'controller'
         e.preventDefault()
         @checkAndSave()
-        ctrl.nextNode()
+        ctrl.send 'nextNode'
       'up': (e) =>
         ctrl = @get 'controller'
         e.preventDefault()

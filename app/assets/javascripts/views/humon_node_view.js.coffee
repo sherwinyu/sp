@@ -13,18 +13,14 @@ Sysys.HumonNodeView = Ember.View.extend
   click: (e)->
     @get('controller').activateNode @get('nodeContent'), focus: true
     e.stopPropagation()
-  focusOut: (e) ->
-    # TODO(syu): bug -- when the view is DELETED, this focusOut triggers!
-    # @get('controller').activateNode null
-
 
   json_string: (->
     JSON.stringify @get('nodeContent.json')
   ).property('nodeContent.json')
 
   isActive: (->
-    ret = @get('controller.activeHumonNode') == @get('nodeContent')
-  ).property('controller.activeHumonNode')
+    ret = @get('controller.activeHumonNode') == @get('nodeContent') && @get('nodeContent')?
+  ).property('controller.activeHumonNode', 'nodeContent')
 
   parentActive: (->
     ret = @get('controller.activeHumonNode') == @get('nodeContent.nodeParent')
@@ -141,3 +137,8 @@ Sysys.DetailView = Sysys.HumonNodeView.extend
   init: ->
     Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
     @_super()
+
+  focusOut: (e) ->
+    # TODO(syu): bug -- when the view is DELETED, this focusOut triggers!
+    if @get('controller')
+      @get('controller').activateNode null
