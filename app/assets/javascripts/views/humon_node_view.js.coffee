@@ -24,7 +24,7 @@ Sysys.HumonNodeView = Ember.View.extend
 
   parentActive: (->
     ret = @get('controller.activeHumonNode') == @get('nodeContent.nodeParent')
-  ).property('controller.activeHumonNode')
+  ).property('controller.activeHumonNode', 'nodeContent.nodeParent')
 
   # normally, there is a 5px gap at the bottom of node-collections to make room for the [ ] and { } glyphs.
   # However, if multiple collections all exit, we don't want a ton of white space, so we only show the gap
