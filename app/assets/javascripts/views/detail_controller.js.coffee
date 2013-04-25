@@ -171,13 +171,14 @@ Sysys.DetailController = Ember.ObjectController.extend
   bubbleDown: ->
     ahn = @get 'activeHumonNode'
     dest = @get('activeHumonNode').lastFlattenedChild().nextNode()
-    return unless dest?.get('nodeParent')
+    destParent = dest?.get('nodeParent')
+    return unless @withinScope destParent
     @get('anims').destroy = 'disappear'
     @get('anims').insert  = 'slideDown'
     Ember.run =>
       ahn.get('nodeParent').deleteChild ahn
       if dest.get('isLiteral')
-        dest.get('nodeParent').insertAt(dest.get('nodeIdx') + 1, ahn)
+        destParent.insertAt(dest.get('nodeIdx') + 1, ahn)
       else
         dest.insertAt(0, ahn)
     @activateNode ahn
