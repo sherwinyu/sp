@@ -85,6 +85,7 @@ textarea.content-field {
   resize: none;
   background: none;
   overflow: hidden;
+  vertical-align: top;
 }
 textarea.content-field:focus {
   border: none;
@@ -161,6 +162,7 @@ textarea.content-field.key-field:focus { }
  ********************/
 span.colon-glyph {
   position: relative;
+  vertical-align: top;
   left: -10px;
 }
 /*

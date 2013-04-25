@@ -16,7 +16,7 @@ Sysys.ContentField = Ember.TextArea.extend
       @removeAutogrow()
 
   autogrow: ->
-    @$().autogrowplus horizontal: true, vertical: false
+    @$().autogrowplus horizontal: true, vertical: true
     @set('autogrowing', true)
   removeAutogrow: ->
     @$().trigger 'remove.autogrowplus'
@@ -108,7 +108,7 @@ Sysys.ContentField = Ember.TextArea.extend
         e.preventDefault()
 
   willDestroyElement: ->
-    @$().trigger 'remove.autogrow'
+    @removeAutogrow()
 
 Sysys.AbstractLabel = Sysys.ContentField.extend
   classNames: ['label-field']
