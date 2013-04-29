@@ -109,11 +109,13 @@
         #if( options.horizontal )
         #      val = $.trim( val );
 
-        # set the shadow's internal value
+        # set the shadow's inner text  value
         if val == '' 
           val = $el.attr 'placeholder'
-        shadow.html(val).css "width", "auto"
-        if options.horizontal and shadow.parent().length
+        shadow.html(val)
+        shadow.css "width", "auto"
+
+        if options.horizontal and shadow.parent().length # if shadow still in DOM
           maxWidth = options.maxWidth
           maxWidth = $el.parent().width() - 12  if typeof (maxWidth) is "undefined"
           otherWidth = parseInt($el.css('width')) - $el.width() + 14
@@ -121,13 +123,13 @@
           # console.log "setting ##{$el.attr 'id'}.width=#{width}"
           $(@).css "width", width
 
-        if options.vertical
+        if options.vertical and shadow.parent().length # shadow still in DOM
           # what is this line for ??? 
           # shadow.css "width", $(this).width() - parseInt($el.css("paddingLeft"), 10) - parseInt($el.css("paddingRight"), 10)
           shadowHeight = shadow.height()
           newHeight = Math.min(Math.max(shadowHeight, minHeight), maxHeight)
           $(this).css "height", newHeight
-          $(this).css "overflow", (if newHeight is maxHeight then "auto" else "hidden")
+          $(this).css "overflow", (newHeight == maxHeight ? "auto" : "hidden")
 
       #### set it up
       $(@).on 'remove.autogrowplus', (e)->

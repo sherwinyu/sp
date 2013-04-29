@@ -107,13 +107,12 @@ Sysys.DetailController = Ember.ObjectController.extend
   focusProxyField: ->
     $pf = @get('activeHumonNodeView').$proxyField().focus()
 
-
 ######################################
 ##  Setting Active Node
 ######################################
 
   activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
-    @set 'activeHumonNode', node
+    @set 'activeHumonNode', node if node && !node.get('hidden')
     if node and focus
         @smartFocus()
 
@@ -124,6 +123,10 @@ Sysys.DetailController = Ember.ObjectController.extend
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
     @activateNode newNode, focus: true
+
+  withinScope: (testNode) ->
+    return false unless testNode instanceof Sysys.HumonNode
+    !!@get('content').pathToNode testNode
 
 ##################################
 ## Manipulating humon node tree
@@ -155,27 +158,30 @@ Sysys.DetailController = Ember.ObjectController.extend
   bubbleUp: ->
     ahn = @get('activeHumonNode')
     dest = @get('activeHumonNode').prevNode()
-    return unless dest?.get('nodeParent')
+    destParent = dest?.get('nodeParent')
+    return unless @withinScope destParent
     @get('anims').destroy = 'disappear'
     @get('anims').insert  = 'slideUp'
     Ember.run =>
       ahn.get('nodeParent').deleteChild ahn
       dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
+    @activateNode ahn
     @smartFocus()
 
   bubbleDown: ->
     ahn = @get 'activeHumonNode'
-    # Em.assert("can only bubble literals", ahn.get('isLiteral'))
     dest = @get('activeHumonNode').lastFlattenedChild().nextNode()
-    return unless dest?.get('nodeParent')
+    destParent = dest?.get('nodeParent')
+    return unless @withinScope destParent
     @get('anims').destroy = 'disappear'
     @get('anims').insert  = 'slideDown'
     Ember.run =>
       ahn.get('nodeParent').deleteChild ahn
       if dest.get('isLiteral')
-        dest.get('nodeParent').insertAt(dest.get('nodeIdx') + 1, ahn)
+        destParent.insertAt(dest.get('nodeIdx') + 1, ahn)
       else
         dest.insertAt(0, ahn)
+    @activateNode ahn
     @smartFocus()
 
   deleteActive: ->
@@ -217,8 +223,6 @@ Sysys.DetailController = Ember.ObjectController.extend
 Sysys.ActController = Sysys.DetailController.extend
   content: null
   contentDidChange: (->
-    console.log "content changing: #{@get('content.json')}"
-
     chain = Sysys.j2hn({})
     model = @get('content')
     description = model.get 'description'
@@ -231,6 +235,7 @@ Sysys.ActController = Sysys.DetailController.extend
     detail.set 'nodeKey', 'details'
     chain.insertAt 0, description, start_time, end_time, detail
     @set 'chain', chain
+    chain.set 'hidden', true
   ).observes 'content'
 
   setTransaction: (->
@@ -259,3 +264,5 @@ Sysys.ActController = Sysys.DetailController.extend
     @_super(rawString)
     key = @get('activeHumonNode.nodeKey')
     @forceDirty key.replace(' ', '_')
+
+  withinScope: -> false

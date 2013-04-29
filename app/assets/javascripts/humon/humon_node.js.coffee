@@ -5,11 +5,11 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   nodeParent: null
   nodeView: null
   keyBinding: 'nodeKey'
-  compare: (hna, hnb) -> 
+  compare: (hna, hnb) ->
     a = hna.get('nodeVal')
     b = hnb.get('nodeVal')
     as = bs = null
-    ret = 
+    ret =
       if hna.get('nodeType') == 'date' || hnb.get('nodeType') == 'date'
         Ember.compare(a, b)
       else
@@ -162,12 +162,12 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
 
   # Public
   # precondition: node is a collection node
-  # replaces objects in 
+  # replaces objects in
   replaceAt: (idx, amt, nodes...) ->
     Em.assert("HumonNode must be a list or a hash to replaceAt(#{idx},#{amt},#{nodes})", @get('isCollection'))
     list = @get 'nodeVal'
 
-    # set the `nodeParent` for the removed nodes to null 
+    # set the `nodeParent` for the removed nodes to null
     end = Math.min(idx + amt, list.length)
     for i in [idx...end]
       list[i]?.set('nodeParent', null)
@@ -193,7 +193,7 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   # if amt is not specified, a single element is deleted
   # if the number of elements to be deleted is greater than the remaining elements in the array, the remaining elemtns are deleted
   # sets the nodeParent for deleted nodes to null
-  deleteAt: (idx, amt) ->
+  deleteAt: (idx, amt)->
     Em.assert("deleteAt(idx, amt) requires idx to be an number", typeof idx == "number")
     amt ?= 1
     Em.assert("HumonNode must be a list or a hash to deleteAt(#{idx},#{amt})", @get('isCollection'))
@@ -207,3 +207,18 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
     Em.assert('Child argument must be a child of this node for deleteChild', node.get('nodeParent') == @)
     idx = node.get('nodeIdx')
     @deleteAt(idx)
+
+  pathToNode: (testNode)->
+    if @ == testNode
+      return [@]
+    else if @get 'isCollection'
+      for child in @get 'nodeVal'
+        if curPath = child.pathToNode( testNode )
+          return [@].concat curPath
+      null
+    else
+      null
+
+  isDescendant: (testNode)->
+    path = @pathToNode(testNode)
+

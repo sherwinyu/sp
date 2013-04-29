@@ -13,22 +13,18 @@ Sysys.HumonNodeView = Ember.View.extend
   click: (e)->
     @get('controller').activateNode @get('nodeContent'), focus: true
     e.stopPropagation()
-  focusOut: (e) ->
-    # TODO(syu): bug -- when the view is DELETED, this focusOut triggers!
-    # @get('controller').activateNode null
-
 
   json_string: (->
     JSON.stringify @get('nodeContent.json')
   ).property('nodeContent.json')
 
   isActive: (->
-    ret = @get('controller.activeHumonNode') == @get('nodeContent')
-  ).property('controller.activeHumonNode')
+    ret = @get('controller.activeHumonNode') == @get('nodeContent') && @get('nodeContent')?
+  ).property('controller.activeHumonNode', 'nodeContent')
 
   parentActive: (->
     ret = @get('controller.activeHumonNode') == @get('nodeContent.nodeParent')
-  ).property('controller.activeHumonNode')
+  ).property('controller.activeHumonNode', 'nodeContent.nodeParent')
 
   # normally, there is a 5px gap at the bottom of node-collections to make room for the [ ] and { } glyphs.
   # However, if multiple collections all exit, we don't want a ton of white space, so we only show the gap
@@ -141,3 +137,11 @@ Sysys.DetailView = Sysys.HumonNodeView.extend
   init: ->
     Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
     @_super()
+
+  didInsertElement: ->
+    Ember.run.sync()
+    @_super()
+
+  focusOut: (e) ->
+    if @get('controller')
+      @get('controller').activateNode null

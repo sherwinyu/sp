@@ -163,7 +163,7 @@ describe "HumonNode", ->
         expect(node.get('nodeVal.1')).toBe nodea
         node.replaceAt 0, 2, nodec0, nodec1
         expect(node.get('nodeVal')[0]).toEqual nodec0
-        expect(node.get('nodeVal')[1]).toEqual nodec1 
+        expect(node.get('nodeVal')[1]).toEqual nodec1
         expect(node.get('nodeVal')[2]).toEqual nodeb
         expect(node.get('nodeVal')[3]).toEqual nodec
         expect(node.get('nodeVal')[4]).toEqual noded
@@ -444,3 +444,24 @@ describe "HumonNode", ->
       it "shouldwork on empty collections", ->
         expect(noded.lastFlattenedChild()).toBe noded
         expect(nodee.lastFlattenedChild()).toBe nodee
+
+    describe "pathToNode", ->
+      it "returns an array containing this node when the testnode is this literal node", ->
+        expect(nodeb.pathToNode nodeb).toEqual [nodeb]
+      it "returns an array containing this node when the testnode is this collection node", ->
+        expect(nodec.pathToNode nodec).toEqual [nodec]
+      it "returns an array containing this node when the testnode is this empty hash node", ->
+        expect(nodee.pathToNode nodee).toEqual [nodee]
+      it "returns an array containing this node to testnode when the testnode is a literal child", ->
+        expect(node.pathToNode nodec0).toEqual [node, nodec, nodec0]
+      it "returns an array containing this node to testnode (and not further) when the testnode is a collection child", ->
+        expect(node.pathToNode nodec2).toEqual [node, nodec, nodec2]
+      it "returns an array containing this node to testnode (and not further) when the testnode is an empty collection child", ->
+        expect(node.pathToNode noded).toEqual [node, noded]
+      it "returns an null when no path can be found", ->
+        expect(noded.pathToNode node).toBeNull()
+
+    describe "isDescendant", ->
+      it "is true when testNode is a child", ->
+      it "is true when testNode is a grand child", ->
+      it "is true when testNode is a grand child with its own children", ->
