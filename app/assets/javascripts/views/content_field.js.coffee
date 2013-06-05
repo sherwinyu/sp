@@ -25,7 +25,7 @@ Sysys.ContentField = Ember.TextArea.extend
 
   didInsertElement: ->
     @refresh()
-    @autosize()
+    # @autosize()
     @setPlaceHolderText()
     @initHotKeys()
 
@@ -75,12 +75,12 @@ Sysys.ContentField = Ember.TextArea.extend
       'down': (e) =>
         ctrl = @get 'controller'
         e.preventDefault()
-        @checkAndSave()
+        # @checkAndSave()
         ctrl.send 'nextNode'
       'up': (e) =>
         ctrl = @get 'controller'
         e.preventDefault()
-        @checkAndSave()
+        # @checkAndSave()
         ctrl.send 'prevNode'
       'ctrl+up': (e) =>
         e.preventDefault()

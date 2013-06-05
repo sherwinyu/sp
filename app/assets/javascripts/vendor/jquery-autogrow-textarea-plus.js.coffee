@@ -7,11 +7,11 @@
   ###
   autogrowVerticallyIE8 = ->
     @each ->
-      
+
       # Variables
       colsDefault = @cols
       rowsDefault = @rows
-      
+
       #Functions
       grow = ->
         growByRef this
@@ -51,10 +51,10 @@
     ###
 
 
-  
+
   #
   #     * Auto-growing textareas; technique ripped from Facebook
-  #     
+  #
 
   $.fn.autogrowplus = (options) ->
     options = $.extend(
@@ -76,10 +76,10 @@
 
       maxHeight ?= 1000000
 
-      shadow = $('<div class="autogrowplus-shadow"></div>').css(
+      window.shadow = shadow = $('<div class="autogrowplus-shadow"></div>').css(
         position: "absolute"
         bottom: 400
-        left: 400
+        left: 100
         fontSize: $el.css("fontSize")
         fontFamily: $el.css("fontFamily")
         fontWeight: $el.css("fontWeight")
@@ -105,12 +105,12 @@
           val = val.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/\n$/, "<br/>&nbsp;").replace(/\n/g, "<br/>").replace(RegExp(" {2,}", "g"), (space) ->
             times("&nbsp;", space.length - 1) + " "
           )
-        
+
         #if( options.horizontal )
         #      val = $.trim( val );
 
         # set the shadow's inner text  value
-        if val == '' 
+        if val == ''
           val = $el.attr 'placeholder'
         shadow.html(val)
         shadow.css "width", "auto"
@@ -124,7 +124,7 @@
           $(@).css "width", width
 
         if options.vertical and shadow.parent().length # shadow still in DOM
-          # what is this line for ??? 
+          # what is this line for ???
           # shadow.css "width", $(this).width() - parseInt($el.css("paddingLeft"), 10) - parseInt($el.css("paddingRight"), 10)
           shadowHeight = shadow.height()
           newHeight = Math.min(Math.max(shadowHeight, minHeight), maxHeight)
@@ -135,7 +135,8 @@
       $(@).on 'remove.autogrowplus', (e)->
         e.preventDefault()
         $(this).off '.autogrowplus'
-        shadow.remove()
+        # console.log "shadow width: #{shadow.width()}"
+        # shadow.remove()
       $(this).on 'change.autogrowplus', update
       $(this).on 'keyup.autogrowplus', update
       $(this).on 'keydown.autogrowplus', update

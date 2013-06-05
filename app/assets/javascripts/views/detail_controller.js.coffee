@@ -9,7 +9,7 @@ Sysys.DetailController = Ember.ObjectController.extend
 
   ######################################
   ##  Committing (keys and values)
-  #####################################
+  ######################################
 
   commitAndContinue: (rawString)->
     ahn = @get 'activeHumonNode'
