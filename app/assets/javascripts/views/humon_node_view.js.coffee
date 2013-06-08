@@ -9,6 +9,18 @@ Sysys.HumonNodeView = Ember.View.extend
     'parentActive:activeChild',
     'suppressGap']
   classNames: ['node']
+  focusOut: (e) ->
+    console.log ' focusing out '
+    e.stopPropagation()
+    @losingFocus()
+
+  focusIn: (e) ->
+    console.log ' humon node view focusing in '
+    console.log "currently focused item is", $(':focus')
+    e.stopPropagation()
+  losingFocus: ->
+    console.log(' WE ARE LOSING FOCUS ')
+    console.log("  #{@get("nodeContent.json")}")
 
   click: (e)->
     @get('controller').activateNode @get('nodeContent'), focus: true

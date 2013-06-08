@@ -5,11 +5,16 @@ Sysys.ContentField = Ember.TextArea.extend
   autogrowing: false
 
   focusIn: (e)->
+    e.preventDefault()
+    console.log "focusingIn contentfield. currently focused item is",  $(':focus')
+    return false
     @get('controller').activateNode @get('parentView.nodeContent')
 
-    unless @get('autogrowing')
-      @autogrow()
-    e.stopPropagation()
+    # unless @get('autogrowing')
+    # @autogrow()
+    # e.stopPropagation()
+    console.log "focusingIn contentfield. currently focused item is",  $(':focus')
+    # true
 
   focusOut: (e)->
     if @get('autogrowing')
@@ -141,6 +146,8 @@ Sysys.ValField = Sysys.ContentField.extend
   focusOut: ->
     @_super()
     @checkAndSave()
+    console.log("VAL FIELD LOSING FOCUS #{@$().val()}")
+    true
 
   initHotKeys: ->
     @_super()
@@ -201,5 +208,3 @@ Sysys.IdxField = Sysys.AbstractLabel.extend
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)
-
-
