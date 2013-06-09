@@ -1,8 +1,15 @@
 Sysys.ContentField = Ember.TextArea.extend
   rawValueBinding: null
   classNames: ['content-field']
+  clasNameBindings: ['isDirty:dirty:clean']
   placeholder: ''
   autogrowing: false
+
+  isDirty: ( ->
+    ret = @get('rawValue') != @get('value')
+    console.log ret
+    ret
+  ).property('rawValue, value')
 
   focusIn: (e)->
     e.preventDefault()

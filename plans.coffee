@@ -70,8 +70,6 @@ HN =
       else
         @focusLabelField()
 
-
-
 CF =
   keyUp: ->
     hnView.up()
@@ -90,3 +88,13 @@ CF =
     true
 # how to redirect focus?
 # simple as do nothing,
+
+
+########
+#
+# plans
+# direct templates
+#
+#
+# THE MASTER PLAN
+
