@@ -12,28 +12,36 @@ Sysys.ContentField = Ember.TextArea.extend
   ).property('rawValue, value')
 
   focusIn: (e)->
-    e.preventDefault()
     console.log "focusingIn contentfield. currently focused item is",  $(':focus')
-    return false
     @get('controller').activateNode @get('parentView.nodeContent')
+    @autogrow()
+    true
 
     # unless @get('autogrowing')
     # @autogrow()
     # e.stopPropagation()
-    console.log "focusingIn contentfield. currently focused item is",  $(':focus')
+    # console.log "focusingIn contentfield. currently focused item is",  $(':focus')
     # true
 
   focusOut: (e)->
-    if @get('autogrowing')
-      @removeAutogrow()
+    @removeAutogrow()
+    console.log "focusingOut contentfield. currently focused item is",  $(':focus')
+    true
 
-  autogrow: ->
-    @$().autogrowplus horizontal: true, vertical: true
-    @set('autogrowing', true)
-  removeAutogrow: ->
-    @$().trigger 'remove.autogrowplus'
-    @set('autogrowing', false)
+  # attempts to set autogrow to true
+  autogrow: (fail = true)->
+    unless @get 'autogrowing'
+      @$().autogrowplus horizontal: true, vertical: true
+      @set('autogrowing', true)
+    else
+      Em.assert "#{@$()} shouldn't already be autogrowing" if fail
 
+  removeAutogrow: (fail = true)->
+    if @get 'autogrowing'
+      @$().trigger 'remove.autogrowplus'
+      @set('autogrowing', false)
+    else
+      Em.assert "#{@$()} should already be autogrowing" if fail
 
   didInsertElement: ->
     @refresh()
@@ -120,7 +128,7 @@ Sysys.ContentField = Ember.TextArea.extend
         e.preventDefault()
 
   willDestroyElement: ->
-    @removeAutogrow()
+    @removeAutogrow(false)
 
 Sysys.AbstractLabel = Sysys.ContentField.extend
   classNames: ['label-field']
@@ -152,7 +160,7 @@ Sysys.ValField = Sysys.ContentField.extend
     @get('controller').commit(@get 'value')
   focusOut: ->
     @_super()
-    @checkAndSave()
+    # @checkAndSave()
     console.log("VAL FIELD LOSING FOCUS #{@$().val()}")
     true
 
@@ -186,8 +194,6 @@ Sysys.BigValField = Sysys.ValField.extend
     hotkeys['up'] = Em.K
     hotkeys['down'] = Em.K
   autosize: Em.K
-  willDestroyElement: ->
-    @removeAutogrow()
 
 Sysys.ProxyField = Sysys.ContentField.extend
   classNames: ['proxy-field']

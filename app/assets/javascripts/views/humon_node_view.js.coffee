@@ -15,12 +15,31 @@ Sysys.HumonNodeView = Ember.View.extend
     @losingFocus()
 
   focusIn: (e) ->
-    console.log ' humon node view focusing in '
-    console.log "currently focused item is", $(':focus')
+    console.log 'humon node view focusing in '
+    console.log "   currently focused item is", $(':focus')
     e.stopPropagation()
-  losingFocus: ->
-    console.log(' WE ARE LOSING FOCUS ')
-    console.log("  #{@get("nodeContent.json")}")
+    if @get 'isActive'
+      console.log "    canceled because node is already active"
+      return
+    else
+      console.log "    calling transitionToNode"
+      @get('controller').transitionToNode @get('nodeContent')
+
+  focusOut: (e) ->
+    console.log 'hnv focusing out'
+    # TODO(syu):
+    # prepare payload: pull from $().val, etc
+    # send to `commit`
+    @get('controller').send 'commitEverything'
+
+  smartFocus: ->
+    node = @get('nodeContent')
+    context = node.get('nodeParent.nodeType')
+    nodeKey = node.get('nodeKye')
+    nodeVal = node.get('nodeVal')
+    if context == 'hash'
+      @$keyField().focus()
+    @$valField().focus()
 
   click: (e)->
     @get('controller').activateNode @get('nodeContent'), focus: true
