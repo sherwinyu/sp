@@ -13,8 +13,7 @@ Sysys.ContentField = Ember.TextArea.extend
 
   focusIn: (e)->
     console.log "focusingIn contentfield. currently focused item is",  $(':focus')
-    @get('controller').activateNode @get('parentView.nodeContent')
-    @autogrow()
+    @autogrow(false)
     true
 
     # unless @get('autogrowing')
@@ -24,23 +23,30 @@ Sysys.ContentField = Ember.TextArea.extend
     # true
 
   focusOut: (e)->
-    @removeAutogrow()
     console.log "focusingOut contentfield. currently focused item is",  $(':focus')
+    @removeAutogrow(false)
+    e.stopPropagation()
     true
 
   # attempts to set autogrow to true
   autogrow: (fail = true)->
+    console.log 'autogrow called'
     unless @get 'autogrowing'
+      console.log '.... successfully'
       @$().autogrowplus horizontal: true, vertical: true
       @set('autogrowing', true)
     else
+      console.log '.... unsuccessfully'
       Em.assert "#{@$()} shouldn't already be autogrowing" if fail
 
   removeAutogrow: (fail = true)->
+    console.log 'removeAutogrow called'
     if @get 'autogrowing'
       @$().trigger 'remove.autogrowplus'
       @set('autogrowing', false)
+      console.log '   ...successfully'
     else
+      console.log '.... unsuccessfully'
       Em.assert "#{@$()} should already be autogrowing" if fail
 
   didInsertElement: ->
@@ -93,11 +99,13 @@ Sysys.ContentField = Ember.TextArea.extend
         e.preventDefault()
         @enter()
       'down': (e) =>
+        Em.assert ' not supported yet '
         ctrl = @get 'controller'
         e.preventDefault()
         # @checkAndSave()
         ctrl.send 'nextNode'
       'up': (e) =>
+        Em.assert ' not supported yet '
         ctrl = @get 'controller'
         e.preventDefault()
         # @checkAndSave()
@@ -158,11 +166,12 @@ Sysys.ValField = Sysys.ContentField.extend
   placeholder: 'val'
   commit: ->
     @get('controller').commit(@get 'value')
-  focusOut: ->
-    @_super()
-    # @checkAndSave()
-    console.log("VAL FIELD LOSING FOCUS #{@$().val()}")
-    true
+
+    # focusOut: ->
+    # @_super()
+    # # @checkAndSave()
+    # console.log("VAL FIELD LOSING FOCUS #{@$().val()}")
+    # true
 
   initHotKeys: ->
     @_super()
@@ -180,6 +189,7 @@ Sysys.BigValField = Sysys.ValField.extend
     @$().autogrowplus horizontal: true, vertical: true
   # TODO(syu): merge this with valfield
   focusOut: (e)->
+    Em.assert 'not supported yet'
     @get('parentView').exitEditing()
     e.stopPropagation()
   commit: ->

@@ -11,6 +11,11 @@ Sysys.DetailController = Ember.ObjectController.extend
   ##  Committing (keys and values)
   ######################################
 
+  commitEverything: (payload) ->
+    if @get('activeHumonNode.isHash')
+      @set('activeHumonNode.nodeKey', payload.key)
+    @commitVal payload.val
+
   commitAndContinue: (rawString)->
     ahn = @get 'activeHumonNode'
     # rawString =  @get('activeHumonNodeView').$valField().val() || '{}'

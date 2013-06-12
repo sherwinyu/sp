@@ -23,19 +23,21 @@ Sysys.HumonNodeView = Ember.View.extend
       return
     else
       console.log "    calling transitionToNode"
-      @get('controller').transitionToNode @get('nodeContent')
+      @get('controller').activateNode @get('nodeContent')
+      # TODO(syu): @get('controller').transitionToNode @get('nodeContent')
 
   focusOut: (e) ->
+    e.stopPropagation()
     console.log 'hnv focusing out'
     # TODO(syu):
     # prepare payload: pull from $().val, etc
     # send to `commit`
     node = @get('nodeContent')
-    console.log('commitingEverything, node=' + node.get('json'))
-    console.log('commitingEverything, activeNode =' + @get('controller.activateNode'))
+    console.log('commitingEverything, node=', node.get('json'))
+    console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.json'))
     payload =
-      val = @$valField.val()
-      key = @$keyField.val()
+      val: @$valField().val()
+      key: @$keyField().val()
     @get('controller').send 'commitEverything', payload
 
   smartFocus: ->
@@ -148,6 +150,7 @@ Sysys.HumonNodeView = Ember.View.extend
     @$('> .content-field.big-val-field')?.first()
 
   enterEditing: ->
+    Em.assert ' '
     return if @get 'editing'
     console.log 'entering editing'
     x = @$bigValField()
@@ -159,6 +162,7 @@ Sysys.HumonNodeView = Ember.View.extend
     x.focus()
 
   exitEditing:->
+    Em.assert ' '
     return unless @get 'editing'
     Em.assert 'must already be editing to exit', @get 'editing'
     console.log 'exiting editing'

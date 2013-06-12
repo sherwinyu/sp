@@ -136,7 +136,7 @@
         e.preventDefault()
         $(this).off '.autogrowplus'
         # console.log "shadow width: #{shadow.width()}"
-        # shadow.remove()
+        shadow.remove()
       $(this).on 'change.autogrowplus', update
       $(this).on 'keyup.autogrowplus', update
       $(this).on 'keydown.autogrowplus', update

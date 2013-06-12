@@ -95,6 +95,9 @@ textarea.content-field:focus {
 textarea.content-field.dirty {
   border-right: 1px solid red;
 }
+textarea.content-field.autogrowing {
+  border-left: 1px solid blue;
+}
 
 textarea.content-field.val-field {
   min-width: 100px;
