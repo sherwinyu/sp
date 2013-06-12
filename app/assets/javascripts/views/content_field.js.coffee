@@ -1,15 +1,16 @@
 Sysys.ContentField = Ember.TextArea.extend
   rawValueBinding: null
   classNames: ['content-field']
-  clasNameBindings: ['isDirty:dirty:clean']
+  classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   placeholder: ''
   autogrowing: false
 
-  isDirty: ( ->
+  dirty: ( ->
+    return false unless @get('state') == 'inDOM'
     ret = @get('rawValue') != @get('value')
     console.log ret
     ret
-  ).property('rawValue, value')
+  ).property('rawValue', 'value')
 
   focusIn: (e)->
     console.log "focusingIn contentfield. currently focused item is",  $(':focus')
@@ -25,7 +26,6 @@ Sysys.ContentField = Ember.TextArea.extend
   focusOut: (e)->
     console.log "focusingOut contentfield. currently focused item is",  $(':focus')
     @removeAutogrow(false)
-    e.stopPropagation()
     true
 
   # attempts to set autogrow to true
