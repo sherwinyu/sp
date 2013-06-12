@@ -30,7 +30,13 @@ Sysys.HumonNodeView = Ember.View.extend
     # TODO(syu):
     # prepare payload: pull from $().val, etc
     # send to `commit`
-    @get('controller').send 'commitEverything'
+    node = @get('nodeContent')
+    console.log('commitingEverything, node=' + node.get('json'))
+    console.log('commitingEverything, activeNode =' + @get('controller.activateNode'))
+    payload =
+      val = @$valField.val()
+      key = @$keyField.val()
+    @get('controller').send 'commitEverything', payload
 
   smartFocus: ->
     node = @get('nodeContent')
@@ -42,8 +48,11 @@ Sysys.HumonNodeView = Ember.View.extend
     @$valField().focus()
 
   click: (e)->
-    @get('controller').activateNode @get('nodeContent'), focus: true
-    e.stopPropagation()
+    # TODO(syu): should be
+    #   1. trigger 'try to transitionTonode'
+    #   2. smartFocus to set the focus
+    # @get('controller').activateNode @get('nodeContent'), focus: true
+    # e.stopPropagation()
 
   json_string: (->
     JSON.stringify @get('nodeContent.json')
