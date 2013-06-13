@@ -55,6 +55,16 @@ Sysys.HumonNodeView = Ember.View.extend
     #   2. smartFocus to set the focus
     # @get('controller').activateNode @get('nodeContent'), focus: true
     # e.stopPropagation()
+    console.log 'hnv click'
+    e.stopPropagation()
+    @$().focus() # focusIn()
+    ###
+    unless @get 'isActive'
+      console.log "    attempting to transition to node"
+      @get('controller').activateNode @get('nodeContent')
+    ###
+    console.log '  smart focusing'
+    @smartFocus()
 
   json_string: (->
     JSON.stringify @get('nodeContent.json')
