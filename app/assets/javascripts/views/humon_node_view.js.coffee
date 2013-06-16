@@ -14,6 +14,12 @@ Sysys.HumonNodeView = Ember.View.extend
     e.stopPropagation()
     @losingFocus()
 
+  # focusIn
+  #  1) cancels propagation
+  #  2) if current HNV is active returns and does nothing
+  #     if current HNV is not active,  calls activateNode on the current node content
+  #
+  #  This is primarily called indirectly by event bubbling from content fields
   focusIn: (e) ->
     console.log 'humon node view focusing in '
     console.log "   currently focused item is", $(':focus')
@@ -26,6 +32,11 @@ Sysys.HumonNodeView = Ember.View.extend
       @get('controller').activateNode @get('nodeContent')
       # TODO(syu): @get('controller').transitionToNode @get('nodeContent')
 
+  # focusOut
+  #   1) constructs a payload to be sent to @controller `commitEverything`
+  #   2) payload contains {key, val}
+  #   3) key is taken from the key field's value
+  #   4) val is taken from the val field TODO(syu): clarify what 'val field' actually means
   focusOut: (e) ->
     e.stopPropagation()
     console.log 'hnv focusing out'
@@ -40,6 +51,11 @@ Sysys.HumonNodeView = Ember.View.extend
       key: @$keyField().val()
     @get('controller').send 'commitEverything', payload
 
+  # smartFocus -- "auto" sets the focus for this HNV based on context
+  # contexts used
+  #   * Key field empty?
+  #   * Val field empty?
+  #   * context?
   smartFocus: ->
     node = @get('nodeContent')
     context = node.get('nodeParent.nodeType')
@@ -49,6 +65,12 @@ Sysys.HumonNodeView = Ember.View.extend
       @$keyField().focus()
     @$valField().focus()
 
+  # click -- responds to a click event on the HNV
+  # primarily for
+  #   1) cancels propagation
+  #   2) if HNV is already active, just smart focus
+  #   3) if HNV is not active, set it as active
+  #   4) regardless, call @smartFocus
   click: (e)->
     # TODO(syu): should be
     #   1. trigger 'try to transitionTonode'

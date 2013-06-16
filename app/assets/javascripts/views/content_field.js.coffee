@@ -12,23 +12,30 @@ Sysys.ContentField = Ember.TextArea.extend
     ret
   ).property('rawValue', 'value')
 
+  # focusIn -- responds to focus event on the contentField
+  # can be overridden by subclasses
+  #   1) calls @autogrow
+  #   2) bubbles the event
   focusIn: (e)->
     console.log "focusingIn contentfield. currently focused item is",  $(':focus')
     @autogrow(false)
     true
 
-    # unless @get('autogrowing')
-    # @autogrow()
-    # e.stopPropagation()
-    # console.log "focusingIn contentfield. currently focused item is",  $(':focus')
-    # true
-
+  # focusOut -- responds to focus out event on the contentField
+  # can be overridden by subclasses
+  #   1) removes the autogrow on the field
+  #   2) bubbles the event
   focusOut: (e)->
     console.log "focusingOut contentfield. currently focused item is",  $(':focus')
     @removeAutogrow(false)
     true
 
-  # attempts to set autogrow to true
+  # autogrow -- attempts to add autogrow to the current field
+  # @param fail -- specifies failure behavior
+  #   true (default) - fail if already autogrowing
+  #   false - ignore autogrow check
+  # Spec
+  #   1) it calls autogrowplus, horizontal true, vertical true
   autogrow: (fail = true)->
     console.log 'autogrow called'
     unless @get 'autogrowing'
@@ -39,6 +46,12 @@ Sysys.ContentField = Ember.TextArea.extend
       console.log '.... unsuccessfully'
       Em.assert "#{@$()} shouldn't already be autogrowing" if fail
 
+  # removeAutogrow -- attempts to remove autogrow from the current field
+  # @param fail -- specifies failure behavior
+  #   true (default) - fail unless already autorowing
+  #   false - ignore already autogrowing check
+  # Spec
+  #   1) it triggers 'remove.autogrowPlus'
   removeAutogrow: (fail = true)->
     console.log 'removeAutogrow called'
     if @get 'autogrowing'
