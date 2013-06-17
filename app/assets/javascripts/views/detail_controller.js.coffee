@@ -12,9 +12,10 @@ Sysys.DetailController = Ember.ObjectController.extend
   ######################################
 
   commitEverything: (payload) ->
-    if @get('activeHumonNode.isHash')
-      @set('activeHumonNode.nodeKey', payload.key)
-    @commitVal payload.val
+    node = payload.node || @get('activeHumonNode')
+    if node.get('isHash')
+      node.set('nodeKey', payload.key)
+    @commitVal payload.val, node: node
 
   commitAndContinue: (rawString)->
     ahn = @get 'activeHumonNode'
@@ -53,8 +54,8 @@ Sysys.DetailController = Ember.ObjectController.extend
   # precondition: activeNode is a literal
   # params: rawString -- the rawString to parse and replace ahn with
   # calls replaceWithJson on activeNode
-  commitVal: (rawString, {rerender}={rerender: false}) ->
-    # return unless @get('activeHumonNode.isLiteral')
+  commitVal: (rawString, {rerender, node}={rerender: false, node: null}) ->
+    node ||= @get('activeHumonNode')
     json =
       try
         humon.parse rawString
@@ -65,9 +66,9 @@ Sysys.DetailController = Ember.ObjectController.extend
           ""
     if rawString?
       Ember.run =>
-        @get('activeHumonNode').replaceWithJson json
+        node.replaceWithJson json
         if rerender
-          @get('activeHumonNodeView').rerender()
+          node.rerender()
 
   commitWithRerender: (rawString) ->
     @commitVal rawString, rerender:true

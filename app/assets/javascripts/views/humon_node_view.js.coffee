@@ -44,11 +44,14 @@ Sysys.HumonNodeView = Ember.View.extend
     # prepare payload: pull from $().val, etc
     # send to `commit`
     node = @get('nodeContent')
-    console.log('commitingEverything, node=', node.get('json'))
-    console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.json'))
+    console.log('commitingEverything, nodeKey=', node.get('nodeKey'))
+    console.log('commitingEverything, node=', node.get('nodeVal'))
+    console.log('commitingEverything, activeNodeKey =', @get('controller.activeHumonNode.nodeKey'))
+    console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.nodeVal'))
     payload =
       val: @$valField().val()
       key: @$keyField().val()
+      node: node
     @get('controller').send 'commitEverything', payload
 
   # smartFocus -- "auto" sets the focus for this HNV based on context
