@@ -78,6 +78,10 @@ Sysys.DetailController = Ember.ObjectController.extend
   #####################################
 
   smartFocus: ->
+    console.log "DC#smartFocus; ahn = #{@get 'activeHumonNode.nodeKey'}; ahnv = ", @get('activeHumonNodeView').$()
+    @get('activeHumonNodeView').smartFocus()
+    return
+  ###
     Ember.run.sync()
     ahn = @get('activeHumonNode')
     ahnv = @get('activeHumonNodeView')
@@ -100,6 +104,7 @@ Sysys.DetailController = Ember.ObjectController.extend
         @focusProxyField()
       else
         @focusLabelField()
+    ###
 
   focusLabelField : ->
     $lf = @get('activeHumonNodeView').$labelField().focus()
@@ -121,13 +126,27 @@ Sysys.DetailController = Ember.ObjectController.extend
     if node and focus
         @smartFocus()
 
+  # nextNode -- controler method for shifting the active node up or down
+  # does NOT affect the UI focus
+  #
+  # @returns newNode -- the new active humon node, or null if no such node exists
+  #   1) fetches  @activeHumonNode.nextNode()
+  #   2) activates that node if it's non null
   nextNode: ->
+    oldNode = @get('activeHumonNode')
     newNode = @get('activeHumonNode').nextNode()
-    @activateNode newNode, focus: true
+    if newNode
+      @activateNode newNode
+    console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
+    newNode
+
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
-    @activateNode newNode, focus: true
+    if newNode
+      @activateNode newNode
+    console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
+    newNode
 
   withinScope: (testNode) ->
     return false unless testNode instanceof Sysys.HumonNode

@@ -8,7 +8,6 @@ Sysys.ContentField = Ember.TextArea.extend
   dirty: ( ->
     return false unless @get('state') == 'inDOM'
     ret = @get('rawValue') != @get('value')
-    console.log ret
     ret
   ).property('rawValue', 'value')
 
@@ -16,17 +15,19 @@ Sysys.ContentField = Ember.TextArea.extend
   # can be overridden by subclasses
   #   1) calls @autogrow
   #   2) bubbles the event
-  focusIn: (e)->
-    console.log "focusingIn contentfield. currently focused item is",  $(':focus')
+  focusIn: (e, options = {})->
+    console.log "focusingIn contentfield", @$()
     @autogrow(false)
+    if e.suppressPropagation
+      e.preventDefault()
     true
 
   # focusOut -- responds to focus out event on the contentField
   # can be overridden by subclasses
   #   1) removes the autogrow on the field
   #   2) bubbles the event
-  focusOut: (e)->
-    console.log "focusingOut contentfield. currently focused item is",  $(':focus')
+  focusOut: (e, options)->
+    console.log "focusingOut contentfield", @$()
     @removeAutogrow(false)
     true
 
@@ -37,13 +38,13 @@ Sysys.ContentField = Ember.TextArea.extend
   # Spec
   #   1) it calls autogrowplus, horizontal true, vertical true
   autogrow: (fail = true)->
-    console.log 'autogrow called'
+    #console.log 'autogrow called'
     unless @get 'autogrowing'
-      console.log '.... successfully'
+      #console.log '.... successfully'
       @$().autogrowplus horizontal: true, vertical: true
       @set('autogrowing', true)
     else
-      console.log '.... unsuccessfully'
+      #console.log '.... unsuccessfully'
       Em.assert "#{@$()} shouldn't already be autogrowing" if fail
 
   # removeAutogrow -- attempts to remove autogrow from the current field
@@ -53,13 +54,13 @@ Sysys.ContentField = Ember.TextArea.extend
   # Spec
   #   1) it triggers 'remove.autogrowPlus'
   removeAutogrow: (fail = true)->
-    console.log 'removeAutogrow called'
+    #console.log 'removeAutogrow called'
     if @get 'autogrowing'
       @$().trigger 'remove.autogrowplus'
       @set('autogrowing', false)
-      console.log '   ...successfully'
+      #console.log '   ...successfully'
     else
-      console.log '.... unsuccessfully'
+      #console.log '.... unsuccessfully'
       Em.assert "#{@$()} should already be autogrowing" if fail
 
   didInsertElement: ->
@@ -95,6 +96,9 @@ Sysys.ContentField = Ember.TextArea.extend
   cancel: ->
     @refresh()
 
+  keyDown: (e) ->
+    console.log(e)
+
   initHotKeys: ->
     @createHotKeys()
     for own combo, func of @get 'hotkeys'
@@ -112,17 +116,11 @@ Sysys.ContentField = Ember.TextArea.extend
         e.preventDefault()
         @enter()
       'down': (e) =>
-        Em.assert ' not supported yet '
-        ctrl = @get 'controller'
         e.preventDefault()
-        # @checkAndSave()
-        ctrl.send 'nextNode'
+        @get('parentView').down()
       'up': (e) =>
-        Em.assert ' not supported yet '
-        ctrl = @get 'controller'
         e.preventDefault()
-        # @checkAndSave()
-        ctrl.send 'prevNode'
+        @get('parentView').up()
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').bubbleUp()

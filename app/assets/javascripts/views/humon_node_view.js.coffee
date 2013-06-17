@@ -61,9 +61,14 @@ Sysys.HumonNodeView = Ember.View.extend
     context = node.get('nodeParent.nodeType')
     nodeKey = node.get('nodeKye')
     nodeVal = node.get('nodeVal')
+
+    # focusEvent = jQuery.Event('focusin')
+    focusEvent =
+      type: 'focusin'
+      suppressPropagation: true
     if context == 'hash'
-      @$keyField().focus()
-    @$valField().focus()
+      @$keyField().trigger focusEvent
+    @$valField().trigger focusEvent
 
   # click -- responds to a click event on the HNV
   # primarily for
@@ -87,6 +92,21 @@ Sysys.HumonNodeView = Ember.View.extend
     ###
     console.log '  smart focusing'
     @smartFocus()
+
+  # up -- handles the event of moving to the previous node
+  #   1) calls prevNode on the controller
+  #   2) calls smartFocus after new node is activated if the node changed
+  up: (event = null) ->
+    if @get('controller').prevNode()
+      console.log "HNV#up; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
+      Ember.run.sync()
+      @get('controller').send 'smartFocus'
+  down: (event = null) ->
+    if changed = @get('controller').nextNode()
+      console.log "HNV#down; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
+      Ember.run.sync()
+      @get('controller').send 'smartFocus'
+
 
   json_string: (->
     JSON.stringify @get('nodeContent.json')
@@ -171,11 +191,15 @@ Sysys.HumonNodeView = Ember.View.extend
   $labelField: ->
     @$('> span> .content-field.label-field')?.first()
   $keyField: ->
-    @$('> span > .content-field.key-field')?.first()
+    field = @$('> span > .content-field.key-field')?.first()
+    # console.log 'keyField: ', field
+    field
   $idxField: ->
     @$('> span > .content-field.idx-field')?.first()
   $valField: ->
-    @$('> span > .content-field.val-field')?.first()
+    field = @$('> span > .content-field.val-field')?.first()
+    # console.log 'valField: ', field
+    field
   $proxyField: ->
     @$('> span > .content-field.proxy-field')?.first()
   $bigValField: ->
