@@ -11,15 +11,17 @@ Sysys.ContentField = Ember.TextArea.extend
     ret
   ).property('rawValue', 'value')
 
+  click: (e) ->
+    console.log 'cf#click propagation stopped'
+    e.stopPropagation()
+
   # focusIn -- responds to focus event on the contentField
   # can be overridden by subclasses
   #   1) calls @autogrow
   #   2) bubbles the event
-  focusIn: (e, options = {})->
+  focusIn: (e, args...) ->
     console.log "focusingIn contentfield", @$()
     @autogrow(false)
-    if e.suppressPropagation
-      e.preventDefault()
     true
 
   # focusOut -- responds to focus out event on the contentField

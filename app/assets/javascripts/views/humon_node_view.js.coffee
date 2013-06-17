@@ -22,7 +22,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #  This is primarily called indirectly by event bubbling from content fields
   focusIn: (e) ->
     console.log 'humon node view focusing in '
-    console.log "   currently focused item is", $(':focus')
+    # console.log "   currently focused item is", $(':focus')
     e.stopPropagation()
     if @get 'isActive'
       console.log "    canceled because node is already active"
@@ -62,16 +62,12 @@ Sysys.HumonNodeView = Ember.View.extend
   smartFocus: ->
     node = @get('nodeContent')
     context = node.get('nodeParent.nodeType')
-    nodeKey = node.get('nodeKye')
+    nodeKey = node.get('nodeKey')
     nodeVal = node.get('nodeVal')
-
-    # focusEvent = jQuery.Event('focusin')
-    focusEvent =
-      type: 'focusin'
-      suppressPropagation: true
     if context == 'hash'
-      @$keyField().trigger focusEvent
-    @$valField().trigger focusEvent
+      @$keyField().trigger 'focus'
+      return
+    @$valField().trigger 'focus'
 
   # click -- responds to a click event on the HNV
   # primarily for
@@ -87,12 +83,8 @@ Sysys.HumonNodeView = Ember.View.extend
     # e.stopPropagation()
     console.log 'hnv click'
     e.stopPropagation()
-    @$().focus() # focusIn()
-    ###
-    unless @get 'isActive'
-      console.log "    attempting to transition to node"
+    unless @get('isActive')
       @get('controller').activateNode @get('nodeContent')
-    ###
     console.log '  smart focusing'
     @smartFocus()
 
