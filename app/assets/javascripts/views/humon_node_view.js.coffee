@@ -32,11 +32,15 @@ Sysys.HumonNodeView = Ember.View.extend
       @get('controller').activateNode @get('nodeContent')
       # TODO(syu): @get('controller').transitionToNode @get('nodeContent')
 
-  # focusOut
+  # focusOut -- handle focusOut from a sub-contentField
+  # This also means that anytime a sub-contentField focuses out, we commit the entire
+  # node as a unit.
+  #
   #   1) constructs a payload to be sent to @controller `commitEverything`
   #   2) payload contains {key, val}
   #   3) key is taken from the key field's value
   #   4) val is taken from the val field TODO(syu): clarify what 'val field' actually means
+  #   5) stops propagation (we don't want parent nodes commiting!)
   focusOut: (e) ->
     e.stopPropagation()
     console.log 'hnv focusing out'
@@ -55,6 +59,10 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('controller').send 'commitEverything', payload
 
   # smartFocus -- "auto" sets the focus for this HNV based on context
+  # Triggers the 'focus' event on the DOM element corresponding to a
+  # sub-contentField. The focus event is handled by CF.focusIn, which
+  # bubbles it to HNV.focusIn, which can conditioanlly do stuff.
+  #
   # contexts used
   #   * Key field empty?
   #   * Val field empty?
@@ -89,13 +97,15 @@ Sysys.HumonNodeView = Ember.View.extend
     @smartFocus()
 
   # up -- handles the event of moving to the previous node
+  # Context: TODO(syu)
   #   1) calls prevNode on the controller
-  #   2) calls smartFocus after new node is activated if the node changed
+  #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
   up: (event = null) ->
     if @get('controller').prevNode()
       console.log "HNV#up; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
       @get('controller').send 'smartFocus'
+
   down: (event = null) ->
     if changed = @get('controller').nextNode()
       console.log "HNV#down; active node key = #{@get('controller.activeHumonNode.nodeKey')}"

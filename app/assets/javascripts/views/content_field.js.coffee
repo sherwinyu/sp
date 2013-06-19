@@ -11,12 +11,22 @@ Sysys.ContentField = Ember.TextArea.extend
     ret
   ).property('rawValue', 'value')
 
+  # click -- responds to click event on the contentField
+  # This exists to prevent propagation to HNV.click, which
+  # calls smartFocus
+  # TODO(syu): confirm that without CF.click stopping propagation,
+  #            HNV.click is called when clicking to gain CF focus.
+  #   1) calls stoppropagation
   click: (e) ->
     console.log 'cf#click propagation stopped'
     e.stopPropagation()
 
   # focusIn -- responds to focus event on the contentField
-  # can be overridden by subclasses
+  # We don't do any foucs cancelling here; instead we handle it at the HNV level.
+  # This means that all 'focus' events are 'real -- if this function
+  # is called, this content field WILL become focused.
+  #
+  # Can be overridden by subclasses
   #   1) calls @autogrow
   #   2) bubbles the event
   focusIn: (e, args...) ->
@@ -25,6 +35,7 @@ Sysys.ContentField = Ember.TextArea.extend
     true
 
   # focusOut -- responds to focus out event on the contentField
+  # In context: this focusOut bubbles to HNV, which triggers commitEverything
   # can be overridden by subclasses
   #   1) removes the autogrow on the field
   #   2) bubbles the event
