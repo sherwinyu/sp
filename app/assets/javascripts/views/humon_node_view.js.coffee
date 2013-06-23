@@ -236,7 +236,10 @@ Sysys.HumonNodeView = Ember.View.extend
   commitAndContinue: ->
     if @$valField().val() == ''
       @$valField().val '{}'
-    @get('controller').commitAndContinue( @$valField().val())
+    payload =
+      val: @$valField().val()
+      key: @$keyField().val()
+    @get('controller').send 'commitAndContinueNew', payload
 
 Sysys.DetailView = Sysys.HumonNodeView.extend
   init: ->
