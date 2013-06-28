@@ -11,6 +11,37 @@ Sysys.DetailController = Ember.ObjectController.extend
   ##  Committing (keys and values)
   ######################################
 
+  # commitEverything --
+  # param payload: an object with the following properties
+  #   node: a HumonNode that describes which node to commit the values to;
+  #     defaults to activeHumonNode
+  #   key: the key for this humon node. If present, the node's nodeKey is set.
+  #   val: the val to be commitd to the node.
+  # Behavior:
+  #   1) it uses node or defaults it to activeHumonNode
+  #   2) it commits the nodeKey
+  #   3) it calls commitVal with the val
+  # #TODO(syu): refactor so commitVal and commitKey are balanced
+  commitEverything: (payload) ->
+    node = payload.node || @get('activeHumonNode')
+    node.set('nodeKey', payload.key) if payload.key?
+    @commitVal payload.val, node: node
+
+  commitAndContinueNew: (payload) ->
+    ahn = @get 'activeHumonNode'
+    @commitEverything(payload)
+    Ember.run.sync()
+    parent = ahn.get 'nodeParent'
+    idx = ahn.get('nodeIdx') + 1
+    if ahn.get 'isCollection'
+      parent = ahn
+      idx = ahn.get('nodeVal').length
+    blank = (Sysys.j2hn "")
+    Ember.run => parent.insertAt(idx,  blank)
+    @activateNode blank
+    Ember.run.sync()
+    @smartFocus()
+
   commitAndContinue: (rawString)->
     ahn = @get 'activeHumonNode'
     # rawString =  @get('activeHumonNodeView').$valField().val() || '{}'
@@ -28,12 +59,6 @@ Sysys.DetailController = Ember.ObjectController.extend
       parent.replaceAt(idx, 0, blank)
     @activateNode blank, focus: true, unfocus: false
 
-  # commits the key changes
-  # commits the val changes
-  commitChanges: ->
-    @commitKey()
-    @commit
-
   commit: (rawString)->
     # rawString =  @get('activeHumonNodeView').$valField().val()
     @commitVal rawString
@@ -45,11 +70,15 @@ Sysys.DetailController = Ember.ObjectController.extend
       @set('activeHumonNode.nodeKey', rawString)
     # TODO(syu): refresh key field
 
+  # commitVal -- commits the val
   # precondition: activeNode is a literal
-  # params: rawString -- the rawString to parse and replace ahn with
-  # calls replaceWithJson on activeNode
-  commitVal: (rawString, {rerender}={rerender: false}) ->
-    # return unless @get('activeHumonNode.isLiteral')
+  # param rawString: the rawString to parse and replace ahn with
+  # param options: options hash with
+  #   node: the node to comit to. defaults to activeHumonNode
+  #   rerender: whether to rerender the humon node view
+  # TODO(syu):  specify behavior strictly
+  commitVal: (rawString, {rerender, node}={rerender: false, node: null}) ->
+    node ||= @get('activeHumonNode')
     json =
       try
         humon.parse rawString
@@ -60,9 +89,9 @@ Sysys.DetailController = Ember.ObjectController.extend
           ""
     if rawString?
       Ember.run =>
-        @get('activeHumonNode').replaceWithJson json
+        node.replaceWithJson json
         if rerender
-          @get('activeHumonNodeView').rerender()
+          node.rerender()
 
   commitWithRerender: (rawString) ->
     @commitVal rawString, rerender:true
@@ -73,6 +102,10 @@ Sysys.DetailController = Ember.ObjectController.extend
   #####################################
 
   smartFocus: ->
+    console.log "DC#smartFocus; ahn = #{@get 'activeHumonNode.nodeKey'}; ahnv = ", @get('activeHumonNodeView').$()
+    @get('activeHumonNodeView').smartFocus()
+    return
+  ###
     Ember.run.sync()
     ahn = @get('activeHumonNode')
     ahnv = @get('activeHumonNodeView')
@@ -95,6 +128,7 @@ Sysys.DetailController = Ember.ObjectController.extend
         @focusProxyField()
       else
         @focusLabelField()
+    ###
 
   focusLabelField : ->
     $lf = @get('activeHumonNodeView').$labelField().focus()
@@ -116,13 +150,27 @@ Sysys.DetailController = Ember.ObjectController.extend
     if node and focus
         @smartFocus()
 
+  # nextNode -- controler method for shifting the active node up or down
+  # does NOT affect the UI focus
+  #
+  # @returns newNode -- the new active humon node, or null if no such node exists
+  #   1) fetches  @activeHumonNode.nextNode()
+  #   2) activates that node if it's non null
   nextNode: ->
+    oldNode = @get('activeHumonNode')
     newNode = @get('activeHumonNode').nextNode()
-    @activateNode newNode, focus: true
+    if newNode
+      @activateNode newNode
+    console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
+    newNode
+
 
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
-    @activateNode newNode, focus: true
+    if newNode
+      @activateNode newNode
+    console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
+    newNode
 
   withinScope: (testNode) ->
     return false unless testNode instanceof Sysys.HumonNode
@@ -189,9 +237,11 @@ Sysys.DetailController = Ember.ObjectController.extend
     @set('activeHumonNode', null)
     Ember.run.sync()
     next = ahn.prevNode() || ahn.nextNode()
-    return unless next
+    return unless next && ahn.get('nodeParent')
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
-    @activateNode(next, focus: true, unfocus: false)
+    @activateNode(next) # , focus: true, unfocus: false)
+    Ember.run.sync()
+    @smartFocus()
 
   insertChild: ->
     ahn = @get('activeHumonNode')

@@ -92,6 +92,13 @@ textarea.content-field:focus {
   box-shadow: none;
 }
 
+textarea.content-field.dirty {
+  border-right: 1px solid red;
+}
+textarea.content-field.autogrowing {
+  border-left: 1px solid blue;
+}
+
 textarea.content-field.val-field {
   min-width: 100px;
 }
@@ -111,7 +118,7 @@ textarea.content-field.val-field.big-val-field.editing {
   border-left: $nodeLeftBorder $activeColorLight solid;
   padding: 2px;
   padding-left: $fieldWhiteIndent*2;
-  // left: $fieldWhiteIndent + $fieldWhiteIndent 
+  // left: $fieldWhiteIndent + $fieldWhiteIndent
 }
 .node-item-collection-wrapper.editing {
   display: none;

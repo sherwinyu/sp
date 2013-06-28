@@ -1,27 +1,80 @@
 Sysys.ContentField = Ember.TextArea.extend
   rawValueBinding: null
   classNames: ['content-field']
+  classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   placeholder: ''
   autogrowing: false
 
-  focusIn: (e)->
-    @get('controller').activateNode @get('parentView.nodeContent')
+  dirty: ( ->
+    return false unless @get('state') == 'inDOM'
+    ret = @get('rawValue') != @get('value')
+    ret
+  ).property('rawValue', 'value')
 
-    unless @get('autogrowing')
-      @autogrow()
+  # click -- responds to click event on the contentField
+  # This exists to prevent propagation to HNV.click, which
+  # calls smartFocus
+  # TODO(syu): confirm that without CF.click stopping propagation,
+  #            HNV.click is called when clicking to gain CF focus.
+  #   1) calls stoppropagation
+  click: (e) ->
+    console.log 'cf#click propagation stopped'
     e.stopPropagation()
 
-  focusOut: (e)->
-    if @get('autogrowing')
-      @removeAutogrow()
+  # focusIn -- responds to focus event on the contentField
+  # We don't do any foucs cancelling here; instead we handle it at the HNV level.
+  # This means that all 'focus' events are 'real -- if this function
+  # is called, this content field WILL become focused.
+  #
+  # Can be overridden by subclasses
+  #   1) calls @autogrow
+  #   2) bubbles the event
+  focusIn: (e, args...) ->
+    console.log "focusingIn contentfield", @$()
+    @autogrow(false)
+    true
 
-  autogrow: ->
-    @$().autogrowplus horizontal: true, vertical: true
-    @set('autogrowing', true)
-  removeAutogrow: ->
-    @$().trigger 'remove.autogrowplus'
-    @set('autogrowing', false)
+  # focusOut -- responds to focus out event on the contentField
+  # In context: this focusOut bubbles to HNV, which triggers commitEverything
+  # can be overridden by subclasses
+  #   1) removes the autogrow on the field
+  #   2) bubbles the event
+  focusOut: (e, options)->
+    console.log "focusingOut contentfield", @$()
+    @removeAutogrow(false)
+    true
 
+  # autogrow -- attempts to add autogrow to the current field
+  # @param fail -- specifies failure behavior
+  #   true (default) - fail if already autogrowing
+  #   false - ignore autogrow check
+  # Spec
+  #   1) it calls autogrowplus, horizontal true, vertical true
+  autogrow: (fail = true)->
+    #console.log 'autogrow called'
+    unless @get 'autogrowing'
+      #console.log '.... successfully'
+      @$().autogrowplus horizontal: true, vertical: true
+      @set('autogrowing', true)
+    else
+      #console.log '.... unsuccessfully'
+      Em.assert "#{@$()} shouldn't already be autogrowing" if fail
+
+  # removeAutogrow -- attempts to remove autogrow from the current field
+  # @param fail -- specifies failure behavior
+  #   true (default) - fail unless already autorowing
+  #   false - ignore already autogrowing check
+  # Spec
+  #   1) it triggers 'remove.autogrowPlus'
+  removeAutogrow: (fail = true)->
+    #console.log 'removeAutogrow called'
+    if @get 'autogrowing'
+      @$().trigger 'remove.autogrowplus'
+      @set('autogrowing', false)
+      #console.log '   ...successfully'
+    else
+      #console.log '.... unsuccessfully'
+      Em.assert "#{@$()} should already be autogrowing" if fail
 
   didInsertElement: ->
     @refresh()
@@ -56,6 +109,9 @@ Sysys.ContentField = Ember.TextArea.extend
   cancel: ->
     @refresh()
 
+  keyDown: (e) ->
+    console.log(e)
+
   initHotKeys: ->
     @createHotKeys()
     for own combo, func of @get 'hotkeys'
@@ -73,15 +129,11 @@ Sysys.ContentField = Ember.TextArea.extend
         e.preventDefault()
         @enter()
       'down': (e) =>
-        ctrl = @get 'controller'
         e.preventDefault()
-        # @checkAndSave()
-        ctrl.send 'nextNode'
+        @get('parentView').down()
       'up': (e) =>
-        ctrl = @get 'controller'
         e.preventDefault()
-        # @checkAndSave()
-        ctrl.send 'prevNode'
+        @get('parentView').up()
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').bubbleUp()
@@ -108,7 +160,7 @@ Sysys.ContentField = Ember.TextArea.extend
         e.preventDefault()
 
   willDestroyElement: ->
-    @removeAutogrow()
+    @removeAutogrow(false)
 
 Sysys.AbstractLabel = Sysys.ContentField.extend
   classNames: ['label-field']
@@ -138,9 +190,12 @@ Sysys.ValField = Sysys.ContentField.extend
   placeholder: 'val'
   commit: ->
     @get('controller').commit(@get 'value')
-  focusOut: ->
-    @_super()
-    @checkAndSave()
+
+    # focusOut: ->
+    # @_super()
+    # # @checkAndSave()
+    # console.log("VAL FIELD LOSING FOCUS #{@$().val()}")
+    # true
 
   initHotKeys: ->
     @_super()
@@ -158,6 +213,7 @@ Sysys.BigValField = Sysys.ValField.extend
     @$().autogrowplus horizontal: true, vertical: true
   # TODO(syu): merge this with valfield
   focusOut: (e)->
+    Em.assert 'not supported yet'
     @get('parentView').exitEditing()
     e.stopPropagation()
   commit: ->
@@ -172,8 +228,6 @@ Sysys.BigValField = Sysys.ValField.extend
     hotkeys['up'] = Em.K
     hotkeys['down'] = Em.K
   autosize: Em.K
-  willDestroyElement: ->
-    @removeAutogrow()
 
 Sysys.ProxyField = Sysys.ContentField.extend
   classNames: ['proxy-field']
@@ -201,5 +255,3 @@ Sysys.IdxField = Sysys.AbstractLabel.extend
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)
-
-
