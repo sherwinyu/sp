@@ -4,7 +4,7 @@
   {{else}}
     {{view "Sysys.KeyField" rawValueBinding="view.nodeContent.nodeKey"}}<span class="colon-glyph">:</span>
   {{/if}}
-
+ | {{view.nodeContent.nodeType}} |
   {{#if view.nodeContent.isLiteral}}
     {{view "Sysys.ValField" rawValueBinding="view.nodeContent.json" }}
   {{else}}

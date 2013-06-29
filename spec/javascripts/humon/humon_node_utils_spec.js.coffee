@@ -9,7 +9,6 @@ describe 'HumonNode Utils', ->
     beforeEach ->
       spyj2hn = sinon.spy Sysys.HumonUtils, "json2humonNode"
 
-
     afterEach ->
       spyj2hn.restore()
 
