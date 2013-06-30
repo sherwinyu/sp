@@ -1,11 +1,13 @@
 Sysys.HumonNodeView = Ember.View.extend
 # templateName: 'humon_node'
-  templateName: (->
+  autoTemplate: (->
+    Em.run.once(@, @.rerender)
     if @get('nodeContent.nodeType') == 'date'
       "humon_node_date"
     else
       "humon_node"
   ).property('nodeContent.nodeType')
+  templateNameBinding: "autoTemplate"
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
