@@ -41,4 +41,4 @@ window.setCursor = (node, pos) ->
 window.getCursor = (node) ->
   $(node).prop('selectionStart')
 
-window.delay = (ms, callback) -> setTimeout(ms, callback)
+window.delay = (ms, callback) -> setTimeout(callback, ms)

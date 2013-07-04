@@ -17,6 +17,9 @@ Humon.register 'currency',
 Humon.register 'date',
 
 HNV:
+  templateNameBinding: (->
+
+  ).property('nodeContent.nodeType')
   variousHooks:
     click: ->
       HUMON.events.click( @get('nodeContent.nodeType') )
@@ -41,3 +44,23 @@ Furthermore, there are two points at which we can inject custom types
       * TEXT to json, essentially
    * where does it make sense to build additional type functionality>
    ###
+###
+  humon_node_currency.hbs
+
+  <span class="blocky">
+    {{#if view.nodeContent.nodeParent.isList}}
+      {{view "Sysys.IdxField" valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"}}
+    {{else}}
+      {{view "Sysys.KeyField" rawValueBinding="view.nodeContent.nodeKey"}}<span class="colon-glyph">:</span>
+    {{/if}}
+
+    {{#if view.nodeContent.isLiteral}}
+      {{view "Sysys.ValField" rawValueBinding="view.nodeContent.json" }}
+    {{else}}
+      <span class="open-glyph"> </span> {{!view "Sysys.ProxyField" }}
+    {{/if}}
+  </span>
+
+
+###
+c
