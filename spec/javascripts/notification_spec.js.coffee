@@ -1,10 +1,10 @@
-describe "Notification system", ->
+xdescribe "Notification system", ->
   beforeEach ->
-    @params = 
+    @params =
       title: "generic title"
       text: "notificaiton text"
       type: "INFO"
-      
+
     @notification = Sysys.Notification.create @params
 
   describe "Notification model", ->
@@ -16,12 +16,12 @@ describe "Notification system", ->
     it "should have the proper attributes"
 
   describe "NotificationsController", ->
-    
+
     beforeEach ->
       @notificationsController = Sysys.NotificationsController.create(
         content: [@notification]
       )
-    afterEach -> 
+    afterEach ->
       @notificationsController = null
 
     describe "add", ->
@@ -38,13 +38,13 @@ describe "Notification system", ->
         expect(@notificationsController.get('length')).toBe(1)
         @notificationsController.remove
 
-describe "notification view", ->
+xdescribe "notification view", ->
   beforeEach ->
-    @params = 
+    @params =
       title: "generic title"
       text: "notificaiton text"
       type: "INFO"
-      
+
     @remove = sinon.spy()
     controller = { remove: @remove }
 

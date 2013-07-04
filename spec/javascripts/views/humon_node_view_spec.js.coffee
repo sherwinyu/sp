@@ -1,4 +1,4 @@
-describe "HumonNodeView", ->
+xdescribe "HumonNodeView", ->
   beforeEach ->
     @serialized = #a: { a: 1, b: 2 }, flat: 5
       {
@@ -15,14 +15,14 @@ describe "HumonNodeView", ->
             417
           ]
         scalar:
-          "scalar" 
+          "scalar"
         list: [
           "zup"
           a: 5
         ]
       }
     json = @serialized
-    @hn = Sysys.HumonUtils.json2humonNode json 
+    @hn = Sysys.HumonUtils.json2humonNode json
     @detailController = Sysys.DetailController.create content: @hn
     @hnv = Sysys.HumonNodeView.create controller: @detailController
     Ember.run => @hnv.append()

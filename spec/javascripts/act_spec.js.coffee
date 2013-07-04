@@ -1,6 +1,6 @@
-describe "Sysys.Act", ->
+xdescribe "Sysys.Act", ->
   beforeEach ->
-    @params = 
+    @params =
       description: "Woke up and lumpd around"
       start_time: moment("2012 08 12").toDate()
       end_time: moment("2012 08 12").add('hours', 4).toDate()
@@ -17,7 +17,7 @@ describe "Sysys.Act", ->
       expect(@act.get('end_time')).toBe(@params.end_time)
 
 
-              
+
 
 
 

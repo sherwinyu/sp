@@ -1,4 +1,4 @@
-describe "Acts", ->
+xdescribe "Acts", ->
   beforeEach ->
     @transaction = (new Sysys.Store).transaction()
     # act1 = transaction.createRecord(Sysys.Act, description: "act1")
@@ -30,7 +30,7 @@ describe "Acts", ->
       expect(@act.get('description')).toEqual("actdescription")
       @act.set('description', 'derp')
       expect(@act.get('description')).toEqual('derp')
-      
+
   describe "integrated validations", ->
 
     beforeEach ->
@@ -49,7 +49,7 @@ describe "Acts", ->
       @requests = []
       actDidCreate = sinon.spy(@act, "didCreate")
 
-      xhr.onCreate = (ajax) => 
+      xhr.onCreate = (ajax) =>
         @requests.push ajax
       Ember.run =>
         @actView.submit()
@@ -65,7 +65,7 @@ describe "Acts", ->
 
       xhr = sinon.useFakeXMLHttpRequest()
       @requests = []
-      xhr.onCreate = (ajax) => 
+      xhr.onCreate = (ajax) =>
         @requests.push ajax
 
 

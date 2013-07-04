@@ -1,4 +1,4 @@
-describe "ActView", ->
+xdescribe "ActView", ->
 
   beforeEach ->
     @act = Ember.Object.create( description: "some description")
@@ -6,7 +6,7 @@ describe "ActView", ->
     @actView = Sysys.ActView.create( context: @act, controller: controller)
     Ember.run =>
       @actView.append()
-    
+
   afterEach ->
     Ember.run =>
       @actView.remove()

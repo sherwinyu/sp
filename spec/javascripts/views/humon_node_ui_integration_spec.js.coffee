@@ -1,4 +1,4 @@
-describe "HumonNode UI integration", ->
+xdescribe "HumonNode UI integration", ->
   beforeEach ->
     @serialized =
       {
@@ -15,8 +15,8 @@ describe "HumonNode UI integration", ->
           ]
       }
     json = @serialized
-    window.hn = @humonNode = Sysys.HumonUtils.json2humonNode json 
-    window.dC = Sysys.DetailController.create( content: hn) 
+    window.hn = @humonNode = Sysys.HumonUtils.json2humonNode json
+    window.dC = Sysys.DetailController.create( content: hn)
     window.hnv = @humonNodeView = Sysys.HumonNodeView.create controller: window.dC,  displayStats: true
 
     Ember.run =>
