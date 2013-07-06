@@ -63,4 +63,23 @@ Furthermore, there are two points at which we can inject custom types
 
 
 ###
-c
+    switch node.get('nodeType')
+      when 'list'
+        ret = []
+        for child in nodeVal
+          ret.pushObject Sysys.HumonUtils.humonNode2json child
+      when 'hash'
+        ret = {}
+        for child in nodeVal
+          key = child.get('nodeKey')
+          key ?= nodeVal.indexOf child
+          ret[key] = Sysys.HumonUtils.humonNode2json child
+      else
+        assert node.isLiteral
+        Humon.types[type].hn2j(nodeVal)
+
+      when 'date'
+        ret = node.get('nodeVal').toString()
+      when 'literal'
+        ret = nodeVal
+      else
