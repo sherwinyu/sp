@@ -1,7 +1,7 @@
 Sysys.HumonNodeView = Ember.View.extend
 # templateName: 'humon_node'
   autoTemplate: (->
-    Em.run.once(@, @.rerender)
+    Em.run.once(@, -> @.rerender() unless @.state == "destroying" )
     if @get('nodeContent.nodeType') == 'date'
       "humon_node_date"
     else
