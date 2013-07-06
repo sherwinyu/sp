@@ -45,8 +45,7 @@ Furthermore, there are two points at which we can inject custom types
    * where does it make sense to build additional type functionality>
    ###
 ###
-  humon_node_currency.hbs
-
+  humon_node_date.hbs
   <span class="blocky">
     {{#if view.nodeContent.nodeParent.isList}}
       {{view "Sysys.IdxField" valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"}}
@@ -60,10 +59,15 @@ Furthermore, there are two points at which we can inject custom types
       <span class="open-glyph"> </span> {{!view "Sysys.ProxyField" }}
     {{/if}}
   </span>
-
-
 ###
-    switch node.get('nodeType')
+#
+#           HN2J
+#
+  humonNode2json: (node)->
+    nodeVal = node.get('nodeVal')
+    ret = undefined
+    type = node.get('nodeType')
+    switch type
       when 'list'
         ret = []
         for child in nodeVal
@@ -76,10 +80,49 @@ Furthermore, there are two points at which we can inject custom types
           ret[key] = Sysys.HumonUtils.humonNode2json child
       else
         assert node.isLiteral
-        Humon.types[type].hn2j(nodeVal)
+        Humon.types[type].hn2j(nodeVal) # nodeVal is the underlying value
 
-      when 'date'
-        ret = node.get('nodeVal').toString()
-      when 'literal'
-        ret = nodeVal
-      else
+#
+#           HN2J
+#
+  # given a json object (typically, the output from Humon.parse)
+  json2humonNode: (json, nodeParent=null)->
+    node = Sysys.HumonNode.create
+      nodeParent: nodeParent
+
+    if Sysys.HumonUtils.isHash json
+      node.set('nodeType', 'hash')
+      children = Em.A()
+      for own key, val of json
+        child = Sysys.HumonUtils.json2humonNode val, node
+        child.set 'nodeKey', key
+        children.pushObject child
+      node.set 'nodeVal', children
+    else if Sysys.HumonUtils.isList json
+      node.set 'nodeType', 'list'
+      children = Em.A()
+      for val in json
+        child = Sysys.HumonUtils.json2humonNode val, node
+        children.pushObject child
+      node.set 'nodeVal', children
+    else ## is a literal
+      Em.assert isLiteral(json)
+      # determine what sort of type it is
+      type = Humn.resolveType(json)
+      node.set('nodeType', type)
+      node.set 'nodeVal', Humon.types[type].j2hn(nodeVal)
+
+Humon.resolveType = (json)->
+  # assert json is not list, is not hash
+  for type in Humon.types.keys
+    if Humon.types[type].matchAgainstJson json
+      return "type"
+  if Humon.types.isNumeric(json)
+    return "number"
+  if Humon.types.isBoolean(json)
+    return "boolean"
+  if Humon.types.isNull(json)
+    return "null"
+  if Humon.types.isString(json)
+    return "string"
+  Em.assert "unrecognized type for json2humonNode: #{json}", false

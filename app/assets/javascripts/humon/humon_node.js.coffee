@@ -151,11 +151,17 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   # If thisNode is a collection, sets each of this children's nodeParent to null
   replaceWithHumonNode: (newNode)->
     Em.assert "replaceWithHumonNode(newNode): newNode must be parent less", !newNode.get('nodeParent')
+
+    # If THIS node already has children, orphan them
     if @get 'hasChildren'
       for child in @get('nodeVal')
         child.set 'nodeParent', null
+
+    # Copy over the val and type of newNode
     @set('nodeVal', newNode.get 'nodeVal')
     @set('nodeType', newNode.get 'nodeType')
+
+    # If newNode has children, link up the children to THIS node
     if @get 'hasChildren'
       for child in @get('nodeVal')
         child.set 'nodeParent', @
