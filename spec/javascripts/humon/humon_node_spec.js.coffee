@@ -28,9 +28,9 @@ describe "HumonNode", ->
       expect(node.get('nodeKey')).toEqual ''
       expect(node.get('nodeIdx')).toBe undefined
       expect(node.get('nodeView')).toBe null
-    it "should have the expected attributes (literal node)", ->
+    it "should have the expected attributes (leaf node)", ->
       expect(nodea.get('nodeVal')).toBe 1
-      expect(nodea.get('nodeType')).toBe 'literal'
+      expect(nodea.get('nodeType')).toBe 'number'
       expect(nodea.get('nodeParent')).toBe node
       expect(nodea.get('nodeKey')).toBe 'a'
       expect(nodea.get('nodeIdx')).toBe 0
@@ -214,7 +214,7 @@ describe "HumonNode", ->
       it "should work when replacing with literal", ->
         nodec.replaceWithJson 'imaliteral'
 
-        expect(nodec.get 'nodeType').toBe 'literal'
+        expect(nodec.get 'nodeType').toBe 'string'
         expect(nodec.get 'nodeParent').toBe node
         expect(nodec.get 'nodeVal').toBe 'imaliteral'
 
@@ -224,11 +224,11 @@ describe "HumonNode", ->
         expect(nodeb.get 'nodeParent').toBe node
 
         expect(nodeb.get('nodeVal.0.nodeVal')).toBe 3
-        expect(nodeb.get('nodeVal.0.nodeType')).toBe 'literal'
+        expect(nodeb.get('nodeVal.0.nodeType')).toBe 'number'
         expect(nodeb.get('nodeVal.0.nodeParent')).toBe nodeb
 
         expect(nodeb.get('nodeVal.1.nodeVal')).toBe 1
-        expect(nodeb.get('nodeVal.1.nodeType')).toBe 'literal'
+        expect(nodeb.get('nodeVal.1.nodeType')).toBe 'number'
         expect(nodeb.get('nodeVal.1.nodeParent')).toBe nodeb
 
       it "should work when replacing hashes", ->
@@ -237,11 +237,11 @@ describe "HumonNode", ->
         expect(nodeb.get 'nodeParent').toBe node
 
         expect(nodeb.get('nodeVal').findProperty('nodeKey', 'a').get 'nodeVal').toBe 3
-        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'a').get 'nodeType').toBe 'literal'
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'a').get 'nodeType').toBe 'number'
         expect(nodeb.get('nodeVal').findProperty('nodeKey', 'a').get 'nodeParent').toBe nodeb
 
         expect(nodeb.get('nodeVal').findProperty('nodeKey', 'b').get 'nodeVal').toBe 6
-        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'b').get 'nodeType').toBe 'literal'
+        expect(nodeb.get('nodeVal').findProperty('nodeKey', 'b').get 'nodeType').toBe 'number'
         expect(nodeb.get('nodeVal').findProperty('nodeKey', 'b').get 'nodeParent').toBe nodeb
 
       it "should work when replacing leafs", ->
@@ -251,11 +251,11 @@ describe "HumonNode", ->
         expect(nodec2nested.get('nodeParent')).toBe nodec2
 
         expect(nodec2nested.get('nodeVal.0.nodeVal')).toBe true
-        expect(nodec2nested.get('nodeVal.0.nodeType')).toBe 'literal'
+        expect(nodec2nested.get('nodeVal.0.nodeType')).toBe 'boolean'
         expect(nodec2nested.get('nodeVal.0.nodeParent')).toBe nodec2nested
 
         expect(nodec2nested.get('nodeVal.1.nodeVal')).toBe false
-        expect(nodec2nested.get('nodeVal.1.nodeType')).toBe 'literal'
+        expect(nodec2nested.get('nodeVal.1.nodeType')).toBe 'boolean'
         expect(nodec2nested.get('nodeVal.1.nodeParent')).toBe nodec2nested
     describe "replaceWithHumonNode", ->
       newNode = null
@@ -267,7 +267,7 @@ describe "HumonNode", ->
         it "should set the nodeVal to newNode's nodeVal", ->
           expect(nodec.get('nodeVal')).toBe newNode.nodeVal
         it "should set the nodeType to newNode's nodeType", ->
-          expect(nodec.get('nodeType')).toBe 'literal'
+          expect(nodec.get('nodeType')).toBe 'string'
         it "should not set nodeKey", ->
           expect(nodec.get('nodeKey')).toBe 'c'
         it "should set nodeParent to null for the replaced children nodes", ->

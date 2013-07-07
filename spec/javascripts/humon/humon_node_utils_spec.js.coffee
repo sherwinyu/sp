@@ -92,25 +92,25 @@ describe 'HumonNode Utils', ->
         expect(node.get 'nodeType').toBe 'hash'
         expect(node.get 'nodeVal').toEqual jasmine.any(Array)
 
-        expect(nodea.get 'nodeType').toBe 'literal'
+        expect(nodea.get 'nodeType').toBe 'number'
         expect(nodea.get 'nodeVal').toBe 1
 
-        expect(nodeb.get 'nodeType').toBe 'literal'
+        expect(nodeb.get 'nodeType').toBe 'number'
         expect(nodeb.get 'nodeVal').toBe 2
 
         expect(nodec.get 'nodeType').toBe 'list'
         expect(nodec.get 'nodeVal').toEqual jasmine.any(Array)
 
-        expect(nodec0.get 'nodeType').toBe 'literal'
+        expect(nodec0.get 'nodeType').toBe 'boolean'
         expect(nodec0.get 'nodeVal').toBe false
 
-        expect(nodec1.get 'nodeType').toBe 'literal'
+        expect(nodec1.get 'nodeType').toBe 'string'
         expect(nodec1.get 'nodeVal').toBe 'lalala'
 
         expect(nodec2.get 'nodeType').toBe 'hash'
         expect(nodec2.get 'nodeVal').toEqual jasmine.any(Array)
 
-        expect(nodec2nested.get 'nodeType').toBe 'literal'
+        expect(nodec2nested.get 'nodeType').toBe 'boolean'
         expect(nodec2nested.get 'nodeVal').toBe true
 
       it "should set up nodeParent relations", ->
@@ -133,7 +133,7 @@ describe 'HumonNode Utils', ->
         expect(spyj2hn).not.toHaveBeenCalled()
       it "should return a HumonNode wrapping the literal", ->
         expect(node.get('nodeVal')).toBe 5
-        expect(node.get('nodeType')).toBe 'literal'
+        expect(node.get('nodeType')).toBe 'number'
 
       it "should be parentless", ->
         expect(node.get('nodeParent')).toBe null

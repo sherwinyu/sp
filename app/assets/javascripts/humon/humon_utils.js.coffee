@@ -191,6 +191,16 @@ Humon.register "null",
   j2hn: (json) ->
     json
 
+Humon.register "boolean",
+  name: "boolean"
+  templateName: "humon_node_boolean"
+  matchAgainstJson: (json) ->
+    typeof json == "boolean"
+  hn2j: (node) ->
+    node
+  j2hn: (json) ->
+    json
+
 Humon.register "string",
   name: "string"
   templateName: "humon_node_string"

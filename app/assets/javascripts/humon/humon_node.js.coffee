@@ -53,7 +53,8 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
 
   isLiteral: (->
     literalTypes = ['literal', 'date', 'number', 'boolean', 'string', 'null']
-    $.inArray @get('nodeType'), literalTypes
+    #$.inArray @get('nodeType'), literalTypes
+    @get('nodeType') in literalTypes
   ).property('nodeType')
 
   # Retrieves a node by key or by index.
