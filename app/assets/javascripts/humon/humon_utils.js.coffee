@@ -60,7 +60,8 @@ Sysys.HumonUtils =
   humonNode2json: (node)->
     nodeVal = node.get('nodeVal')
     ret = undefined
-    switch node.get('nodeType')
+    type = node.get('nodeType')
+    switch type
       when 'list'
         ret = []
         for child in nodeVal
@@ -71,12 +72,10 @@ Sysys.HumonUtils =
           key = child.get('nodeKey')
           key ?= nodeVal.indexOf child
           ret[key] = Sysys.HumonUtils.humonNode2json child
-      when 'date'
-        ret = node.get('nodeVal').toString()
-      when 'literal'
-        ret = nodeVal
       else
-        0/0
+        Em.assert "node is a literal", node.get('isLiteral')
+        ret = Humon.contextualize(type).hn2j(nodeVal)
+      #TODO(syu): handle error case
     ret
 
   json2humonNode: (json, nodeParent=null)->
@@ -98,22 +97,10 @@ Sysys.HumonUtils =
         child = Sysys.HumonUtils.json2humonNode val, node
         children.pushObject child
       node.set 'nodeVal', children
-    else if Sysys.HumonUtils.isDate json
-      node.set('nodeType', 'date')
-      val =
-        if json instanceof Date
-          json
-        else
-          new Date(json)
-      node.set('nodeVal', val)
-    else if Sysys.HumonUtils.isLiteral json
-      node.set('nodeType', 'literal')
-      node.set('nodeVal', json)
-    else if Sysys.HumonUtils.isNull json
-      node.set('nodeType', 'literal')
-      node.set('nodeVal', null)
-    else
-      Em.assert "unrecognized type for json2humonNode: #{json}", false
+    else # json corresponds to a literal
+      nodeType = Humon.resolveType(json)
+      node.set 'nodeType', nodeType
+      node.set 'nodeVal', Humon.contextualize(nodeType).j2hn json
     node
 
   isHash: (val) ->
@@ -140,6 +127,7 @@ Sysys.HumonUtils =
       !!ret
 
   #TODO(syu): support date literals
+  # Definitely broke -- null is a literal
   isLiteral: (val) ->
     val? and typeof val isnt 'object'
 
@@ -165,18 +153,39 @@ window.Humon =
     @_typeKeys.push type
 
   contextualize: (type) ->
+    if type.constructor == Sysys.HumonNode
+      type = type.get('nodeType')
     @_types[type] || Em.assert("Could not find type #{type}")
 
   resolveType: (json) ->
-    for type in @_typekeys
+    for type in @_typeKeys
       if Humon._types[type].matchAgainstJson json
-        return "type"
+        return type
+    if Sysys.HumonUtils.isNumber json
+      return "number"
+    if Sysys.HumonUtils.isBoolean(json)
+      return "boolean"
+    if Sysys.HumonUtils.isNull(json)
+      return "null"
+    if Sysys.HumonUtils.isString(json)
+      return "string"
+    Em.assert "unrecognized type for json2humonNode: #{json}", false
 
 Humon.register "number",
   name: "number"
   templateName: "humon_node_number"
   matchAgainstJson: (json) ->
     typeof "json" == "number"
+  hn2j: (node) ->
+    node
+  j2hn: (json) ->
+    node
+
+Humon.register "string",
+  name: "number"
+  templateName: "humon_node_string"
+  matchAgainstJson: (json) ->
+    typeof "json" == "string"
   hn2j: (node) ->
     node
   j2hn: (json) ->
@@ -204,9 +213,9 @@ Humon.register "date",
       ret = false
     finally
       !!ret
-  hn2j: (node)
-    node.toString () #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
-  j2hn: (json)
+  hn2j: (node) ->
+    node.toString() #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
+  j2hn: (json) ->
     # TODO(syu): make it work for dateMatchers
     val =
       if json instanceof Date

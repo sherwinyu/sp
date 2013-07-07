@@ -1,4 +1,6 @@
 #### TYPE SYSTEM NOTES
+#
+#
 
 # exists a system to register new data types
 Humon.register 'currency',
