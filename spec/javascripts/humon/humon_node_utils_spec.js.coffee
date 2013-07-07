@@ -13,32 +13,36 @@ describe 'HumonNode Utils', ->
       spyj2hn.restore()
 
     describe "when called on flat list", ->
-      array = [1, 4, 'sdf']
+      array = [1, 4, 'sdf', false, null]
 
       beforeEach ->
         node = j2hn array
 
-
       it "should recurse for each element of the list", ->
-        expect(spyj2hn).toHaveBeenCalledThrice()
         expect(spyj2hn).toHaveBeenCalledWithExactly 1, node
         expect(spyj2hn).toHaveBeenCalledWithExactly 4, node
         expect(spyj2hn).toHaveBeenCalledWithExactly 'sdf', node
-
-      it "should return a HumonNode with containing a list of HumonNodes wrapping literals", ->
+        expect(spyj2hn).toHaveBeenCalledWithExactly false, node
+        expect(spyj2hn).toHaveBeenCalledWithExactly null, node
+      it "returns a list HumonNode wrapping the litearls", ->
         expect(node.get 'nodeVal.0.nodeVal').toBe 1
         expect(node.get 'nodeVal.1.nodeVal').toBe 4
         expect(node.get 'nodeVal.2.nodeVal').toBe 'sdf'
+        expect(node.get 'nodeVal.3.nodeVal').toBe false
+        expect(node.get 'nodeVal.4.nodeVal').toBe null
+        expect(node.get 'nodeVal.0.nodeType').toBe 'number'
+        expect(node.get 'nodeVal.1.nodeType').toBe 'number'
+        expect(node.get 'nodeVal.2.nodeType').toBe 'string'
+        expect(node.get 'nodeVal.3.nodeType').toBe 'boolean'
+        expect(node.get 'nodeVal.4.nodeType').toBe 'null'
         expect(node.get 'nodeType').toEqual 'list'
-
       it "should set up nodeParent relations", ->
         expect(node.get('nodeParent')).toBe null
         expect(node.get 'nodeVal.0.nodeParent').toBe node
         expect(node.get 'nodeVal.1.nodeParent').toBe node
         expect(node.get 'nodeVal.2.nodeParent').toBe node
-
-      it "should work on different literal types", ->
-        throw 'pending'
+        expect(node.get 'nodeVal.3.nodeParent').toBe node
+        expect(node.get 'nodeVal.4.nodeParent').toBe node
 
     describe "when called on flat hash", ->
       hash = {a: 1, b: 2, c: 3}
@@ -63,7 +67,6 @@ describe 'HumonNode Utils', ->
         expect(node.get('nodeVal').findProperty('nodeKey', 'a').get('nodeParent')).toBe node
         expect(node.get('nodeVal').findProperty('nodeKey', 'b').get('nodeParent')).toBe node
         expect(node.get('nodeVal').findProperty('nodeKey', 'c').get('nodeParent')).toBe node
-
 
     describe "when called on nested structure", ->
       hash = {a: 1, b: 2, c: [false, 'lalala', {nested: true}]}
@@ -123,20 +126,43 @@ describe 'HumonNode Utils', ->
         expect(nodec2.get 'nodeParent').toBe nodec
         expect(nodec2nested.get 'nodeParent').toBe nodec2
 
-    describe "when called on literal", ->
-      literal = 5
+    describe "when called on native literal", ->
+      describe "number", ->
+        literal = 5
+        beforeEach ->
+          node = j2hn literal
+        it "should not recurse", ->
+          expect(spyj2hn).not.toHaveBeenCalled()
+        it "should return a HumonNode wrapping the literal", ->
+          expect(node.get('nodeVal')).toBe 5
+          expect(node.get('nodeType')).toBe 'number'
+        it "should be parentless", ->
+          expect(node.get('nodeParent')).toBe null
 
-      beforeEach ->
-        node = j2hn literal
+      describe "boolean", ->
+        literal = false
+        beforeEach ->
+          node = j2hn literal
+        it "should not recurse", ->
+          expect(spyj2hn).not.toHaveBeenCalled()
+        it "should return a HumonNode wrapping the literal", ->
+          expect(node.get('nodeVal')).toBe false
+          expect(node.get('nodeType')).toBe 'boolean'
+        it "should be parentless", ->
+          expect(node.get('nodeParent')).toBe null
 
-      it "should not recurse", ->
-        expect(spyj2hn).not.toHaveBeenCalled()
-      it "should return a HumonNode wrapping the literal", ->
-        expect(node.get('nodeVal')).toBe 5
-        expect(node.get('nodeType')).toBe 'number'
+      describe "string", ->
+        literal = "imaliteral"
+        beforeEach ->
+          node = j2hn literal
+        it "should not recurse", ->
+          expect(spyj2hn).not.toHaveBeenCalled()
+        it "should return a HumonNode wrapping the literal", ->
+          expect(node.get('nodeVal')).toBe "imaliteral"
+          expect(node.get('nodeType')).toBe 'string'
+        it "should be parentless", ->
+          expect(node.get('nodeParent')).toBe null
 
-      it "should be parentless", ->
-        expect(node.get('nodeParent')).toBe null
 
   describe "type checkers", ->
     hash1 = {a: 6}
@@ -148,6 +174,7 @@ describe 'HumonNode Utils', ->
     bool = false
     num = 3.14
     str = "111"
+    nul = null
 
     describe "isHash", ->
       it "should respond true for an objective",  ->
@@ -162,6 +189,7 @@ describe 'HumonNode Utils', ->
         expect(shu.isHash(bool)).toBe false
         expect(shu.isHash(num)).toBe false
         expect(shu.isHash(str)).toBe false
+        expect(shu.isHash(nul)).toBe false
 
     describe "isList", ->
       it "should respond false for arrrays", ->
@@ -172,10 +200,11 @@ describe 'HumonNode Utils', ->
         expect(shu.isList(arr1)).toBe true
         expect(shu.isList(arr2)).toBe true
         expect(shu.isList(arr3)).toBe true
-      it "should respond false for arrrays", ->
+      it "should respond false for literals", ->
         expect(shu.isList(bool)).toBe false
         expect(shu.isList(num)).toBe false
         expect(shu.isList(str)).toBe false
+        expect(shu.isList(nul)).toBe false
 
     describe "isLiteral", ->
       it "should respond false for arrrays", ->
@@ -190,6 +219,4 @@ describe 'HumonNode Utils', ->
         expect(shu.isLiteral(bool)).toBe true
         expect(shu.isLiteral(num)).toBe true
         expect(shu.isLiteral(str)).toBe true
-      it "should fail 'work' date objects", ->
-        throw 'pending'
-      # kexpect(-> shu.isLiteral(new Date())).toThrow()
+        expect(shu.isLiteral(nul)).toBe true
