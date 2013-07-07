@@ -76,6 +76,13 @@ HumonTypes.register "string",
   j2hn: (json) ->
     json
 
+###
+HumonNodeView
+  templateStrings: (->
+    HumonTypes.contextualize(@).templateStrings(@)
+  ).property('nodeVal', 'nodeType')
+###
+
 HumonTypes.register "date",
   name: "date"
   templateName: "humon_node_date"
@@ -84,9 +91,31 @@ HumonTypes.register "date",
     /^tomorrow$/,
     /^tmrw$/,
   ]
+  _inferenceMatchers: [
+    /^!date/,
+    /^!now/,
+  ]
+  _precomitMatchers: [
+  ]
+
+  templateStrings: (node) ->
+    Em.assert node.isDate ## TODO(syu): what exactly does isDate mean?
+    nodeVal = node.get('nodeVal')
+    ret =
+      month: nodeVal.get('month')
+      day: nodeVal.get('day')
+      hour: nodeVal.get('hour')
+      abbreviated: Date.format('2013 05 14')
+    ret
   _matchesAsStringDate: (json) ->
     return false if json.constructor != String
     @_dateMatchers.some (dateMatcher) -> dateMatcher.test json
+
+  precommitNodeVal: (string, node) ->
+  inferType: (json)->
+  defaultNodeVal: ->
+    new Date()
+
   matchAgainstJson: (json) ->
     ret = false
     try
