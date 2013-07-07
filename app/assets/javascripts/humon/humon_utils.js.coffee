@@ -150,7 +150,7 @@ window.Humon =
   register: (type, context) ->
     # TODO make warnings about malformed args
     @_types[type] = context
-    @_typeKeys.push type
+    @_typeKeys.splice 0, 0, type
 
   contextualize: (type) ->
     if type.constructor == Sysys.HumonNode
@@ -175,17 +175,27 @@ Humon.register "number",
   name: "number"
   templateName: "humon_node_number"
   matchAgainstJson: (json) ->
-    typeof "json" == "number"
+    typeof json == "number"
   hn2j: (node) ->
     node
   j2hn: (json) ->
+    json
+
+Humon.register "null",
+  name: "null"
+  templateName: "humon_node_null"
+  matchAgainstJson: (json) ->
+    json == null
+  hn2j: (node) ->
     node
+  j2hn: (json) ->
+    json
 
 Humon.register "string",
-  name: "number"
+  name: "string"
   templateName: "humon_node_string"
   matchAgainstJson: (json) ->
-    typeof "json" == "string"
+    typeof json == "string"
   hn2j: (node) ->
     node
   j2hn: (json) ->
@@ -201,15 +211,17 @@ Humon.register "date",
   ]
   _matchesAsStringDate: (json) ->
     return false if json.constructor != String
-    _dateMatchers.some (dateMatcher) -> dateMatcher.test json
+    @_dateMatchers.some (dateMatcher) -> dateMatcher.test json
   matchAgainstJson: (json) ->
     ret = false
     try
-      ret ||= (typeof val is "object" && val.constructor == Date)
-      # if it's an ISO date
-      ret ||= (new Date(val.substring 0, 19)).toISOString().substring( 0, 19) == val.substring(0, 19)
+      ret ||= (typeof json is "object" && json.constructor == Date)
       ret ||= @_matchesAsStringDate json
+
+      # if it's an ISO date
+      ret ||= (new Date(json.substring 0, 19)).toISOString().substring( 0, 19) == json.substring(0, 19)
     catch error
+      console.log error.toString()
       ret = false
     finally
       !!ret
