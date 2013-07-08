@@ -18,7 +18,7 @@ window.HumonTypes =
     @_typeKeys.splice 0, 0, type
 
   contextualize: (type) ->
-    if type.constructor == Sysys.HumonTypesNode
+    if type.constructor == Sysys.HumonNode
       type = type.get('nodeType')
     @_types[type] || Em.assert("Could not find type #{type}")
 
@@ -99,13 +99,13 @@ HumonTypes.register "date",
   ]
 
   templateStrings: (node) ->
-    Em.assert node.isDate ## TODO(syu): what exactly does isDate mean?
+    # Em.assert node.isDate ## TODO(syu): what exactly does isDate mean?
     nodeVal = node.get('nodeVal')
     ret =
-      month: nodeVal.get('month')
-      day: nodeVal.get('day')
-      hour: nodeVal.get('hour')
-      abbreviated: Date.format('2013 05 14')
+      month: nodeVal.getMonth()
+      day: nodeVal.getDay()
+      hour: nodeVal.getHours()
+      abbreviated: nodeVal.toString()
     ret
   _matchesAsStringDate: (json) ->
     return false if json.constructor != String
