@@ -119,8 +119,13 @@ HumonTypes.register "date",
   matchAgainstJson: (json) ->
     ret = false
     try
+      # if it's a date object
       ret ||= (typeof json is "object" && json.constructor == Date)
+
       ret ||= @_matchesAsStringDate json
+
+      # if it's a JS formatted date
+      ret ||= (new Date(json)).toString() == json
 
       # if it's an ISO date
       ret ||= (new Date(json.substring 0, 19)).toISOString().substring( 0, 19) == json.substring(0, 19)

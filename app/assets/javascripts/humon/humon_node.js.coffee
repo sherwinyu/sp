@@ -159,8 +159,9 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
         child.set 'nodeParent', null
 
     # Copy over the val and type of newNode
-    @set('nodeVal', newNode.get 'nodeVal')
-    @set('nodeType', newNode.get 'nodeType')
+    Ember.run =>
+      @set('nodeType', newNode.get 'nodeType')
+      @set('nodeVal', newNode.get 'nodeVal')
 
     # If newNode has children, link up the children to THIS node
     if @get 'hasChildren'
