@@ -14,7 +14,19 @@ window.HumonTypes =
 
   register: (type, context) ->
     # TODO make warnings about malformed args
-    @_types[type] = context
+    defaultContext =
+      templateName: "humon_node_#{context.name}"
+      matchAgainstJson: (json) ->
+        typeof json == context.name
+      hn2j: (node) -> node
+      j2hn: (node) -> node
+      templateStrings: (node) ->
+        nodeVal = node.get('nodeVal')
+        ret =
+          asString: nodeVal.toString()
+        ret
+
+    @_types[type] = $.extend defaultContext, context
     @_typeKeys.splice 0, 0, type
 
   contextualize: (type) ->
