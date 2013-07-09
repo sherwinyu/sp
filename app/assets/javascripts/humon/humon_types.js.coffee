@@ -15,15 +15,18 @@ window.HumonTypes =
   register: (type, context) ->
     # TODO make warnings about malformed args
     defaultContext =
-      templateName: "humon_node_#{context.name}"
+      templateName: "humon_node_#{type}"
       matchAgainstJson: (json) ->
-        typeof json == context.name
-      hn2j: (node) -> node
-      j2hn: (node) -> node
+        typeof json == type
+      hnv2j: (node) ->
+        json = node
+      j2hnv: (json) ->
+        node = json
       templateStrings: (node) ->
         nodeVal = node.get('nodeVal')
         ret =
           asString: nodeVal.toString()
+          asJson: HumonTypes.contextualize(type).hnv2j(node.get 'nodeVal')
         ret
 
     @_types[type] = $.extend defaultContext, context
@@ -48,52 +51,12 @@ window.HumonTypes =
       return "string"
     Em.assert "unrecognized type for json2humonNode: #{json}", false
 
-HumonTypes.register "number",
-  name: "number"
-  templateName: "humon_node_number"
-  matchAgainstJson: (json) ->
-    typeof json == "number"
-  hn2j: (node) ->
-    node
-  j2hn: (json) ->
-    json
-
+HumonTypes.register "number"
 HumonTypes.register "null",
-  name: "null"
-  templateName: "humon_node_null"
   matchAgainstJson: (json) ->
     json == null
-  hn2j: (node) ->
-    node
-  j2hn: (json) ->
-    json
-
-HumonTypes.register "boolean",
-  name: "boolean"
-  templateName: "humon_node_boolean"
-  matchAgainstJson: (json) ->
-    typeof json == "boolean"
-  hn2j: (node) ->
-    node
-  j2hn: (json) ->
-    json
-
-HumonTypes.register "string",
-  name: "string"
-  templateName: "humon_node_string"
-  matchAgainstJson: (json) ->
-    typeof json == "string"
-  hn2j: (node) ->
-    node
-  j2hn: (json) ->
-    json
-
-###
-HumonNodeView
-  templateStrings: (->
-    HumonTypes.contextualize(@).templateStrings(@)
-  ).property('nodeVal', 'nodeType')
-###
+HumonTypes.register "boolean"
+HumonTypes.register "string"
 
 HumonTypes.register "date",
   name: "date"
@@ -147,10 +110,10 @@ HumonTypes.register "date",
     finally
       !!ret
 
-  hn2j: (node) ->
+  hnv2j: (node) ->
     node.toString() #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
 
-  j2hn: (json) ->
+  j2hnv: (json) ->
     # TODO(syu): make it work for dateMatchers
     val =
       if json == "now"

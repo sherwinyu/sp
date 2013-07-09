@@ -16,7 +16,7 @@ Sysys.HumonUtils =
           ret[key] = Sysys.HumonUtils.humonNode2json child
       else
         Em.assert "node is a literal", node.get('isLiteral')
-        ret = HumonTypes.contextualize(type).hn2j(nodeVal)
+        ret = HumonTypes.contextualize(type).hnv2j(nodeVal)
       #TODO(syu): handle error case
     ret
 
@@ -42,7 +42,7 @@ Sysys.HumonUtils =
     else # json corresponds to a literal
       nodeType = HumonTypes.resolveType(json)
       node.set 'nodeType', nodeType
-      node.set 'nodeVal', HumonTypes.contextualize(nodeType).j2hn json
+      node.set 'nodeVal', HumonTypes.contextualize(nodeType).j2hnv json
     node
 
   isHash: (val) ->
