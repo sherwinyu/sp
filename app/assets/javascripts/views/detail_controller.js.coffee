@@ -86,7 +86,7 @@ Sysys.DetailController = Ember.ObjectController.extend
         try
           JSON.parse rawString
         catch error
-          ""
+          rawString
     if rawString?
       Ember.run =>
         node.replaceWithJson json

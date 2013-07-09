@@ -129,12 +129,16 @@ HumonTypes.register "date",
       ret = false
     finally
       !!ret
+
   hn2j: (node) ->
     node.toString() #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
+
   j2hn: (json) ->
     # TODO(syu): make it work for dateMatchers
     val =
-      if json instanceof Date
+      if json == "now"
+        new Date()
+      else if json instanceof Date
         json
       else
         new Date(json)
