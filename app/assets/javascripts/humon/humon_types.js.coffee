@@ -51,13 +51,12 @@ window.HumonTypes =
       return "string"
     Em.assert "unrecognized type for json2humonNode: #{json}", false
 
+HumonTypes.register "string"
 HumonTypes.register "number"
 HumonTypes.register "null",
   matchAgainstJson: (json) ->
     json == null
 HumonTypes.register "boolean"
-HumonTypes.register "string"
-
 HumonTypes.register "date",
   name: "date"
   templateName: "humon_node_date"

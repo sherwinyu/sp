@@ -77,7 +77,7 @@ Sysys.DetailController = Ember.ObjectController.extend
   #   node: the node to comit to. defaults to activeHumonNode
   #   rerender: whether to rerender the humon node view
   # TODO(syu):  specify behavior strictly
-  commitVal: (rawString, {rerender, node}={rerender: false, node: null}) ->
+  commitVal: (rawString, {rerender, node}={rerender: true, node: null}) ->
     node ||= @get('activeHumonNode')
     json =
       try
@@ -90,8 +90,7 @@ Sysys.DetailController = Ember.ObjectController.extend
     if rawString?
       Ember.run =>
         node.replaceWithJson json
-        if rerender
-          node.rerender()
+        node.get('nodeView').rerender()
 
   commitWithRerender: (rawString) ->
     @commitVal rawString, rerender:true
