@@ -10,7 +10,7 @@ class ActsController < ApplicationController
   end
 
   def index
-    @acts = Act.all
+    @acts = [Act.first]
     respond_with @acts
   end
 

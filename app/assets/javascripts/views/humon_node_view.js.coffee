@@ -4,13 +4,14 @@ Sysys.HumonNodeView = Ember.View.extend
     HumonTypes.contextualize(@get 'nodeContent').templateStrings(@get 'nodeContent')
   )# .property('nodeContent') #.nodeVal', 'nodeType.nodeType')
   autoTemplate: (->
+    return "humon_node"
+    return if @isFocused()
     node = @get('nodeContent')
-    if false # node?.get("nodeTypeChanged")
+    if node
       node.set('nodeTypeChanged', false)
       Em.run.once(@, ->
         console.log "   autotemplate                      #{@.state}"
         @.rerender() unless @.state in ["destroying", null, "inBuffer"]   )
-    # console.log "autotemplate                      #{@.state}"
     if @get('nodeContent.nodeType') == 'date'
       HumonTypes.contextualize(node).templateName
     else
@@ -26,10 +27,8 @@ Sysys.HumonNodeView = Ember.View.extend
     'parentActive:activeChild',
     'suppressGap']
   classNames: ['node']
-  focusOut: (e) ->
-    console.log ' focusing out '
-    e.stopPropagation()
-    @losingFocus()
+  isFocused: ->
+    @?$('.content-field')?.is(':focus')
 
   # focusIn
   #  1) cancels propagation
