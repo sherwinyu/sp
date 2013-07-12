@@ -90,7 +90,11 @@ Sysys.DetailController = Ember.ObjectController.extend
     if rawString?
       Ember.run =>
         node.replaceWithJson json
-        node.get('nodeView').rerender()
+        # We are manually re-rendering to update autoTemplate.
+        # But we don't want to rerender if we're still on the same humon node
+        # Also, add the ?. check on nodeView because in the case of dC.delete, the node already has
+        # nodeView set to null from HNV#willDeleteElement
+        node.get('nodeView')?.rerender() unless node == @get('activeHumonNode')
 
   commitWithRerender: (rawString) ->
     @commitVal rawString, rerender:true
