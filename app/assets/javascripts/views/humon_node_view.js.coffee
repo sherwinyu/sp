@@ -2,7 +2,7 @@ Sysys.HumonNodeView = Ember.View.extend
 # templateName: 'humon_node'
   templateStrings: (->
     HumonTypes.contextualize(@get 'nodeContent').templateStrings(@get 'nodeContent')
-  )# .property('nodeContent') #.nodeVal', 'nodeType.nodeType')
+  ).property('nodeContent.nodeVal')
 
   # autoTemplate is solely responsible for producing the correct template name
   autoTemplate: (->

@@ -5,8 +5,12 @@
     {{view "Sysys.KeyField" rawValueBinding="view.nodeContent.nodeKey"}}<span class="colon-glyph">:</span>
   {{/if}}
 
-    DATE:: {{view "Sysys.ValField" rawValueBinding="view.nodeContent.json" }}
-    tN:: {{view.templateName}} | {{view.nodeContent.nodeType}} |  month:: {{view.templateStrings.month}} |
+    {{view "Sysys.ValField" rawValueBinding="view.nodeContent.json" }}
+    ( {{view.templateStrings.asString}} )
+    | {{view.nodeContent.nodeType}}
+    | month:: {{view.templateStrings.month}}
+    | day:: {{view.templateStrings.day}} |
+
 </span>
 
 <span class="buffer"></span>
