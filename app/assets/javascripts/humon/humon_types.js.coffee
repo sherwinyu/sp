@@ -25,8 +25,8 @@ window.HumonTypes =
       templateStrings: (node) ->
         nodeVal = node.get('nodeVal')
         ret =
-          asString: nodeVal.toString()
-          asJson: HumonTypes.contextualize(type).hnv2j(node.get 'nodeVal')
+          asString: nodeVal + ""
+          asJson: HumonTypes.contextualize(node).hnv2j(node.get 'nodeVal')
         ret
 
     @_types[type] = $.extend defaultContext, context
@@ -56,4 +56,11 @@ HumonTypes.register "number"
 HumonTypes.register "null",
   matchAgainstJson: (json) ->
     json == null
+  templateStrings: (node)  ->
+    nodeVal = node.get('nodeVal')
+    ret =
+      asString: "!null"
+      asJson: HumonTypes.contextualize(node).hnv2j(node.get 'nodeVal')
+    ret
+
 HumonTypes.register "boolean"

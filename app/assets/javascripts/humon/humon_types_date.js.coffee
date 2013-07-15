@@ -1,3 +1,19 @@
+
+humanized = (date) ->
+  date = moment(date)
+  date.format("ddd MMM D")
+  if date.isSame(new Date(), 'year')
+    date.format("ddd, MM D")
+  else
+    date.format("ddd, MM D, YYYY")
+
+relative = (date) ->
+  date = moment(date)
+  date.fromNow()
+  # if date.isBefore()
+  # date.
+
+
 HumonTypes.register "date",
   name: "date"
   templateName: "humon_node_date"
@@ -20,7 +36,9 @@ HumonTypes.register "date",
       month: nodeVal.getMonth()
       day: nodeVal.getDay()
       hour: nodeVal.getHours()
-      abbreviated: nodeVal.toString()
+      abbreviated: humanized(nodeVal)
+      asString: humanized(nodeVal)
+      relative: relative(nodeVal)
     ret
   _matchesAsStringDate: (json) ->
     return false if json.constructor != String
