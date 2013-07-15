@@ -26,6 +26,8 @@ gem 'ember-rails', '0.12.0'
 gem 'ember-source', '1.0.0.rc3.3'
 gem 'ember-bootstrap-rails'
 
+gem 'momentjs-rails'
+
 gem 'pry', '0.9.11'
 gem 'spring', require: false
 group :development, :test do
