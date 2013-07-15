@@ -2,21 +2,11 @@ window.HumonTypes =
   _types: {}
   _typeKeys: []
 
-  contextExample:
-    name: "string"
-    templateName: "humon_node_string"
-    # Returns true if the json value could EVER resolve to this type
-    # priorities are determined by the order in which types are registered
-    # priorities are determined by the order in which types are registered
-    typeInferers: ->
-    matchAgainstJson: (json) ->
-      typeof "json" == "string"
-
   register: (type, context) ->
     # TODO make warnings about malformed args
     defaultContext =
       templateName: "humon_node_#{type}"
-      matchAgainstJson: (json) ->
+      matchesAgainstJson: (json) ->
         typeof json == type
       hnv2j: (node) ->
         json = node
@@ -37,24 +27,23 @@ window.HumonTypes =
       type = type.get('nodeType')
     @_types[type] || Em.assert("Could not find type #{type}")
 
+  # resolveType
+  # param json json: the json that we want to know the type of
+  # returns: a string, the name of the type
+  #
+  # Context: is called by HumonUtils.json2HumonNode in the literal node case (when
+  # `json` is not a hash or a list. `resolveType`
+  #
   resolveType: (json) ->
     for type in @_typeKeys
-      if HumonTypes._types[type].matchAgainstJson json
+      if HumonTypes._types[type].matchesAgainstJson json
         return type
-    if Sysys.HumonUtils.isNumber json
-      return "number"
-    if Sysys.HumonUtils.isBoolean(json)
-      return "boolean"
-    if Sysys.HumonUtils.isNull(json)
-      return "null"
-    if Sysys.HumonUtils.isString(json)
-      return "string"
     Em.assert "unrecognized type for json2humonNode: #{json}", false
 
 HumonTypes.register "string"
 HumonTypes.register "number"
 HumonTypes.register "null",
-  matchAgainstJson: (json) ->
+  matchesAgainstJson: (json) ->
     json == null
   templateStrings: (node)  ->
     nodeVal = node.get('nodeVal')
