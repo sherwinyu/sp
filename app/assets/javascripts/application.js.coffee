@@ -16,11 +16,11 @@
 #= require handlebars
 #= require ember
 #= require ember-data
+#= require moment
 #
 #= require vendor/jquery-autogrow-textarea
 #= require vendor/jquery-autogrow-textarea-plus
 #= require vendor/jquery.hotkeys
-#= require vendor/moment
 #= require vendor/jquery-ui-timepicker-addon
 #= require vendor/humon
 #
