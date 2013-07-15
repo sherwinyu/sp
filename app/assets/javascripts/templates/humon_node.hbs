@@ -7,9 +7,15 @@ humon_node_view.hbs
   {{else}}
     {{view "Sysys.KeyField" rawValueBinding=view.nodeContent.nodeKey}}<span class="colon-glyph">:</span>
   {{/if}}
+
+
+
  | {{view.nodeContent.nodeType}} |
   {{#if view.nodeContent.isLiteral}}
     {{view "Sysys.ValField" rawValueBinding="view.templateStrings.asString" }}
+    <span class="node-detail">
+      detail
+    </span>
   {{else}}
     <span class="open-glyph"> </span> {{!view "Sysys.ProxyField" }}
   {{/if}}

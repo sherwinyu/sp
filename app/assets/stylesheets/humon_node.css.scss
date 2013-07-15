@@ -50,7 +50,7 @@ span.blocky {
 .node.active {
 }
 
-.node.active > .blocky {
+.node.active > span.blocky {
   background: $activeColorLight
 }
 .node.active > .node {
@@ -59,6 +59,12 @@ span.blocky {
 .node.active > span.blocky > textarea.content-field.label-field {
   color: $activeColorDark;
   text-decoration: underline;
+}
+.node.active > span.blocky> span.node-detail {
+  display: inline;
+}
+span.node-detail {
+  display: none;
 }
 
 /*

@@ -5,13 +5,10 @@
     {{view "Sysys.KeyField" rawValueBinding="view.nodeContent.nodeKey"}}<span class="colon-glyph">:</span>
   {{/if}}
 
-    {{view "Sysys.ValField" rawValueBinding="view.templateStrings.asString" }}
-    ( {{view.templateStrings.asString}} )
-    | {{view.nodeContent.nodeType}}
-    | month:: {{view.templateStrings.month}}
-    | day:: {{view.templateStrings.day}} |
-    | humanized:: {{view.templateStrings.abbreviated}}
-    | relative:: {{view.templateStrings.relative}}
+    {{view "Sysys.ValField" rawValueBinding="view.templateStrings.asString" }} {{view.templateStrings.relative }}
+    <span class="node-detail">
+      {{view.templateStrings.verbose}} verbose
+    </span>
 
 </span>
 
