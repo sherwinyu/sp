@@ -1,4 +1,3 @@
-
 verbose = (date) ->
   mmt = moment(date)
   mmt.format('LLLL')
@@ -74,6 +73,17 @@ HumonTypes.register "date",
     return false if string.constructor != String
     Date.parse(string) || false
 
+  # _inferFromJson -- attempts to convert a json value to this type
+  #   param json json: the candidate json object
+  #   return: if successful, a value of this type
+  #           if unsuccessful, a falsy value
+  #
+  # Note: _inferFromJson returns the value if `json` could EVER resolve to this type
+  # Multiple types can match against the same json; priority is determined by
+  # registration order
+  #
+  # TODO(syu): update and generalize to work for all humon types and include it in
+  # the standard suite. AKA make it work for booleans: return a hash {matchesType, value}
   _inferFromJson: (json) ->
     ret = false
     try
@@ -98,12 +108,8 @@ HumonTypes.register "date",
   # matchesAgainstJson -- checks a json value to see if it could be this type
   #   param json json: the candidate json
   #   returns: a boolean, true if it could be this value, false if not
-  #
+  # This just takes @_inferFromJson and coerces the return value to a boolean.
   # Context: called by HumonTypes.resolveType while iterating over all registered types
-  #
-  # Note: matchesAgainstJson should return true if `json` could EVER resolve to this type
-  # Multiple types can match against the same json; priority is determined by
-  # registration order
   matchesAgainstJson: (json) ->
     !!@_inferFromJson(json)
 
@@ -125,8 +131,15 @@ HumonTypes.register "date",
   defaultNodeVal: ->
     new Date()
 
-  hnv2j: (node) ->
-    node.toString() #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
+  # hnv2j -- humon node val to json. Converts from nodeVal of this type to json
+  # Context: called by HumonUtils.humonNode2json, which is in turn called by the Store
+  # in preparation for serializing this to
+  hnv2j: (nodeVal) ->
+    nodeVal.toString() #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
 
+  # j2hnv -- json to humon nodeVal. Converts from json value to a nodeVal of this type
+  # Context: called by HumonUtils.j2hn when setting the nodeVal for literal nodes
+  # Note: this is different from HumonUtils.j2hn, which outputs **humon node objects**.
+  # j2hnv outputs humon node `nodeVal`s
   j2hnv: (json) ->
     val = @_inferFromJson(json)
