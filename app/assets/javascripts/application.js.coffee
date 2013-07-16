@@ -17,6 +17,7 @@
 #= require ember
 #= require ember-data
 #= require moment
+#= require date
 #
 #= require vendor/jquery-autogrow-textarea
 #= require vendor/jquery-autogrow-textarea-plus
