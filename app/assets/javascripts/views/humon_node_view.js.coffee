@@ -8,7 +8,8 @@ Sysys.HumonNodeView = Ember.View.extend
   # autoTemplate is solely responsible for producing the correct template name
   autoTemplate: (->
     node = @get('nodeContent')
-    if @get('nodeContent.nodeType') == 'date'
+    nodeType = @get('nodeContent.nodeType')
+    if nodeType && nodeType not in ['list', 'hash']
       HumonTypes.contextualize(node).templateName
     else
       "humon_node"
@@ -21,10 +22,9 @@ Sysys.HumonNodeView = Ember.View.extend
     'nodeContent.isList:node-list',
     'isActive:active',
     'parentActive:activeChild',
+    'nodeContent.nodeType',
     'suppressGap']
   classNames: ['node']
-  isFocused: ->
-    @?$('.content-field')?.is(':focus')
 
   # focusIn
   #  1) cancels propagation

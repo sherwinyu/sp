@@ -96,14 +96,20 @@ textarea.content-field {
 }
 textarea.content-field:focus {
   border: none;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
   box-shadow: none;
 }
 
+textarea.content-field {
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
 textarea.content-field.dirty {
-  border-right: 1px solid red;
+  // border-right: 1px solid red;
 }
 textarea.content-field.autogrowing {
-  border-left: 1px solid blue;
+  // border-left: 1px solid blue;
 }
 
 textarea.content-field.val-field {

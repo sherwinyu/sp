@@ -7,18 +7,7 @@ humon_node_view.hbs
   {{else}}
     {{view "Sysys.KeyField" rawValueBinding=view.nodeContent.nodeKey}}<span class="colon-glyph">:</span>
   {{/if}}
-
-
-
- | {{view.nodeContent.nodeType}} |
-  {{#if view.nodeContent.isLiteral}}
-    {{view "Sysys.ValField" rawValueBinding="view.templateStrings.asString" }}
-    <span class="node-detail">
-      detail
-    </span>
-  {{else}}
-    <span class="open-glyph"> </span> {{!view "Sysys.ProxyField" }}
-  {{/if}}
+    <span class="open-glyph"> </span>
 </span>
 
 {{#if view.nodeContent.isCollection}}
@@ -28,7 +17,6 @@ humon_node_view.hbs
     {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
     {{/with}}
   {{/each}}
-  {{!collection contentBinding="view.nodeContent.nodeVal" itemViewClass="Sysys.HumonNodeView" class="node-item-collection-wrapper"}}
 {{/if}}
 <span class="buffer"></span>
 <span class="close-glyph"></span>

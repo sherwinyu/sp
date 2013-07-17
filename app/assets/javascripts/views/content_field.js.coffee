@@ -78,7 +78,7 @@ Sysys.ContentField = Ember.TextArea.extend
 
   didInsertElement: ->
     @refresh()
-    # @autosize()
+    @autosize()
     @setPlaceHolderText()
     @initHotKeys()
 

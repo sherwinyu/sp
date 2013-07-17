@@ -5,7 +5,8 @@ window.HumonTypes =
   register: (type, context) ->
     # TODO make warnings about malformed args
     defaultContext =
-      templateName: "humon_node_#{type}"
+      # templateName: "humon_node_#{type}"
+      templateName: "humon_node_literal"
       matchesAgainstJson: (json) ->
         typeof json == type
       hnv2j: (node) ->
