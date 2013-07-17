@@ -21,6 +21,7 @@ window.HumonTypes =
         ret
 
     @_types[type] = $.extend defaultContext, context
+    # insert type at the beginning of _typeKeys
     @_typeKeys.splice 0, 0, type
 
   contextualize: (type) ->
@@ -34,7 +35,6 @@ window.HumonTypes =
   #
   # Context: is called by HumonUtils.json2HumonNode in the literal node case (when
   # `json` is not a hash or a list. `resolveType`
-  #
   resolveType: (json) ->
     for type in @_typeKeys
       if HumonTypes._types[type].matchesAgainstJson json
