@@ -61,6 +61,7 @@ span.blocky {
   text-decoration: underline;
 }
 .node.active > span.blocky> span.node-detail {
+  font-style: italic;
   display: inline;
 }
 span.node-detail {
