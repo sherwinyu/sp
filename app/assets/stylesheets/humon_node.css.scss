@@ -67,6 +67,9 @@ span.blocky {
 span.node-detail {
   display: none;
 }
+span.node-detail i {
+  @extend .icon-camera-retro
+}
 
 /*
  * Active child styling
