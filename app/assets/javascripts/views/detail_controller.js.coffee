@@ -37,27 +37,14 @@ Sysys.DetailController = Ember.ObjectController.extend
       parent = ahn
       idx = ahn.get('nodeVal').length
     blank = (Sysys.j2hn "")
-    Ember.run => parent.insertAt(idx,  blank)
+    Ember.run =>
+      Ember.run.schedule 'render', @, ->
+        parent.get('nodeView').rerender()
+      parent.insertAt(idx,  blank)
     @activateNode blank
     Ember.run.sync()
     @smartFocus()
 
-  commitAndContinue: (rawString)->
-    ahn = @get 'activeHumonNode'
-    # rawString =  @get('activeHumonNodeView').$valField().val() || '{}'
-    rawString ||= '{}'
-    @commitKey()
-    @commitVal(rawString)
-    Ember.run.sync()
-    parent = ahn.get 'nodeParent'
-    idx = ahn.get('nodeIdx') + 1
-    if ahn.get 'isCollection'
-      parent = ahn
-      idx = ahn.get('nodeVal').length
-    blank = (Sysys.j2hn "")
-    Ember.run =>
-      parent.replaceAt(idx, 0, blank)
-    @activateNode blank, focus: true, unfocus: false
 
   commit: (rawString)->
     # rawString =  @get('activeHumonNodeView').$valField().val()
