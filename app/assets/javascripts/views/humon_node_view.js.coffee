@@ -8,8 +8,7 @@ Sysys.HumonNodeView = Ember.View.extend
   # autoTemplate is solely responsible for producing the correct template name
   autoTemplate: (->
     node = @get('nodeContent')
-    nodeType = @get('nodeContent.nodeType')
-    if nodeType && nodeType not in ['list', 'hash']
+    if @get('nodeContent.isLiteral')
       HumonTypes.contextualize(node).templateName
     else
       "humon_node"

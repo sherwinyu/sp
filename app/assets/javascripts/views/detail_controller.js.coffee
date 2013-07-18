@@ -38,8 +38,8 @@ Sysys.DetailController = Ember.ObjectController.extend
       idx = ahn.get('nodeVal').length
     blank = (Sysys.j2hn null)
     Ember.run =>
-      parent.insertAt(idx,  blank)
       parent.get('nodeView').rerender()
+      parent.insertAt(idx,  blank)
     @activateNode blank
     Ember.run.sync()
     @smartFocus()
