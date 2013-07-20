@@ -16,16 +16,16 @@ Sysys.DetailController = Ember.ObjectController.extend
   #   node: a HumonNode that describes which node to commit the values to;
   #     defaults to activeHumonNode
   #   key: the key for this humon node. If present, the node's nodeKey is set.
-  #   val: the val to be commitd to the node.
+  #   val: the val to be commitd to the node. If present, the commitVal is called.
   # Behavior:
   #   1) it uses node or defaults it to activeHumonNode
-  #   2) it commits the nodeKey
-  #   3) it calls commitVal with the val
+  #   2) it commits the nodeKey if key is present
+  #   3) it calls commitVal with the val if val is present
   # #TODO(syu): refactor so commitVal and commitKey are balanced
   commitEverything: (payload) ->
     node = payload.node || @get('activeHumonNode')
     node.set('nodeKey', payload.key) if payload.key?
-    @commitVal payload.val, node: node
+    @commitVal payload.val, node: node if payload.val?
 
   commitAndContinueNew: (payload) ->
     ahn = @get 'activeHumonNode'

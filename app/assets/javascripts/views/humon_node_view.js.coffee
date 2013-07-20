@@ -51,7 +51,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #   1) constructs a payload to be sent to @controller `commitEverything`
   #   2) payload contains {key, val}
   #   3) key is taken from the key field's value
-  #   4) val is taken from the val field TODO(syu): clarify what 'val field' actually means
+  #   4) val is taken from the val field if the val field is dirty #TODO clarify dirty
   #   5) stops propagation (we don't want parent nodes commiting!)
   focusOut: (e) ->
     e.stopPropagation()
@@ -65,9 +65,10 @@ Sysys.HumonNodeView = Ember.View.extend
     console.log('commitingEverything, activeNodeKey =', @get('controller.activeHumonNode.nodeKey'))
     console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.nodeVal'))
     payload =
-      val: @$valField().val()
       key: @$keyField().val()
       node: node
+    if @$valField().val() isnt @get("templateStrings.asString")
+      payload.val = @$valField().val()
     @get('controller').send 'commitEverything', payload
 
   # smartFocus -- "auto" sets the focus for this HNV based on context
