@@ -51,7 +51,7 @@ Sysys.ContentField = Ember.TextArea.extend
   # Spec
   #   1) it calls autogrowplus, horizontal true, vertical true
   autogrow: (fail = true)->
-    #console.log 'autogrow called'
+    return
     unless @get 'autogrowing'
       #console.log '.... successfully'
       @$().autogrowplus horizontal: true, vertical: true
@@ -67,7 +67,7 @@ Sysys.ContentField = Ember.TextArea.extend
   # Spec
   #   1) it triggers 'remove.autogrowPlus'
   removeAutogrow: (fail = true)->
-    #console.log 'removeAutogrow called'
+    return
     if @get 'autogrowing'
       @$().trigger 'remove.autogrowplus'
       @set('autogrowing', false)
@@ -78,7 +78,7 @@ Sysys.ContentField = Ember.TextArea.extend
 
   didInsertElement: ->
     @refresh()
-    @autosize()
+    # @autosize()
     @setPlaceHolderText()
     @initHotKeys()
 
@@ -176,6 +176,7 @@ Sysys.AbstractLabel = Sysys.ContentField.extend
 
   moveRight: (e)->
     if getCursor(@$()) ==  @$().val().length
+      console.debug "move right", ts()
       @get('controller').focusValField()
       e.preventDefault()
 

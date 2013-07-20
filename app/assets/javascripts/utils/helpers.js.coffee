@@ -25,7 +25,7 @@ window.getCursor = (node) ->
   $(node).prop('selectionStart')
 
 window.setCursor = (node, pos) ->
-  node = if typeof node == "string" || node instanceof string
+  node = if typeof node == "string" || node instanceof String
            document.getElementById node
          else
            node

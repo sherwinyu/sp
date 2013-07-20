@@ -151,7 +151,9 @@ textarea.content-field.idx-field:focus { }
  */
 textarea.content-field.key-field {
   min-width: 25px;
-  width: 200px;
+  width: 100px;
+  text-align: right;
+  padding-right: $fieldWhiteIndent;
 }
 textarea.content-field.key-field:focus { }
 

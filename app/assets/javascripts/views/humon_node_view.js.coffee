@@ -1,4 +1,5 @@
 Sysys.HumonNodeView = Ember.View.extend
+  _focusedField: null
 # templateName: 'humon_node'
   templateStrings: (->
     if @get('nodeContent.isLiteral')
@@ -149,7 +150,12 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('nodeContent')?.set 'nodeView', null
 
   didInsertElement: ->
-    # @animInsert()
+    if @get("_focusedField")
+      opts =
+        left: true
+      console.debug "about to focus field", opts, ts()
+      @focusField(@get("_focusedField"), opts)
+      @set "_focusedField", null
     @initHotkeys()
     @get('nodeContent')?.set 'nodeView', @
 
@@ -208,14 +214,20 @@ Sysys.HumonNodeView = Ember.View.extend
     @$('> span> .content-field.label-field')?.first()
   $keyField: ->
     field = @$('> span > .content-field.key-field')?.first()
-    # console.log 'keyField: ', field
     field
   $idxField: ->
     @$('> span > .content-field.idx-field')?.first()
   $valField: ->
     field = @$('> span > .content-field.val-field')?.first()
-    # console.log 'valField: ', field
     field
+  focusField: (name, opts) ->
+    console.debug "focusField#{name}", ts()
+    @set "_focusedField", name
+    $field = @["$#{name}Field"]()
+    $field.focus()
+    if opts?.left
+      setCursor($field.get(0), 0)
+
 
   commitAndContinue: ->
     if @$valField().val() == ''
