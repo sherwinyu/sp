@@ -1,44 +1,44 @@
-verbose = (date) ->
-  mmt = moment(date)
-  mmt.format('LLLL')
+#
+# Date type-registration
+#
 
-asString = (date) ->
-  "#{humanized(date)} (#{relative(date)})"
-  humanized(date)
+$.extend @,
+  verbose: (date) ->
+    mmt = moment(date)
+    mmt.format('LLLL')
 
-humanized = (date) ->
-  mmt = moment(date)
-  if mmt.isSame(new Date(), 'year')
-    mmt.format("ddd, MMM D")
-  else
-    mmt.format("ddd, MMM D, YYYY")
+  asString: (date) ->
+    "#{humanized(date)} (#{relative(date)})"
+    humanized(date)
 
-relative = (date) ->
-  mmt = moment(date)
-  mmt.fromNow()
+  humanized: (date) ->
+    mmt = moment(date)
+    if mmt.isSame(new Date(), 'year')
+      mmt.format("ddd, MMM D")
+    else
+      mmt.format("ddd, MMM D, YYYY")
 
-# param date Date
-# returns: a Date
-tomorrow = (date) ->
-  mmt = moment(date)
-  if mmt.hour() > 3
-    mmt.add days: 1
-  mmt.startOf('day')
-  mmt.toDate()
+  relative: (date) ->
+    mmt = moment(date)
+    mmt.fromNow()
 
-momentFormat = (string, format) ->
-  mmt = moment(string, format)
+  # param date Date
+  # returns: a Date
+  tomorrow: (date) ->
+    mmt = moment(date)
+    if mmt.hour() > 3
+      mmt.add days: 1
+    mmt.startOf('day')
+    mmt.toDate()
 
-momentFormatAndValidate = (string, format) ->
-  date = momentFormat(string, format).toDate()
-  valid = Date.parse(string).equals date
-  {valid: valid, date: date}
+  momentFormat: (string, format) ->
+    mmt = moment(string, format)
 
+  momentFormatAndValidate: (string, format) ->
+    date = momentFormat(string, format).toDate()
+    valid = Date.parse(string).equals date
+    {valid: valid, date: date}
 
-HumonTypes.register "date",
-  name: "date"
-  templateName: "humon_node_date"
-  iconClass: "icon-calendar"
   _regexTransforms:
     "^now$": (string) -> new Date()
     "^tomorrow$": (string) ->
@@ -49,30 +49,8 @@ HumonTypes.register "date",
   _momentFormatTransforms:
     'ddd MMM D': (string, format) ->
       momentFormatAndValidate string, format
-
     'ddd MMM D YYYY': (string, format)->
       momentFormatAndValidate string, format
-
-  _precomitMatchers: [
-  ]
-
-  _inferAsRegex: (string) ->
-    return false if string.constructor != String
-    for matcher, transform of @_regexTransforms
-      if (new RegExp(matcher)).test string
-        return @_regexTransforms[matcher](string)
-
-  _inferAsMomentFormat: (string) ->
-    return false if string.constructor != String
-    for format, transform of @_momentFormatTransforms
-      {valid, date} = @_momentFormatTransforms[format](string, format)
-      if valid
-        return date
-    false
-
-  _inferViaDateParse: (string) ->
-    return false if string.constructor != String
-    Date.parse(string) || false
 
   # _inferFromJson -- attempts to convert a json value to this type
   #   param json json: the candidate json object
@@ -91,9 +69,9 @@ HumonTypes.register "date",
       # if it's a date object
       ret ||= (typeof json is "object" && json.constructor == Date)
 
-      ret ||= @_inferAsRegex json
-      ret ||= @_inferAsMomentFormat json
-      ret ||= @_inferViaDateParse json
+      ret ||= _inferAsRegex json
+      ret ||= _inferAsMomentFormat json
+      ret ||= _inferViaDateParse json
 
       # if it's a JS formatted date
       ret ||= (new Date(json)).toString() == json
@@ -106,25 +84,51 @@ HumonTypes.register "date",
       ret = false
     finally
       ret
+
+_inferAsRegex = (string) ->
+  return false if string.constructor != String
+  for matcher, transform of _regexTransforms
+    if (new RegExp(matcher)).test string
+      return _regexTransforms[matcher](string)
+
+_inferAsMomentFormat = (string) ->
+  return false if string.constructor != String
+  for format, transform of @_momentFormatTransforms
+    {valid, date} = @_momentFormatTransforms[format](string, format)
+    if valid
+      return date
+  false
+
+_inferViaDateParse = (string) ->
+  return false if string.constructor != String
+  Date.parse(string) || false
+
+HumonTypes.register "date",
+  name: "date"
+  templateName: "humon_node_date"
+  iconClass: "icon-calendar"
+
   # matchesAgainstJson -- checks a json value to see if it could be this type
   #   param json json: the candidate json
   #   returns: a boolean, true if it could be this value, false if not
   # This just takes @_inferFromJson and coerces the return value to a boolean.
   # Context: called by HumonTypes.resolveType while iterating over all registered types
   matchesAgainstJson: (json) ->
-    !!@_inferFromJson(json)
+    !!_inferFromJson(json)
 
-  templateStrings:
-    month: (node) -> node.get('nodeVal').getMonth()
-    day: (node) -> node.get('nodeVal').getDay()
-    hour: (node) -> node.get('nodeVal').getHours()
-    abbreviated: (node) -> humanized(node.get('nodeVal'))
-    asString: (node) -> asString(node.get('nodeVal'))
-    relative: (node) -> relative(node.get('nodeVal'))
-    verbose: (node) -> verbose(node.get('nodeVal'))
+  # templateStrings -- values made available to the humon_node template via
+  # view.templateStrings.<name>
+  # Here, we're using the function (lazy evaluation) version
+  # We can also declare a straight up object.
+  templateStrings: (node) ->
+    month:  node.get('nodeVal').getMonth()
+    day:  node.get('nodeVal').getDay()
+    hour:  node.get('nodeVal').getHours()
+    abbreviated:  humanized(node.get('nodeVal'))
+    asString:  asString(node.get('nodeVal'))
+    relative:  relative(node.get('nodeVal'))
+    verbose:  verbose(node.get('nodeVal'))
 
-  precommitNodeVal: (string, node) ->
-  inferType: (json)->
   defaultNodeVal: ->
     new Date()
 
@@ -139,4 +143,4 @@ HumonTypes.register "date",
   # Note: this is different from HumonUtils.j2hn, which outputs **humon node objects**.
   # j2hnv outputs humon node `nodeVal`s
   j2hnv: (json) ->
-    val = @_inferFromJson(json)
+    val = _inferFromJson(json)
