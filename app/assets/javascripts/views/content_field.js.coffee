@@ -92,12 +92,6 @@ Sysys.ContentField = Ember.TextArea.extend
   setPlaceHolderText: ->
     @$().attr('placeholder', @get('placeholder'))
 
-  checkAndSave: ->
-    # TODO(syu) -- convert to string!
-    Ember.run =>
-      if @get('rawValue') + "" != @$().val()
-        @commit()
-
   commit: Em.K
 
   enter: ->
@@ -190,12 +184,6 @@ Sysys.ValField = Sysys.ContentField.extend
   placeholder: 'val'
   commit: ->
     @get('controller').commit(@get 'value')
-
-    # focusOut: ->
-    # @_super()
-    # # @checkAndSave()
-    # console.log("VAL FIELD LOSING FOCUS #{@$().val()}")
-    # true
 
   initHotKeys: ->
     @_super()

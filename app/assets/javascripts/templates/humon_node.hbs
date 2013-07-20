@@ -2,12 +2,8 @@
 humon_node_view.hbs
 }}
 <span class="blocky">
-  {{#if view.nodeContent.nodeParent.isList}}
-    {{view "Sysys.IdxField" valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"}}
-  {{else}}
-    {{view "Sysys.KeyField" rawValueBinding=view.nodeContent.nodeKey}}<span class="colon-glyph">:</span>
-  {{/if}}
-    <span class="open-glyph"> </span>
+  {{partial humon_key_index_field}}
+  <span class="open-glyph"> </span>
 </span>
 
 {{#if view.nodeContent.isCollection}}
@@ -18,7 +14,6 @@ humon_node_view.hbs
     {{/with}}
   {{/each}}
 {{/if}}
-<span class="buffer"></span>
 <span class="close-glyph"></span>
 
 {{#if view.displayStats}}
