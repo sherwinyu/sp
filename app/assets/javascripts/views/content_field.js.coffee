@@ -195,42 +195,6 @@ Sysys.ValField = Sysys.ContentField.extend
       @get('controller').focusLabelField()
       e.preventDefault()
 
-Sysys.BigValField = Sysys.ValField.extend
-  classNames: ['big-val-field']
-  autogrow: ->
-    @$().autogrowplus horizontal: true, vertical: true
-  # TODO(syu): merge this with valfield
-  focusOut: (e)->
-    Em.assert 'not supported yet'
-    @get('parentView').exitEditing()
-    e.stopPropagation()
-  commit: ->
-    @get('controller').commitWithRerender @get 'value'
-  cancel: ->
-    @get('parentView').exitEditing()
-
-  createHotKeys: ->
-    @_super()
-    hotkeys = @get('hotkeys')
-    hotkeys['return'] = Em.K
-    hotkeys['up'] = Em.K
-    hotkeys['down'] = Em.K
-  autosize: Em.K
-
-Sysys.ProxyField = Sysys.ContentField.extend
-  classNames: ['proxy-field']
-
-  placeholder: ''
-  didInsertElement: ->
-    @_super()
-    @$().attr('tabindex', -1)
-  commitAndContinue: ->
-    @get('controller').insertChild()
-  focusIn: (e)->
-    @_super(e)
-    # @get('parentView').enterEditing()
-    e.stopPropagation()
-
 Sysys.KeyField = Sysys.AbstractLabel.extend
   classNames: ['key-field']
   placeholder: 'key'

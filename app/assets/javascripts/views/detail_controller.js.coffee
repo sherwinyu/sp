@@ -91,33 +91,8 @@ Sysys.DetailController = Ember.ObjectController.extend
   #####################################
 
   smartFocus: ->
-    # console.log "DC#smartFocus; ahn = #{@get 'activeHumonNode.nodeKey'}; ahnv = ", @get('activeHumonNodeView').$()
     @get('activeHumonNodeView').smartFocus()
     return
-  ###
-    Ember.run.sync()
-    ahn = @get('activeHumonNode')
-    ahnv = @get('activeHumonNodeView')
-    context = ahn.get('nodeParent.nodeType')
-    nodeKey = ahn.get('nodeKey')
-    nodeVal = ahn.get('nodeVal')
-
-    if context == 'hash'
-      if nodeKey.length == 0
-        @focusKeyField()
-      else
-        @focusValField()
-    else if context == 'list'
-      if ahn.get 'hasChildren'
-        @focusLabelField()
-      else
-        @focusValField()
-    if ahn.get('isCollection')
-      if not ahn.get('hasChildren')
-        @focusProxyField()
-      else
-        @focusLabelField()
-    ###
 
   focusLabelField : ->
     $lf = @get('activeHumonNodeView').$labelField().focus()
@@ -127,8 +102,6 @@ Sysys.DetailController = Ember.ObjectController.extend
     $vf = @get('activeHumonNodeView').$valField().focus()
   focusIdxField: ->
     $if = @get('activeHumonNodeView').$idxField().focus()
-  focusProxyField: ->
-    $pf = @get('activeHumonNodeView').$proxyField().focus()
 
 ######################################
 ##  Setting Active Node
