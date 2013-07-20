@@ -19,6 +19,7 @@ window.routes = -> _app_.Router.router.recognizer.names
 window.msm = (model)-> model.get('stateManager')
 window.mcp = (model)-> msm(model).get('currentPath')
 window.mcs = (model)-> msm(model).get('currentState')
+window.ts = -> moment().format("HH:mm:ss")
 
 window.getCursor = (node) ->
   $(node).prop('selectionStart')

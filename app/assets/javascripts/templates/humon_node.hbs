@@ -7,7 +7,6 @@ humon_node_view.hbs
 </span>
 
 {{#if view.nodeContent.isCollection}}
-  {{view "Sysys.BigValField"}}
   {{#each nodeChild in view.nodeContent.nodeVal}}
     {{#with nodeChild}}
     {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}

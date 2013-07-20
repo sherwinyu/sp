@@ -38,7 +38,7 @@ Sysys.DetailController = Ember.ObjectController.extend
       idx = ahn.get('nodeVal').length
     blank = (Sysys.j2hn null)
     Ember.run =>
-      console.debug "nodeView rerender"
+      console.debug "nodeView rerender: commitAndContinueNew", ts()
       parent.get('nodeView').rerender()
       parent.insertAt(idx,  blank)
     @activateNode blank
@@ -80,7 +80,7 @@ Sysys.DetailController = Ember.ObjectController.extend
         # But we don't want to rerender if we're still on the same humon node
         # Also, add the ?. check on nodeView because in the case of dC.delete, the node already has
         # nodeView set to null from HNV#willDeleteElement
-        node.get('nodeView')?.rerender() && console.debug("nodeView rerender") unless node == @get('activeHumonNode')
+        node.get('nodeView')?.rerender() && console.debug("nodeView rerender:commitVal", ts()) unless node == @get('activeHumonNode')
 
   commitWithRerender: (rawString) ->
     @commitVal rawString, rerender:true
