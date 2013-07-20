@@ -70,7 +70,18 @@ span.node-detail {
 span.node-detail i {
   @extend .icon-camera-retro
 }
-
+.node.number >  span.node-detail i.icon {
+  @extend .icon-camera-retro
+}
+.node.number  span.node-detail i.icon {
+  @extend .icon-camera-retro
+}
+.node.string  span.node-detail i.icon {
+  @extend .icon-quote-left
+}
+.node.date  span.node-detail i.icon {
+  @extend .icon-calendar
+}
 /*
  * Active child styling
  */

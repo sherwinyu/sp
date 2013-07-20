@@ -2,23 +2,34 @@ window.HumonTypes =
   _types: {}
   _typeKeys: []
 
+  defaultTemplateStrings:
+    asString: (node) -> node.get('nodeVal') + ""
+    asJson: (node) -> HumonTypes.contextualize(node).hnv2j(node.get 'nodeVal')
+    iconClass: (node) -> HumonTypes.contextualize(node).iconClass
+
+
   register: (type, context) ->
     # TODO make warnings about malformed args
     defaultContext =
       # templateName: "humon_node_#{type}"
       templateName: "humon_node_literal"
+      iconClass: "icon-circle-blank"
       matchesAgainstJson: (json) ->
         typeof json == type
       hnv2j: (node) ->
         json = node
       j2hnv: (json) ->
         node = json
-      templateStrings: (node) ->
-        nodeVal = node.get('nodeVal')
-        ret =
-          asString: nodeVal + ""
-          asJson: HumonTypes.contextualize(node).hnv2j(node.get 'nodeVal')
+      _materializeTemplateStringsForNode: (node) ->
+        templateStrings = $.extend {}, HumonTypes.defaultTemplateStrings, @templateStrings
+        ret = {}
+        for own k, v of templateStrings
+          ret[k] = if typeof v is "function"
+                     v.call(@, node)
+                   else
+                     v
         ret
+
 
     @_types[type] = $.extend defaultContext, context
     # insert type at the beginning of _typeKeys
@@ -44,13 +55,10 @@ window.HumonTypes =
 HumonTypes.register "string"
 HumonTypes.register "number"
 HumonTypes.register "null",
+  iconClass: "icon-ban-circle"
   matchesAgainstJson: (json) ->
     json == null
-  templateStrings: (node)  ->
-    nodeVal = node.get('nodeVal')
-    ret =
-      asString: "!null"
-      asJson: HumonTypes.contextualize(node).hnv2j(node.get 'nodeVal')
-    ret
+  templateStrings:
+    asString: "!null"
 
 HumonTypes.register "boolean"

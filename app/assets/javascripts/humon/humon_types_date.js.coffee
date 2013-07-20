@@ -38,6 +38,7 @@ momentFormatAndValidate = (string, format) ->
 HumonTypes.register "date",
   name: "date"
   templateName: "humon_node_date"
+  iconClass: "icon-calendar"
   _regexTransforms:
     "^now$": (string) -> new Date()
     "^tomorrow$": (string) ->
@@ -101,7 +102,7 @@ HumonTypes.register "date",
       # ret ||= (new Date(json.substring 0, 19))
       # .toISOString().substring( 0, 19) == json.substring(0, 19)
     catch error
-      console.log error.toString()
+      console.error error.toString()
       ret = false
     finally
       ret
@@ -113,18 +114,14 @@ HumonTypes.register "date",
   matchesAgainstJson: (json) ->
     !!@_inferFromJson(json)
 
-  templateStrings: (node) ->
-    # Em.assert node.isDate ## TODO(syu): what exactly does isDate mean?
-    nodeVal = node.get('nodeVal')
-    ret =
-      month: nodeVal.getMonth()
-      day: nodeVal.getDay()
-      hour: nodeVal.getHours()
-      abbreviated: humanized(nodeVal)
-      asString: asString(nodeVal)
-      relative: relative(nodeVal)
-      verbose: verbose(nodeVal)
-    ret
+  templateStrings:
+    month: (node) -> node.get('nodeVal').getMonth()
+    day: (node) -> node.get('nodeVal').getDay()
+    hour: (node) -> node.get('nodeVal').getHours()
+    abbreviated: (node) -> humanized(node.get('nodeVal'))
+    asString: (node) -> asString(node.get('nodeVal'))
+    relative: (node) -> relative(node.get('nodeVal'))
+    verbose: (node) -> verbose(node.get('nodeVal'))
 
   precommitNodeVal: (string, node) ->
   inferType: (json)->
