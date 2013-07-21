@@ -104,9 +104,8 @@ GEM
     figaro (0.6.3)
       bundler (~> 1.0)
       rails (>= 3, < 5)
-    font-awesome-sass-rails (3.0.2.2)
-      railties (>= 3.1.1)
-      sass-rails (>= 3.1.1)
+    font-awesome-rails (3.2.1.2)
+      railties (>= 3.2, < 5.0)
     formatador (0.2.4)
     fssm (0.2.10)
     guard (1.8.1)
@@ -286,7 +285,7 @@ DEPENDENCIES
   ember-source (= 1.0.0.rc3.3)
   factory_girl_rails (= 4.2.1)
   figaro (= 0.6.3)
-  font-awesome-sass-rails
+  font-awesome-rails
   guard-jasmine (= 1.15.1)
   guard-rspec (= 3.0.0)
   guard-zeus

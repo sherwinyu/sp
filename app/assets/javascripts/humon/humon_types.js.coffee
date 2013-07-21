@@ -60,13 +60,18 @@ window.HumonTypes =
         return type
     Em.assert "unrecognized type for json2humonNode: #{json}", false
 
-HumonTypes.register "string"
-HumonTypes.register "number"
+HumonTypes.register "string",
+  iconClass: "icon-quote-left"
+
+HumonTypes.register "number",
+  iconClass: "icon-superscript"
+
 HumonTypes.register "null",
   iconClass: "icon-ban-circle"
   matchesAgainstJson: (json) ->
     json == null
   templateStrings:
-    asString: "!null"
+    asString: "(null)"
 
-HumonTypes.register "boolean"
+HumonTypes.register "boolean",
+  iconClass: "icon-check"
