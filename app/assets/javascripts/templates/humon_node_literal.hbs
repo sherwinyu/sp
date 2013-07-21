@@ -4,9 +4,11 @@ humon_node_literal.hbs
 <span class="blocky">
   {{partial humon_key_index_field}}
 
+  <span class="node-detail node-icon">
+    {{partial humon_icon}}
+  </span>
   {{view "Sysys.ValField" rawValueBinding="view.templateStrings.asString" }}
   <span class="node-detail">
-    {{partial humon_icon}}
   </span>
 </span>
 <span class="close-glyph"></span>

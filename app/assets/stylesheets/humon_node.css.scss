@@ -66,21 +66,18 @@ span.blocky {
 }
 span.node-detail {
   display: none;
+  position: relative;
 }
-span.node-detail i {
-  @extend .icon-camera-retro
-}
-.node.number >  span.node-detail i.icon {
-  @extend .icon-camera-retro
-}
-.node.number  span.node-detail i.icon {
-  @extend .icon-camera-retro
-}
-.node.string  span.node-detail i.icon {
-  @extend .icon-quote-left
-}
-.node.date  span.node-detail i.icon {
-  @extend .icon-calendar
+span.node-detail.node-icon {
+  height: 10px;
+  font-size: 10px;
+  line-height: 10px;
+  i.icon {
+    height: 10px;
+    top: 0%;
+    position: absolute;
+    left: -12px;
+  }
 }
 /*
  * Active child styling
