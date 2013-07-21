@@ -84,11 +84,20 @@ Sysys.HumonNodeView = Ember.View.extend
     node = @get('nodeContent')
     context = node.get('nodeParent.nodeType')
     nodeKey = node.get('nodeKey')
-    nodeVal = node.get('nodeVal')
-    if context == 'hash'
-      @$keyField().trigger 'focus'
-      return
-    @$valField().trigger 'focus'
+    nodeVal = @$valField().val()
+    isLiteral = node.get('isLiteral')
+    isCollection = node.get('isCollection')
+    opts = {}
+    if context == 'hash' && isLiteral && nodeKey && !nodeVal
+      opts.field = 'label'
+    else if context == 'hash' && !nodeKey
+      opts.field = 'label'
+    else if context =='hash' && isCollection
+      opts.field = 'label'
+    else
+      opts.field = "val"
+      opts.pos = "right"
+    @focusField opts
 
   # click -- responds to a click event on the HNV
   # primarily for
@@ -154,10 +163,7 @@ Sysys.HumonNodeView = Ember.View.extend
 
   didInsertElement: ->
     if @get("_focusedField")
-      opts =
-        left: true
-      console.debug "about to focus field", opts, ts()
-      @focusField(@get("_focusedField"), opts)
+      @focusField(@get("_focusedField"))
       @set "_focusedField", null
     @initHotkeys()
     @get('nodeContent')?.set 'nodeView', @
@@ -223,13 +229,29 @@ Sysys.HumonNodeView = Ember.View.extend
   $valField: ->
     field = @$('> span > .content-field.val-field')?.first()
     field
-  focusField: (name, opts) ->
-    console.debug "focusField#{name}", ts()
-    @set "_focusedField", name
-    $field = @["$#{name}Field"]()
+
+  focusField: (opts) ->
+    if typeof arg is String
+      opts = field: opts
+    $field = @["$#{opts.field}Field"]()
     $field.focus()
-    if opts?.left
+    if opts.pos == "left"
       setCursor($field.get(0), 0)
+    if opts.pos == "right"
+      setCursor($field.get(0), $field.val().length)
+
+  moveLeft: ->
+    @set '_focusedField',
+      field: 'label'
+      pos: 'right'
+    @focusField @get '_focusedField'
+
+  moveRight: ->
+    @set '_focusedField',
+      field: 'val'
+      pos: 'left'
+    @focusField @get '_focusedField'
+
 
 
   commitAndContinue: ->

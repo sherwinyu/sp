@@ -172,12 +172,11 @@ Sysys.AbstractLabel = Sysys.ContentField.extend
   keyDown: (e) ->
     if e.which ==  186 # colon
       e.preventDefault()
-      @get('controller').focusValField()
+      @get('parentView').moveRight()
 
   moveRight: (e)->
     if getCursor(@$()) ==  @$().val().length
-      console.debug "move right", ts()
-      @get('controller').focusValField()
+      @get('parentView').moveRight()
       e.preventDefault()
 
 Sysys.ValField = Sysys.ContentField.extend
@@ -193,7 +192,7 @@ Sysys.ValField = Sysys.ContentField.extend
 
   moveLeft: (e)->
     if getCursor(@$()) ==  0
-      @get('controller').focusLabelField()
+      @get('parentView').moveLeft()
       e.preventDefault()
 
 Sysys.KeyField = Sysys.AbstractLabel.extend
