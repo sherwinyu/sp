@@ -65,6 +65,7 @@ Sysys.DetailController = Ember.ObjectController.extend
   # TODO(syu):  specify behavior strictly
   commitVal: (rawString, {rerender, node}={rerender: true, node: null}) ->
     node ||= @get('activeHumonNode')
+    oldType = node.get('nodeType')
     json =
       try
         humon.parse rawString
@@ -76,12 +77,14 @@ Sysys.DetailController = Ember.ObjectController.extend
     if rawString?
       Ember.run =>
         node.replaceWithJson json
+        newType = node.get('nodeType')
+        if newType != oldType
         # We are manually re-rendering to update autoTemplate.
         # But we don't want to rerender if we're still on the same humon node --
         #   because if we do, we can't "right arrow" into the next field -- it'll have been removed!
         # Als o, add the ?. check on nodeView because in the case of dC.delete, the node already has
         # nodeView set to null from HNV#willDeleteElement
-        node.get('nodeView')?.rerender() && console.debug("nodeView rerender:commitVal", ts()) # unless node == @get('activeHumonNode')
+          node.get('nodeView')?.rerender() && console.debug("nodeView rerender:commitVal", ts()) # unless node == @get('activeHumonNode')
 
   commitWithRerender: (rawString) ->
     @commitVal rawString, rerender:true

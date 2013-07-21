@@ -115,12 +115,14 @@ Sysys.HumonNodeView = Ember.View.extend
   #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
   up: (event = null) ->
     if @get('controller').prevNode()
+      @set "_focusedField", null
       console.log "HNV#up; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
       @get('controller').send 'smartFocus'
 
   down: (event = null) ->
     if changed = @get('controller').nextNode()
+      @set "_focusedField", null
       console.log "HNV#down; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
       @get('controller').send 'smartFocus'
