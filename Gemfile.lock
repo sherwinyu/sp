@@ -90,6 +90,7 @@ GEM
     ember-source (1.0.0.rc3.3)
       handlebars-source (>= 1.0.0.rc3, < 1.0.0.rc4)
     erubis (2.7.0)
+    escape (0.0.4)
     eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -155,6 +156,10 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     mini_portile (0.5.0)
+    mixpanel (3.5.2)
+      escape
+      json
+      rack
     mocha (0.13.3)
       metaclass (~> 0.0.1)
     momentjs-rails (2.0.0.2)
@@ -293,6 +298,7 @@ DEPENDENCIES
   jasminerice (= 0.0.10)
   jquery-rails (= 2.2.1)
   jquery-ui-rails (= 4.0.2)
+  mixpanel
   momentjs-rails (= 2.0.0.2)
   mongoid (~> 3.0.0)
   mongoid_auto_increment

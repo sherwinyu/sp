@@ -19,6 +19,7 @@ group :assets do
   gem 'uglifier', '1.2.3'
   gem 'font-awesome-rails'
 end
+
 gem 'jquery-rails', '2.2.1'
 gem 'jquery-ui-rails', '4.0.2'
 gem 'bootstrap-sass', '~> 2.3.1.0'
@@ -59,14 +60,6 @@ group :test do
   gem 'zeus'
 end
 
-# gem 'puffing-billy'
-# gem 'strong_parameters', '0.2.1'
-# gem 'devise', '2.2.3'
-# gem 'omniauth-facebook', '1.4.0'
-# gem 'koala', '1.6.0'
-# gem 'rest-client', '1.6.7'
-# gem 'multimap'
-gem "active_model_serializers", "~> 0.7.0"
 
 
 
@@ -76,22 +69,9 @@ gem "active_model_serializers", "~> 0.7.0"
 # gem 'handlebars-source', '1.0.0.rc3'
 # gem 'ember-rails', github: 'emberjs/ember-rails'
 
+gem "active_model_serializers", "~> 0.7.0"
 gem "mongoid", "~> 3.0.0"
 gem "mongoid_auto_increment"
-# gem "active_model_serializers", :git => "git://github.com/rails-api/active_model_serializers.git"
 
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
+gem "mixpanel"

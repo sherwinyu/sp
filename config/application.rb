@@ -67,8 +67,13 @@ module Sysys
 
     config.ember.variant = :development
 
-    ##
-    # config.mixpanel.token = 'XYZ'
+
+    options = {
+      # insert_mixpanel_scripts: true
+      #
+    }
+    config.middleware.use "Mixpanel::Middleware", Figaro.env.MIXPANEL_TOKEN, options
+    # config.mixpanel.token = Figaro.env.MIXPANEL_TOKEN
     # config.mixpanel.middleware.use = true
     # config.mixpanel.middleware.persist = false
     # config.mixpanel.middlware.insert_js_last = true
