@@ -6,7 +6,7 @@ Sysys.HumonNodeView = Ember.View.extend
       HumonTypes.contextualize(@get 'nodeContent')._materializeTemplateStringsForNode(@get 'nodeContent')
   ).property('nodeContent.nodeVal')
 
-  # autoTemplate is solely responsible for producing the correct template name
+  # autoTemplate is responsible solely for producing the correct template name
   autoTemplate: (->
     node = @get('nodeContent')
     if @get('nodeContent.isLiteral')
@@ -15,6 +15,7 @@ Sysys.HumonNodeView = Ember.View.extend
       "humon_node"
   ).property('nodeContent.nodeType')
   templateNameBinding: "autoTemplate"
+  # templateName: "humon_node"
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
