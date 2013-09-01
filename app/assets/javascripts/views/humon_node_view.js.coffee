@@ -83,7 +83,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #   * context?
   smartFocus: ->
     node = @get('nodeContent')
-    context = node.get('nodeParent.nodeType')
+    context = node.get('nodeParent.nodeType') || "hash"
     nodeKey = node.get('nodeKey')
     nodeVal = @$valField().val()
     isLiteral = node.get('isLiteral')
@@ -169,51 +169,6 @@ Sysys.HumonNodeView = Ember.View.extend
     @initHotkeys()
     @get('nodeContent')?.set 'nodeView', @
 
-  animInsert: ->
-    anims = @get('controller.anims')
-    $el = @$()
-    if @get('isActive') and anims?.insert
-      switch anims['insert']
-        when 'slideDown'
-          $el.animate bottom: $el.css('height'), 0
-          $el.animate bottom: 0, 185
-        when 'slideUp'
-          $el.css 'z-index', 555
-          $el.animate top: $el.css('height'), 0
-          $el.animate top: 0, 185, ->
-            $el.css 'z-index', ''
-        when 'fadeIn'
-          $el.hide 0
-          $el.fadeIn 185
-        when 'appear'
-          Em.K
-      anims.insert = undefined
-      return
-    $el.hide 0
-    $el.slideDown 375
-
-  animDestroy: ->
-    anims = @get('controller.anims')
-    $el = @$().clone()
-    @.$().replaceWith $el
-    if @get('isActive') and anims?.destroy
-      switch anims.destroy
-        when 'slideDown'
-          $el.slideDown 185
-        when 'slideUp'
-          # $el.animate bottom: $el.css('height'), 185
-          $el.slideUp 185
-        when 'fadeOut'
-          $el.fadeOut 185
-        when 'disappear'
-          $el.addClass 'tracker'
-          $el.hide 0
-      anims.destroy = undefined
-      delay 185, -> $el.remove()
-      return
-    console.log 'sliding up'
-    $el.slideUp 250, ->
-      $el.remove()
 
   unbindHotkeys: Em.K
 
@@ -288,29 +243,4 @@ Sysys.HumonRootView = Sysys.HumonNodeView.extend
   focusOut: (e) ->
     if @get('controller')
       @get('controller').send('activateNode', null)
-
-Sysys.HumonEditorComponent = Ember.Component.extend
-  end_time: Sysys.j2hn "wala wala"
-  init: ->
-    @set 'node', Sysys.j2hn @get 'json'
-    detailController = Sysys.DetailController.create()
-    @set '_actions', detailController
-
-    @_super()
-
-  eventManager:
-    wala: ->
-      debugger
-
-  definedEvent: ->
-    debugger
-
-  actions: null
-
-  prevNode: (args...)  ->
-    @_actions.prevNode.apply(@_actions, args)
-
-  nextNode: (args...)  ->
-    @_actions.nextNode.apply(@_actions, args)
-
 

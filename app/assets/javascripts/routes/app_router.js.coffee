@@ -64,7 +64,7 @@ Sysys.ActsIndexRoute = Ember.Route.extend
 
     acts: Ember.Route.extend
       route: '/acts'
-        
+
       connectOutlets: (router, context) ->
         router.get('applicationController').connectOutlet('acts')
 
@@ -75,17 +75,17 @@ Sysys.ActsIndexRoute = Ember.Route.extend
           router.get('applicationController').connectOutlet('acts')
           router.get('actsController').connectOutlet( 'notifications', 'notifications', [Sysys.Notification.create()])
 
-              
+
       # root.acts.act
       act: Ember.Route.extend
         enter: ->
-            
+
         route: '/:act_id'
 
         connectOutlets: (router, act) ->
           # TODO(syu): figure out how to handle case of outlet doesn't exist
           if act.get('isNew')
-            router.transitionTo('root.acts') 
+            router.transitionTo('root.acts')
           else
             router.get('applicationController').connectOutlet('act', act)
 
