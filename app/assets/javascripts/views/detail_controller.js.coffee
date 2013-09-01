@@ -25,11 +25,11 @@ Sysys.DetailController = Ember.ObjectController.extend
   commitEverything: (payload) ->
     node = payload.node || @get('activeHumonNode')
     node.set('nodeKey', payload.key) if payload.key?
-    @commitVal payload.val, node: node if payload.val?
+    @send 'commitVal', payload.val, node: node if payload.val?
 
   commitAndContinueNew: (payload) ->
     ahn = @get 'activeHumonNode'
-    @commitEverything(payload)
+    @send 'commitEverything', payload
     Ember.run.sync()
     parent = ahn.get 'nodeParent'
     idx = ahn.get('nodeIdx') + 1
@@ -41,13 +41,13 @@ Sysys.DetailController = Ember.ObjectController.extend
       console.debug "nodeView rerender: commitAndContinueNew", ts()
       parent.get('nodeView').rerender()
       parent.insertAt(idx,  blank)
-    @activateNode blank
+    @send 'activateNode', blank
     Ember.run.sync()
-    @smartFocus()
+    @send 'smartFocus'
 
   commit: (rawString)->
     # rawString =  @get('activeHumonNodeView').$valField().val()
-    @commitVal rawString
+    @send 'commitVal', rawString
 
   commitKey: ->
     rawString =  @get('activeHumonNodeView').$keyField().val()
@@ -87,8 +87,8 @@ Sysys.DetailController = Ember.ObjectController.extend
           node.get('nodeView')?.rerender() && console.debug("nodeView rerender:commitVal", ts()) # unless node == @get('activeHumonNode')
 
   commitWithRerender: (rawString) ->
-    @commitVal rawString, rerender:true
-    @smartFocus()
+    @send 'commitVal', rawString, rerender:true
+    @send 'smartFocus'
 
   ######################################
   ##  Manipulating focus
@@ -117,7 +117,7 @@ Sysys.DetailController = Ember.ObjectController.extend
   activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
     @set 'activeHumonNode', node if node && !node.get('hidden')
     if node and focus
-        @smartFocus()
+        @send 'smartFocus'
 
   # nextNode -- controler method for shifting the active node up or down
   # does NOT affect the UI focus
@@ -129,7 +129,7 @@ Sysys.DetailController = Ember.ObjectController.extend
     oldNode = @get('activeHumonNode')
     newNode = @get('activeHumonNode').nextNode()
     if newNode
-      @activateNode newNode
+      @send 'activateNode', newNode
     console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
@@ -137,7 +137,7 @@ Sysys.DetailController = Ember.ObjectController.extend
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
     if newNode
-      @activateNode newNode
+      @send 'activateNode', newNode
     console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
@@ -158,7 +158,7 @@ Sysys.DetailController = Ember.ObjectController.extend
       ahn.convertToHash()
     if ahn.get('isLiteral') && ahn.get('nodeParent.isList')
       ahn.get('nodeParent')?.convertToHash()
-    @smartFocus()
+    @send 'smartFocus'
 
   # Changes context to a hash
   # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
@@ -169,7 +169,7 @@ Sysys.DetailController = Ember.ObjectController.extend
       ahn.convertToList()
     if ahn.get('isLiteral') && ahn.get('nodeParent.isHash')
       ahn.get('nodeParent')?.convertToList()
-    @smartFocus()
+    @send 'smartFocus'
 
   # TODO(syu): test me
   bubbleUp: ->
@@ -182,8 +182,8 @@ Sysys.DetailController = Ember.ObjectController.extend
     Ember.run =>
       ahn.get('nodeParent').deleteChild ahn
       dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
-    @activateNode ahn
-    @smartFocus()
+    @send 'activateNode', ahn
+    @send 'smartFocus'
 
   bubbleDown: ->
     ahn = @get 'activeHumonNode'
@@ -198,8 +198,8 @@ Sysys.DetailController = Ember.ObjectController.extend
         destParent.insertAt(dest.get('nodeIdx') + 1, ahn)
       else
         dest.insertAt(0, ahn)
-    @activateNode ahn
-    @smartFocus()
+    @send 'activateNode', ahn
+    @send 'smartFocus'
 
   deleteActive: ->
     ahn = @get('activeHumonNode')
@@ -208,16 +208,16 @@ Sysys.DetailController = Ember.ObjectController.extend
     next = ahn.prevNode() || ahn.nextNode()
     return unless next && ahn.get('nodeParent')
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
-    @activateNode(next) # , focus: true, unfocus: false)
+    @send 'activateNode', next # , focus: true, unfocus: false)
     Ember.run.sync()
-    @smartFocus()
+    @send 'smartFocus'
 
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
     nextBlank = (Sysys.j2hn "")
     Em.run => ahn.insertAt 0, nextBlank
-    @activateNode(nextBlank, focus: true, unfocus: false)
+    @send 'activateNode', nextBlank, focus: true, unfocus: false
 
   outdent: ->
     ahn = @get 'activeHumonNode'

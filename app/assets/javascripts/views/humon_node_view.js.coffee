@@ -42,7 +42,7 @@ Sysys.HumonNodeView = Ember.View.extend
       return
     else
       console.log "    calling transitionToNode"
-      @get('controller').activateNode @get('nodeContent')
+      @get('controller').send('activateNode', @get('nodeContent'))
       # TODO(syu): @get('controller').transitionToNode @get('nodeContent')
 
   # focusOut -- handle focusOut from a sub-contentField
@@ -115,7 +115,7 @@ Sysys.HumonNodeView = Ember.View.extend
     console.log 'hnv click'
     e.stopPropagation()
     unless @get('isActive')
-      @get('controller').activateNode @get('nodeContent')
+      @get('controller').send('activateNode', @get('nodeContent'))
     console.log '  smart focusing'
     @smartFocus()
 
@@ -124,14 +124,14 @@ Sysys.HumonNodeView = Ember.View.extend
   #   1) calls prevNode on the controller
   #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
   up: (event = null) ->
-    if @get('controller').prevNode()
+    if @get('controller').prevNode() #send('prevNode')
       @set "_focusedField", null
       console.log "HNV#up; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
       @get('controller').send 'smartFocus'
 
   down: (event = null) ->
-    if changed = @get('controller').nextNode()
+    if changed = @get('controller').nextNode() #send('nextNode')
       @set "_focusedField", null
       console.log "HNV#down; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
@@ -274,7 +274,7 @@ Sysys.DetailView = Sysys.HumonNodeView.extend
 
   focusOut: (e) ->
     if @get('controller')
-      @get('controller').activateNode null
+      @get('controller').send('activateNode', null)
 
 Sysys.HumonRootView = Sysys.HumonNodeView.extend
   init: ->
@@ -287,10 +287,30 @@ Sysys.HumonRootView = Sysys.HumonNodeView.extend
 
   focusOut: (e) ->
     if @get('controller')
-      @get('controller').activateNode null
+      @get('controller').send('activateNode', null)
 
 Sysys.HumonEditorComponent = Ember.Component.extend
   end_time: Sysys.j2hn "wala wala"
   init: ->
-    @_super()
     @set 'node', Sysys.j2hn @get 'json'
+    detailController = Sysys.DetailController.create()
+    @set '_actions', detailController
+
+    @_super()
+
+  eventManager:
+    wala: ->
+      debugger
+
+  definedEvent: ->
+    debugger
+
+  actions: null
+
+  prevNode: (args...)  ->
+    @_actions.prevNode.apply(@_actions, args)
+
+  nextNode: (args...)  ->
+    @_actions.nextNode.apply(@_actions, args)
+
+
