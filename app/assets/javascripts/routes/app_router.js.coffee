@@ -40,8 +40,18 @@ Sysys.ActsActiveActRoute = Ember.Route.extend
 
 Sysys.ActsIndexRoute = Ember.Route.extend
   model: ->
-    
-  
+
+Sysys.ApplicationRoute = Ember.Route.extend
+  actions:
+    jsonChanged: (json)->
+      debugger
+
+Sysys.IndexRoute = Ember.Route.extend
+  actions:
+    jsonChanged: (json)->
+      debugger
+
+
 
     # = Ember.Router.extend
     # location: 'hash'
