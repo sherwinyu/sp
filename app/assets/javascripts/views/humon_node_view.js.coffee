@@ -288,3 +288,9 @@ Sysys.HumonRootView = Sysys.HumonNodeView.extend
   focusOut: (e) ->
     if @get('controller')
       @get('controller').activateNode null
+
+Sysys.HumonEditorComponent = Ember.Component.extend
+  end_time: Sysys.j2hn "wala wala"
+  init: ->
+    @_super()
+    @set 'node', Sysys.j2hn @get 'json'
