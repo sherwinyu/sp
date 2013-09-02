@@ -1,4 +1,5 @@
 Sysys.HumonEditorComponent = Ember.Component.extend
+  classNames: ['humon-editor']
   end_time: Sysys.j2hn "wala wala"
   init: ->
     @set 'content', Sysys.j2hn @get 'json'
@@ -242,3 +243,17 @@ Sysys.HumonEditorComponent = Ember.Component.extend
       parent.deleteChild ahn
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
     @smartFocus()
+
+
+Sysys.HumonEditorView = Ember.View.extend
+  templateName: 'humon-editor'
+  init: ->
+    unless @get 'json'
+      @set 'json', test: 'json'
+    @set 'content', Sysys.j2hn @get 'json'
+    detailController = Sysys.DetailController.create
+      container: Sysys.__container__
+      content: @get 'content'
+
+    @set 'controller', detailController
+    @_super()

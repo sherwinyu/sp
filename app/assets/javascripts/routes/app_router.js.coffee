@@ -48,8 +48,14 @@ Sysys.ApplicationRoute = Ember.Route.extend
 
 Sysys.IndexRoute = Ember.Route.extend
   actions:
-    jsonChanged: (json)->
+    jsonChanged: ->
       debugger
+
+Sysys.ActsIndex = Ember.Route.extend
+  actions:
+    jsonChanged: ->
+      debugger
+
 
 
 
