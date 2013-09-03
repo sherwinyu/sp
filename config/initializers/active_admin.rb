@@ -142,6 +142,7 @@ ActiveAdmin.setup do |config|
   #   config.register_javascript 'my_javascript.js'
   config.register_javascript 'dependencies.js'
   config.register_javascript 'sysys.js'
+  config.register_javascript 'admin/form'
 
 
   # == CSV options
