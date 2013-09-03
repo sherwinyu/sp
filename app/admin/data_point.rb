@@ -8,11 +8,14 @@ ActiveAdmin.register DataPoint do
 
   filter :email
 
-  form do |f|
+  form partial:  "form"
+=begin
+  do |f|
     f.inputs "Admin Details" do
       f.input :submitted_at
       f.input :details
     end
     f.actions
   end
+=end
 end
