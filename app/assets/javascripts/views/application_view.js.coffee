@@ -4,5 +4,3 @@ Sysys.ApplicationView = Ember.View.extend
   json:
     key: 'value'
     list: [1, 2, 3]
-
-

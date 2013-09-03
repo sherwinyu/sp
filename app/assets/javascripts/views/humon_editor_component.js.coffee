@@ -6,8 +6,10 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
     detailController = Sysys.DetailController.create()
     @_super()
 
-  committed: ->
-    @sendAction 'jsonChanged', Sysys.hn2j @get('content')
+  hooks:
+    didCommit: ->
+      @sendAction 'jsonChanged', Sysys.hn2j @get('content')
+      @set 'json', Sysys.hn2j @get('content')
 
 Sysys.HumonEditorView = Ember.View.extend
   templateName: 'humon-editor'
