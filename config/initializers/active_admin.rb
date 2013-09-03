@@ -140,6 +140,8 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
+  config.register_javascript 'dependencies.js'
+  config.register_javascript 'sysys.js'
 
 
   # == CSV options
@@ -154,9 +156,9 @@ ActiveAdmin.setup do |config|
   # == Menu System
   #
   # You can add a navigation menu to be used in your application, or configure a provided menu
-  # 
+  #
   # To change the default utility navigation to show a link to your website & a logout btn
-  # 
+  #
   #   config.namespace :admin do |admin|
   #     admin.build_menu :utility_navigation do |menu|
   #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
@@ -200,7 +202,7 @@ ActiveAdmin.setup do |config|
 
   # == Filters
   #
-  # By default the index screen includes a “Filters” sidebar on the right 
+  # By default the index screen includes a “Filters” sidebar on the right
   # hand side with a filter for each attribute of the registered model.
   # You can enable or disable them for all resources here.
   #
