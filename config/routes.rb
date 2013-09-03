@@ -1,4 +1,10 @@
 Sysys::Application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
+  resources :data_points
+
+
   resources :acts
   root to: 'pages#home'
 

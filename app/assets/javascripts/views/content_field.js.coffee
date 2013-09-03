@@ -130,28 +130,25 @@ Sysys.ContentField = Ember.TextArea.extend
         @get('parentView').up()
       'ctrl+up': (e) =>
         e.preventDefault()
-        @get('controller').bubbleUp()
+        @get('controller').send('bubbleUp')
       'ctrl+down': (e) =>
         e.preventDefault()
-        @get('controller').bubbleDown()
+        @get('controller').send('bubbleDown')
       'ctrl+left': (e) =>
         e.preventDefault()
-        @get('controller').outdent()
+        @get('controller').send('outdent')
       'ctrl+right': (e) =>
         e.preventDefault()
-        @get('controller').indent()
+        @get('controller').send('indent')
       'ctrl+backspace': (e) =>
         e.preventDefault()
-        @get('controller').deleteActive()
+        @get('controller').send('deleteActive')
       'ctrl+shift+l': (e) =>
         console.log 'ctrl shift l'
-        @get('controller').forceList()
+        @get('controller').send('forceList')
       'ctrl+shift+h': (e) =>
         console.log 'ctrl+shift+h'
-        @get('controller').forceHash()
-      'ctrl+space': (e) =>
-        @get('parentView').enterEditing()
-        e.preventDefault()
+        @get('controller').send('forceHash')
 
   willDestroyElement: ->
     @removeAutogrow(false)
@@ -160,7 +157,7 @@ Sysys.AbstractLabel = Sysys.ContentField.extend
   classNames: ['label-field']
   enter: ->
     if @get('controller.activeHumonNode.isCollection')
-      @get('controller').insertChild()
+      @get('controller').send('insertChild')
     else
       @commitAndContinue()
 
@@ -183,7 +180,7 @@ Sysys.ValField = Sysys.ContentField.extend
   classNames: ['val-field']
   placeholder: 'val'
   commit: ->
-    @get('controller').commit(@get 'value')
+    @get('controller').send('commit', @get 'value')
 
   initHotKeys: ->
     @_super()
