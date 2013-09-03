@@ -1,0 +1,23 @@
+<h1>Listing data_points</h1>
+
+<table>
+  <tr>
+    <th>Submitted at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @data_points.each do |data_point| %>
+  <tr>
+    <td><%= data_point.submitted_at %></td>
+    <td><%= link_to 'Show', data_point %></td>
+    <td><%= link_to 'Edit', edit_data_point_path(data_point) %></td>
+    <td><%= link_to 'Destroy', data_point, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Data point', new_data_point_path %>

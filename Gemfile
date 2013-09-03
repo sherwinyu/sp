@@ -72,6 +72,6 @@ end
 gem "active_model_serializers", "~> 0.7.0"
 gem "mongoid", "~> 3.0.0"
 gem "mongoid_auto_increment"
-
+gem 'activeadmin-mongoid'
 
 gem "mixpanel"
