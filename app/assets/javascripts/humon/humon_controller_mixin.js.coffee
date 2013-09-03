@@ -1,4 +1,6 @@
 Sysys.HumonControllerMixin = Ember.Mixin.create
+# content:  the root HumonNode
+
   activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
   activeHumonNodeView: null
   activeHumonNode: null
@@ -93,7 +95,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     if rawString?
       Ember.run =>
         node.replaceWithJson json
-        @didCommit()
+        @didCommit( Sysys.hn2j @get('content') )
         newType = node.get('nodeType')
         if newType != oldType
         # We are manually re-rendering to update autoTemplate.

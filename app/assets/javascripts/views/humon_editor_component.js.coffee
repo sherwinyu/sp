@@ -17,6 +17,11 @@ Sysys.HumonEditorView = Ember.View.extend
     unless @get 'json'
       @set 'json', test: 'json'
     @set 'content', Sysys.j2hn @get 'json'
+    @set 'hooks', $.extend(
+      didCommit: (json) =>
+        @set 'json', json
+    , @get('hooks'))
+
     detailController = Sysys.DetailController.create
       hooks: @get 'hooks'
       container: Sysys.__container__

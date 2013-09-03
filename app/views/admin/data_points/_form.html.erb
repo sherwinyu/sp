@@ -1,5 +1,6 @@
 form_for(@stemp, :remote => true, :html => {:'data-type' => 'json', :multipart => true})
 <%= form_for [:admin, @data_point], remote: true, html: {'data-type'=> 'json', 'multipart'=>true} do |f| %>
   <%= f.text_field :submitted_at %>
+  <div id="humon-editor"> </div>
   <%= f.submit %>
 <% end %>
