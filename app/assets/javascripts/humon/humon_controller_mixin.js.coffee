@@ -2,7 +2,26 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
   activeHumonNodeView: null
   activeHumonNode: null
-  commited: Em.K
+  init: ->
+    @_super()
+    hooks = @get('hooks') || {}
+    if typeof hooks.didCommit is 'function'
+      @didCommit = hooks.didCommit
+    if typeof hooks.didUp is 'function'
+      @didUp = hooks.didUp
+    if typeof hooks.didDown is 'function'
+      @didDown = hooks.didDown
+
+  ###################
+  # HOOKS
+  ##################
+
+  didCommit: ->
+    debugger
+  didUp: ->
+    debugger
+  didDown: ->
+    debugger
 
   ######################################
   ##  Committing (keys and values)
@@ -74,7 +93,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     if rawString?
       Ember.run =>
         node.replaceWithJson json
-        @committed()
+        @didCommit()
         newType = node.get('nodeType')
         if newType != oldType
         # We are manually re-rendering to update autoTemplate.
@@ -128,6 +147,8 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     newNode = @get('activeHumonNode').nextNode()
     if newNode
       @send 'activateNode', newNode
+    else
+      @didDown()
     console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
@@ -136,6 +157,8 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     newNode = @get('activeHumonNode').prevNode()
     if newNode
       @send 'activateNode', newNode
+    else
+      @didUp()
     console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
