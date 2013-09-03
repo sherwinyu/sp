@@ -6,7 +6,7 @@ Sysys.HumonNodeView = Ember.View.extend
       HumonTypes.contextualize(@get 'nodeContent')._materializeTemplateStringsForNode(@get 'nodeContent')
   ).property('nodeContent.nodeVal')
 
-  # autoTemplate is solely responsible for producing the correct template name
+  # autoTemplate is responsible solely for producing the correct template name
   autoTemplate: (->
     node = @get('nodeContent')
     if @get('nodeContent.isLiteral')
@@ -15,6 +15,7 @@ Sysys.HumonNodeView = Ember.View.extend
       "humon_node"
   ).property('nodeContent.nodeType')
   templateNameBinding: "autoTemplate"
+  # templateName: "humon_node"
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
@@ -41,7 +42,7 @@ Sysys.HumonNodeView = Ember.View.extend
       return
     else
       console.log "    calling transitionToNode"
-      @get('controller').activateNode @get('nodeContent')
+      @get('controller').send('activateNode', @get('nodeContent'))
       # TODO(syu): @get('controller').transitionToNode @get('nodeContent')
 
   # focusOut -- handle focusOut from a sub-contentField
@@ -82,7 +83,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #   * context?
   smartFocus: ->
     node = @get('nodeContent')
-    context = node.get('nodeParent.nodeType')
+    context = node.get('nodeParent.nodeType') || "hash"
     nodeKey = node.get('nodeKey')
     nodeVal = @$valField().val()
     isLiteral = node.get('isLiteral')
@@ -114,7 +115,7 @@ Sysys.HumonNodeView = Ember.View.extend
     console.log 'hnv click'
     e.stopPropagation()
     unless @get('isActive')
-      @get('controller').activateNode @get('nodeContent')
+      @get('controller').send('activateNode', @get('nodeContent'))
     console.log '  smart focusing'
     @smartFocus()
 
@@ -123,14 +124,14 @@ Sysys.HumonNodeView = Ember.View.extend
   #   1) calls prevNode on the controller
   #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
   up: (event = null) ->
-    if @get('controller').prevNode()
+    if @get('controller').prevNode() #send('prevNode')
       @set "_focusedField", null
       console.log "HNV#up; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
       @get('controller').send 'smartFocus'
 
   down: (event = null) ->
-    if changed = @get('controller').nextNode()
+    if changed = @get('controller').nextNode() #send('nextNode')
       @set "_focusedField", null
       console.log "HNV#down; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
@@ -168,51 +169,6 @@ Sysys.HumonNodeView = Ember.View.extend
     @initHotkeys()
     @get('nodeContent')?.set 'nodeView', @
 
-  animInsert: ->
-    anims = @get('controller.anims')
-    $el = @$()
-    if @get('isActive') and anims?.insert
-      switch anims['insert']
-        when 'slideDown'
-          $el.animate bottom: $el.css('height'), 0
-          $el.animate bottom: 0, 185
-        when 'slideUp'
-          $el.css 'z-index', 555
-          $el.animate top: $el.css('height'), 0
-          $el.animate top: 0, 185, ->
-            $el.css 'z-index', ''
-        when 'fadeIn'
-          $el.hide 0
-          $el.fadeIn 185
-        when 'appear'
-          Em.K
-      anims.insert = undefined
-      return
-    $el.hide 0
-    $el.slideDown 375
-
-  animDestroy: ->
-    anims = @get('controller.anims')
-    $el = @$().clone()
-    @.$().replaceWith $el
-    if @get('isActive') and anims?.destroy
-      switch anims.destroy
-        when 'slideDown'
-          $el.slideDown 185
-        when 'slideUp'
-          # $el.animate bottom: $el.css('height'), 185
-          $el.slideUp 185
-        when 'fadeOut'
-          $el.fadeOut 185
-        when 'disappear'
-          $el.addClass 'tracker'
-          $el.hide 0
-      anims.destroy = undefined
-      delay 185, -> $el.remove()
-      return
-    console.log 'sliding up'
-    $el.slideUp 250, ->
-      $el.remove()
 
   unbindHotkeys: Em.K
 
@@ -273,4 +229,18 @@ Sysys.DetailView = Sysys.HumonNodeView.extend
 
   focusOut: (e) ->
     if @get('controller')
-      @get('controller').activateNode null
+      @get('controller').send('activateNode', null)
+
+Sysys.HumonRootView = Sysys.HumonNodeView.extend
+  init: ->
+    Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
+    @_super()
+
+  didInsertElement: ->
+    Ember.run.sync()
+    @_super()
+
+  focusOut: (e) ->
+    if @get('controller')
+      @get('controller').send('activateNode', null)
+
