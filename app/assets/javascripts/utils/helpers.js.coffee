@@ -31,6 +31,8 @@ window.setCursor = (node, pos) ->
            node
   unless node
     return false
+  if node.tagName is "DIV"
+    return divSetCursor(node, pos, pos)
   if node.createTextRange
     textRange = node.createTextRange()
     textRange.collapse true

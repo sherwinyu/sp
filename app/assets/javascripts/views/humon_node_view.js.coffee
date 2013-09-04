@@ -61,10 +61,10 @@ Sysys.HumonNodeView = Ember.View.extend
     # prepare payload: pull from $().val, etc
     # send to `commit`
     node = @get('nodeContent')
-    console.log('commitingEverything, nodeKey=', node.get('nodeKey'))
-    console.log('commitingEverything, node=', node.get('nodeVal'))
-    console.log('commitingEverything, activeNodeKey =', @get('controller.activeHumonNode.nodeKey'))
-    console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.nodeVal'))
+    # console.log('commitingEverything, nodeKey=', node.get('nodeKey'))
+    # console.log('commitingEverything, node=', node.get('nodeVal'))
+    # console.log('commitingEverything, activeNodeKey =', @get('controller.activeHumonNode.nodeKey'))
+    # console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.nodeVal'))
     payload =
       key: @$keyField().val()
       node: node
@@ -186,6 +186,7 @@ Sysys.HumonNodeView = Ember.View.extend
     field = @$('> span > .content-field.val-field')?.first()
     field
 
+  # focusField --
   focusField: (opts) ->
     if typeof arg is String
       opts = field: opts

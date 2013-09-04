@@ -18,12 +18,13 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # HOOKS
   ##################
 
-  didCommit: ->
-    debugger
+  didCommit: (json)->
+    console.log 'didCommit', JSON.stringify json
+
   didUp: ->
-    debugger
+    console.log 'didUp'
   didDown: ->
-    debugger
+    console.log 'didDown'
 
   ######################################
   ##  Committing (keys and values)
