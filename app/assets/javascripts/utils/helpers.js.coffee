@@ -22,6 +22,14 @@ window.mcs = (model)-> msm(model).get('currentState')
 window.ts = -> moment().format("HH:mm:ss")
 
 window.getCursor = (node) ->
+  # first convert node to a HTMLElement, always
+  if node instanceof jQuery
+    node = node[0]
+
+  # if it's a div .. or a SPAN TODO
+  # then use the divGetCursor routine
+  if node.tagName is "DIV"
+    return divGetCursor(node)
   $(node).prop('selectionStart')
 
 window.setCursor = (node, pos) ->
