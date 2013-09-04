@@ -1,0 +1,16 @@
+/*
+ * This stylesheet is for the content-editable-fields branch
+ * This sheet is included by `humon_node` at the bottom, overriding
+ * the original styles.
+ *
+ * This will be merged in once the branch is complete
+ */
+
+@import "base";
+.key-field {
+  @include imp;
+  border: 1px solid red;
+  display: inline-block;
+  width: 100px;
+  height: 18px;
+}

@@ -1,27 +1,5 @@
+@import "base";
 @import "humon_node_base";
-
-$copygray: #555555;
-$grayDark: darken($copygray, 15%);
-$grayDarker: darken($copygray, 30%);
-$grayLight: lighten($copygray, 15%);
-$grayLighter: lighten($copygray, 30%);
-$grayLightest: lighten($copygray, 45%);
-
-$activeColor: rgb(72, 137, 255);
-$activeColorDark: darken($activeColor, 30%);
-$activeColorLight: lighten($activeColor, 30%);
-
-$glyphcolor: darken($grayLightest, 5%);
-$glyphsize: 14px;
-$lineheight: 20px;
-
-$nodeWhiteIndent: 15px;
-$nodeLeftBorder: 4px;
-$fieldWhiteIndent: 15px;
-
-@mixin imp {
-  border: 1px solid red;
-}
 
 span.blocky {
   display: inline-block;
@@ -225,3 +203,5 @@ textarea.autogrow-field.content-field {
   border-bottom: 15px red solid;
   padding-bottom: 50px;
 }
+
+@import "humon_node_content_editable_field.css.scss";

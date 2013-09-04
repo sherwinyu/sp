@@ -1,3 +1,8 @@
+/*
+ * This file is intended to provide default styling that we were relying on from Bootstrap
+ * We noticed that in active-admin, which doesn't include bootstrap.css, the node views were styled differently
+ */
+
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="datetime"]:focus,

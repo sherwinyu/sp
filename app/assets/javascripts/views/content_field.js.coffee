@@ -198,6 +198,25 @@ Sysys.KeyField = Sysys.AbstractLabel.extend
   commit: ->
     @get('controller').commitKey()
 
+
+Sysys.KeyField = Ember.View.extend
+  classNames: ['content-field', 'key-field']
+  contenteditable: true
+  attributeBindings: ["contenteditable"]
+  placeholder: 'key'
+  commit: ->
+    @get('controller').commitKey()
+  didInsertElement: ->
+    @set('content', 'walawala')
+    @$().html @get('rawValue')
+  click: ->
+    debugger
+
+
+  focusIn: (e, args...) ->
+    console.log "focusingIn keyField", @$()
+    true
+
 Sysys.IdxField = Sysys.AbstractLabel.extend
   classNames: ['idx-field']
   refresh: Em.K
