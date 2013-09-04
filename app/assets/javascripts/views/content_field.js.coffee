@@ -5,6 +5,12 @@ Sysys.ContentField = Ember.TextArea.extend
   placeholder: ''
   autogrowing: false
 
+  val: (args...) ->
+    @$().val.apply(@$(), args)
+  contentLength: ->
+    @val().length
+
+
   dirty: ( ->
     return false unless @get('state') == 'inDOM'
     ret = @get('rawValue') != @get('value')

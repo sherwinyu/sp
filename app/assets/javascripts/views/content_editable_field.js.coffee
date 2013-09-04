@@ -1,8 +1,15 @@
 Sysys.ContentEditableField = Ember.View.extend
+
   rawValueBinding: null
   classNames: ['content-field']
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   placeholder: ''
+
+  val: (args...) ->
+    @$().html.apply(@$(), args)
+
+  contentLength: ->
+    @val().length
 
   # click -- responds to click event on the contentField
   # This exists to prevent propagation to HNV.click, which
@@ -58,6 +65,7 @@ Sysys.ContentEditableField = Ember.View.extend
   cancel: ->
     @refresh()
 
+
   initHotKeys: ->
     @createHotKeys()
     for own combo, func of @get 'hotkeys'
@@ -102,8 +110,31 @@ Sysys.ContentEditableField = Ember.View.extend
         console.log 'ctrl+shift+h'
         @get('controller').send('forceHash')
 
-Sysys.KeyEditableField = Sysys.ContentEditableField.extend
-  classNames: ['content-field', 'key-field']
+Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
+  classNames: ['label-field']
+  enter: ->
+    if @get('controller.activeHumonNode.isCollection')
+      @get('controller').send('insertChild')
+    else
+      @commitAndContinue()
+
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'right', (e) =>
+      @moveRight(e)
+
+  keyDown: (e) ->
+    if e.which ==  186 # colon
+      e.preventDefault()
+      @get('parentView').moveRight()
+
+  moveRight: (e)->
+    if getCursor(@$()) ==  @contentLength()
+      @get('parentView').moveRight()
+      e.preventDefault()
+
+Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
+  classNames: ['content-field', 'key-field', 'label-field']
   contenteditable: 'true'
   attributeBindings: ["contenteditable:contenteditable"]
   placeholder: 'key'

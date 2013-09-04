@@ -35,7 +35,6 @@ Sysys.HumonNodeView = Ember.View.extend
   #  This is primarily called indirectly by event bubbling from content fields
   focusIn: (e) ->
     console.log 'humon node view focusing in '
-    # console.log "   currently focused item is", $(':focus')
     e.stopPropagation()
     if @get 'isActive'
       console.log "    canceled because node is already active"
@@ -66,10 +65,10 @@ Sysys.HumonNodeView = Ember.View.extend
     # console.log('commitingEverything, activeNodeKey =', @get('controller.activeHumonNode.nodeKey'))
     # console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.nodeVal'))
     payload =
-      key: @$keyField().val()
+      key: @keyField()?.val()
       node: node
-    if @$valField().val() isnt @get("templateStrings.asString")
-      payload.val = @$valField().val()
+    if @valField()?.val() isnt @get("templateStrings.asString")
+      payload.val = @valField()?.val()
     @get('controller').send 'commitEverything', payload
 
   # smartFocus -- "auto" sets the focus for this HNV based on context
@@ -85,7 +84,7 @@ Sysys.HumonNodeView = Ember.View.extend
     node = @get('nodeContent')
     context = node.get('nodeParent.nodeType') || "hash"
     nodeKey = node.get('nodeKey')
-    nodeVal = @$valField().val()
+    nodeVal = @valField()?.val()
     isLiteral = node.get('isLiteral')
     isCollection = node.get('isCollection')
     opts = {}
@@ -176,7 +175,8 @@ Sysys.HumonNodeView = Ember.View.extend
     @$().bind 'keyup', 'up', (e) =>
 
   $labelField: ->
-    @$('> span> .content-field.label-field')?.first()
+    field = @$('> span> .content-field.label-field')?.first()
+    field
   $keyField: ->
     field = @$('> span > .content-field.key-field')?.first()
     field
@@ -186,16 +186,45 @@ Sysys.HumonNodeView = Ember.View.extend
     field = @$('> span > .content-field.val-field')?.first()
     field
 
+  labelField: ->
+    Sysys.vfi(@$labelField().attr 'id')
+  keyField: ->
+    Sysys.vfi(@$keyField().attr 'id')
+  idxField: ->
+    Sysys.vfi(@$idxField().attr 'id')
+  valField: ->
+    Sysys.vfi(@$valField().attr 'id')
+
   # focusField --
   focusField: (opts) ->
     if typeof arg is String
       opts = field: opts
+
+    # get the field view
+    fieldView = @["#{opts.field}Field"]()
+    if fieldView instanceof Ember.TextArea
+      fieldView.$().focus()
+    else # if it's not a text area, then we just focus it to the left
+      setCursor(fieldView.$().get(0), 0)
+
+    if opts.pos == "left"
+      setCursor(fieldView.$().get(0), 0)
+    if opts.pos == "right"
+      setCursor(fieldView.$().get(0), fieldView.contentLength())
+
+    return
+  ###
     $field = @["$#{opts.field}Field"]()
+    # if this is textfield
+    #
+
     $field.focus()
+
     if opts.pos == "left"
       setCursor($field.get(0), 0)
     if opts.pos == "right"
-      setCursor($field.get(0), $field.val().length)
+      setCursor($field.get(0), $field.val()?.length || $field.html().length)
+    ###
 
   moveLeft: ->
     @set '_focusedField',
@@ -212,11 +241,11 @@ Sysys.HumonNodeView = Ember.View.extend
 
 
   commitAndContinue: ->
-    if @$valField().val() == ''
-      @$valField().val '{}'
+    if @valField()?.val() == ''
+      @valField()?.val '{}'
     payload =
-      val: @$valField().val()
-      key: @$keyField().val()
+      val: @valField()?.val()
+      key: @keyField()?.val()
     @get('controller').send 'commitAndContinueNew', payload
 
 Sysys.DetailView = Sysys.HumonNodeView.extend

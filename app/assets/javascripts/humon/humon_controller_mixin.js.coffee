@@ -46,6 +46,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     node.set('nodeKey', payload.key) if payload.key?
     @send 'commitVal', payload.val, node: node if payload.val?
 
+  # calls commitEverything
+  # then conditionally decides whether to insert a sibling or a child,
+  # depending on whether active node is a collection
   commitAndContinueNew: (payload) ->
     ahn = @get 'activeHumonNode'
     @send 'commitEverything', payload
