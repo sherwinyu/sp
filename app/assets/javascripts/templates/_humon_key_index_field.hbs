@@ -1,5 +1,5 @@
 {{#if view.nodeContent.nodeParent.isList}}
   {{view "Sysys.IdxField" valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"}}
 {{else}}
-  {{view "Sysys.KeyField" rawValueBinding=view.nodeContent.nodeKey}}<span class="colon-glyph">:</span>
+  {{view "Sysys.KeyEditableField" rawValueBinding=view.nodeContent.nodeKey}}<span class="colon-glyph">:</span>
 {{/if}}

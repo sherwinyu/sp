@@ -1,15 +1,8 @@
-Sysys.ContentField = Ember.TextArea.extend
+Sysys.ContentEditableField = Ember.View.extend
   rawValueBinding: null
   classNames: ['content-field']
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   placeholder: ''
-  autogrowing: false
-
-  dirty: ( ->
-    return false unless @get('state') == 'inDOM'
-    ret = @get('rawValue') != @get('value')
-    ret
-  ).property('rawValue', 'value')
 
   # click -- responds to click event on the contentField
   # This exists to prevent propagation to HNV.click, which
@@ -30,8 +23,7 @@ Sysys.ContentField = Ember.TextArea.extend
   #   1) calls @autogrow
   #   2) bubbles the event
   focusIn: (e, args...) ->
-    console.log "focusingIn contentfield", @$()
-    @autogrow(false)
+    console.log "focusingIn content editable field", @$()
     true
 
   # focusOut -- responds to focus out event on the contentField
@@ -40,60 +32,23 @@ Sysys.ContentField = Ember.TextArea.extend
   #   1) removes the autogrow on the field
   #   2) bubbles the event
   focusOut: (e, options)->
-    console.log "focusingOut contentfield", @$()
-    @removeAutogrow(false)
+    console.log "focusingOut content editable field", @$()
     true
-
-  # autogrow -- attempts to add autogrow to the current field
-  # @param fail -- specifies failure behavior
-  #   true (default) - fail if already autogrowing
-  #   false - ignore autogrow check
-  # Spec
-  #   1) it calls autogrowplus, horizontal true, vertical true
-  autogrow: (fail = true)->
-    return
-    unless @get 'autogrowing'
-      #console.log '.... successfully'
-      @$().autogrowplus horizontal: true, vertical: true
-      @set('autogrowing', true)
-    else
-      #console.log '.... unsuccessfully'
-      Em.assert "#{@$()} shouldn't already be autogrowing" if fail
-
-  # removeAutogrow -- attempts to remove autogrow from the current field
-  # @param fail -- specifies failure behavior
-  #   true (default) - fail unless already autorowing
-  #   false - ignore already autogrowing check
-  # Spec
-  #   1) it triggers 'remove.autogrowPlus'
-  removeAutogrow: (fail = true)->
-    return
-    if @get 'autogrowing'
-      @$().trigger 'remove.autogrowplus'
-      @set('autogrowing', false)
-      #console.log '   ...successfully'
-    else
-      #console.log '.... unsuccessfully'
-      Em.assert "#{@$()} should already be autogrowing" if fail
 
   didInsertElement: ->
     @refresh()
-    # @autosize()
     @setPlaceHolderText()
     @initHotKeys()
 
   refresh: ->
     @set 'value', @get('rawValue')
 
-  autosize: ->
-    @autogrow()
-    @removeAutogrow()
-
   setPlaceHolderText: ->
     @$().attr('placeholder', @get('placeholder'))
 
   commit: Em.K
 
+  # is this an event?
   enter: ->
     @commitAndContinue()
 
@@ -102,9 +57,6 @@ Sysys.ContentField = Ember.TextArea.extend
 
   cancel: ->
     @refresh()
-
-  keyDown: (e) ->
-    console.log(e)
 
   initHotKeys: ->
     @createHotKeys()
@@ -150,57 +102,31 @@ Sysys.ContentField = Ember.TextArea.extend
         console.log 'ctrl+shift+h'
         @get('controller').send('forceHash')
 
-  willDestroyElement: ->
-    @removeAutogrow(false)
-
-Sysys.AbstractLabel = Sysys.ContentField.extend
-  classNames: ['label-field']
-  enter: ->
-    if @get('controller.activeHumonNode.isCollection')
-      @get('controller').send('insertChild')
-    else
-      @commitAndContinue()
-
-  initHotKeys: ->
-    @_super()
-    @$().bind 'keydown', 'right', (e) =>
-      @moveRight(e)
-
-  keyDown: (e) ->
-    if e.which ==  186 # colon
-      e.preventDefault()
-      @get('parentView').moveRight()
-
-  moveRight: (e)->
-    if getCursor(@$()) ==  @$().val().length
-      @get('parentView').moveRight()
-      e.preventDefault()
-
-Sysys.ValField = Sysys.ContentField.extend
-  classNames: ['val-field']
-  placeholder: 'val'
-  commit: ->
-    @get('controller').send('commit', @get 'value')
-
-  initHotKeys: ->
-    @_super()
-    @$().bind 'keydown', 'left', (e) =>
-      @moveLeft(e)
-
-  moveLeft: (e)->
-    if getCursor(@$()) ==  0
-      @get('parentView').moveLeft()
-      e.preventDefault()
-
-Sysys.KeyField = Sysys.AbstractLabel.extend
-  classNames: ['key-field']
+Sysys.KeyEditableField = Sysys.ContentEditableField.extend
+  classNames: ['content-field', 'key-field']
+  contenteditable: 'true'
+  attributeBindings: ["contenteditable:contenteditable"]
   placeholder: 'key'
   commit: ->
     @get('controller').commitKey()
-
-Sysys.IdxField = Sysys.AbstractLabel.extend
-  classNames: ['idx-field']
-  refresh: Em.K
   didInsertElement: ->
     @_super()
-    @$().attr('tabindex', -1)
+    @$().html @get('rawValue')
+  click: (e)->
+    # @get('controller').send 'focusIn'
+    console.log "debugger"
+    e.stopPropagation()
+
+
+  focusIn: (e, args...) ->
+    console.log "focusingIn keyField", @$()
+    true
+
+  focusOut: (e) ->
+    console.log "focusOut"
+
+  blur: (e) ->
+    console.log "blur"
+
+  activate: (e) ->
+    console.log "activate"
