@@ -1,3 +1,5 @@
+@import "humon_node_base";
+
 $copygray: #555555;
 $grayDark: darken($copygray, 15%);
 $grayDarker: darken($copygray, 30%);
@@ -51,13 +53,13 @@ span.blocky {
 }
 
 .node.active > span.blocky {
-  background: $activeColorLight
+  // background: $activeColorLight
 }
 .node.active > .node {
   border-left: $nodeLeftBorder $activeColorLight solid;
 }
-.node.active > span.blocky > textarea.content-field.label-field {
-  color: $activeColorDark;
+.node.active > span.blocky > textarea.content-field {
+  // color: $activeColorDark;
   text-decoration: underline;
 }
 .node.active > span.blocky> span.node-detail {
@@ -92,67 +94,70 @@ span.node-detail.node-icon {
 /*
  * Content Fields
  */
-textarea.content-field {
-  color: $copygray;
-  height: $lineheight;
-  border: none;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px;
-  box-shadow: none;
-  resize: none;
-  background: none;
-  overflow: hidden;
-  vertical-align: top;
-}
-textarea.content-field:focus {
-  border: none;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  box-shadow: none;
-}
+.node {
+  textarea.content-field {
+    color: $copygray;
+    height: $lineheight;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    box-shadow: none;
+    resize: none;
+    background: none;
+    overflow: hidden;
+    vertical-align: top;
+  }
+  textarea.content-field:focus {
+    border: none;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    box-shadow: none;
+  }
 
-textarea.content-field {
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-}
-textarea.content-field.dirty {
-  // border-right: 1px solid red;
-}
-textarea.content-field.autogrowing {
-  // border-left: 1px solid blue;
-}
+  textarea.content-field {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+  }
+  textarea.content-field.dirty {
+    // border-right: 1px solid red;
+  }
+  textarea.content-field.autogrowing {
+    // border-left: 1px solid blue;
+  }
 
-textarea.content-field.val-field {
-  min-width: 100px;
-}
-textarea.content-field.val-field:focus { }
+  textarea.content-field.val-field {
+    min-width: 100px;
+  }
+  textarea.content-field.val-field:focus { }
 
-/*
- * Label Field
- */
-textarea.content-field.label-field {
-  padding-left: $fieldWhiteIndent;
-  min-width: 20px;
+  /*
+   * Label Field
+   */
+  textarea.content-field.label-field {
+    padding-left: $fieldWhiteIndent;
+    min-width: 20px;
+  }
+  /*
+   * index field
+  */
+  textarea.content-field.idx-field {
+    width: 20px;
+    color: $grayLight;
+  }
+  textarea.content-field.idx-field:focus { }
+  /*
+   * Key Field
+   */
+  textarea.content-field.key-field {
+    min-width: 25px;
+    width: 100px;
+    text-align: left;
+    padding-right: $fieldWhiteIndent;
+  }
+  textarea.content-field.key-field:focus {
+  }
 }
-/*
- * index field
- */
-textarea.content-field.idx-field {
-  width: 20px;
-  color: $grayLight;
-}
-textarea.content-field.idx-field:focus { }
-/*
- * Key Field
- */
-textarea.content-field.key-field {
-  min-width: 25px;
-  width: 100px;
-  text-align: right;
-  padding-right: $fieldWhiteIndent;
-}
-textarea.content-field.key-field:focus { }
 
 /*********************
  * Glyphs

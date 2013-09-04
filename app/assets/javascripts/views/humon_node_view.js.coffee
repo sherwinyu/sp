@@ -19,11 +19,9 @@ Sysys.HumonNodeView = Ember.View.extend
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
-    'nodeContent.isHash:node-hash',
-    'nodeContent.isList:node-list',
+    'nodeContent.nodeType',
     'isActive:active',
     'parentActive:activeChild',
-    'nodeContent.nodeType',
     'suppressGap']
   classNames: ['node']
 
