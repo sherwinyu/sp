@@ -112,10 +112,13 @@ Sysys.KeyEditableField = Sysys.ContentEditableField.extend
   didInsertElement: ->
     @_super()
     @$().html @get('rawValue')
-  click: (e)->
+
+  click: (e) ->
     # @get('controller').send 'focusIn'
     console.log "debugger"
     e.stopPropagation()
+    @send('testEvent')
+
 
 
   focusIn: (e, args...) ->
@@ -124,6 +127,7 @@ Sysys.KeyEditableField = Sysys.ContentEditableField.extend
 
   focusOut: (e) ->
     console.log "focusOut"
+    true
 
   blur: (e) ->
     console.log "blur"

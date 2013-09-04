@@ -1,4 +1,6 @@
 Sysys.HumonNodeView = Ember.View.extend
+  testEvent: (e) ->
+    debugger
   _focusedField: null
 # templateName: 'humon_node'
   templateStrings: (->

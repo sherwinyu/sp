@@ -10,6 +10,9 @@
 #= require_tree ./routes
 @Sysys = Ember.Application.create
   LOG_TRANSITIONS: true
+  customEvents: {
+    testEvent: 'testEvent'
+  }
   # if @TESTING
   # Sysys.deferReadiness()
 
