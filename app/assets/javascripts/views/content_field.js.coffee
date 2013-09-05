@@ -4,6 +4,12 @@ Sysys.ContentField = Ember.TextArea.extend
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   placeholder: ''
   autogrowing: false
+  init: ->
+    _controller = @get('controller')
+    _context = @get('context')
+    @_super()
+    @set 'controller', _controller
+    @set 'context', _context
 
   val: (args...) ->
     @$().val.apply(@$(), args)
