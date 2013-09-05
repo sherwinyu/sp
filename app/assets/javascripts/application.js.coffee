@@ -9,21 +9,6 @@
 #
 # WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 # GO AFTER THE REQUIRES BELOW.
-#= require vendor/jquery-1.9.1
-#= require jquery_ujs
-#= require jquery.ui.datepicker
-#= require jquery.ui.slider
-#= require handlebars
-#= require ember
-#= require ember-data
-#= require moment
-#= require date
-#
-#= require vendor/jquery-autogrow-textarea
-#= require vendor/jquery-autogrow-textarea-plus
-#= require vendor/jquery.hotkeys
-#= require vendor/jquery-ui-timepicker-addon
-#= require vendor/humon
-#
+#= require dependencies
 #= require sysys
 @Test = false

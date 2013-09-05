@@ -1,25 +1,5 @@
-$copygray: #555555;
-$grayDark: darken($copygray, 15%);
-$grayDarker: darken($copygray, 30%);
-$grayLight: lighten($copygray, 15%);
-$grayLighter: lighten($copygray, 30%);
-$grayLightest: lighten($copygray, 45%);
-
-$activeColor: rgb(72, 137, 255);
-$activeColorDark: darken($activeColor, 30%);
-$activeColorLight: lighten($activeColor, 30%);
-
-$glyphcolor: darken($grayLightest, 5%);
-$glyphsize: 14px;
-$lineheight: 20px;
-
-$nodeWhiteIndent: 15px;
-$nodeLeftBorder: 4px;
-$fieldWhiteIndent: 15px;
-
-@mixin imp {
-  border: 1px solid red;
-}
+@import "base";
+@import "humon_node_base";
 
 span.blocky {
   display: inline-block;
@@ -51,13 +31,13 @@ span.blocky {
 }
 
 .node.active > span.blocky {
-  background: $activeColorLight
+  // background: $activeColorLight
 }
 .node.active > .node {
   border-left: $nodeLeftBorder $activeColorLight solid;
 }
-.node.active > span.blocky > textarea.content-field.label-field {
-  color: $activeColorDark;
+.node.active > span.blocky > textarea.content-field {
+  // color: $activeColorDark;
   text-decoration: underline;
 }
 .node.active > span.blocky> span.node-detail {
@@ -92,67 +72,70 @@ span.node-detail.node-icon {
 /*
  * Content Fields
  */
-textarea.content-field {
-  color: $copygray;
-  height: $lineheight;
-  border: none;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px;
-  box-shadow: none;
-  resize: none;
-  background: none;
-  overflow: hidden;
-  vertical-align: top;
-}
-textarea.content-field:focus {
-  border: none;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  box-shadow: none;
-}
+.node {
+  textarea.content-field {
+    color: $copygray;
+    height: $lineheight;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    box-shadow: none;
+    resize: none;
+    background: none;
+    overflow: hidden;
+    vertical-align: top;
+  }
+  textarea.content-field:focus {
+    border: none;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    box-shadow: none;
+  }
 
-textarea.content-field {
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-}
-textarea.content-field.dirty {
-  // border-right: 1px solid red;
-}
-textarea.content-field.autogrowing {
-  // border-left: 1px solid blue;
-}
+  textarea.content-field {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+  }
+  textarea.content-field.dirty {
+    // border-right: 1px solid red;
+  }
+  textarea.content-field.autogrowing {
+    // border-left: 1px solid blue;
+  }
 
-textarea.content-field.val-field {
-  min-width: 100px;
-}
-textarea.content-field.val-field:focus { }
+  textarea.content-field.val-field {
+    min-width: 100px;
+  }
+  textarea.content-field.val-field:focus { }
 
-/*
- * Label Field
- */
-textarea.content-field.label-field {
-  padding-left: $fieldWhiteIndent;
-  min-width: 20px;
+  /*
+   * Label Field
+   */
+  textarea.content-field.label-field {
+    padding-left: $fieldWhiteIndent;
+    min-width: 20px;
+  }
+  /*
+   * index field
+  */
+  textarea.content-field.idx-field {
+    width: 20px;
+    color: $grayLight;
+  }
+  textarea.content-field.idx-field:focus { }
+  /*
+   * Key Field
+   */
+  textarea.content-field.key-field {
+    min-width: 25px;
+    width: 100px;
+    text-align: left;
+    padding-right: $fieldWhiteIndent;
+  }
+  textarea.content-field.key-field:focus {
+  }
 }
-/*
- * index field
- */
-textarea.content-field.idx-field {
-  width: 20px;
-  color: $grayLight;
-}
-textarea.content-field.idx-field:focus { }
-/*
- * Key Field
- */
-textarea.content-field.key-field {
-  min-width: 25px;
-  width: 100px;
-  text-align: right;
-  padding-right: $fieldWhiteIndent;
-}
-textarea.content-field.key-field:focus { }
 
 /*********************
  * Glyphs
@@ -220,3 +203,5 @@ textarea.autogrow-field.content-field {
   border-bottom: 15px red solid;
   padding-bottom: 50px;
 }
+
+@import "humon_node_content_editable_field.css.scss";
