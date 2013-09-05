@@ -139,10 +139,11 @@ Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
 
 Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
   classNames: ['key-field']
-
   placeholder: 'key'
+
   commit: ->
     @get('controller').commitKey()
+
   didInsertElement: ->
     @_super()
     @val @get('rawValue')
@@ -151,3 +152,21 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
     # @get('controller').send 'focusIn'
     console.log "debugger"
     e.stopPropagation()
+
+Sysys.ValEditableField = Sysys.ContentEditableField.extend
+  classNames: ['val-field']
+  placeholder: 'val'
+  init: ->
+
+  commit: ->
+    @get('controller').send('commit', @get 'value')
+
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'left', (e) =>
+      @moveLeft(e)
+
+  moveLeft: (e)->
+    if getCursor(@$()) ==  0
+      @get('parentView').moveLeft()
+      e.preventDefault()
