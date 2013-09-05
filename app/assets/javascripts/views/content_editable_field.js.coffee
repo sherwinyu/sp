@@ -48,14 +48,10 @@ Sysys.ContentEditableField = Ember.View.extend
 
   didInsertElement: ->
     @refresh()
-    @setPlaceHolderText()
     @initHotKeys()
 
   refresh: ->
-    @set 'value', @get('rawValue')
-
-  setPlaceHolderText: ->
-    @$().attr('placeholder', @get('placeholder'))
+    @val @get('rawValue')
 
   commit: Em.K
 
@@ -144,10 +140,6 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
   commit: ->
     @get('controller').commitKey()
 
-  didInsertElement: ->
-    @_super()
-    @val @get('rawValue')
-
   click: (e) ->
     # @get('controller').send 'focusIn'
     console.log "debugger"
@@ -156,7 +148,9 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
 Sysys.ValEditableField = Sysys.ContentEditableField.extend
   classNames: ['val-field']
   placeholder: 'val'
+
   init: ->
+    @_super()
 
   commit: ->
     @get('controller').send('commit', @get 'value')
