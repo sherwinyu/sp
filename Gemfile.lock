@@ -106,7 +106,7 @@ GEM
     diff-lcs (1.2.4)
     ember-bootstrap-rails (0.0.3)
       rails (>= 3.1.0)
-    ember-data-source (0.13)
+    ember-data-source (1.0.0.beta.2)
       ember-source
     ember-rails (0.12.0)
       active_model_serializers
@@ -115,7 +115,7 @@ GEM
       ember-source (>= 1.0.0.rc2.2)
       execjs (>= 1.2)
       railties (>= 3.1)
-    ember-source (1.0.0.rc8)
+    ember-source (1.0.0)
       handlebars-source (= 1.0.12)
     erubis (2.7.0)
     escape (0.0.4)
@@ -339,8 +339,9 @@ DEPENDENCIES
   database_cleaner (= 0.9.1)
   datejs-rails (= 2.0.1)
   ember-bootstrap-rails
+  ember-data-source (= 1.0.0.beta.2)
   ember-rails
-  ember-source (= 1.0.0.rc8)
+  ember-source (= 1.0.0)
   factory_girl_rails (= 4.2.1)
   figaro (= 0.6.3)
   font-awesome-rails
