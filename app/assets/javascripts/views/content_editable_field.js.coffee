@@ -1,9 +1,13 @@
 Sysys.ContentEditableField = Ember.View.extend
+  tagName: "span"
 
   rawValueBinding: null
   classNames: ['content-field']
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   placeholder: ''
+
+  contenteditable: 'true'
+  attributeBindings: ["contenteditable:contenteditable"]
 
   val: (args...) ->
     @$().html.apply(@$(), args)
@@ -134,32 +138,16 @@ Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
       e.preventDefault()
 
 Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
-  classNames: ['content-field', 'key-field', 'label-field']
-  contenteditable: 'true'
-  attributeBindings: ["contenteditable:contenteditable"]
+  classNames: ['key-field']
+
   placeholder: 'key'
   commit: ->
     @get('controller').commitKey()
   didInsertElement: ->
     @_super()
-    @$().html @get('rawValue')
+    @val @get('rawValue')
 
   click: (e) ->
     # @get('controller').send 'focusIn'
     console.log "debugger"
     e.stopPropagation()
-    @send('testEvent')
-
-  focusIn: (e, args...) ->
-    console.log "focusingIn keyField", @$()
-    true
-
-  focusOut: (e) ->
-    console.log "focusOut"
-    true
-
-  blur: (e) ->
-    console.log "blur"
-
-  activate: (e) ->
-    console.log "activate"
