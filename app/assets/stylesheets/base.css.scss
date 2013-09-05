@@ -20,6 +20,9 @@ $fieldWhiteIndent: 15px;
 @mixin imp {
   border: 1px solid red;
 }
+@mixin nimp {
+  border: 1px solid transparent;
+}
 
 
 $keyFieldMinWidth: 20px;

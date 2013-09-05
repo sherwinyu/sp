@@ -226,7 +226,7 @@ Sysys.HumonNodeView = Ember.View.extend
     if fieldView instanceof Ember.TextArea
       fieldView.$().focus()
     else if fieldView instanceof Sysys.ContentEditableField
-      setCursor(fieldView.$().get(0), 0)
+      setCursor(fieldView.$().get(0), fieldView.contentLength())
     else
       # it's possible that this field doesn't exist:
       # "moveRight" on a node-collection's label field

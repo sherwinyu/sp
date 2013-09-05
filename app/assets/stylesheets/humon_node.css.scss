@@ -107,9 +107,19 @@ span.node-detail.node-icon {
   }
 
   textarea.content-field.val-field {
+    @include nimp;
     min-width: 100px;
   }
-  textarea.content-field.val-field:focus { }
+  textarea.content-field.val-field:focus {
+    @include imp;
+  }
+
+  span.content-field.val-field {
+    display: inline-block;
+    min-width: 20px;
+  }
+  span.content-field.val-field:focus {
+  }
 
   /*
    * Label Field
