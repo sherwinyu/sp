@@ -241,7 +241,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
     nextBlank = (Sysys.j2hn "")
     Em.run => ahn.insertAt 0, nextBlank
-    @send 'activateNode', nextBlank, focus: true, unfocus: false
+    @send 'activateNode', nextBlank #, focus: true, unfocus: false
+    Ember.run.sync()
+    @send 'smartFocus'
 
   outdent: ->
     ahn = @get 'activeHumonNode'
