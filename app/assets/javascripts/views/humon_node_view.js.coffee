@@ -80,6 +80,8 @@ Sysys.HumonNodeView = Ember.View.extend
   #   * Key field empty?
   #   * Val field empty?
   #   * context?
+  #   TODO(syu): refactor to use semantic variables
+  #     e.g., keyFieldPresent, valFieldPresent, idxFieldPresent
   smartFocus: ->
     node = @get('nodeContent')
     context = node.get('nodeParent.nodeType') || "hash"
@@ -88,12 +90,23 @@ Sysys.HumonNodeView = Ember.View.extend
     isLiteral = node.get('isLiteral')
     isCollection = node.get('isCollection')
     opts = {}
+
+    # the labelfield is key AND a key is present AND valfield is present
     if context == 'hash' && isLiteral && nodeKey && !nodeVal
       opts.field = 'label'
+
+    # the labelfield is key AND the key is empty
     else if context == 'hash' && !nodeKey
       opts.field = 'label'
+
+    # the labelfield is key AND no val field is present
     else if context =='hash' && isCollection
       opts.field = 'label'
+
+    # the labelfield is list AND no val field present
+    else if context =='list'  && isCollection
+      opts.field = 'label'
+
     else
       opts.field = "val"
       opts.pos = "right"
@@ -200,12 +213,27 @@ Sysys.HumonNodeView = Ember.View.extend
     if typeof arg is String
       opts = field: opts
 
+    # if no field is present
+    # this can happen in cases such as
+    #   current node is a collection (no val field)
+    #   and context is a list (no key field)
+    if opts.field == "none"
+      $('textarea').blur()
+      $('div').blur()
+      return
+
     # get the field view
     fieldView = @["#{opts.field}Field"]()
+
     if fieldView instanceof Ember.TextArea
       fieldView.$().focus()
-    else # if it's not a text area, then we just focus it to the left
+    else if fieldView instanceof Sysys.ContentEditableField
       setCursor(fieldView.$().get(0), 0)
+    else
+      # it's possible that this field doesn't exist:
+      # "moveRight" on a node-collection's label field
+      # no val field exists!
+      return
 
     if opts.pos == "left"
       setCursor(fieldView.$().get(0), 0)

@@ -235,6 +235,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run.sync()
     @send 'smartFocus'
 
+  # convert the call to 'activateNode' to use smartFocus, remove the opts.focus?
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
