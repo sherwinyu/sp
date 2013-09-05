@@ -1,22 +1,31 @@
 Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   classNames: ['humon-editor']
-  end_time: Sysys.j2hn "wala wala"
+  content: null
+  hooks: null
+
   init: ->
     @set 'content', Sysys.j2hn @get 'json'
     detailController = Sysys.DetailController.create()
     @_super()
 
+  # TODO(syu): is this safe? if this object never gets cloned?
   hooks:
-    didCommit: ->
-      @sendAction 'jsonChanged', Sysys.hn2j @get('content')
-      @set 'json', Sysys.hn2j @get('content')
+    didCommit: (json) ->
+      @sendAction 'jsonChanged', json
+      @set 'json'
 
 Sysys.HumonEditorView = Ember.View.extend
   templateName: 'humon-editor'
+  content: null
+
   init: ->
+    Em.assert @get('json')?, "json must be defined for HumonEditorView"
+
     unless @get 'json'
       @set 'json', test: 'json'
+
     @set 'content', Sysys.j2hn @get 'json'
+
     @set 'hooks', $.extend(
       didCommit: (json) =>
         @set 'json', json
