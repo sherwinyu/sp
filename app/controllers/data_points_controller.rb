@@ -1,4 +1,6 @@
 class DataPointsController < ApplicationController
+  respond_to :html, :json
+
   # GET /data_points
   # GET /data_points.json
   def index

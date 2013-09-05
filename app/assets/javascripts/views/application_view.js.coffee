@@ -3,4 +3,8 @@ Sysys.ApplicationView = Ember.View.extend
   oshbagosh: "zorger"
   json:
     key: 'value'
-    list: [1, 2, 3]
+    list:
+      hash:
+        a: 1
+        b: 2
+

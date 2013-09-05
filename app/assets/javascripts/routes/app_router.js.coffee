@@ -7,7 +7,7 @@ Sysys.ActsRoute = Ember.Route.extend
   enter: ->
     console.log 'enter acts route'
   model: ->
-    Sysys.Act.find()
+    # Sysys.Act.find()
   events:
     wala: ->
       console.log @controllerFor('acts')
