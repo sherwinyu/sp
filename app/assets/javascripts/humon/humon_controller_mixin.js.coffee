@@ -159,7 +159,6 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
-
   prevNode: ->
     newNode = @get('activeHumonNode').prevNode()
     if newNode

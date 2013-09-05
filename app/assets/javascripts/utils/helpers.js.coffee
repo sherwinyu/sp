@@ -28,7 +28,7 @@ window.getCursor = (node) ->
 
   # if it's a div .. or a SPAN TODO
   # then use the divGetCursor routine
-  if node.tagName is "DIV"
+  if node.tagName is "DIV" || node.tagName is "SPAN"
     return divGetCursor(node)
   $(node).prop('selectionStart')
 
@@ -39,7 +39,7 @@ window.setCursor = (node, pos) ->
            node
   unless node
     return false
-  if node.tagName is "DIV"
+  if node.tagName is "DIV" || node.tagName is "SPAN"
     return divSetCursor(node, pos, pos)
   if node.createTextRange
     textRange = node.createTextRange()

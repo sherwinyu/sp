@@ -150,8 +150,6 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
     e.stopPropagation()
     @send('testEvent')
 
-
-
   focusIn: (e, args...) ->
     console.log "focusingIn keyField", @$()
     true
