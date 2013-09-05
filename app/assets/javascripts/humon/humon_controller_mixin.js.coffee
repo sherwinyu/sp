@@ -137,10 +137,11 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
 ##  Setting Active Node
 ######################################
 
-  activateNode: (node, {focus, unfocus} = {focus: false, unfocus: false}) ->
+  # all this does is SETS THE NODE TO ACTIVE
+  # does NOT focus
+  # does NOT commit
+  activateNode: (node) ->
     @set 'activeHumonNode', node if node && !node.get('hidden')
-    if node and focus
-        @send 'smartFocus'
 
   # nextNode -- controler method for shifting the active node up or down
   # does NOT affect the UI focus
@@ -231,7 +232,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     next = ahn.prevNode() || ahn.nextNode()
     return unless next && ahn.get('nodeParent')
     Ember.run => ahn.get('nodeParent')?.deleteChild ahn
-    @send 'activateNode', next # , focus: true, unfocus: false)
+    @send 'activateNode', next
     Ember.run.sync()
     @send 'smartFocus'
 
@@ -241,7 +242,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
     nextBlank = (Sysys.j2hn "")
     Em.run => ahn.insertAt 0, nextBlank
-    @send 'activateNode', nextBlank #, focus: true, unfocus: false
+    @send 'activateNode', nextBlank
     Ember.run.sync()
     @send 'smartFocus'
 

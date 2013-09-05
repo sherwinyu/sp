@@ -122,8 +122,6 @@ Sysys.HumonNodeView = Ember.View.extend
     # TODO(syu): should be
     #   1. trigger 'try to transitionTonode'
     #   2. smartFocus to set the focus
-    # @get('controller').activateNode @get('nodeContent'), focus: true
-    # e.stopPropagation()
     console.log 'hnv click'
     e.stopPropagation()
     unless @get('isActive')
