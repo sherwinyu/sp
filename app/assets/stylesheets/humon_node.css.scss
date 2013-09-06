@@ -2,8 +2,8 @@
 @import "humon_node_base";
 
 .humon-editor {
-  padding: 15px;
-  border: 1px solid $grayLighter;
+  padding: $nodeEditorPadding;
+  border: $nodeEditorBorder;
 }
 
 
@@ -202,8 +202,16 @@ span.node-detail.node-icon {
     min-width: $keyFieldMinWidth;
     max-width: $keyFieldMaxWidth;
     height: $lineheight;
+
+    text-overflow: ellipsis; // "…"; //\2026";
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
   }
   .content-field.key-field:focus {
+    overflow: visible;
+    max-width: 1000px;
+    transition: all 300ms ease;
   }
 }
 
@@ -214,7 +222,8 @@ span.colon-glyph {
   position: relative;
   vertical-align: top;
   left: 0px;
-  font-style: bolder;
+  font-weight: bolder;
+  padding-left: 2px;
 }
 /*
  * open glyph

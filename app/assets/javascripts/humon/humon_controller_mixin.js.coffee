@@ -18,8 +18,13 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # HOOKS
   ##################
 
-  didCommit: (json)->
-    console.log 'didCommit', JSON.stringify json
+  # params:
+  #   - controller: the instance of the controller
+  #   - node: the committed node
+  #   - rootJson: json representation of the root node
+  #   - key: a string if the key was committed; null otherwise
+  didCommit: (params)->
+    console.log 'didCommit', JSON.stringify rootJson
 
   didUp: ->
     console.log 'didUp'
@@ -99,7 +104,11 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     if rawString?
       Ember.run =>
         node.replaceWithJson json
-        @didCommit( Sysys.hn2j @get('content') )
+        @didCommit(
+          controller: @
+          node: node
+          rootJson: Sysys.hn2j @get('content')
+        )
         # We are manually re-rendering to update autoTemplate.
         # But we don't want to rerender if we're still on the same humon node --
         #   because if we do, we can't "right arrow" into the next field -- it'll have been removed!

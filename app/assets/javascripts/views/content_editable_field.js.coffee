@@ -154,6 +154,8 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
     @_super()
     @$().bind 'keydown', 'left', (e) =>
       @moveLeft(e)
+    # this is necessary to focus the label field properly
+    # when a type change occurs and HNV is rerendered and HNV is rerendered
     @$().bind 'keydown', 'shift+tab', (e) =>
       @set 'parentView._focusedField', 'label'
 
@@ -174,4 +176,3 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
 
   didInsertElement: ->
     @_super()
-    # @$().attr('tabindex', -1)

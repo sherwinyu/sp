@@ -103,3 +103,6 @@ $nodeActiveCopyColor: $grayDarkest1;
 
 $nodeIdxCopyColor: lighten($nodeCopyColor, 15%);
 $nodeIdxActiveCopyColor: lighten($nodeActiveCopyColor, 15%);
+
+$nodeEditorBorder: 1px solid $grayLighter;
+$nodeEditorPadding: 15px;

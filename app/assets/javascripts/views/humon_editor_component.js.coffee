@@ -11,8 +11,10 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   # TODO(syu): is this safe? if this object never gets cloned?
   hooks:
     didCommit: (json) ->
+      Em.assert 'fix me'
+      # TODO(syu): use new params
       @sendAction 'jsonChanged', json
-      @set 'json'
+      @set 'json', json
 
 Sysys.HumonEditorView = Ember.View.extend
   templateName: 'humon-editor'
@@ -30,6 +32,8 @@ Sysys.HumonEditorView = Ember.View.extend
 
     @set 'hooks', $.extend(
       didCommit: (json) =>
+        Em.assert 'fix me'
+        # TODO(syu): use new params
         @set 'json', json
     , @get('hooks'))
 
