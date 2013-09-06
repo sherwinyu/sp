@@ -84,5 +84,14 @@ HumonTypes.register "null",
 
 HumonTypes.register "boolean",
   iconClass: "icon-check"
+
   matchesAgainstJson: (json) ->
-    json == "true" || "false"
+    json in ["true", "false", true, false]
+
+  j2hnv: (json) ->
+    if json in ["true", true]
+      true
+    else if json in ["false", false]
+      false
+    else
+      Em.assert "Invalid json for boolean inference"

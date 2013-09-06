@@ -1,10 +1,14 @@
 @import "base";
 @import "humon_node_base";
 
+.humon-editor {
+  padding: 15px;
+  border: 1px solid $grayLighter;
+}
+
 
 span.blocky {
   display: inline-block;
-  width: 100%;
   border: none;
 }
 body {

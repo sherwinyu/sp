@@ -16,6 +16,8 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
 
 Sysys.HumonEditorView = Ember.View.extend
   templateName: 'humon-editor'
+  classNames: ['humon-editor']
+
   content: null
 
   init: ->
