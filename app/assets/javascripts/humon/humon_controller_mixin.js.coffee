@@ -141,7 +141,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # does NOT focus
   # does NOT commit
   activateNode: (node) ->
-    @set 'activeHumonNode', node if node && !node.get('hidden')
+    # if not node?
+    # debugger
+    @set 'activeHumonNode', node # if node # && !node.get('hidden')
 
   # nextNode -- controler method for shifting the active node up or down
   # does NOT affect the UI focus
@@ -208,6 +210,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       ahn.get('nodeParent').deleteChild ahn
       dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
     @send 'activateNode', ahn
+    Ember.run.sync()
     @send 'smartFocus'
 
   bubbleDown: ->
@@ -222,6 +225,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       else
         dest.insertAt(0, ahn)
     @send 'activateNode', ahn
+    Ember.run.sync()
     @send 'smartFocus'
 
   deleteActive: ->
@@ -253,6 +257,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run =>
       newSibling.deleteChild ahn
       newParent.insertAt newSibling.get('nodeIdx') + 1, ahn
+    Ember.run.sync()
     @smartFocus()
 
   indent: ->
@@ -263,4 +268,5 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run =>
       parent.deleteChild ahn
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
+    Ember.run.sync()
     @smartFocus()

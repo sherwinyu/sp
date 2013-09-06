@@ -51,6 +51,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #   5) stops propagation (we don't want parent nodes commiting!)
   focusOut: (e) ->
     e.stopPropagation()
+    @get('controller').send('activateNode', null)
     # TODO(syu):
     # prepare payload: pull from $().val, etc
     # send to `commit`
