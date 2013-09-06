@@ -45,7 +45,6 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   #   1) it uses node or defaults it to activeHumonNode
   #   2) it commits the nodeKey if key is present
   #   3) it calls commitVal with the val if val is present
-  # #TODO(syu): refactor so commitVal and commitKey are balanced
   commitEverything: (payload) ->
     node = payload.node || @get('activeHumonNode')
     node.set('nodeKey', payload.key) if payload.key?
@@ -73,15 +72,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   commit: (rawString)->
-    # rawString =  @get('activeHumonNodeView').$valField().val()
     @send 'commitVal', rawString
-
-  commitKey: ->
-    rawString =  @get('activeHumonNodeView').$keyField().val()
-    if rawString?
-      # TODO(syu): validate whether rawString can be a key
-      @set('activeHumonNode.nodeKey', rawString)
-    # TODO(syu): refresh key field
 
   # commitVal -- commits the val
   # precondition: activeNode is a literal

@@ -13,7 +13,7 @@ Sysys.ContentEditableField = Ember.View.extend
     @$().html.apply(@$(), args)
 
   contentLength: ->
-    @val().length
+    unescape(@val()).length
 
   # click -- responds to click event on the contentField
   # This exists to prevent propagation to HNV.click, which
@@ -135,9 +135,6 @@ Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
 Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
   classNames: ['key-field']
   placeholder: 'key'
-
-  commit: ->
-    @get('controller').commitKey()
 
   click: (e) ->
     # @get('controller').send 'focusIn'
