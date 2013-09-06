@@ -71,7 +71,19 @@ $contentFieldMinWidth: 10px;
 $contentFieldMaxWidth: 1000px;
 
 $keyFieldMinWidth: $contentFieldMinWidth;
-$keyFieldMaxWidthh: 200px;
+$keyFieldMaxWidth: 200px;
 
 $valFieldMinWidth: $contentFieldMinWidth;
 $valFieldMaxWidth: $contentFieldMaxWidth;
+
+$borderUnderline: 1px solid $grayLight;
+$borderLightUnderline: 1px dotted $grayLightest;
+
+$nodeActiveBorderLeft: $nodeLeftBorder $activeColorLight solid;
+$nodeBorderLeft: $nodeLeftBorder transparent solid;
+
+$borderTransparent: 1px solid transparent;
+
+$nodeWhiteIndent: 15px;
+$childNodeGlyphWidth: 8px;
+$childNodeGlyphLeftOffset: $nodeWhiteIndent - $childNodeGlyphWidth - 2px;

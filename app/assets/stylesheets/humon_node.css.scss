@@ -1,6 +1,7 @@
 @import "base";
 @import "humon_node_base";
 
+
 span.blocky {
   display: inline-block;
   width: 100%;
@@ -14,7 +15,7 @@ span.blocky {
   position: relative;
   padding-left: $nodeWhiteIndent;
   border: 0px transparent solid;
-  border-left: $nodeLeftBorder white solid;
+  border-left: $nodeBorderLeft;
   background: white;
 }
 
@@ -35,16 +36,17 @@ span.blocky {
   // background: $activeColorLight
 }
 .node.active > .node {
-  border-left: $nodeLeftBorder $activeColorLight solid;
+  border-left: $nodeActiveBorderLeft;
 }
 .node.active > span.blocky > .content-field {
-  // color: $activeColorDark;
-  text-decoration: underline;
+  // text-decoration: underline;
   transition-property: text-decoration;
   transition-duration: 1s;
+  border-bottom: $borderUnderline;
 }
 .content-field:empty:before {
-  content: "...";
+  content: "\2026"; // ellipsis
+  content: "\0020"; // interpunct
 }
 .node.active > span.blocky> .content-field:empty:before {
   display: none;
@@ -73,9 +75,20 @@ span.node-detail.node-icon {
 /*
  * Active child styling
  */
-.node.activeChild > span.blocky > textarea.content-field.label-field {
-  color: lighten($grayDark, 5%);
-  text-decoration: underline;
+.node.activeChild > span.blocky > .content-field.label-field {
+  // border-left: $borderLightUnderline;
+  &:before {
+    content: "\21B5"; // carraige return
+    color: $grayLightest;
+
+    display: inline-block;
+    position: absolute;
+    left: $childNodeGlyphLeftOffset;
+
+    width: $childNodeGlyphWidth;
+    @include rotate(90deg);
+
+  }
 }
 
 
@@ -84,6 +97,10 @@ span.node-detail.node-icon {
  * Content Fields
  */
 .node {
+  .content-field {
+    border-bottom: $borderLightUnderline;
+    border-left: $borderTransparent;
+  }
   div.content-field, span.content-field {
     height: $lineheight;
   }
@@ -111,39 +128,37 @@ span.node-detail.node-icon {
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
   }
-  textarea.content-field.dirty {
-    // border-right: 1px solid red;
-  }
-  textarea.content-field.autogrowing {
-    // border-left: 1px solid blue;
-  }
+
+  /*
+   * VAL FIELD
+   */
 
   textarea.content-field.val-field {
-    @include nimp;
     min-width: 100px;
   }
   textarea.content-field.val-field:focus {
-    @include imp;
   }
 
-  span.content-field.val-field {
+  span.val-field {
     display: inline-block;
-    min-width: 20px;
+    min-width: $valFieldMinWidth;
+    max-width: $valFieldMaxWidth;
   }
-  span.content-field.val-field:focus {
+  span.val-field:focus {
   }
 
   /*
    * Label Field
    */
   textarea.content-field.label-field {
-    padding-left: $fieldWhiteIndent;
+    // padding-left: $fieldWhiteIndent;
   }
   /*
    * index field
   */
   textarea.content-field.idx-field {
-    color: $grayLight;
+    color: $grayLighter;
+    width: $keyFieldMinWidth;
   }
   textarea.content-field.idx-field:focus { }
   /*
@@ -209,6 +224,7 @@ span.close-glyph:after {
   z-index: 1001;
 }
 .node.active > span.close-glyph:after {
+  border-left: $nodeLeftBorder $activeColorLight solid;
   border-left: $nodeLeftBorder $activeColorLight solid;
 }
 .node.active.node-hash > span.close-glyph:after{
