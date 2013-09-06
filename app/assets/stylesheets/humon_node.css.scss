@@ -59,7 +59,8 @@ body {
 .node.active > span.blocky> .content-field:empty:before {
   display: none;
 }
-.node.active > span.blocky> span.node-detail {
+.node.active > span.blocky> span.node-detail,
+.node:hover > span.blocky > span.node-detail {
   visibility: visible;
 }
 span.node-detail {

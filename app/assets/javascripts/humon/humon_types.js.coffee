@@ -7,6 +7,15 @@ window.HumonTypes =
     asJson: (node) -> HumonTypes.contextualize(node).hnv2j(node.get 'nodeVal')
     iconClass: (node) -> HumonTypes.contextualize(node).iconClass
 
+  # called by `HumonTypes.register` to generate a default context
+  # (evaluating against the type name) for the type.
+  #
+  # param type string -- the string representation of the name of the type
+  # returns a js object -- represents context for this type
+  #
+  # context
+  #   the returned context object can then be overriden in `register` by additional
+  #   user-specified context
   defaultContext: (type) ->
     # templateName: "humon_node_#{type}"
     templateName: "humon_node_literal"
@@ -75,3 +84,5 @@ HumonTypes.register "null",
 
 HumonTypes.register "boolean",
   iconClass: "icon-check"
+  matchesAgainstJson: (json) ->
+    json == "true" || "false"

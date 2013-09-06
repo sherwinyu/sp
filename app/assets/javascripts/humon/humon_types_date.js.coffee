@@ -63,6 +63,7 @@ $.extend @,
   #
   # TODO(syu): update and generalize to work for all humon types and include it in
   # the standard suite. AKA make it work for booleans: return a hash {matchesType, value}
+  # problem is that right now yu can't distinguish between a literal false and a false as in failure
   _inferFromJson: (json) ->
     ret = false
     try
