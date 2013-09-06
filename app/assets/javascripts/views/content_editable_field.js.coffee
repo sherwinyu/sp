@@ -22,7 +22,6 @@ Sysys.ContentEditableField = Ember.View.extend
   #            HNV.click is called when clicking to gain CF focus.
   #   1) calls stoppropagation
   click: (e) ->
-    console.log 'cf#click propagation stopped'
     e.stopPropagation()
 
   # focusIn -- responds to focus event on the contentField
@@ -34,7 +33,7 @@ Sysys.ContentEditableField = Ember.View.extend
   #   1) calls @autogrow
   #   2) bubbles the event
   focusIn: (e, args...) ->
-    console.log "focusingIn content editable field", @$()
+    # console.log "focusingIn content editable field", @$()
     true
 
   # focusOut -- responds to focus out event on the contentField
@@ -43,7 +42,7 @@ Sysys.ContentEditableField = Ember.View.extend
   #   1) removes the autogrow on the field
   #   2) bubbles the event
   focusOut: (e, options)->
-    console.log "focusingOut content editable field", @$()
+    # console.log "focusingOut content editable field", @$()
     true
 
   didInsertElement: ->

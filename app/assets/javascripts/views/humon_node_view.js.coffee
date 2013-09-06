@@ -34,13 +34,10 @@ Sysys.HumonNodeView = Ember.View.extend
   #
   #  This is primarily called indirectly by event bubbling from content fields
   focusIn: (e) ->
-    console.log 'humon node view focusing in '
     e.stopPropagation()
     if @get 'isActive'
-      console.log "    canceled because node is already active"
       return
     else
-      console.log "    calling transitionToNode"
       @get('controller').send('activateNode', @get('nodeContent'))
       # TODO(syu): @get('controller').transitionToNode @get('nodeContent')
 
@@ -55,7 +52,6 @@ Sysys.HumonNodeView = Ember.View.extend
   #   5) stops propagation (we don't want parent nodes commiting!)
   focusOut: (e) ->
     e.stopPropagation()
-    console.log 'hnv focusing out'
     # TODO(syu):
     # prepare payload: pull from $().val, etc
     # send to `commit`
@@ -122,11 +118,9 @@ Sysys.HumonNodeView = Ember.View.extend
     # TODO(syu): should be
     #   1. trigger 'try to transitionTonode'
     #   2. smartFocus to set the focus
-    console.log 'hnv click'
     e.stopPropagation()
     unless @get('isActive')
       @get('controller').send('activateNode', @get('nodeContent'))
-    console.log '  smart focusing'
     @smartFocus()
 
   # up -- handles the event of moving to the previous node
@@ -136,14 +130,12 @@ Sysys.HumonNodeView = Ember.View.extend
   up: (event = null) ->
     if @get('controller').prevNode() #send('prevNode')
       @set "_focusedField", null
-      console.log "HNV#up; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
       @get('controller').send 'smartFocus'
 
   down: (event = null) ->
     if changed = @get('controller').nextNode() #send('nextNode')
       @set "_focusedField", null
-      console.log "HNV#down; active node key = #{@get('controller.activeHumonNode.nodeKey')}"
       Ember.run.sync()
       @get('controller').send 'smartFocus'
 
@@ -241,22 +233,20 @@ Sysys.HumonNodeView = Ember.View.extend
     return
 
   moveLeft: ->
-
     # you can't focus left on a list!
     if @get('nodeContent.nodeParent.nodeType') is 'list'
       return
     @set '_focusedField',
       field: 'label'
       pos: 'right'
-    @focusField @get '_focusedField'
+    Ember.run.schedule "afterRender", @, ->
+      @focusField @get '_focusedField'
 
   moveRight: ->
     @set '_focusedField',
       field: 'val'
       pos: 'left'
     @focusField @get '_focusedField'
-
-
 
   commitAndContinue: ->
     if @valField()?.val() == ''
