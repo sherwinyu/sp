@@ -241,17 +241,3 @@ span.close-glyph:after {
   margin-top: 0px;// transparent solid;
 }
 
-/*
- * Autogrow Tests
- */
-textarea.autogrow-field.content-field {
-  @include imp;
-  overflow: hidden;
-  height: 150px;
-  padding-top: 50px;
-  border-top: 15px red solid;
-  border-bottom: 15px red solid;
-  padding-bottom: 50px;
-}
-
-// @import "humon_node_content_editable_field.css.scss";

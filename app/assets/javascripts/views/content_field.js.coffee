@@ -90,12 +90,10 @@ Sysys.ContentField = Ember.TextArea.extend
 
   didInsertElement: ->
     @refresh()
-    # @autosize()
-    @setPlaceHolderText()
     @initHotKeys()
 
   refresh: ->
-    @set 'value', @get('rawValue')
+    @val(@get('rawValue'))
 
   autosize: ->
     @autogrow()
@@ -212,7 +210,10 @@ Sysys.KeyField = Sysys.AbstractLabel.extend
 
 Sysys.IdxField = Sysys.AbstractLabel.extend
   classNames: ['idx-field']
-  refresh: Em.K
+  disabled: true
+  attributeBindings: ['disabled']
+  refresh: ->
+    @val "#{parseInt(@get('rawValue')) + 1}."
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)

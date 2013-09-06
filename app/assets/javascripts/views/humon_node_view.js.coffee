@@ -239,20 +239,12 @@ Sysys.HumonNodeView = Ember.View.extend
       setCursor(fieldView.$().get(0), fieldView.contentLength())
 
     return
-  ###
-    $field = @["$#{opts.field}Field"]()
-    # if this is textfield
-    #
-
-    $field.focus()
-
-    if opts.pos == "left"
-      setCursor($field.get(0), 0)
-    if opts.pos == "right"
-      setCursor($field.get(0), $field.val()?.length || $field.html().length)
-    ###
 
   moveLeft: ->
+
+    # you can't focus left on a list!
+    if @get('nodeContent.nodeParent.nodeType') is 'list'
+      return
     @set '_focusedField',
       field: 'label'
       pos: 'right'
