@@ -71,7 +71,7 @@ HumonTypes.register "null",
   matchesAgainstJson: (json) ->
     json == null
   templateStrings:
-    asString: "(null)"
+    asString: "null"
 
 HumonTypes.register "boolean",
   iconClass: "icon-check"

@@ -147,10 +147,6 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
 
 Sysys.ValEditableField = Sysys.ContentEditableField.extend
   classNames: ['val-field']
-  placeholder: 'val'
-
-  init: ->
-    @_super()
 
   commit: ->
     @get('controller').send('commit', @get 'value')
@@ -164,3 +160,17 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
     if getCursor(@$()) ==  0
       @get('parentView').moveLeft()
       e.preventDefault()
+
+Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
+  classNames: ['idx-field']
+  contenteditable: 'false'
+  refresh: ->
+    @val "#{parseInt(@get('rawValue')) + 1}."
+
+  rawValueDidChange: (->
+    @refresh()
+  ).observes('rawValue')
+
+  didInsertElement: ->
+    @_super()
+    # @$().attr('tabindex', -1)

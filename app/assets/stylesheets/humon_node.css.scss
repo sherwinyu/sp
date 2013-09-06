@@ -7,9 +7,13 @@ span.blocky {
   width: 100%;
   border: none;
 }
+body {
+  font-family: "Source Sans";
+}
 
 .node {
   font-family: "Source Sans";
+  font-size: $nodeCopyFontSize;
   cursor: text;
   color: $copygray;
   position: relative;
@@ -39,10 +43,14 @@ span.blocky {
   border-left: $nodeActiveBorderLeft;
 }
 .node.active > span.blocky > .content-field {
-  // text-decoration: underline;
-  transition-property: text-decoration;
-  transition-duration: 1s;
   border-bottom: $borderUnderline;
+  color: $nodeActiveCopyColor;
+}
+
+.node.active > span.blocky > .content-field.idx-field {
+  transition-property: color;
+  color: $nodeIdxActiveCopyColor;
+  border-bottom: $borderTransparent;
 }
 .content-field:empty:before {
   content: "\2026"; // ellipsis
@@ -75,11 +83,11 @@ span.node-detail.node-icon {
 /*
  * Active child styling
  */
+// child node glyph
 .node.activeChild > span.blocky > .content-field.label-field {
-  // border-left: $borderLightUnderline;
   &:before {
     content: "\21B5"; // carraige return
-    color: $grayLightest;
+    color: $childNodeGlyphColor;
 
     display: inline-block;
     position: absolute;
@@ -100,6 +108,8 @@ span.node-detail.node-icon {
   .content-field {
     border-bottom: $borderLightUnderline;
     border-left: $borderTransparent;
+    color: $nodeCopyColor;
+    transition: all 300ms ease;
   }
   div.content-field, span.content-field {
     height: $lineheight;
@@ -138,6 +148,11 @@ span.node-detail.node-icon {
   }
   textarea.content-field.val-field:focus {
   }
+  div.val-field {
+    display: inline-block;
+    min-width: $valFieldMinWidth;
+    max-width: $valFieldMaxWidth;
+  }
 
   span.val-field {
     display: inline-block;
@@ -157,10 +172,12 @@ span.node-detail.node-icon {
    * index field
   */
   textarea.content-field.idx-field {
-    color: $grayLighter;
-    width: $keyFieldMinWidth;
+    font-size: $nodeCopyFontSize;
+    display: inline-block;
+    color: $nodeIdxCopyColor;
+    min-width: $idxFieldMinWidth;
+    max-width: $idxFieldMaxWidth;
   }
-  textarea.content-field.idx-field:focus { }
   /*
    * Key Field
    */

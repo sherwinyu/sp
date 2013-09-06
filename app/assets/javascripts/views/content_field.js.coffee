@@ -214,6 +214,11 @@ Sysys.IdxField = Sysys.AbstractLabel.extend
   attributeBindings: ['disabled']
   refresh: ->
     @val "#{parseInt(@get('rawValue')) + 1}."
+
+  rawValueDidChange: (->
+    @refresh()
+  ).observes('rawValue')
+
   didInsertElement: ->
     @_super()
     @$().attr('tabindex', -1)
