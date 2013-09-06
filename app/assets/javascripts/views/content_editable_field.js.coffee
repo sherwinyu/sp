@@ -154,6 +154,8 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
     @_super()
     @$().bind 'keydown', 'left', (e) =>
       @moveLeft(e)
+    @$().bind 'keydown', 'shift+tab', (e) =>
+      @set 'parentView._focusedField', 'label'
 
   moveLeft: (e)->
     if getCursor(@$()) ==  0

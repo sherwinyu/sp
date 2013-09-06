@@ -1,8 +1,6 @@
 Sysys.HumonNodeView = Ember.View.extend
-  testEvent: (e) ->
-    debugger
   _focusedField: null
-# templateName: 'humon_node'
+
   templateStrings: (->
     if @get('nodeContent.isLiteral')
       HumonTypes.contextualize(@get 'nodeContent')._materializeTemplateStringsForNode(@get 'nodeContent')
@@ -17,8 +15,9 @@ Sysys.HumonNodeView = Ember.View.extend
       "humon_node"
   ).property('nodeContent.nodeType')
   templateNameBinding: "autoTemplate"
-  # templateName: "humon_node"
+
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
+
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.nodeType',
@@ -200,7 +199,7 @@ Sysys.HumonNodeView = Ember.View.extend
 
   # focusField --
   focusField: (opts) ->
-    if typeof arg is String
+    if typeof opts is "string"
       opts = field: opts
 
     # if no field is present
@@ -229,7 +228,6 @@ Sysys.HumonNodeView = Ember.View.extend
       setCursor(fieldView.$().get(0), 0)
     if opts.pos == "right"
       setCursor(fieldView.$().get(0), fieldView.contentLength())
-
     return
 
   moveLeft: ->
