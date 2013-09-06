@@ -23,7 +23,15 @@ $fieldWhiteIndent: 15px;
 @mixin nimp {
   border: 1px solid transparent;
 }
+/* NEW */
 
+$lineheight: 20px;
 
-$keyFieldMinWidth: 20px;
-$keyFieldMaxWidth: 200px;
+$contentFieldMinWidth: 10px;
+$contentFieldMaxWidth: 1000px;
+
+$keyFieldMinWidth: $contentFieldMinWidth;
+$keyFieldMaxWidthh: 200px;
+
+$valFieldMinWidth: $contentFieldMinWidth;
+$valFieldMaxWidth: $contentFieldMaxWidth;

@@ -36,9 +36,17 @@ span.blocky {
 .node.active > .node {
   border-left: $nodeLeftBorder $activeColorLight solid;
 }
-.node.active > span.blocky > textarea.content-field {
+.node.active > span.blocky > .content-field {
   // color: $activeColorDark;
   text-decoration: underline;
+  transition-property: text-decoration;
+  transition-duration: 1s;
+}
+.content-field:empty:before {
+  content: "...";
+}
+.node.active > span.blocky> .content-field:empty:before {
+  display: none;
 }
 .node.active > span.blocky> span.node-detail {
   visibility: visible;
@@ -75,6 +83,9 @@ span.node-detail.node-icon {
  * Content Fields
  */
 .node {
+  div.content-field, span.content-field {
+    height: $lineheight;
+  }
   textarea.content-field {
     color: $copygray;
     height: $lineheight;
@@ -126,13 +137,11 @@ span.node-detail.node-icon {
    */
   textarea.content-field.label-field {
     padding-left: $fieldWhiteIndent;
-    min-width: 20px;
   }
   /*
    * index field
   */
   textarea.content-field.idx-field {
-    width: 20px;
     color: $grayLight;
   }
   textarea.content-field.idx-field:focus { }
@@ -146,12 +155,17 @@ span.node-detail.node-icon {
     padding-right: $fieldWhiteIndent;
   }
   div.content-field.key-field {
+    min-width: $keyFieldMinWidth;
+    max-width: $keyFieldMaxWidth;
+    height: $lineheight;
+  }
+  span.content-field.key-field {
     display: inline-block;
     min-width: $keyFieldMinWidth;
     max-width: $keyFieldMaxWidth;
     height: $lineheight;
   }
-  textarea.content-field.key-field:focus {
+  .content-field.key-field:focus {
   }
 }
 
@@ -162,6 +176,7 @@ span.colon-glyph {
   position: relative;
   vertical-align: top;
   left: 0px;
+  font-style: bolder;
 }
 /*
  * open glyph
