@@ -280,4 +280,3 @@ Sysys.HumonRootView = Sysys.HumonNodeView.extend
   focusOut: (e) ->
     if @get('controller')
       @get('controller').send('activateNode', null)
-

@@ -257,7 +257,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run =>
       newSibling.deleteChild ahn
       newParent.insertAt newSibling.get('nodeIdx') + 1, ahn
-    Ember.run.sync()
+      @send 'activateNode', ahn
     @smartFocus()
 
   indent: ->
@@ -268,5 +268,5 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run =>
       parent.deleteChild ahn
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
-    Ember.run.sync()
+      @send 'activateNode', ahn
     @smartFocus()
