@@ -1,19 +1,29 @@
 @import "base";
 @import "humon_node_base";
 
+.humon-editor {
+  padding: $nodeEditorPadding;
+  border: $nodeEditorBorder;
+}
+
+
 span.blocky {
   display: inline-block;
-  width: 100%;
   border: none;
+}
+body {
+  font-family: "Source Sans";
 }
 
 .node {
+  font-family: "Source Sans";
+  font-size: $nodeCopyFontSize;
   cursor: text;
   color: $copygray;
   position: relative;
   padding-left: $nodeWhiteIndent;
   border: 0px transparent solid;
-  border-left: $nodeLeftBorder white solid;
+  border-left: $nodeBorderLeft;
   background: white;
 }
 
@@ -34,37 +44,64 @@ span.blocky {
   // background: $activeColorLight
 }
 .node.active > .node {
-  border-left: $nodeLeftBorder $activeColorLight solid;
+  border-left: $nodeActiveBorderLeft;
 }
-.node.active > span.blocky > textarea.content-field {
-  // color: $activeColorDark;
-  text-decoration: underline;
+.node.active > span.blocky > .content-field {
+  border-bottom: $borderUnderline;
+  color: $nodeActiveCopyColor;
 }
-.node.active > span.blocky> span.node-detail {
-  font-style: italic;
-  display: inline;
+
+.node.active > span.blocky > .content-field.idx-field {
+  transition-property: color;
+  color: $nodeIdxActiveCopyColor;
+  border-bottom: $borderTransparent;
+}
+.content-field:empty:before {
+  content: "\2026"; // ellipsis
+  content: "\0020"; // interpunct
+}
+.node.active > span.blocky> .content-field:empty:before {
+  display: none;
+}
+.node.active > span.blocky> span.node-detail,
+.node:hover > span.blocky > span.node-detail {
+  visibility: visible;
 }
 span.node-detail {
-  display: none;
+  font-style: italic;
+  visibility: hidden;
   position: relative;
+  display: inline-block;
 }
 span.node-detail.node-icon {
   height: 10px;
+  width: 10px;
   font-size: 10px;
   line-height: 10px;
   i.icon {
     height: 10px;
     top: 0%;
     position: absolute;
-    left: -12px;
+    left: 0px ;// -12px;
   }
 }
 /*
  * Active child styling
  */
-.node.activeChild > span.blocky > textarea.content-field.label-field {
-  color: lighten($grayDark, 5%);
-  text-decoration: underline;
+// child node glyph
+.node.activeChild > span.blocky > .content-field.label-field {
+  &:before {
+    content: "\21B5"; // carraige return
+    color: $childNodeGlyphColor;
+
+    display: inline-block;
+    position: absolute;
+    left: $childNodeGlyphLeftOffset;
+
+    width: $childNodeGlyphWidth;
+    @include rotate(90deg);
+
+  }
 }
 
 
@@ -73,6 +110,15 @@ span.node-detail.node-icon {
  * Content Fields
  */
 .node {
+  .content-field {
+    border-bottom: $borderLightUnderline;
+    border-left: $borderTransparent;
+    color: $nodeCopyColor;
+    transition: all 300ms ease;
+  }
+  div.content-field, span.content-field {
+    height: $lineheight;
+  }
   textarea.content-field {
     color: $copygray;
     height: $lineheight;
@@ -97,33 +143,46 @@ span.node-detail.node-icon {
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
   }
-  textarea.content-field.dirty {
-    // border-right: 1px solid red;
-  }
-  textarea.content-field.autogrowing {
-    // border-left: 1px solid blue;
-  }
+
+  /*
+   * VAL FIELD
+   */
 
   textarea.content-field.val-field {
     min-width: 100px;
   }
-  textarea.content-field.val-field:focus { }
+  textarea.content-field.val-field:focus {
+  }
+  div.val-field {
+    display: inline-block;
+    min-width: $valFieldMinWidth;
+    max-width: $valFieldMaxWidth;
+  }
+
+  span.val-field {
+    display: inline-block;
+    min-width: $valFieldMinWidth;
+    max-width: $valFieldMaxWidth;
+  }
+  span.val-field:focus {
+  }
 
   /*
    * Label Field
    */
   textarea.content-field.label-field {
-    padding-left: $fieldWhiteIndent;
-    min-width: 20px;
+    // padding-left: $fieldWhiteIndent;
   }
   /*
    * index field
   */
   textarea.content-field.idx-field {
-    width: 20px;
-    color: $grayLight;
+    font-size: $nodeCopyFontSize;
+    display: inline-block;
+    color: $nodeIdxCopyColor;
+    min-width: $idxFieldMinWidth;
+    max-width: $idxFieldMaxWidth;
   }
-  textarea.content-field.idx-field:focus { }
   /*
    * Key Field
    */
@@ -133,7 +192,26 @@ span.node-detail.node-icon {
     text-align: left;
     padding-right: $fieldWhiteIndent;
   }
-  textarea.content-field.key-field:focus {
+  div.content-field.key-field {
+    min-width: $keyFieldMinWidth;
+    max-width: $keyFieldMaxWidth;
+    height: $lineheight;
+  }
+  span.content-field.key-field {
+    display: inline-block;
+    min-width: $keyFieldMinWidth;
+    max-width: $keyFieldMaxWidth;
+    height: $lineheight;
+
+    text-overflow: ellipsis; // "…"; //\2026";
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  .content-field.key-field:focus {
+    overflow: visible;
+    max-width: 1000px;
+    transition: all 300ms ease;
   }
 }
 
@@ -143,7 +221,9 @@ span.node-detail.node-icon {
 span.colon-glyph {
   position: relative;
   vertical-align: top;
-  left: -10px;
+  left: 0px;
+  font-weight: bolder;
+  padding-left: 2px;
 }
 /*
  * open glyph
@@ -176,6 +256,7 @@ span.close-glyph:after {
 }
 .node.active > span.close-glyph:after {
   border-left: $nodeLeftBorder $activeColorLight solid;
+  border-left: $nodeLeftBorder $activeColorLight solid;
 }
 .node.active.node-hash > span.close-glyph:after{
   content: '}';
@@ -191,17 +272,3 @@ span.close-glyph:after {
   margin-top: 0px;// transparent solid;
 }
 
-/*
- * Autogrow Tests
- */
-textarea.autogrow-field.content-field {
-  @include imp;
-  overflow: hidden;
-  height: 150px;
-  padding-top: 50px;
-  border-top: 15px red solid;
-  border-bottom: 15px red solid;
-  padding-bottom: 50px;
-}
-
-@import "humon_node_content_editable_field.css.scss";

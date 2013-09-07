@@ -1,9 +1,12 @@
 $copygray: #555555;
 $grayDark: darken($copygray, 15%);
 $grayDarker: darken($copygray, 30%);
+$grayDarkest: darken($copygray, 40%);
+$grayDarkest1: darken($copygray, 50%);
 $grayLight: lighten($copygray, 15%);
-$grayLighter: lighten($copygray, 30%);
-$grayLightest: lighten($copygray, 45%);
+$grayLighter: lighten($copygray, 28%);
+$grayLightest: lighten($copygray, 35%);
+$grayLightest1: lighten($copygray, 42%);
 
 $activeColor: rgb(72, 137, 255);
 $activeColorDark: darken($activeColor, 30%);
@@ -20,3 +23,86 @@ $fieldWhiteIndent: 15px;
 @mixin imp {
   border: 1px solid red;
 }
+
+@mixin nimp {
+  border: 1px solid transparent;
+}
+
+
+/* NEW */
+@font-face {
+  font-family: "Source Sans";
+  src: font-url('SourceSansPro-light.otf');
+}
+
+@font-face {
+  font-family: "Source Sans bold";
+  src: font-url('SourceSansPro-Bold.otf');
+}
+
+@font-face {
+  font-family: "Source Sans semibold";
+  src: url('SourceSansPro-Bold.otf');
+}
+
+@font-face {
+  font-family: "Source Sans";
+  src: url('SourceSansPro-Regular.otf');
+}
+
+@font-face {
+  font-family: "Source Sans light";
+  src: url('SourceSansPro-Light.otf');
+}
+
+/* @font-face {
+ font-family: "Univers 45 Light";
+ src: font-url('Univers45light.ttf');
+}
+@font-face {
+font-family: "Univers 47 Light";
+src: font-url('Univers47Light.ttf');
+}
+@font-face {
+font-family: "Univers 67 Condensed Bold";
+src: font-url('Univers67CondensedBold.ttf');
+} */
+
+$lineheight: 20px;
+$nodeCopyFontSize: 16px;
+
+$contentFieldMinWidth: 10px;
+$contentFieldMaxWidth: 640px;
+
+$keyFieldMinWidth: $contentFieldMinWidth;
+$keyFieldMaxWidth: 120px;
+
+$valFieldMinWidth: $contentFieldMinWidth;
+$valFieldMaxWidth: $contentFieldMaxWidth;
+
+$idxFieldMinWidth: 5px;
+$idxFieldMaxWidth: 12px;
+
+$borderUnderline: 1px solid $grayLight;
+$borderLightUnderline: 1px dotted $grayLightest;
+
+$nodeBorderLeftWidth: 4px;
+$nodeBorderLeft: $nodeBorderLeftWidth transparent solid;
+// $nodeActiveBorderLeft: $nodeLeftBorder $activeColorLight solid;
+$nodeActiveBorderLeft: $nodeBorderLeftWidth lighten($grayLightest1, 6%) solid;
+
+$borderTransparent: 1px solid transparent;
+
+$nodeWhiteIndent: 15px;
+$childNodeGlyphWidth: 8px;
+$childNodeGlyphLeftOffset: $nodeWhiteIndent - $childNodeGlyphWidth - 2px;
+$childNodeGlyphColor: $grayLightest1;
+
+$nodeCopyColor: $copygray;
+$nodeActiveCopyColor: $grayDarkest1;
+
+$nodeIdxCopyColor: lighten($nodeCopyColor, 15%);
+$nodeIdxActiveCopyColor: lighten($nodeActiveCopyColor, 15%);
+
+$nodeEditorBorder: 1px solid $grayLighter;
+$nodeEditorPadding: 15px;
