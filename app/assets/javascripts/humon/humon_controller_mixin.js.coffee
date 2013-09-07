@@ -51,20 +51,24 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     @send 'commitVal', payload.val, node: node if payload.val?
 
   # calls commitEverything
+  # then, if the active (just committed) node is a collection,
+  #   we switch to insertChild
+  # otherwise,
+  #   insert a sibling after the active node
   # then conditionally decides whether to insert a sibling or a child,
   # depending on whether active node is a collection
   commitAndContinueNew: (payload) ->
     ahn = @get 'activeHumonNode'
     @send 'commitEverything', payload
     Ember.run.sync()
-    parent = ahn.get 'nodeParent'
-    idx = ahn.get('nodeIdx') + 1
     if ahn.get 'isCollection'
-      parent = ahn
-      idx = ahn.get('nodeVal').length
-    blank = (Sysys.j2hn null)
+      @activateNode ahn
+      @insertChild()
+      return
+    blank = Sysys.j2hn null
     Ember.run =>
-      console.debug "nodeView rerender: commitAndContinueNew", ts()
+      parent = ahn.get 'nodeParent'
+      idx = ahn.get('nodeIdx') + 1
       parent.get('nodeView').rerender()
       parent.insertAt(idx,  blank)
     @send 'activateNode', blank
@@ -239,13 +243,15 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run.sync()
     @send 'smartFocus'
 
-  # convert the call to 'activateNode' to use smartFocus, remove the opts.focus?
+  # insertChild
+  #   inserts and sets focus on a blank node that is a child
+  #   of the active node, which must be a collection.
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
-    nextBlank = (Sysys.j2hn "")
-    Em.run => ahn.insertAt 0, nextBlank
-    @send 'activateNode', nextBlank
+    blank = Sysys.j2hn null
+    Em.run => ahn.insertAt 0, blank
+    @send 'activateNode', blank
     Ember.run.sync()
     @send 'smartFocus'
 

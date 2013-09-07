@@ -54,12 +54,8 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('controller').send('activateNode', null)
     # TODO(syu):
     # prepare payload: pull from $().val, etc
-    # send to `commit`
+    # send to `commitEverything
     node = @get('nodeContent')
-    # console.log('commitingEverything, nodeKey=', node.get('nodeKey'))
-    # console.log('commitingEverything, node=', node.get('nodeVal'))
-    # console.log('commitingEverything, activeNodeKey =', @get('controller.activeHumonNode.nodeKey'))
-    # console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.nodeVal'))
     payload =
       key: @keyField()?.val()
       node: node
