@@ -214,20 +214,21 @@ Sysys.HumonNodeView = Ember.View.extend
 
     # get the field view
     fieldView = @["#{opts.field}Field"]()
-    Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
 
     if fieldView instanceof Ember.TextArea
       fieldView.$().focus()
     else if fieldView instanceof Sysys.ContentEditableField
-      Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
       setCursor(fieldView.$().get(0), fieldView.contentLength())
-      Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
     else
       # it's possible that this field doesn't exist:
       # "moveRight" on a node-collection's label field
       # no val field exists!
       return
 
+    # for some reason, fieldView can suddenly be updated by the call
+    # to `setCursor`. If this happens, we need to regrab the fieldView
+    if fieldView.staate isnt "inDom"
+      fieldView = @["#{opts.field}Field"]()
     Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
     if opts.pos == "left"
       setCursor(fieldView.$().get(0), 0)
