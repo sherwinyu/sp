@@ -143,6 +143,10 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
       @get('parentView').moveLeft()
       e.preventDefault()
 
+  rawValueDidChange: (->
+    @refresh()
+  ).observes('rawValue')
+
 Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
   classNames: ['idx-field']
   contenteditable: 'false'
