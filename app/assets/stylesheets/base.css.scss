@@ -1,8 +1,9 @@
-$copygray: #555555;
+$copygray: #666666;
 $grayDark: darken($copygray, 15%);
 $grayDarker: darken($copygray, 30%);
 $grayDarkest: darken($copygray, 40%);
 $grayDarkest1: darken($copygray, 50%);
+$grayDarkest2: darken($copygray, 60%);
 $grayLight: lighten($copygray, 15%);
 $grayLighter: lighten($copygray, 28%);
 $grayLightest: lighten($copygray, 35%);
@@ -27,46 +28,6 @@ $fieldWhiteIndent: 15px;
 @mixin nimp {
   border: 1px solid transparent;
 }
-
-
-/* NEW */
-@font-face {
-  font-family: "Source Sans";
-  src: font-url('SourceSansPro-light.otf');
-}
-
-@font-face {
-  font-family: "Source Sans bold";
-  src: font-url('SourceSansPro-Bold.otf');
-}
-
-@font-face {
-  font-family: "Source Sans semibold";
-  src: url('SourceSansPro-Bold.otf');
-}
-
-@font-face {
-  font-family: "Source Sans";
-  src: url('SourceSansPro-Regular.otf');
-}
-
-@font-face {
-  font-family: "Source Sans light";
-  src: url('SourceSansPro-Light.otf');
-}
-
-/* @font-face {
- font-family: "Univers 45 Light";
- src: font-url('Univers45light.ttf');
-}
-@font-face {
-font-family: "Univers 47 Light";
-src: font-url('Univers47Light.ttf');
-}
-@font-face {
-font-family: "Univers 67 Condensed Bold";
-src: font-url('Univers67CondensedBold.ttf');
-} */
 
 $lineheight: 20px;
 $nodeCopyFontSize: 16px;
