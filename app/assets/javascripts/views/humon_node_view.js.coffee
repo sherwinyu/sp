@@ -54,15 +54,13 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('controller').send('activateNode', null)
     # TODO(syu):
     # prepare payload: pull from $().val, etc
-    # send to `commit`
+    # send to `commitEverything
     node = @get('nodeContent')
-    # console.log('commitingEverything, nodeKey=', node.get('nodeKey'))
-    # console.log('commitingEverything, node=', node.get('nodeVal'))
-    # console.log('commitingEverything, activeNodeKey =', @get('controller.activeHumonNode.nodeKey'))
-    # console.log('commitingEverything, activeNode =', @get('controller.activeHumonNode.nodeVal'))
     payload =
       key: @keyField()?.val()
       node: node
+
+    # if the value has been modified
     if @valField()?.val() isnt @get("templateStrings.asString")
       payload.val = @valField()?.val()
     @get('controller').send 'commitEverything', payload
@@ -166,8 +164,11 @@ Sysys.HumonNodeView = Ember.View.extend
 
   didInsertElement: ->
     if @get("_focusedField")
-      @focusField(@get("_focusedField"))
-      @set "_focusedField", null
+      # needs to be in a deferred because the child views (node fields)
+      # might not have had their text set up (via didInsertElement)
+      Ember.run.scheduleOnce "afterRender", @, =>
+        @focusField(@get("_focusedField"))
+        @set "_focusedField", null
     @initHotkeys()
     @get('nodeContent')?.set 'nodeView', @
 
@@ -190,18 +191,19 @@ Sysys.HumonNodeView = Ember.View.extend
     field
 
   labelField: ->
-    Sysys.vfi(@$labelField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.AbstractEditableLabel
   keyField: ->
-    Sysys.vfi(@$keyField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.KeyEditableField
   idxField: ->
-    Sysys.vfi(@$idxField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.IdxEditableField #KeyEditableField
   valField: ->
-    Sysys.vfi(@$valField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.ValEditableField #IdxEditableField#KeyEditableField
 
   # focusField --
   focusField: (opts) ->
     if typeof opts is "string"
       opts = field: opts
+    console.log "focusing field, #{opts.field}, #{opts.pos}"
 
     # if no field is present
     # this can happen in cases such as
@@ -225,6 +227,11 @@ Sysys.HumonNodeView = Ember.View.extend
       # no val field exists!
       return
 
+    # for some reason, fieldView can suddenly be updated by the call
+    # to `setCursor`. If this happens, we need to regrab the fieldView
+    if fieldView.staate isnt "inDom"
+      fieldView = @["#{opts.field}Field"]()
+    Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
     if opts.pos == "left"
       setCursor(fieldView.$().get(0), 0)
     if opts.pos == "right"
@@ -247,28 +254,18 @@ Sysys.HumonNodeView = Ember.View.extend
       pos: 'left'
     @focusField @get '_focusedField'
 
-  commitAndContinue: ->
+  enterPressed: ->
+    if @get('controller.activeHumonNode.isCollection')
+      @get('controller').send('insertChild')
+      return
     if @valField()?.val() == ''
-      @valField()?.val '{}'
+      @valField().val '{}'
     payload =
       val: @valField()?.val()
       key: @keyField()?.val()
     @get('controller').send 'commitAndContinueNew', payload
 
 Sysys.DetailView = Sysys.HumonNodeView.extend
-  init: ->
-    Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
-    @_super()
-
-  didInsertElement: ->
-    Ember.run.sync()
-    @_super()
-
-  focusOut: (e) ->
-    if @get('controller')
-      @get('controller').send('activateNode', null)
-
-Sysys.HumonRootView = Sysys.HumonNodeView.extend
   init: ->
     Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
     @_super()

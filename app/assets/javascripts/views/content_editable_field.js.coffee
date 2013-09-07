@@ -13,7 +13,7 @@ Sysys.ContentEditableField = Ember.View.extend
     @$().html.apply(@$(), args)
 
   contentLength: ->
-    @val().length
+    unescape(@val()).length
 
   # click -- responds to click event on the contentField
   # This exists to prevent propagation to HNV.click, which
@@ -52,14 +52,9 @@ Sysys.ContentEditableField = Ember.View.extend
   refresh: ->
     @val @get('rawValue')
 
-  commit: Em.K
-
   # is this an event?
   enter: ->
-    @commitAndContinue()
-
-  commitAndContinue: ->
-    @get('parentView').commitAndContinue()
+    @get('parentView').send 'enterPressed'
 
   cancel: ->
     @refresh()
@@ -75,9 +70,6 @@ Sysys.ContentEditableField = Ember.View.extend
       'esc': (e) =>
         e.preventDefault()
         @cancel()
-      'ctrl+shift+return': (e) =>
-        e.preventDefault()
-        @commit()
       'return': (e) =>
         e.preventDefault()
         @enter()
@@ -111,11 +103,6 @@ Sysys.ContentEditableField = Ember.View.extend
 
 Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
   classNames: ['label-field']
-  enter: ->
-    if @get('controller.activeHumonNode.isCollection')
-      @get('controller').send('insertChild')
-    else
-      @commitAndContinue()
 
   initHotKeys: ->
     @_super()
@@ -136,19 +123,11 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
   classNames: ['key-field']
   placeholder: 'key'
 
-  commit: ->
-    @get('controller').commitKey()
-
   click: (e) ->
-    # @get('controller').send 'focusIn'
-    console.log "debugger"
     e.stopPropagation()
 
 Sysys.ValEditableField = Sysys.ContentEditableField.extend
   classNames: ['val-field']
-
-  commit: ->
-    @get('controller').send('commit', @get 'value')
 
   initHotKeys: ->
     @_super()
@@ -170,6 +149,7 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
   refresh: ->
     @val "#{parseInt(@get('rawValue')) + 1}."
 
+  # Keep the displayed value in sync
   rawValueDidChange: (->
     @refresh()
   ).observes('rawValue')
