@@ -67,6 +67,7 @@ module Sysys
 
     config.ember.variant = :development
 
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
 
     options = {
       # insert_mixpanel_scripts: true

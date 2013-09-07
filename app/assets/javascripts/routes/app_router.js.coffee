@@ -44,17 +44,17 @@ Sysys.ActsIndexRoute = Ember.Route.extend
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:
     jsonChanged: (json)->
-      debugger
+      5
 
 Sysys.IndexRoute = Ember.Route.extend
   actions:
     jsonChanged: ->
-      debugger
+      5
 
 Sysys.ActsIndex = Ember.Route.extend
   actions:
     jsonChanged: ->
-      debugger
+      5
 
 
 

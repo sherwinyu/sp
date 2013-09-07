@@ -1,15 +1,19 @@
 Sysys.ContentEditableField = Ember.View.extend
+  tagName: "span"
 
   rawValueBinding: null
   classNames: ['content-field']
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   placeholder: ''
 
+  contenteditable: 'true'
+  attributeBindings: ["contenteditable:contenteditable"]
+
   val: (args...) ->
     @$().html.apply(@$(), args)
 
   contentLength: ->
-    @val().length
+    unescape(@val()).length
 
   # click -- responds to click event on the contentField
   # This exists to prevent propagation to HNV.click, which
@@ -18,7 +22,6 @@ Sysys.ContentEditableField = Ember.View.extend
   #            HNV.click is called when clicking to gain CF focus.
   #   1) calls stoppropagation
   click: (e) ->
-    console.log 'cf#click propagation stopped'
     e.stopPropagation()
 
   # focusIn -- responds to focus event on the contentField
@@ -30,7 +33,7 @@ Sysys.ContentEditableField = Ember.View.extend
   #   1) calls @autogrow
   #   2) bubbles the event
   focusIn: (e, args...) ->
-    console.log "focusingIn content editable field", @$()
+    # console.log "focusingIn content editable field", @$()
     true
 
   # focusOut -- responds to focus out event on the contentField
@@ -39,28 +42,19 @@ Sysys.ContentEditableField = Ember.View.extend
   #   1) removes the autogrow on the field
   #   2) bubbles the event
   focusOut: (e, options)->
-    console.log "focusingOut content editable field", @$()
+    # console.log "focusingOut content editable field", @$()
     true
 
   didInsertElement: ->
     @refresh()
-    @setPlaceHolderText()
     @initHotKeys()
 
   refresh: ->
-    @set 'value', @get('rawValue')
-
-  setPlaceHolderText: ->
-    @$().attr('placeholder', @get('placeholder'))
-
-  commit: Em.K
+    @val @get('rawValue')
 
   # is this an event?
   enter: ->
-    @commitAndContinue()
-
-  commitAndContinue: ->
-    @get('parentView').commitAndContinue()
+    @get('parentView').send 'enterPressed'
 
   cancel: ->
     @refresh()
@@ -76,9 +70,6 @@ Sysys.ContentEditableField = Ember.View.extend
       'esc': (e) =>
         e.preventDefault()
         @cancel()
-      'ctrl+shift+return': (e) =>
-        e.preventDefault()
-        @commit()
       'return': (e) =>
         e.preventDefault()
         @enter()
@@ -112,11 +103,6 @@ Sysys.ContentEditableField = Ember.View.extend
 
 Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
   classNames: ['label-field']
-  enter: ->
-    if @get('controller.activeHumonNode.isCollection')
-      @get('controller').send('insertChild')
-    else
-      @commitAndContinue()
 
   initHotKeys: ->
     @_super()
@@ -134,32 +120,39 @@ Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
       e.preventDefault()
 
 Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
-  classNames: ['content-field', 'key-field', 'label-field']
-  contenteditable: 'true'
-  attributeBindings: ["contenteditable:contenteditable"]
+  classNames: ['key-field']
   placeholder: 'key'
-  commit: ->
-    @get('controller').commitKey()
-  didInsertElement: ->
-    @_super()
-    @$().html @get('rawValue')
 
   click: (e) ->
-    # @get('controller').send 'focusIn'
-    console.log "debugger"
     e.stopPropagation()
-    @send('testEvent')
 
-  focusIn: (e, args...) ->
-    console.log "focusingIn keyField", @$()
-    true
+Sysys.ValEditableField = Sysys.ContentEditableField.extend
+  classNames: ['val-field']
 
-  focusOut: (e) ->
-    console.log "focusOut"
-    true
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'left', (e) =>
+      @moveLeft(e)
+    # this is necessary to focus the label field properly
+    # when a type change occurs and HNV is rerendered and HNV is rerendered
+    @$().bind 'keydown', 'shift+tab', (e) =>
+      @set 'parentView._focusedField', 'label'
 
-  blur: (e) ->
-    console.log "blur"
+  moveLeft: (e)->
+    if getCursor(@$()) ==  0
+      @get('parentView').moveLeft()
+      e.preventDefault()
 
-  activate: (e) ->
-    console.log "activate"
+Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
+  classNames: ['idx-field']
+  contenteditable: 'false'
+  refresh: ->
+    @val "#{parseInt(@get('rawValue')) + 1}."
+
+  # Keep the displayed value in sync
+  rawValueDidChange: (->
+    @refresh()
+  ).observes('rawValue')
+
+  didInsertElement: ->
+    @_super()

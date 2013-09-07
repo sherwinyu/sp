@@ -18,8 +18,13 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # HOOKS
   ##################
 
-  didCommit: (json)->
-    console.log 'didCommit', JSON.stringify json
+  # params:
+  #   - controller: the instance of the controller
+  #   - node: the committed node
+  #   - rootJson: json representation of the root node
+  #   - key: a string if the key was committed; null otherwise
+  didCommit: (params)->
+    console.log 'didCommit', JSON.stringify rootJson
 
   didUp: ->
     console.log 'didUp'
@@ -36,56 +41,62 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   #     defaults to activeHumonNode
   #   key: the key for this humon node. If present, the node's nodeKey is set.
   #   val: the val to be commitd to the node. If present, the commitVal is called.
+  #
   # Behavior:
   #   1) it uses node or defaults it to activeHumonNode
   #   2) it commits the nodeKey if key is present
-  #   3) it calls commitVal with the val if val is present
-  # #TODO(syu): refactor so commitVal and commitKey are balanced
+  #   3) it calls _commitVal with the val if val is present
+  #
+  # Context:
+  #   commitEverything is the central pathway for all commiting.
+  #   it fires the didCommit hook
+  #   called by:
+  #     - `commitAndContinueNew`, prior to inserting blank
+  #     - `HNV#focusOut`
   commitEverything: (payload) ->
     node = payload.node || @get('activeHumonNode')
     node.set('nodeKey', payload.key) if payload.key?
-    @send 'commitVal', payload.val, node: node if payload.val?
+    @_commitVal payload.val, node: node if payload.val?
+    @didCommit(
+      controller: @
+      node: node
+      rootJson: Sysys.hn2j @get('content')
+      payload: payload
+    )
 
   # calls commitEverything
+  # then, if the active (just committed) node is a collection,
+  #   we switch to insertChild
+  # otherwise,
+  #   insert a sibling after the active node
   # then conditionally decides whether to insert a sibling or a child,
   # depending on whether active node is a collection
   commitAndContinueNew: (payload) ->
     ahn = @get 'activeHumonNode'
     @send 'commitEverything', payload
     Ember.run.sync()
-    parent = ahn.get 'nodeParent'
-    idx = ahn.get('nodeIdx') + 1
     if ahn.get 'isCollection'
-      parent = ahn
-      idx = ahn.get('nodeVal').length
-    blank = (Sysys.j2hn null)
+      @activateNode ahn
+      @insertChild()
+      return
+    blank = Sysys.j2hn null
     Ember.run =>
-      console.debug "nodeView rerender: commitAndContinueNew", ts()
+      parent = ahn.get 'nodeParent'
+      idx = ahn.get('nodeIdx') + 1
       parent.get('nodeView').rerender()
       parent.insertAt(idx,  blank)
     @send 'activateNode', blank
     Ember.run.sync()
     @send 'smartFocus'
 
-  commit: (rawString)->
-    # rawString =  @get('activeHumonNodeView').$valField().val()
-    @send 'commitVal', rawString
-
-  commitKey: ->
-    rawString =  @get('activeHumonNodeView').$keyField().val()
-    if rawString?
-      # TODO(syu): validate whether rawString can be a key
-      @set('activeHumonNode.nodeKey', rawString)
-    # TODO(syu): refresh key field
-
-  # commitVal -- commits the val
+  # _commitVal -- commits the val
   # precondition: activeNode is a literal
   # param rawString: the rawString to parse and replace ahn with
   # param options: options hash with
   #   node: the node to comit to. defaults to activeHumonNode
   #   rerender: whether to rerender the humon node view
   # TODO(syu):  specify behavior strictly
-  commitVal: (rawString, {rerender, node}={rerender: true, node: null}) ->
+  _commitVal: (rawString, {node}={node: null}) ->
     node ||= @get('activeHumonNode')
     oldType = node.get('nodeType')
     json =
@@ -99,19 +110,13 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     if rawString?
       Ember.run =>
         node.replaceWithJson json
-        @didCommit( Sysys.hn2j @get('content') )
-        newType = node.get('nodeType')
-        if newType != oldType
+        # rerender this node; _focusField will get us properly refocused
         # We are manually re-rendering to update autoTemplate.
         # But we don't want to rerender if we're still on the same humon node --
         #   because if we do, we can't "right arrow" into the next field -- it'll have been removed!
-        # Als o, add the ?. check on nodeView because in the case of dC.delete, the node already has
+        # Also, add the ?. check on nodeView because in the case of dC.delete, the node already has
         # nodeView set to null from HNV#willDeleteElement
-          node.get('nodeView')?.rerender() && console.debug("nodeView rerender:commitVal", ts()) # unless node == @get('activeHumonNode')
-
-  commitWithRerender: (rawString) ->
-    @send 'commitVal', rawString, rerender:true
-    @send 'smartFocus'
+        node.get('nodeView')?.rerender()
 
   ######################################
   ##  Manipulating focus
@@ -141,7 +146,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # does NOT focus
   # does NOT commit
   activateNode: (node) ->
-    @set 'activeHumonNode', node if node && !node.get('hidden')
+    # if not node?
+    # debugger
+    @set 'activeHumonNode', node # if node # && !node.get('hidden')
 
   # nextNode -- controler method for shifting the active node up or down
   # does NOT affect the UI focus
@@ -208,6 +215,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       ahn.get('nodeParent').deleteChild ahn
       dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
     @send 'activateNode', ahn
+    Ember.run.sync()
     @send 'smartFocus'
 
   bubbleDown: ->
@@ -222,6 +230,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       else
         dest.insertAt(0, ahn)
     @send 'activateNode', ahn
+    Ember.run.sync()
     @send 'smartFocus'
 
   deleteActive: ->
@@ -235,13 +244,15 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run.sync()
     @send 'smartFocus'
 
-  # convert the call to 'activateNode' to use smartFocus, remove the opts.focus?
+  # insertChild
+  #   inserts and sets focus on a blank node that is a child
+  #   of the active node, which must be a collection.
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
-    nextBlank = (Sysys.j2hn "")
-    Em.run => ahn.insertAt 0, nextBlank
-    @send 'activateNode', nextBlank
+    blank = Sysys.j2hn null
+    Em.run => ahn.insertAt 0, blank
+    @send 'activateNode', blank
     Ember.run.sync()
     @send 'smartFocus'
 
@@ -253,6 +264,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run =>
       newSibling.deleteChild ahn
       newParent.insertAt newSibling.get('nodeIdx') + 1, ahn
+      @send 'activateNode', ahn
     @smartFocus()
 
   indent: ->
@@ -263,4 +275,5 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run =>
       parent.deleteChild ahn
       prevSib.insertAt prevSib.get('nodeVal.length'), ahn
+      @send 'activateNode', ahn
     @smartFocus()
