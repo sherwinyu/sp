@@ -41,14 +41,28 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   #     defaults to activeHumonNode
   #   key: the key for this humon node. If present, the node's nodeKey is set.
   #   val: the val to be commitd to the node. If present, the commitVal is called.
+  #
   # Behavior:
   #   1) it uses node or defaults it to activeHumonNode
   #   2) it commits the nodeKey if key is present
-  #   3) it calls commitVal with the val if val is present
+  #   3) it calls _commitVal with the val if val is present
+  #
+  # Context:
+  #   commitEverything is the central pathway for all commiting.
+  #   it fires the didCommit hook
+  #   called by:
+  #     - `commitAndContinueNew`, prior to inserting blank
+  #     - `HNV#focusOut`
   commitEverything: (payload) ->
     node = payload.node || @get('activeHumonNode')
     node.set('nodeKey', payload.key) if payload.key?
-    @send 'commitVal', payload.val, node: node if payload.val?
+    @_commitVal payload.val, node: node if payload.val?
+    @didCommit(
+      controller: @
+      node: node
+      rootJson: Sysys.hn2j @get('content')
+      payload: payload
+    )
 
   # calls commitEverything
   # then, if the active (just committed) node is a collection,
@@ -75,14 +89,14 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run.sync()
     @send 'smartFocus'
 
-  # commitVal -- commits the val
+  # _commitVal -- commits the val
   # precondition: activeNode is a literal
   # param rawString: the rawString to parse and replace ahn with
   # param options: options hash with
   #   node: the node to comit to. defaults to activeHumonNode
   #   rerender: whether to rerender the humon node view
   # TODO(syu):  specify behavior strictly
-  commitVal: (rawString, {rerender, node}={rerender: true, node: null}) ->
+  _commitVal: (rawString, {node}={node: null}) ->
     node ||= @get('activeHumonNode')
     oldType = node.get('nodeType')
     json =
@@ -96,11 +110,6 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     if rawString?
       Ember.run =>
         node.replaceWithJson json
-        @didCommit(
-          controller: @
-          node: node
-          rootJson: Sysys.hn2j @get('content')
-        )
         # rerender this node; _focusField will get us properly refocused
         # We are manually re-rendering to update autoTemplate.
         # But we don't want to rerender if we're still on the same humon node --
@@ -108,10 +117,6 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         # Also, add the ?. check on nodeView because in the case of dC.delete, the node already has
         # nodeView set to null from HNV#willDeleteElement
         node.get('nodeView')?.rerender()
-
-  commitWithRerender: (rawString) ->
-    @send 'commitVal', rawString, rerender:true
-    @send 'smartFocus'
 
   ######################################
   ##  Manipulating focus

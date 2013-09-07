@@ -59,6 +59,8 @@ Sysys.HumonNodeView = Ember.View.extend
     payload =
       key: @keyField()?.val()
       node: node
+
+    # if the value has been modified
     if @valField()?.val() isnt @get("templateStrings.asString")
       payload.val = @valField()?.val()
     @get('controller').send 'commitEverything', payload
@@ -252,7 +254,7 @@ Sysys.HumonNodeView = Ember.View.extend
       pos: 'left'
     @focusField @get '_focusedField'
 
-  commitAndContinue: ->
+  enterPressed: ->
     if @get('controller.activeHumonNode.isCollection')
       @get('controller').send('insertChild')
       return
@@ -264,19 +266,6 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('controller').send 'commitAndContinueNew', payload
 
 Sysys.DetailView = Sysys.HumonNodeView.extend
-  init: ->
-    Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
-    @_super()
-
-  didInsertElement: ->
-    Ember.run.sync()
-    @_super()
-
-  focusOut: (e) ->
-    if @get('controller')
-      @get('controller').send('activateNode', null)
-
-Sysys.HumonRootView = Sysys.HumonNodeView.extend
   init: ->
     Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
     @_super()

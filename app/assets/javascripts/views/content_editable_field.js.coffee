@@ -54,10 +54,7 @@ Sysys.ContentEditableField = Ember.View.extend
 
   # is this an event?
   enter: ->
-    @commitAndContinue()
-
-  commitAndContinue: ->
-    @get('parentView').commitAndContinue()
+    @get('parentView').send 'enterPressed'
 
   cancel: ->
     @refresh()
@@ -127,8 +124,6 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
   placeholder: 'key'
 
   click: (e) ->
-    # @get('controller').send 'focusIn'
-    console.log "debugger"
     e.stopPropagation()
 
 Sysys.ValEditableField = Sysys.ContentEditableField.extend
@@ -154,6 +149,7 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
   refresh: ->
     @val "#{parseInt(@get('rawValue')) + 1}."
 
+  # Keep the displayed value in sync
   rawValueDidChange: (->
     @refresh()
   ).observes('rawValue')
