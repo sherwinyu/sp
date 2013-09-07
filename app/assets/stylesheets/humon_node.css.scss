@@ -25,6 +25,7 @@ body {
   border: 0px transparent solid;
   border-left: $nodeBorderLeft;
   background: white;
+  transition: all 300ms ease;
 }
 
 .node.node-literal { }
@@ -39,12 +40,18 @@ body {
  */
 .node.active {
 }
-
-.node.active > span.blocky {
-  // background: $activeColorLight
+.node.active:before {
+  transition: all 300ms ease;
+  content: "\00BB"; //»
+  position: absolute;
+  left: 0;
+  font-size: 24px;
+  vertical-align: middle;
 }
+
 .node.active > .node {
   border-left: $nodeActiveBorderLeft;
+  transition: all 300ms ease;
 }
 .node.active > span.blocky > .content-field {
   border-bottom: $borderUnderline;
@@ -89,9 +96,11 @@ span.node-detail.node-icon {
  * Active child styling
  */
 // child node glyph
-.node.activeChild > span.blocky > .content-field.label-field {
+// .node.activeChild > span.blocky > .content-field.label-field {
+.node.activeChild {
   &:before {
     content: "\21B5"; // carraige return
+    content: "\2022"; // bullet •
     color: $childNodeGlyphColor;
 
     display: inline-block;
@@ -99,7 +108,7 @@ span.node-detail.node-icon {
     left: $childNodeGlyphLeftOffset;
 
     width: $childNodeGlyphWidth;
-    @include rotate(90deg);
+    // @include rotate(90deg);
 
   }
 }
@@ -220,10 +229,10 @@ span.node-detail.node-icon {
  ********************/
 span.colon-glyph {
   position: relative;
-  vertical-align: top;
   left: 0px;
   font-weight: bolder;
   padding-left: 2px;
+  margin-right: 4px;
 }
 /*
  * open glyph
