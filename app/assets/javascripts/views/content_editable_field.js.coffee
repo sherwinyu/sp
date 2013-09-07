@@ -52,8 +52,6 @@ Sysys.ContentEditableField = Ember.View.extend
   refresh: ->
     @val @get('rawValue')
 
-  commit: Em.K
-
   # is this an event?
   enter: ->
     @commitAndContinue()
@@ -75,9 +73,6 @@ Sysys.ContentEditableField = Ember.View.extend
       'esc': (e) =>
         e.preventDefault()
         @cancel()
-      'ctrl+shift+return': (e) =>
-        e.preventDefault()
-        @commit()
       'return': (e) =>
         e.preventDefault()
         @enter()
@@ -111,11 +106,6 @@ Sysys.ContentEditableField = Ember.View.extend
 
 Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
   classNames: ['label-field']
-  enter: ->
-    if @get('controller.activeHumonNode.isCollection')
-      @get('controller').send('insertChild')
-    else
-      @commitAndContinue()
 
   initHotKeys: ->
     @_super()
@@ -143,9 +133,6 @@ Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
 
 Sysys.ValEditableField = Sysys.ContentEditableField.extend
   classNames: ['val-field']
-
-  commit: ->
-    @get('controller').send('commit', @get 'value')
 
   initHotKeys: ->
     @_super()

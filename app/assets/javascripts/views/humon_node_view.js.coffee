@@ -244,8 +244,11 @@ Sysys.HumonNodeView = Ember.View.extend
     @focusField @get '_focusedField'
 
   commitAndContinue: ->
+    if @get('controller.activeHumonNode.isCollection')
+      @get('controller').send('insertChild')
+      return
     if @valField()?.val() == ''
-      @valField()?.val '{}'
+      @valField().val '{}'
     payload =
       val: @valField()?.val()
       key: @keyField()?.val()

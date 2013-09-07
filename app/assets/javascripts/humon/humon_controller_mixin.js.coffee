@@ -75,9 +75,6 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     Ember.run.sync()
     @send 'smartFocus'
 
-  commit: (rawString)->
-    @send 'commitVal', rawString
-
   # commitVal -- commits the val
   # precondition: activeNode is a literal
   # param rawString: the rawString to parse and replace ahn with
