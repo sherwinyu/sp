@@ -162,8 +162,11 @@ Sysys.HumonNodeView = Ember.View.extend
 
   didInsertElement: ->
     if @get("_focusedField")
-      @focusField(@get("_focusedField"))
-      @set "_focusedField", null
+      # needs to be in a deferred because the child views (node fields)
+      # might not have had their text set up (via didInsertElement)
+      Ember.run.scheduleOnce "afterRender", @, =>
+        @focusField(@get("_focusedField"))
+        @set "_focusedField", null
     @initHotkeys()
     @get('nodeContent')?.set 'nodeView', @
 
@@ -186,18 +189,19 @@ Sysys.HumonNodeView = Ember.View.extend
     field
 
   labelField: ->
-    Sysys.vfi(@$labelField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.AbstractEditableLabel
   keyField: ->
-    Sysys.vfi(@$keyField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.KeyEditableField
   idxField: ->
-    Sysys.vfi(@$idxField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.IdxEditableField #KeyEditableField
   valField: ->
-    Sysys.vfi(@$valField().attr 'id')
+    @get("childViews").find (view) -> view instanceof Sysys.ValEditableField #IdxEditableField#KeyEditableField
 
   # focusField --
   focusField: (opts) ->
     if typeof opts is "string"
       opts = field: opts
+    console.log "focusing field, #{opts.field}, #{opts.pos}"
 
     # if no field is present
     # this can happen in cases such as
@@ -210,17 +214,21 @@ Sysys.HumonNodeView = Ember.View.extend
 
     # get the field view
     fieldView = @["#{opts.field}Field"]()
+    Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
 
     if fieldView instanceof Ember.TextArea
       fieldView.$().focus()
     else if fieldView instanceof Sysys.ContentEditableField
+      Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
       setCursor(fieldView.$().get(0), fieldView.contentLength())
+      Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
     else
       # it's possible that this field doesn't exist:
       # "moveRight" on a node-collection's label field
       # no val field exists!
       return
 
+    Em.assert "fieldView must be inDOM", fieldView.state is "inDOM"
     if opts.pos == "left"
       setCursor(fieldView.$().get(0), 0)
     if opts.pos == "right"
