@@ -15,9 +15,7 @@ Sysys.HumonNodeView = Ember.View.extend
       "humon_node"
   ).property('nodeContent.nodeType')
   templateNameBinding: "autoTemplate"
-
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
-
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.nodeType',
@@ -52,7 +50,6 @@ Sysys.HumonNodeView = Ember.View.extend
   focusOut: (e) ->
     e.stopPropagation()
     @get('controller').send('activateNode', null)
-    # TODO(syu):
     # prepare payload: pull from $().val, etc
     # send to `commitEverything
     node = @get('nodeContent')
@@ -60,7 +57,7 @@ Sysys.HumonNodeView = Ember.View.extend
       key: @keyField()?.val()
       node: node
 
-    # if the value has been modified
+    # if the value has been modified, include val in the payload
     if @valField()?.val() isnt @get("templateStrings.asString")
       payload.val = @valField()?.val()
     @get('controller').send 'commitEverything', payload
@@ -88,19 +85,15 @@ Sysys.HumonNodeView = Ember.View.extend
     # the labelfield is key AND a key is present AND valfield is present
     if context == 'hash' && isLiteral && nodeKey && !nodeVal
       opts.field = 'label'
-
     # the labelfield is key AND the key is empty
     else if context == 'hash' && !nodeKey
       opts.field = 'label'
-
     # the labelfield is key AND no val field is present
     else if context =='hash' && isCollection
       opts.field = 'label'
-
     # the labelfield is list AND no val field present
     else if context =='list'  && isCollection
       opts.field = 'label'
-
     else
       opts.field = "val"
       opts.pos = "right"
@@ -113,9 +106,6 @@ Sysys.HumonNodeView = Ember.View.extend
   #   3) if HNV is not active, set it as active
   #   4) regardless, call @smartFocus
   click: (e)->
-    # TODO(syu): should be
-    #   1. trigger 'try to transitionTonode'
-    #   2. smartFocus to set the focus
     e.stopPropagation()
     unless @get('isActive')
       @get('controller').send('activateNode', @get('nodeContent'))
@@ -125,13 +115,13 @@ Sysys.HumonNodeView = Ember.View.extend
   # Context: TODO(syu)
   #   1) calls prevNode on the controller
   #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
-  up: (event = null) ->
+  up:  ->
     if @get('controller').prevNode() #send('prevNode')
       @set "_focusedField", null
       Ember.run.sync()
       @get('controller').send 'smartFocus'
 
-  down: (event = null) ->
+  down: ->
     if changed = @get('controller').nextNode() #send('nextNode')
       @set "_focusedField", null
       Ember.run.sync()
@@ -153,7 +143,6 @@ Sysys.HumonNodeView = Ember.View.extend
   ).property('nodeContent.nodeParent.nodeVal.lastObject')
 
   willDestroyElement: ->
-    @unbindHotkeys()
     @get('nodeContent')?.set 'nodeView', null
 
   didInsertElement: ->
@@ -164,21 +153,6 @@ Sysys.HumonNodeView = Ember.View.extend
         @focusField(@get("_focusedField"))
         @set "_focusedField", null
     @get('nodeContent')?.set 'nodeView', @
-
-  unbindHotkeys: Em.K
-
-  # TODO(syu): prepare to delete
-  $labelField: ->
-    field = @$('> span> .content-field.label-field')?.first()
-    field
-  $keyField: ->
-    field = @$('> span > .content-field.key-field')?.first()
-    field
-  $idxField: ->
-    @$('> span > .content-field.idx-field')?.first()
-  $valField: ->
-    field = @$('> span > .content-field.val-field')?.first()
-    field
 
   labelField: ->
     @get("childViews").find (view) -> view instanceof Sysys.AbstractEditableLabel

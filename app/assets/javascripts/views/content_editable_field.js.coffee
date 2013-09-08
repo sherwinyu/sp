@@ -1,11 +1,8 @@
 Sysys.ContentEditableField = Ember.View.extend
   tagName: "span"
-
   rawValueBinding: null
   classNames: ['content-field']
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
-  placeholder: ''
-
   contenteditable: 'true'
   attributeBindings: ["contenteditable:contenteditable"]
 
@@ -33,7 +30,6 @@ Sysys.ContentEditableField = Ember.View.extend
   #   1) calls @autogrow
   #   2) bubbles the event
   focusIn: (e, args...) ->
-    # console.log "focusingIn content editable field", @$()
     true
 
   # focusOut -- responds to focus out event on the contentField
@@ -42,7 +38,6 @@ Sysys.ContentEditableField = Ember.View.extend
   #   1) removes the autogrow on the field
   #   2) bubbles the event
   focusOut: (e, options)->
-    # console.log "focusingOut content editable field", @$()
     true
 
   didInsertElement: ->
@@ -59,7 +54,6 @@ Sysys.ContentEditableField = Ember.View.extend
   cancel: ->
     @refresh()
 
-
   initHotKeys: ->
     @createHotKeys()
     for own combo, func of @get 'hotkeys'
@@ -67,18 +61,15 @@ Sysys.ContentEditableField = Ember.View.extend
 
   createHotKeys: ->
     @set 'hotkeys',
-      'esc': (e) =>
-        e.preventDefault()
-        @cancel()
       'return': (e) =>
         e.preventDefault()
         @enter()
       'down': (e) =>
         e.preventDefault()
-        @get('parentView').down()
+        @get('parentView').send 'down'
       'up': (e) =>
         e.preventDefault()
-        @get('parentView').up()
+        @get('parentView').send 'up'
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').send('bubbleUp')
@@ -121,7 +112,6 @@ Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
 
 Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
   classNames: ['key-field']
-  placeholder: 'key'
 
   click: (e) ->
     e.stopPropagation()
@@ -157,6 +147,3 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
   rawValueDidChange: (->
     @refresh()
   ).observes('rawValue')
-
-  didInsertElement: ->
-    @_super()
