@@ -26,6 +26,10 @@ window.HumonTypes =
       json = node
     j2hnv: (json) ->
       node = json
+
+    # _materializeTemplateStringsForNode
+    # param node node -- the node against which to evaluate the template strings
+    # returns
     _materializeTemplateStringsForNode: (node) ->
       # if the registered templateStrings is a function, lazy-evaluate it
       # with the node as the argument
@@ -34,8 +38,12 @@ window.HumonTypes =
         templateStrings = @templateStrings.call(@, node)
       # update templateStrings by merging it into the default template
       # strings
+
+      # merge templateStrings into default templateStrings into newObject
       templateStrings = $.extend {}, HumonTypes.defaultTemplateStrings, templateStrings
-      # for templateString, lazy evaluate if it's a function
+
+      # for each template string, lazy evalute and inject
+      # it into the return object
       ret = {}
       for own k, v of templateStrings
         ret[k] = if typeof v is "function"
@@ -43,6 +51,7 @@ window.HumonTypes =
                  else
                    v
       ret
+  ## END `defaultContext`
 
   register: (type, context) ->
     # TODO make warnings about malformed args

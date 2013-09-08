@@ -10,7 +10,7 @@ Sysys.ContentEditableField = Ember.View.extend
   attributeBindings: ["contenteditable:contenteditable"]
 
   val: (args...) ->
-    @$().html.apply(@$(), args)
+    @$().text.apply(@$(), args)
 
   contentLength: ->
     unescape(@val()).length

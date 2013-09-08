@@ -137,11 +137,6 @@ Sysys.HumonNodeView = Ember.View.extend
       Ember.run.sync()
       @get('controller').send 'smartFocus'
 
-
-  json_string: (->
-    JSON.stringify @get('nodeContent.json')
-  ).property('nodeContent.json')
-
   isActive: (->
     ret = @get('controller.activeHumonNode') == @get('nodeContent') && @get('nodeContent')?
   ).property('controller.activeHumonNode', 'nodeContent')
@@ -158,7 +153,6 @@ Sysys.HumonNodeView = Ember.View.extend
   ).property('nodeContent.nodeParent.nodeVal.lastObject')
 
   willDestroyElement: ->
-    # @animDestroy()
     @unbindHotkeys()
     @get('nodeContent')?.set 'nodeView', null
 
@@ -169,15 +163,11 @@ Sysys.HumonNodeView = Ember.View.extend
       Ember.run.scheduleOnce "afterRender", @, =>
         @focusField(@get("_focusedField"))
         @set "_focusedField", null
-    @initHotkeys()
     @get('nodeContent')?.set 'nodeView', @
-
 
   unbindHotkeys: Em.K
 
-  initHotkeys: ->
-    @$().bind 'keyup', 'up', (e) =>
-
+  # TODO(syu): prepare to delete
   $labelField: ->
     field = @$('> span> .content-field.label-field')?.first()
     field
@@ -264,16 +254,3 @@ Sysys.HumonNodeView = Ember.View.extend
       val: @valField()?.val()
       key: @keyField()?.val()
     @get('controller').send 'commitAndContinueNew', payload
-
-Sysys.DetailView = Sysys.HumonNodeView.extend
-  init: ->
-    Ember.run.sync() # <-- need to do this because nodeContentBinding hasn't propagated yet
-    @_super()
-
-  didInsertElement: ->
-    Ember.run.sync()
-    @_super()
-
-  focusOut: (e) ->
-    if @get('controller')
-      @get('controller').send('activateNode', null)

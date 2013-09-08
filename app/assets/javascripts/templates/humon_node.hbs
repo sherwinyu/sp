@@ -1,10 +1,7 @@
 {{!
 humon_node.hbs
 }}
-<span class="blocky">
-  {{partial humon_key_index_field}}
-  <span class="open-glyph"> </span>
-</span>
+{{partial humon_key_index_field}}
 
 {{#if view.nodeContent.isCollection}}
   {{#each nodeChild in view.nodeContent.nodeVal}}
@@ -12,14 +9,4 @@ humon_node.hbs
     {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
     {{/with}}
   {{/each}}
-{{/if}}
-<span class="close-glyph"></span>
-
-{{#if view.displayStats}}
-<br><br>
-<strong> JSON STRING</strong>: {{view.json_string}} <br>
-<strong> Active Humon Node</strong>: {{controller.activeHumonNode.nodeView.json_string}} <br>
-<strong> Active Humon Node Key</strong> {{controller.activeHumonNode.nodeKey}} <br>
-<strong> Active Humon Node Idx</strong> {{controller.activeHumonNode.nodeIdx}} <br>
-<strong> Active Humon Node Parent</strong> {{controller.activeHumonNode.nodeParent.nodeView.json_string}} <br>
 {{/if}}
