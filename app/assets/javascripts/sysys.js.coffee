@@ -13,9 +13,3 @@
   customEvents: {
     testEvent: 'testEvent'
   }
-  # if @TESTING
-  # Sysys.deferReadiness()
-
-
-
-

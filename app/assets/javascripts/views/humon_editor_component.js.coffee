@@ -24,16 +24,12 @@ Sysys.HumonEditorView = Ember.View.extend
   init: ->
     Em.assert @get('json')?, "json must be defined for HumonEditorView"
 
-    unless @get 'json'
-      @set 'json', test: 'json'
-
     @set 'content', Sysys.j2hn @get 'json'
 
     @set 'hooks', $.extend(
-      didCommit: (json) =>
-        console.log "didCommit:", params
-        Em.assert 'fix me'
-        @set 'json', param.rootJson
+      didCommit: (params) =>
+        console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
+        @set 'json', params.rootJson
     , @get('hooks'))
 
     detailController = Sysys.DetailController.create
@@ -44,8 +40,11 @@ Sysys.HumonEditorView = Ember.View.extend
     @set 'controller', detailController
     @_super()
 
-window.hev = Sysys.HumonEditorView.create
-  hooks:
-    didUp: ->
-      console.log 'didUp'
-      debugger
+window.appendHev = (selector, initialJson) ->
+  @hev = Sysys.HumonEditorView.create
+    hooks:
+      didUp: ->
+        console.log 'didUp'
+    json: initialJson
+  @hev.appendTo(selector)
+  @hev
