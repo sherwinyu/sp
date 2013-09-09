@@ -24,6 +24,51 @@ Sysys.HumonNodeView = Ember.View.extend
     'suppressGap']
   classNames: ['node']
 
+  actions:
+
+    # up -- handles the event of moving to the previous node
+    # Context: TODO(syu)
+    #   1) calls prevNode on the controller
+    #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
+    up:  ->
+      if @get('controller').prevNode() #send('prevNode')
+        @set "_focusedField", null
+        Ember.run.sync()
+        @get('controller').send 'smartFocus'
+
+    down: ->
+      if changed = @get('controller').nextNode() #send('nextNode')
+        @set "_focusedField", null
+        Ember.run.sync()
+        @get('controller').send 'smartFocus'
+
+    enterPressed: ->
+      if @get('controller.activeHumonNode.isCollection')
+        @get('controller').send('insertChild')
+        return
+      if @valField()?.val() == ''
+        @valField().val '{}'
+      payload =
+        val: @valField()?.val()
+        key: @keyField()?.val()
+      @get('controller').send 'commitAndContinueNew', payload
+
+    moveLeft: ->
+      # you can't focus left on a list!
+      if @get('nodeContent.nodeParent.nodeType') is 'list'
+        return
+      @set '_focusedField',
+        field: 'label'
+        pos: 'right'
+      Ember.run.schedule "afterRender", @, ->
+        @focusField @get '_focusedField'
+
+    moveRight: ->
+      @set '_focusedField',
+        field: 'val'
+        pos: 'left'
+      @focusField @get '_focusedField'
+
   # focusIn
   #  1) cancels propagation
   #  2) if current HNV is active returns and does nothing
@@ -111,21 +156,6 @@ Sysys.HumonNodeView = Ember.View.extend
       @get('controller').send('activateNode', @get('nodeContent'))
     @smartFocus()
 
-  # up -- handles the event of moving to the previous node
-  # Context: TODO(syu)
-  #   1) calls prevNode on the controller
-  #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
-  up:  ->
-    if @get('controller').prevNode() #send('prevNode')
-      @set "_focusedField", null
-      Ember.run.sync()
-      @get('controller').send 'smartFocus'
-
-  down: ->
-    if changed = @get('controller').nextNode() #send('nextNode')
-      @set "_focusedField", null
-      Ember.run.sync()
-      @get('controller').send 'smartFocus'
 
   isActive: (->
     ret = @get('controller.activeHumonNode') == @get('nodeContent') && @get('nodeContent')?
@@ -202,29 +232,3 @@ Sysys.HumonNodeView = Ember.View.extend
       setCursor(fieldView.$().get(0), fieldView.contentLength())
     return
 
-  moveLeft: ->
-    # you can't focus left on a list!
-    if @get('nodeContent.nodeParent.nodeType') is 'list'
-      return
-    @set '_focusedField',
-      field: 'label'
-      pos: 'right'
-    Ember.run.schedule "afterRender", @, ->
-      @focusField @get '_focusedField'
-
-  moveRight: ->
-    @set '_focusedField',
-      field: 'val'
-      pos: 'left'
-    @focusField @get '_focusedField'
-
-  enterPressed: ->
-    if @get('controller.activeHumonNode.isCollection')
-      @get('controller').send('insertChild')
-      return
-    if @valField()?.val() == ''
-      @valField().val '{}'
-    payload =
-      val: @valField()?.val()
-      key: @keyField()?.val()
-    @get('controller').send 'commitAndContinueNew', payload

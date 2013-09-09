@@ -103,11 +103,11 @@ Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
   keyDown: (e) ->
     if e.which ==  186 # colon
       e.preventDefault()
-      @get('parentView').moveRight()
+      @get('parentView').send 'moveRight'
 
   moveRight: (e)->
     if getCursor(@$()) ==  @contentLength()
-      @get('parentView').moveRight()
+      @get('parentView').send 'moveRight'
       e.preventDefault()
 
 Sysys.KeyEditableField = Sysys.AbstractEditableLabel.extend
@@ -130,7 +130,7 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
 
   moveLeft: (e)->
     if getCursor(@$()) ==  0
-      @get('parentView').moveLeft()
+      @get('parentView').send 'moveLeft'
       e.preventDefault()
 
   rawValueDidChange: (->
