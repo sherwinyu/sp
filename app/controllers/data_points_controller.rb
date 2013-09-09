@@ -42,6 +42,7 @@ class DataPointsController < ApplicationController
   # POST /data_points
   # POST /data_points.json
   def create
+    binding.pry
     @data_point = DataPoint.new(params[:data_point])
 
     respond_to do |format|

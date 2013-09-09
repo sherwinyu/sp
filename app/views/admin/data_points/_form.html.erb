@@ -1,4 +1,3 @@
-form_for(@stemp, :remote => true, :html => {:'data-type' => 'json', :multipart => true})
 <%= form_for @data_point,  html: {id: 'my-form'} do |f| %>
   <%= f.text_field :submitted_at %>
   <%= f.text_field :details %>
