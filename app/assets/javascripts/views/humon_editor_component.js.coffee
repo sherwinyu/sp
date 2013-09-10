@@ -1,11 +1,13 @@
 Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   classNames: ['humon-editor']
-  content: null
   hooks: null
+  json: {}
+  jsonDidChange: (->
+    @set 'content', Sysys.j2hn @get 'initialJson'
+    @get('childViews')[0].rerender()
+  ).observes "initialJson"
 
   init: ->
-    @set 'content', Sysys.j2hn @get 'json'
-    detailController = Sysys.DetailController.create()
     @_super()
 
   # TODO(syu): is this safe? if this object never gets cloned?

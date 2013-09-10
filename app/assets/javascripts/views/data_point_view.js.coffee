@@ -46,11 +46,15 @@ appendForm = ->
   @hevForm = new HEVForm("#new_data_point", json, opts)
 
 $(document).ready ->
-  controller = Ember.ObjectController.create(
-    asJson: [1,2,3,4]
-    jsonChanged: ->
-      debugger
-  )
+  controller = Ember.ObjectController.extend(
+    init: ->
+      dpPromise = lu('store:main').find 'data_point',  1
+      @set 'content', dpPromise
+      dpPromise.then( (dp) =>
+        @set 'initialJson', dp.get('details')
+      )
+      @_super()
+  ).create()
 
   dpv = Sysys.DataPointView.create
     controller: controller
