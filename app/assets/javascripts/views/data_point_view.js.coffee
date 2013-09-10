@@ -1,8 +1,8 @@
+# responsible for displaying / editing a DataPoint
 Sysys.DataPointView = Ember.View.extend
   templateName: 'data_point'
   actions:
     submit: ->
-      debugger
 
 class HEVForm
   # TODO split form selector and append selector
@@ -48,6 +48,8 @@ appendForm = ->
 $(document).ready ->
   controller = Ember.ObjectController.create(
     asJson: [1,2,3,4]
+    jsonChanged: ->
+      debugger
   )
 
   dpv = Sysys.DataPointView.create

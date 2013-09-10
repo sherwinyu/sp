@@ -1,2 +1,3 @@
 Sysys.DataPoint = DS.Model.extend
-  submittedAt: DS.attr('date')
+  submittedAt: DS.attr()
+  details: DS.attr()

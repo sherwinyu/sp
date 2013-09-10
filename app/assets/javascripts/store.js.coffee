@@ -1,3 +1,4 @@
+###
 Sysys.Adapter = DS.RESTAdapter.extend
 
   # @overrides dirtyRecordsForAttributeChange
@@ -18,3 +19,4 @@ Sysys.Adapter.registerTransform 'humon',
 Sysys.Store = DS.Store.extend
   revision: 12,
   adapter: Sysys.Adapter.create()
+###
