@@ -51,7 +51,13 @@ Sysys.HumonNodeView = Ember.View.extend
       payload =
         val: @valField()?.val()
         key: @keyField()?.val()
-      @get('controller').send 'commitAndContinueNew', payload
+      if @get('controller.activeHumonNode.nodeParent.isCollection')
+        @get('controller').send 'commitAndContinueNew', payload
+      else
+        @get('controller').send 'commitLiteral', payload
+
+        console.log 'activeNode', @get('controller.activeHumonNode')
+
 
     moveLeft: ->
       # you can't focus left on a list!

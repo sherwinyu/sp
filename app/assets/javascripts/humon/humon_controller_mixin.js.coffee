@@ -36,8 +36,8 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     ##  Committing (keys and values)
     ######################################
 
-    # commitEverything --
-    # param payload: an object with the following properties
+    # action commitEverything --
+    # @param payload: an object with the following properties
     #   node: a HumonNode that describes which node to commit the values to;
     #     defaults to activeHumonNode
     #   key: the key for this humon node. If present, the node's nodeKey is set.
@@ -65,16 +65,36 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         payload: payload
       )
 
-    # all this does is SETS THE NODE TO ACTIVE
-    # does NOT focus
-    # does NOT commit
-    # does NOT check if node is null TODO(syu): split into a deactivateNode action
+
+    ###
+    action activateNode
+    @param nodeToActivate
+
+    all this does is SETS THE NODE TO ACTIVE
+    does NOT focus
+    does NOT commit
+    does NOT check if node is null TODO(syu): split into a deactivateNode action
+    ###
     activateNode: (node) ->
       @set 'activeHumonNode', node
 
     smartFocus: ->
       @get('activeHumonNodeView').smartFocus()
 
+
+###
+action commitLiteral
+Called by
+
+###
+    commitLiteral: (payload) ->
+      ahn = @get('activeHumonNode')
+      Ember.run =>
+        @send 'commitEverything', payload
+      Ember.run =>
+        @send 'activateNode', ahn
+        Ember.run.sync()
+        @send 'smartFocus'
 
     # calls commitEverything
     # then, if the active (just committed) node is a collection,
@@ -91,9 +111,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         @send 'activateNode', ahn
         @insertChild()
         return
+      parent = ahn.get 'nodeParent'
       blank = Sysys.j2hn null
       Ember.run =>
-        parent = ahn.get 'nodeParent'
         idx = ahn.get('nodeIdx') + 1
         parent.get('nodeView').rerender()
         parent.insertAt(idx,  blank)
@@ -106,7 +126,10 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # param rawString: the rawString to parse and replace ahn with
   # param options: options hash with
   #   node: the node to comit to. defaults to activeHumonNode
-  #   rerender: whether to rerender the humon node view
+  #
+  # Note:
+  #   if the node changes type, then we need to rerender the entire humonnode
+  #   to get recalculate HNV.autoTemplate .
   # TODO(syu):  specify behavior strictly
   _commitVal: (rawString, {node}={node: null}) ->
     node ||= @get('activeHumonNode')
