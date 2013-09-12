@@ -147,3 +147,7 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
   rawValueDidChange: (->
     @refresh()
   ).observes('rawValue')
+
+Sysys.KeyFixedField = Sysys.KeyEditableField.extend
+  classNames: ['key-field-fixed']
+  contenteditable: "false"
