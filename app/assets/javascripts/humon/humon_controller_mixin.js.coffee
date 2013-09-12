@@ -82,11 +82,10 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       @get('activeHumonNodeView').smartFocus()
 
 
-###
-action commitLiteral
-Called by
-
-###
+    ###
+    action commitLiteral
+    triggered when `enter` is pressed on a node that has no parent
+    ###
     commitLiteral: (payload) ->
       ahn = @get('activeHumonNode')
       Ember.run =>
@@ -96,13 +95,13 @@ Called by
         Ember.run.sync()
         @send 'smartFocus'
 
-    # calls commitEverything
-    # then, if the active (just committed) node is a collection,
-    #   we switch to insertChild
-    # otherwise,
-    #   insert a sibling after the active node
-    # then conditionally decides whether to insert a sibling or a child,
-    # depending on whether active node is a collection
+# calls commitEverything
+# then, if the active (just committed) node is a collection,
+#   we switch to insertChild
+# otherwise,
+#   insert a sibling after the active node
+# then conditionally decides whether to insert a sibling or a child,
+# depending on whether active node is a collection
     commitAndContinueNew: (payload) ->
       ahn = @get 'activeHumonNode'
       @send 'commitEverything', payload
@@ -129,8 +128,8 @@ Called by
   #
   # Note:
   #   if the node changes type, then we need to rerender the entire humonnode
-  #   to get recalculate HNV.autoTemplate .
-  # TODO(syu):  specify behavior strictly
+  #   to get recalculate HNV.autoTemplate
+
   _commitVal: (rawString, {node}={node: null}) ->
     node ||= @get('activeHumonNode')
     oldType = node.get('nodeType')
