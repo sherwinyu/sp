@@ -18,14 +18,20 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
     - set content; and the norma view life cycle will render it for us.
   ###
   initialJsonDidChange: (->
-    @set 'content', Sysys.j2hn @get 'initialJson'
+    @initContentFromJson()
+    # @rerender()
     @get('childViews')[0].rerender()
   ).observes "initialJson"
 
+  initContentFromJson: ->
+    initialJson = @get('initialJson') || {}
+    node = Sysys.j2hn initialJson
+    node.set('nodeKey', @get('rootKey') || "")
+    @set 'content', node
+
   init: ->
     @_super()
-    initialJson = @get 'initialJson'
-    @set 'content', Sysys.j2hn(initialJson || {})
+    @initContentFromJson()
 
   # TODO(syu): is this safe? if this object never gets cloned?
   hooks:
