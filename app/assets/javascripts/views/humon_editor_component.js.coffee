@@ -1,5 +1,5 @@
 Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
-  classNames: ['humon-editor']
+  classNames: ['humon-editor', 'humon-editor-inline']
   hooks: null
   json: {}
 
@@ -17,6 +17,7 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
     - we assume that it's a static (or already resolved) value
     - set content; and the norma view life cycle will render it for us.
   ###
+  initClassNames: (->)
   initialJsonDidChange: (->
     @initContentFromJson()
     # @rerender()
