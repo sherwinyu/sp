@@ -1,3 +1,54 @@
+### TEMPLATESK
+
+details:
+  sleep:
+    start: 23:00
+    end: 07:00
+    energy at lights out:
+
+meta:
+  sleep:
+    start:
+      $type: datetime
+      $required: true
+    end:
+      $type: datetime
+      $required: true
+    energy at lights out:
+      $type: range
+      $range start: 0
+      $range end: 10
+      $path: sleep.energy_at_lights_out
+  meals:
+    [
+      dinner:
+        $type: bool
+        $path: meals.@each.dinner
+      lunch:
+        $type: bool
+        $path: meals.@each.lunch
+      breakfast:
+        $type: bool
+        $path: meals.@each.breakfast
+    ]
+  meals:
+    [
+      $type: meal
+      $path: meals.@each
+    ]
+  list of numbers:
+    [
+      $type: integer
+      $path: list_of_numbers.@each
+    ]
+
+ALGORITHM
+  if an object has a key that starts with $
+  THEN it is a metavalue, which DESCRIBES the sets of values that can fit in its path
+
+
+
+
 ### MVP
 
 * MixPanel een tracking for happiness, productivity, sleepiness
