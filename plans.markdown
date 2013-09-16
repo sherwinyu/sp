@@ -1,4 +1,4 @@
-### TEMPLATESK
+### TEMPLATES
 
 details:
   sleep:
@@ -42,9 +42,22 @@ meta:
       $path: list_of_numbers.@each
     ]
 
-ALGORITHM
+#### ALGORITHM
   if an object has a key that starts with $
   THEN it is a metavalue, which DESCRIBES the sets of values that can fit in its path
+
+# IDEA
+=======
+  typedefed values can contain other values. e.g.,
+  TimeRange:
+    Start:
+    d
+      $type: time with zone
+    End:
+      $type: time with zone
+
+
+
 
 
 
