@@ -140,6 +140,8 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
 Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
   classNames: ['idx-field']
   contenteditable: 'false'
+  tabindex: '0'
+  attributeBindings: ['tabindex:tabindex']
   refresh: ->
     @val "#{parseInt(@get('rawValue')) + 1}."
 
@@ -151,3 +153,5 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
 Sysys.KeyFixedField = Sysys.KeyEditableField.extend
   classNames: ['key-field-fixed']
   contenteditable: "false"
+  tabindex: '0'
+  attributeBindings: ['tabindex:tabindex']
