@@ -68,6 +68,8 @@ Sysys.HumonNodeView = Ember.View.extend
       # you can't focus left on a list!
       if @get('nodeContent.nodeParent.nodeType') is 'list'
         return
+      if @get('layoutName') is 'humon_node_fixed_key_layout'
+        return
       @set '_focusedField',
         field: 'label'
         pos: 'right'
