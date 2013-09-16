@@ -36,12 +36,16 @@ Sysys.HumonNodeView = Ember.View.extend
         @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
+        # else
+        # @get('controller').send 'didUp'
 
     down: ->
       if changed = @get('controller').nextNode() #send('nextNode')
         @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
+        # else
+        # @get('controller').send 'didDown'
 
     enterPressed: ->
       if @get('controller.activeHumonNode.isCollection')

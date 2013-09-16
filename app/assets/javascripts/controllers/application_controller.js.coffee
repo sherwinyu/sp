@@ -7,3 +7,8 @@ Sysys.ApplicationController = Ember.Controller.extend
       abc: 123
       waga: [1,2,3, 4]
     @set 'content', @get('node')
+  actions:
+    downPressed: ->
+      debugger
+    upPressed: ->
+      debugger

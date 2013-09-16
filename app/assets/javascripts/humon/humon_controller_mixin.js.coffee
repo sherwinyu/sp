@@ -26,9 +26,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   didCommit: (params)->
     console.log 'didCommit', JSON.stringify rootJson
 
-  didUp: ->
+  didUp: (e)->
     console.log 'didUp'
-  didDown: ->
+  didDown: (e)->
     console.log 'didDown'
 
   actions:

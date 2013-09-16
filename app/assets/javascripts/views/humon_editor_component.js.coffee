@@ -41,6 +41,13 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
       @sendAction 'jsonChanged', params.rootJson
       @set 'json', params.rootJson
 
+    didUp: (e) ->
+      @sendAction 'upPressed', e
+
+    didDown: (e)->
+      @sendAction 'downPressed', e
+
+
 Sysys.HumonEditorView = Ember.View.extend
   templateName: 'humon-editor'
   classNames: ['humon-editor']
