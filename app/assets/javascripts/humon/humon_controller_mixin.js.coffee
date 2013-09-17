@@ -164,22 +164,22 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # @returns newNode -- the new active humon node, or null if no such node exists
   #   1) fetches  @activeHumonNode.nextNode()
   #   2) activates that node if it's non null
-  nextNode: ->
+  nextNode: (e)->
     oldNode = @get('activeHumonNode')
     newNode = @get('activeHumonNode').nextNode()
     if newNode
       @send 'activateNode', newNode
     else
-      @didDown()
+      @didDown(e)
     console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
-  prevNode: ->
+  prevNode: (e)->
     newNode = @get('activeHumonNode').prevNode()
     if newNode
       @send 'activateNode', newNode
     else
-      @didUp()
+      @didUp(e)
     console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 

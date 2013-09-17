@@ -4,7 +4,8 @@ Sysys.ContentEditableField = Ember.View.extend
   classNames: ['content-field']
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   contenteditable: 'true'
-  attributeBindings: ["contenteditable:contenteditable"]
+  tabindex: '0'
+  attributeBindings: ["contenteditable:contenteditable",  'tabindex:tabindex']
 
   val: (args...) ->
     @$().text.apply(@$(), args)
@@ -66,10 +67,10 @@ Sysys.ContentEditableField = Ember.View.extend
         @enter()
       'down': (e) =>
         e.preventDefault()
-        @get('parentView').send 'down'
+        @get('parentView').send 'down', e
       'up': (e) =>
         e.preventDefault()
-        @get('parentView').send 'up'
+        @get('parentView').send 'up', e
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').send('bubbleUp')
@@ -153,5 +154,3 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
 Sysys.KeyFixedField = Sysys.KeyEditableField.extend
   classNames: ['key-field-fixed']
   contenteditable: "false"
-  tabindex: '0'
-  attributeBindings: ['tabindex:tabindex']

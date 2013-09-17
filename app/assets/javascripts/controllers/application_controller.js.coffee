@@ -8,7 +8,16 @@ Sysys.ApplicationController = Ember.Controller.extend
       waga: [1,2,3, 4]
     @set 'content', @get('node')
   actions:
-    downPressed: ->
-      debugger
-    upPressed: ->
-      debugger
+    downPressed: (e)->
+      elements = $('[tabIndex]')
+      idx = elements.index(e.target)
+      return if idx == -1
+      idx = (idx + elements.length + 1) % elements.length
+      elements[idx].focus()
+
+    upPressed: (e)->
+      elements = $('[tabIndex]')
+      idx = elements.index(e.target)
+      return if idx == -1
+      idx = (idx + elements.length - 1) % elements.length
+      elements[idx].focus()

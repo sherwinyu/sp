@@ -31,21 +31,17 @@ Sysys.HumonNodeView = Ember.View.extend
     # Context: TODO(syu)
     #   1) calls prevNode on the controller
     #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
-    up:  ->
-      if @get('controller').prevNode() #send('prevNode')
+    up:  (e)->
+      if @get('controller').prevNode(e) #send('prevNode')
         @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
-        # else
-        # @get('controller').send 'didUp'
 
-    down: ->
-      if changed = @get('controller').nextNode() #send('nextNode')
+    down: (e)->
+      if changed = @get('controller').nextNode(e) #send('nextNode')
         @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
-        # else
-        # @get('controller').send 'didDown'
 
     enterPressed: ->
       if @get('controller.activeHumonNode.isCollection')
