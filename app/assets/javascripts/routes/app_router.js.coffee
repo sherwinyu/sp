@@ -1,7 +1,23 @@
 Sysys.Router.map ->
+  @resource "dataPoint", path: "/data_point", ->
+    @route "new"
+
   @resource "acts", ->
     @route "new"
     @route "activeAct", path: 'activeAct/:act_id'
+
+Sysys.DataPointRoute = Ember.Route.extend
+  model: (params)->
+     dpPromise = @get('store').find 'data_point', 1
+  beforeModel: ->
+    debugger
+  actions: ->
+    downPressed: (e)->
+      debugger
+      true
+    upPressed: (e)->
+      debugger
+      true
 
 Sysys.ActsRoute = Ember.Route.extend
   enter: ->
@@ -12,6 +28,7 @@ Sysys.ActsRoute = Ember.Route.extend
     wala: ->
       console.log @controllerFor('acts')
       console.log 'wala'
+
 
 Sysys.ActsNewRoute = Ember.Route.extend
   model: ->
@@ -46,6 +63,24 @@ Sysys.ApplicationRoute = Ember.Route.extend
     jsonChanged: (json)->
       5
 
+    downPressed: (e)->
+      elements = $('[tabIndex]')
+      idx = elements.index(e.target)
+      return if idx == -1
+      idx = (idx + elements.length + 1) % elements.length
+      elements[idx].focus()
+
+    upPressed: (e)->
+      elements = $('[tabIndex]')
+      idx = elements.index(e.target)
+      return if idx == -1
+      idx = (idx + elements.length - 1) % elements.length
+      elements[idx].focus()
+
+  beforeModel: ->
+    debugger
+  activate: ->
+    debugger
 Sysys.IndexRoute = Ember.Route.extend
   actions:
     jsonChanged: ->

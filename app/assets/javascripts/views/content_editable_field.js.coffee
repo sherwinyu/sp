@@ -153,4 +153,4 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
 
 Sysys.KeyFixedField = Sysys.KeyEditableField.extend
   classNames: ['key-field-fixed']
-  contenteditable: "false"
+  contenteditable: "true"
