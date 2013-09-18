@@ -19,13 +19,17 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   ###
   initClassNames: (->)
 
+  ###
+  _inited: false
   initialJsonDidChange: (->
     @initContentFromJson()
     @get('childViews')[0].rerender()
+    @_inited = true
   ).observes "initialJson"
+  ###
 
   initContentFromJson: ->
-    initialJson = @get('initialJson') || {}
+    initialJson = @get('json') || {}
     node = Sysys.j2hn initialJson
     node.set('nodeKey', @get('rootKey') || "(root key)")
     @set 'content', node

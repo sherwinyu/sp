@@ -131,7 +131,7 @@ HumonTypes.register "date",
   # Context: called by HumonUtils.humonNode2json, which is in turn called by the Store
   # in preparation for serializing this to
   hnv2j: (nodeVal) ->
-    nodeVal.toString() #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
+    nodeVal #TODO(syu): can we just keep this a node? Will the .ajax call serialize it properly?
 
   # j2hnv -- json to humon nodeVal. Converts from json value to a nodeVal of this type
   # Context: called by HumonUtils.j2hn when setting the nodeVal for literal nodes
