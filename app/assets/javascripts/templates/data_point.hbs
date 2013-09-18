@@ -1,6 +1,6 @@
 <h1> DataPoint </h1>
-{{humon-editor initialJson="now" jsonOut=submitted_at rootKey="Time" downPressed="downPressed" upPressed="upPressed"}}
-{{humon-editor initialJson=initialJson json=details rootKey="Details" downPressed="downPressed" upPressed="upPressed"}}
-<button {{action "submit"}}>
+{{humon-editor initialJson=submittedAt rootKey="Time" downPressed="downPressed" upPressed="upPressed"}}
+{{humon-editor initialJson=details rootKey="Details" downPressed="downPressed" upPressed="upPressed"}}
+<button {{action "submitDataPoint"}}>
   Create data point
 </button>

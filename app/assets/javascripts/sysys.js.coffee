@@ -1,5 +1,5 @@
 #= require_self
-# require ./store
+#= require ./store
 #= require_tree ./utils
 #= require_tree ./humon
 #= require_tree ./models

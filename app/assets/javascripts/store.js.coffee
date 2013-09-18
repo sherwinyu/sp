@@ -1,3 +1,22 @@
+Sysys.ApplicationSerializer = DS.RESTSerializer.extend
+  normalize: (type, hash, property) ->
+    normalized = {}
+    normalizedProp = null
+
+    for prop of hash
+      if prop.substr(-3) == '_id'
+        # belongsTo relationships
+        normalizedProp = prop.slice(0, -3)
+      else if prop.substr(-4) == '_ids'
+        # hasMany relationship
+        normalizedProp = Ember.String.pluralize(prop.slice(0, -4))
+      else
+        # regualarAttribute
+        normalizedProp = prop;
+      normalizedProp = Ember.String.camelize(normalizedProp)
+      normalized[normalizedProp] = hash[prop]
+
+    return @_super(type, normalized, property)
 ###
 Sysys.Adapter = DS.RESTAdapter.extend
 
