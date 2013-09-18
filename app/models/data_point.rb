@@ -9,7 +9,7 @@ class DataPoint
   def self.find args
     if args.to_i.to_s == args
       args = args.to_i
-      return self.order_by(:created_at.desc)[args]
+      return self.order_by(:created_at.asc)[args]
     else
       super(args)
     end

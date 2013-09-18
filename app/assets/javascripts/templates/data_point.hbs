@@ -3,5 +3,5 @@
 {{humon-editor json=endedAt rootKey="Ended at" downPressed="downPressed" upPressed="upPressed"}}
 {{humon-editor json=details rootKey="Details" downPressed="downPressed" upPressed="upPressed"}}
 <button {{action "submitDataPoint"}}>
-  Create data point
+  {{#if isNew}}Create{{else}}Update{{/if}} data point
 </button>
