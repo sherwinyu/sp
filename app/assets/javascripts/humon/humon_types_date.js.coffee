@@ -59,7 +59,7 @@ $.extend @,
   #
   # Note: _inferFromJson returns the value if `json` could EVER resolve to this type
   # Multiple types can match against the same json; priority is determined by
-  # registration order
+  # type registration order (calls to HumonType.register)
   #
   # TODO(syu): update and generalize to work for all humon types and include it in
   # the standard suite. AKA make it work for booleans: return a hash {matchesType, value}
@@ -68,18 +68,12 @@ $.extend @,
     ret = false
     try
       # if it's a date object
-      ret ||= (typeof json is "object" && json.constructor == Date)
-
+      ret ||= (typeof json is "object" && json.constructor == Date && json)
       ret ||= _inferAsRegex json
       ret ||= _inferAsMomentFormat json
       ret ||= _inferViaDateParse json
-
       # if it's a JS formatted date
       ret ||= (new Date(json)).toString() == json
-
-      # if it's an ISO date
-      # ret ||= (new Date(json.substring 0, 19))
-      # .toISOString().substring( 0, 19) == json.substring(0, 19)
     catch error
       console.error error.toString()
       ret = false
