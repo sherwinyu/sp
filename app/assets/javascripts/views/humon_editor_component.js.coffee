@@ -18,9 +18,9 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
     - set content; and the norma view life cycle will render it for us.
   ###
   initClassNames: (->)
+
   initialJsonDidChange: (->
     @initContentFromJson()
-    # @rerender()
     @get('childViews')[0].rerender()
   ).observes "initialJson"
 

@@ -10,14 +10,12 @@ Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
      dpPromise = @get('store').find 'data_point', 1
   beforeModel: ->
-    debugger
-  actions: ->
+  actions:
     downPressed: (e)->
-      debugger
       true
     upPressed: (e)->
-      debugger
       true
+
 
 Sysys.ActsRoute = Ember.Route.extend
   enter: ->
@@ -78,9 +76,7 @@ Sysys.ApplicationRoute = Ember.Route.extend
       elements[idx].focus()
 
   beforeModel: ->
-    debugger
   activate: ->
-    debugger
 Sysys.IndexRoute = Ember.Route.extend
   actions:
     jsonChanged: ->
