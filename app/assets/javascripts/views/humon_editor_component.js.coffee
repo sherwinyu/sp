@@ -29,7 +29,9 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   ###
 
   initContentFromJson: ->
-    initialJson = @get('json') || {}
+    initialJson = @get('json')
+    if typeof initialJson is 'undefined'
+      initialJson = 'undefined'
     node = Sysys.j2hn initialJson
     node.set('nodeKey', @get('rootKey') || "(root key)")
     @set 'content', node

@@ -2,6 +2,8 @@ class DataPoint
   include Mongoid::Document
   include Mongoid::Timestamps
   field :submitted_at, type: Time
+  field :started_at, type: Time
+  field :ended_at, type: Time
   field :details
 
   def self.find args

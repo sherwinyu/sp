@@ -16,7 +16,6 @@ Sysys.DataPointRoute = Ember.Route.extend
     upPressed: (e)->
       true
 
-
 Sysys.ActsRoute = Ember.Route.extend
   enter: ->
     console.log 'enter acts route'
