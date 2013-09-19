@@ -1,6 +1,6 @@
+<span class="options">
+  <a {{action "save"}}> <span>Save</span> </a>
+</span>
 {{humon-editor json=startedAt rootKey="Started at" downPressed="downPressed" upPressed="upPressed"}}
 {{humon-editor json=endedAt rootKey="Ended at" downPressed="downPressed" upPressed="upPressed"}}
 {{humon-editor json=details rootKey="Details" downPressed="downPressed" upPressed="upPressed"}}
-<button {{action "submitDataPoint"}}>
-  {{#if isNew}}Create{{else}}Update{{/if}} data point
-</button>
