@@ -11,14 +11,11 @@ $dataPointWidth: 500px;
   span.options {
     display: none;
     float: right;
-    // position: absolute;
     right: 5px;
     top: 5px;
   }
   &:hover span.options {
     display: block;
     z-index: 100;
-
-
   }
 }

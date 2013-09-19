@@ -24,7 +24,6 @@ body {
   padding-left: $nodeWhiteIndent;
   border: 0px transparent solid;
   border-left: $nodeBorderLeft;
-  // background: white;
   transition: all 300ms ease;
 }
 
@@ -232,7 +231,7 @@ span.node-detail.node-icon {
   span.content-field.key-field.key-field-fixed {
     color: $rootNodeKeyColor;
     border-bottom: $borderTransparent;
-    font-weight: bold;
+    font-weight: 600;
   }
   .node.active > span.content-field.key-field.key-field-fixed {
     color: $rootNodeKeyColor;
