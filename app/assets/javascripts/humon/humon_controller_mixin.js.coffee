@@ -81,7 +81,6 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     smartFocus: ->
       @get('activeHumonNodeView').smartFocus()
 
-
     ###
     action commitLiteral
     triggered when `enter` is pressed on a node that has no parent
