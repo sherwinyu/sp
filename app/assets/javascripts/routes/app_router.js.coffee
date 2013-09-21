@@ -1,5 +1,5 @@
 Sysys.Router.map ->
-  @resource "dataPoint", path: "/data_point", ->
+  @resource "dataPoint", path: "/data_point/:data_point_id", ->
     @route "new"
   @resource "dataPoints", path: "/data_points", ->
     @route  "new"
@@ -10,8 +10,9 @@ Sysys.Router.map ->
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
-     dpPromise = @get('store').find 'data_point', 1
-  beforeModel: ->
+     dpPromise = @get('store').find 'data_point', params.data_point_id
+
+Sysys.DataPointIndexRoute = Ember.Route.extend()
 
 Sysys.DataPointsRoute = Ember.Route.extend
   model: (params)->

@@ -1,5 +1,4 @@
 Sysys.DataPointController = Ember.ObjectController.extend
-
   init: ->
     @get('content')
     @_super()
@@ -8,4 +7,3 @@ Sysys.DataPointController = Ember.ObjectController.extend
     submitDataPoint: ->
       @get('content').set('submittedAt', new Date())
       @get('content').save()
-

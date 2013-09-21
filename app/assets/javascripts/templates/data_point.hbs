@@ -1,5 +1,8 @@
 <span class="options">
-  <a {{action "save"}}> Save </a>
+  {{#link-to "dataPoint" this}} Perma link {{/link-to}}
+  {{#if isDirty}}
+  <a {{action "save"}}> Save </a> *
+  {{/if}}
 </span>
 {{humon-editor json=startedAt rootKey="Started at" downPressed="downPressed" upPressed="upPressed"}}
 {{humon-editor json=endedAt rootKey="Ended at" downPressed="downPressed" upPressed="upPressed"}}
