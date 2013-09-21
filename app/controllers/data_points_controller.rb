@@ -60,7 +60,6 @@ class DataPointsController < ApplicationController
   # PUT /data_points/1.json
   def update
     @data_point = DataPoint.find(params[:id])
-    binding.pry
 
     respond_to do |format|
       if @data_point.update_attributes(params[:data_point])

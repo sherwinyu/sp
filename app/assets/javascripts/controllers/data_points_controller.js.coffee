@@ -3,5 +3,9 @@ Sysys.DataPointsController = Ember.ArrayController.extend
     @get('content')
     @_super()
   actions:
-    save: (dataPoint) ->
-      dataPoint.save()
+    newDataPoint: ->
+      newDp = @get('store').createRecord "data_point"
+      @get('content').insertAt(0, newDp, 0)
+      # focusOnDataPointView: ->
+
+
