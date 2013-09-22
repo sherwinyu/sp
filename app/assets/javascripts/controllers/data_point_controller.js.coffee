@@ -10,3 +10,8 @@ Sysys.DataPointController = Ember.ObjectController.extend
     submitDataPoint: ->
       @get('content').set('submittedAt', new Date())
       @get('content').save()
+    activateDataPointView: ->
+      @set('active', true)
+    deactivateDataPointView: ->
+      @set('active', false)
+

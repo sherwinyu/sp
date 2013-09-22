@@ -20,7 +20,7 @@ $dataPointWidth: 500px;
     display: block;
     z-index: 100;
   }
-  &:focus span.options {
+  &.active span.options {
     position: relative;
     display: block;
     z-index: 100;

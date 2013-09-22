@@ -2,6 +2,10 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   classNames: ['humon-editor', 'humon-editor-inline']
   hooks: null
   json: {}
+  focusOut: (e)->
+    @sendAction 'focusLost'
+  focusIn: (e)->
+    @sendAction 'focusGained'
 
   ###
   initialJsonDidChange
