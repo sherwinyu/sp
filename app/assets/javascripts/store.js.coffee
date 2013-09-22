@@ -38,6 +38,42 @@ Sysys.ApplicationSerializer = DS.RESTSerializer.extend
 
     json[key] = value
 
+hasValue = (record, key) ->
+  record._attributes.hasOwnProperty(key) or record._inFlightAttributes.hasOwnProperty(key) or record._data.hasOwnProperty(key)
+
+getValue = (record, key) ->
+  if record._attributes.hasOwnProperty(key)
+    record._attributes[key]
+  else if record._inFlightAttributes.hasOwnProperty(key)
+    record._inFlightAttributes[key]
+  else
+    record._data[key]
+
+Sysys.attr = (type, options) ->
+  options ||= {}
+  meta =
+    type: type
+    isAttribute: true
+    options: options
+  Ember.computed( (key, value, oldValue) ->
+    currentValue = null
+    if arguments.length > 1
+      Ember.assert "You may not set `id` as an attribute on your model. Please remove any lines that look like: `id: DS.attr('<type>')` from " + @constructor.toString(), key isnt "id"
+      @send "didSetProperty",
+        name: key
+        oldValue: @_attributes[key] or @_inFlightAttributes[key] or @_data[key]
+        value: value
+
+      @_attributes[key] = value
+      value
+    else if hasValue(@, key)
+      getValue @, key
+    else
+      getDefaultValue @, options, key
+  ).property('data').meta(meta)
+
+
+
 ###
 Sysys.Adapter = DS.RESTAdapter.extend
 
