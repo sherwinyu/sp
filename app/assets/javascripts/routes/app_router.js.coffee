@@ -22,24 +22,23 @@ Sysys.ApplicationRoute = Ember.Route.extend
   actions:
     jsonChanged: (json)->
 
+    # algorithm:
+    #   find all elements with [tabIndex] set
+    #   then convert each of those elements to the nearest humon node element
+    #   then fire smartFocus on the corresponding humon node view
     downPressed: (e)->
-      console.debug "downPressed"
-      Ember.run.scheduleOnce "afterRender", @, =>
-        elements = $('[tabIndex]')
-        idx = elements.index(e.target)
-        return if idx == -1
-        idx = (idx + elements.length + 1) % elements.length
-        console.debug "cross HEC focusing", elements[idx]
-        elements[idx].focus()
+      elements = $('[tabIndex]').closest('.node')
+      idx = elements.index($(e.target).closest('.node'))
+      return if idx == -1
+      idx = (idx + elements.length + 1) % elements.length
+      Sysys.vfi($(elements[idx]).attr('id')).smartFocus()
+
     upPressed: (e)->
-      console.debug "upPressed"
-      Ember.run.scheduleOnce "afterRender", @, =>
-        elements = $('[tabIndex]')
-        idx = elements.index(e.target)
-        return if idx == -1
-        idx = (idx + elements.length - 1) % elements.length
-        console.debug "cross HEC focusing", elements[idx]
-        elements[idx].focus()
+      elements = $('[tabIndex]').closest('.node')
+      idx = elements.index($(e.target).closest('.node'))
+      return if idx == -1
+      idx = (idx + elements.length - 1) % elements.length
+      Sysys.vfi($(elements[idx]).attr('id')).smartFocus()
 Sysys.IndexRoute = Ember.Route.extend
   actions:
     jsonChanged: ->
