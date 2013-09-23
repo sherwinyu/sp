@@ -23,18 +23,23 @@ Sysys.ApplicationRoute = Ember.Route.extend
     jsonChanged: (json)->
 
     downPressed: (e)->
-      elements = $('[tabIndex]')
-      idx = elements.index(e.target)
-      return if idx == -1
-      idx = (idx + elements.length + 1) % elements.length
-      elements[idx].focus()
-
+      console.debug "downPressed"
+      Ember.run.scheduleOnce "afterRender", @, =>
+        elements = $('[tabIndex]')
+        idx = elements.index(e.target)
+        return if idx == -1
+        idx = (idx + elements.length + 1) % elements.length
+        console.debug "cross HEC focusing", elements[idx]
+        elements[idx].focus()
     upPressed: (e)->
-      elements = $('[tabIndex]')
-      idx = elements.index(e.target)
-      return if idx == -1
-      idx = (idx + elements.length - 1) % elements.length
-      elements[idx].focus()
+      console.debug "upPressed"
+      Ember.run.scheduleOnce "afterRender", @, =>
+        elements = $('[tabIndex]')
+        idx = elements.index(e.target)
+        return if idx == -1
+        idx = (idx + elements.length - 1) % elements.length
+        console.debug "cross HEC focusing", elements[idx]
+        elements[idx].focus()
 Sysys.IndexRoute = Ember.Route.extend
   actions:
     jsonChanged: ->

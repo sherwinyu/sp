@@ -187,10 +187,13 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('nodeContent')?.set 'nodeView', null
 
   didInsertElement: ->
+    console.debug "didInsertElement"
     if @get("_focusedField")
       # needs to be in a deferred because the child views (node fields)
       # might not have had their text set up (via didInsertElement)
+      console.debug "didInsertElement and focus field is set"
       Ember.run.scheduleOnce "afterRender", @, =>
+        console.debug "afterRender focusField"
         @focusField(@get("_focusedField"))
         @set "_focusedField", null
     @get('nodeContent')?.set 'nodeView', @
