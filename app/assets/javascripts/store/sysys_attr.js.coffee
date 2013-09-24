@@ -6,11 +6,18 @@ a comparison based on object identity.
 Sysys.attr gets around this by pre-emptively comparing (for equality) oldValue and value,
 and if they are equal, setting oldVal to value before sending `didSetProperty`
 
-hasValue and getValue are both helper functions closed in ember-data
+`hasValue`, `getValue`, and `getDefaultValue` are both helper functions closed in
+ember-data
 
 TODO(syu): determine whether using JSON.stringify is safe
   * e.g., if keys are not stringified in consistent order
 ###
+
+getDefaultValue = (record, options, key) ->
+  if typeof options.defaultValue is "function"
+    options.defaultValue()
+  else
+    options.defaultValue
 
 hasValue = (record, key) ->
   record._attributes.hasOwnProperty(key) or record._inFlightAttributes.hasOwnProperty(key) or record._data.hasOwnProperty(key)
