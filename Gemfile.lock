@@ -269,6 +269,8 @@ GEM
       json (~> 1.4)
     responders (1.0.0.rc)
       railties (>= 3.2, < 5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -363,6 +365,7 @@ DEPENDENCIES
   pry-debugger (= 0.2.2)
   rails (= 3.2.13)
   rb-inotify
+  rest-client (= 1.6.7)
   rspec-rails (= 2.13.0)
   rspec-spies
   sass-rails (= 3.2.4)
