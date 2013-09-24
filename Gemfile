@@ -77,3 +77,4 @@ gem "mongoid_auto_increment"
 gem 'activeadmin-mongoid'
 gem 'rest-client', '1.6.7'
 gem "mixpanel"
+gem 'hashie'
