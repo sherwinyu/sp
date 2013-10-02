@@ -30,33 +30,7 @@ class DataPoint
     end
     pp zug
   end
+  def self.import_from_rescue_time hashie
 
-=begin
-  method_name = options[:method] || :sender_to_recipient
-
-  # template_name = options[:template] || "#{__method__}_#{referral.client.key}"
-  # options[:template] ||= options[:template] || method_name
-
-  data = Multimap.new
-
-  mail = ReferralMailer.send method_name, referral, options
-  data[:from] = mail.from
-  data[:to] = mail.to
-
-  data[:subject] = mail.subject #"Hello"
-  data[:text] = mail.text_part.body # "Testing some Mailgun awesomness!"
-  data[:html] = mail.html_part.body # "<html>HTML version of the body</html>"
-  data['o:campaign']='newliving'
-  data['o:testmode'] = true if Rails.env.testing? || Rails.env.development?
-  data
-end
-
-def self.mailgun_deliver data_hash
-  domain = Figaro.env.mailgun_api_domain
-  url = "https://api:#{Figaro.env.MAILGUN_API_KEY}@api.mailgun.net/v2/#{domain}/messages"
-  logger.info url
-  logger.info data_hash.inspect
-  logger.info RestClient.post url, data_hash
-end
-=end
+  end
 end
