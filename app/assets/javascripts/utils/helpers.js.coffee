@@ -91,3 +91,8 @@ window.utils =
 
   delayed: (ms, callback) ->
     setTimeout(callback, ms)
+
+  peek: (dfd) ->
+    x = null
+    dfd.then( (result) -> x = result)
+    x

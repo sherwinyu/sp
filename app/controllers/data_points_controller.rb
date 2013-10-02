@@ -17,9 +17,10 @@ class DataPointsController < ApplicationController
   def show
     @data_point = DataPoint.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @data_point }
+    if @data_point
+      render json: @data_point
+    else
+      render json: @data_point, status: 404
     end
   end
 

@@ -5,6 +5,10 @@
   padding: $nodeEditorPadding;
   border: $nodeEditorBorder;
 }
+.humon-editor.humon-editor-inline {
+  padding: 3px 3px;
+  border: none;
+}
 
 
 body {
@@ -20,7 +24,6 @@ body {
   padding-left: $nodeWhiteIndent;
   border: 0px transparent solid;
   border-left: $nodeBorderLeft;
-  background: white;
   transition: all 300ms ease;
 }
 
@@ -221,6 +224,18 @@ span.node-detail.node-icon {
     overflow: visible;
     max-width: 1000px;
     transition: all 300ms ease;
+  }
+  /*
+   * Key Fixed Field
+   */
+  span.content-field.key-field.key-field-fixed {
+    color: $rootNodeKeyColor;
+    border-bottom: $borderTransparent;
+    font-weight: 600;
+  }
+  .node.active > span.content-field.key-field.key-field-fixed {
+    color: $rootNodeKeyColor;
+    border-bottom: $borderTransparent;
   }
 }
 

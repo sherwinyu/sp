@@ -7,7 +7,7 @@ Sysys.Act = DS.Model.extend
   # duration is stored as seconds and is a computed property
   duration: ((key, val)->
     if val?
-      start = @get 'start_time' 
+      start = @get 'start_time'
       end = moment(start)?.clone().add(val * 1000).toDate()
       @set 'end_time', end
     else
@@ -15,32 +15,18 @@ Sysys.Act = DS.Model.extend
       if ret? then ret else  null
   ).property('start_time', 'end_time').volatile()
 
-
-
-  ###
-  start_time_pretty: (->
-    @pretty_date('start_time')
-    ).property('start_time')
-
-  pretty_date: (date_key) ->
-    date = @get(date_key)?.getDay()
-    hours = @get(date_key)?.getHours()
-    minutes = @get(date_key)?.getMinutes()
-    "#{date} #{hours}:#{minutes}"
-    ###
-
   pretty_duration: (->
     dur = @get('duration')
     moment.duration(dur*1000).humanize()
   ).property('duration')
 
-  isActive: -> 
+  isActive: ->
     current = new Date
-    t1 = @get('startTime').getTime()  
+    t1 = @get('startTime').getTime()
     t2 = @get('endTime').getTime()
 
     return current < new Date(t2)
-    
+
   timeRemainingMs: ->
     if @isActive()
       @get('endTime').getTime() - new Date().getTime()

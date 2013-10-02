@@ -1,8 +1,8 @@
 #= require_self
-# require ./store
+#= require ./store
 #= require_tree ./utils
 #= require_tree ./humon
-# require_tree ./models
+#= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
 #= require_tree ./helpers
@@ -10,6 +10,8 @@
 #= require_tree ./routes
 @Sysys = Ember.Application.create
   LOG_TRANSITIONS: true
+  LOG_TRANSITIONS_INTERNAL: true
+
   customEvents: {
     testEvent: 'testEvent'
   }
