@@ -1,6 +1,7 @@
 Sysys.HumonNodeView = Ember.View.extend
   _focusedField: null
 
+  layoutName: "humon_node_key_layout"
   templateStrings: (->
     if @get('nodeContent.isLiteral')
       HumonTypes.contextualize(@get 'nodeContent')._materializeTemplateStringsForNode(@get 'nodeContent')
@@ -30,14 +31,14 @@ Sysys.HumonNodeView = Ember.View.extend
     # Context: TODO(syu)
     #   1) calls prevNode on the controller
     #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
-    up:  ->
-      if @get('controller').prevNode() #send('prevNode')
+    up:  (e)->
+      if @get('controller').prevNode(e) #send('prevNode')
         @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
 
-    down: ->
-      if changed = @get('controller').nextNode() #send('nextNode')
+    down: (e)->
+      if changed = @get('controller').nextNode(e) #send('nextNode')
         @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
@@ -51,11 +52,19 @@ Sysys.HumonNodeView = Ember.View.extend
       payload =
         val: @valField()?.val()
         key: @keyField()?.val()
-      @get('controller').send 'commitAndContinueNew', payload
+      if @get('controller.activeHumonNode.nodeParent.isCollection')
+        @get('controller').send 'commitAndContinueNew', payload
+      else
+        @get('controller').send 'commitLiteral', payload
+
+        console.log 'activeNode', @get('controller.activeHumonNode')
+
 
     moveLeft: ->
       # you can't focus left on a list!
       if @get('nodeContent.nodeParent.nodeType') is 'list'
+        return
+      if @get('layoutName') is 'humon_node_fixed_key_layout'
         return
       @set '_focusedField',
         field: 'label'
@@ -77,6 +86,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #  This is primarily called indirectly by event bubbling from content fields
   focusIn: (e) ->
     e.stopPropagation()
+    @get('controller').send 'focusIn'
     if @get 'isActive'
       return
     else
@@ -94,6 +104,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #   5) stops propagation (we don't want parent nodes commiting!)
   focusOut: (e) ->
     e.stopPropagation()
+    @get('controller').send 'focusOut'
     @get('controller').send('activateNode', null)
     # prepare payload: pull from $().val, etc
     # send to `commitEverything
@@ -176,10 +187,13 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('nodeContent')?.set 'nodeView', null
 
   didInsertElement: ->
+    console.debug "didInsertElement"
     if @get("_focusedField")
       # needs to be in a deferred because the child views (node fields)
       # might not have had their text set up (via didInsertElement)
+      console.debug "didInsertElement and focus field is set"
       Ember.run.scheduleOnce "afterRender", @, =>
+        console.debug "afterRender focusField"
         @focusField(@get("_focusedField"))
         @set "_focusedField", null
     @get('nodeContent')?.set 'nodeView', @

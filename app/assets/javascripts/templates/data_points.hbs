@@ -1,0 +1,6 @@
+<button {{action "newDataPoint"}}>
+  New DataPoint
+</button>
+{{#each dataPoint in content}}
+  {{render 'dataPoint' dataPoint}}
+{{/each}}

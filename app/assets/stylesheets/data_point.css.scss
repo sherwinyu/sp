@@ -1,0 +1,28 @@
+$dataPointWidth: 700px;
+
+.data-point {
+  position: relative;
+  width: $dataPointWidth;
+  border: 1px solid $grayLightest1;
+  border-radius: 3px;
+  padding: 3px;
+  margin: 3px;
+
+  span.options {
+    position: relative;
+    display: none;
+    float: right;
+    right: 5px;
+    top: 5px;
+  }
+  &:hover span.options {
+    position: relative;
+    display: block;
+    z-index: 100;
+  }
+  &.active span.options {
+    position: relative;
+    display: block;
+    z-index: 100;
+  }
+}
