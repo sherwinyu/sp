@@ -33,4 +33,5 @@ class DataPoint
   def self.import_from_rescue_time hashie
 
   end
+  def self.instantiate_from_rescuetime_hour
 end

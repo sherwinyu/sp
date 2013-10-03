@@ -9,8 +9,6 @@ class RescueTimeRaw
   field :rt_category, type: String
   field :rt_productivity, type: Integer
 
-
-
   def self.zorg_it(opts={})
     data = Hash.new
     data[:key] = Figaro.env.RESCUETIME_TOKEN
@@ -34,6 +32,7 @@ class RescueTimeRaw
     h = self.zorg_it
     h.rows.each do |row|
       rtr = RescueTimeRaw.create(
+        #[Date   Time Spent (seconds)   Number of People  Activity   Category   Productivity ]
         synced_at: Time.now,
         rt_date: row[0],
         rt_time_spent: row[1],
@@ -43,17 +42,16 @@ class RescueTimeRaw
         rt_productivity: row[5]
       )
     end
-
-     #headers: ["Date", "Time Spent (seconds)", "Number of People",
-    #"Activity", "Category", "Productivity"]
   end
 
+  # Accessor methods
+  # And Method aliases
   def time
     Time.parse rt_date rescue nil
   end
 
   def date
-    Date.parse rt_date
+    Date.parse rt_date rescue nil
   end
 
   def hour
@@ -67,11 +65,11 @@ class RescueTimeRaw
   end
 
   def duration
-    rt_time_spent.seconds
+    rt_time_spent.seconds rescue nil
   end
 
   def pretty_duration
-    Time.at(duration).utc.strftime "%Mm %Ss"
+    Time.at(duration).utc.strftime "%Mm %Ss" rescue nil
   end
 
   def activity
@@ -88,5 +86,13 @@ class RescueTimeRaw
 
   def category
     rt_category
+  end
+
+  def to_s
+    "date: #{date}, activity: #{activity}, duration: #{pretty_duration}"
+  end
+
+  def inspect
+    "date: #{date}, activity: #{activity}, duration: #{pretty_duration}"
   end
 end
