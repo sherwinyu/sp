@@ -66,7 +66,7 @@ class RescueTimeRaw
   end
 
   def day
-    Date.parse(date.to_s) rescue nil
+    date.to_date rescue nil
   end
 
   def hour
