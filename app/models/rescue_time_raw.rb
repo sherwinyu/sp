@@ -2,6 +2,8 @@ class RescueTimeRaw
   include Mongoid::Document
   include Mongoid::Timestamps
   field :synced_at, type: Time
+  field :date, type: Time
+
   field :rt_date
   field :rt_time_spent
   field :rt_number_of_people, type: Integer
@@ -20,38 +22,51 @@ class RescueTimeRaw
     data.merge!( {
       perspective: "interval",
       resolution_time: "hour",
-      restrict_begin: end_string,
-      restrict_end: end_string
+      restrict_begin: end_string, #inclusive
+      restrict_end: end_string, #exclusive
     })
     data.merge! opts
     p "Calling rescuetime with:", data
     url = "https://www.rescuetime.com/anapi/data"
     json = Hashie::Mash.new JSON.parse(RestClient.post url, data)
   end
+
+  def self.instantiate_from_raw_row row
+    rtr = RescueTimeRaw.create(
+      #[Date Time Spent (seconds)   Number of People  Activity   Category   Productivity ]
+      synced_at: Time.now,
+      date: nil,
+
+      rt_date: row[0],
+      rt_time_spent: row[1],
+      rt_number_of_people: row[2],
+      rt_activity: row[3],
+      rt_category: row[4],
+      rt_productivity: row[5]
+    )
+    rtr.sync_timezone
+  end
+
   def self.import
     h = self.zorg_it
     h.rows.each do |row|
-      rtr = RescueTimeRaw.create(
-        #[Date   Time Spent (seconds)   Number of People  Activity   Category   Productivity ]
-        synced_at: Time.now,
-        rt_date: row[0],
-        rt_time_spent: row[1],
-        rt_number_of_people: row[2],
-        rt_activity: row[3],
-        rt_category: row[4],
-        rt_productivity: row[5]
-      )
+      instantiate_from_raw_row row
     end
+  end
+
+  def sync_timezone
+    # calculate where i was "at this time" (aka, when I experienced 4pm)
+    self.update_attribute :date, Time.parse(rt_date)
   end
 
   # Accessor methods
   # And Method aliases
   def time
-    Time.parse rt_date rescue nil
+    date
   end
 
-  def date
-    Date.parse rt_date rescue nil
+  def day
+    Date.parse(date.to_s) rescue nil
   end
 
   def hour
@@ -61,7 +76,9 @@ class RescueTimeRaw
   def pretty_hour
     t1 = time
     t2 = time + 1.hour
+    pm = t2.hour >= 12 ? "pm" : ""
     "#{t1.hour}:00-#{t2.hour}:00"
+    "#{(t1.hour - 1) % 12 + 1}-#{(t2.hour - 1) % 12 + 1}#{pm}"
   end
 
   def duration
@@ -89,10 +106,6 @@ class RescueTimeRaw
   end
 
   def to_s
-    "date: #{date}, activity: #{activity}, duration: #{pretty_duration}"
-  end
-
-  def inspect
-    "date: #{date}, activity: #{activity}, duration: #{pretty_duration}"
+    "#{day} @ #{pretty_hour}, activity: #{activity}, duration: #{pretty_duration}"
   end
 end

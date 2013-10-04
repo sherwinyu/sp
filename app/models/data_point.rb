@@ -34,4 +34,6 @@ class DataPoint
 
   end
   def self.instantiate_from_rescuetime_hour
+
+  end
 end
