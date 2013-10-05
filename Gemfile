@@ -75,5 +75,7 @@ gem "active_model_serializers", "~> 0.7.0"
 gem "mongoid", "~> 3.0.0"
 gem "mongoid_auto_increment"
 gem 'activeadmin-mongoid'
-
+gem 'rest-client', '1.6.7'
 gem "mixpanel"
+gem 'hashie'
+gem 'awesome_print'
