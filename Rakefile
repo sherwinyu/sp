@@ -5,7 +5,8 @@
 require File.expand_path('../config/application', __FILE__)
 
 Sysys::Application.load_tasks
-
+=begin
 task :updateHumon do |t|
   FileUtils.cp '/home/syu/projects/HUMON/lib/humon.js', 'app/assets/javascripts/vendor/humon.js'
 end
+=end
