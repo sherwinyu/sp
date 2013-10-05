@@ -3,7 +3,6 @@
 # //  moment syntax example: moment(Date("2011-07-18T15:50:52")).format("MMMM YYYY")
 # //  usage: {{dateFromNow creation_date}}
 Handlebars.registerHelper('as_json',  (object, options) ->
-  debugger
   # zorg = @get(object)
   zorg = Ember.get(this, object)
   return JSON.stringify zorg
@@ -27,8 +26,7 @@ Handlebars.registerHelper('as_json',  (object, options) ->
 #
 Ember.Handlebars.registerBoundHelper('eachO', (path, options) ->
   console.log 'zugzug'
-  debugger
-  if arguments.length == 4 
+  if arguments.length == 4
     Ember.assert("If you pass more than one argument to the each helper, it must be in the form #each foo in bar", arguments[1] == "in")
     keywordName = arguments[0]
     options = arguments[3]
@@ -36,9 +34,9 @@ Ember.Handlebars.registerBoundHelper('eachO', (path, options) ->
     if path == ''
       path = "this"
     options.hash.keyword = keywordName
-  else 
+  else
     options.hash.eachHelper = 'each'
-  
+
 
   options.hash.contentBinding = path
   #  Set up emptyView as a metamorph with no tag

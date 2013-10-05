@@ -61,7 +61,6 @@ xdescribe "HumonNodeView", ->
       @hn_a0 = @hn_a.getNode '0'
       @hn_a1 = @hn_a.getNode '1'
       @hn_a1b = @hn_a1.getNode 'b'
-      debugger
       @hnv_root = Sysys.HumonNodeView.create node: @hn, nodeContentBinding: 'node'
       expect(@hn.get 'nodeView').toBeNull()
       expect(@hn_a.get 'nodeView').toBeNull()
