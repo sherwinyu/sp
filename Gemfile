@@ -66,11 +66,6 @@ group :production do
   gem 'unicorn'
 end
 
-
-
-
-
-
 ######## ORIGINAL GEMFILE ##################
 # gem 'handlebars-source', '1.0.0.rc3'
 # gem 'ember-rails', github: 'emberjs/ember-rails'
