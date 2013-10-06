@@ -96,3 +96,12 @@ window.utils =
     x = null
     dfd.then( (result) -> x = result)
     x
+
+  track: (eventName, eventOptions) ->
+    $.extend(eventOptions, @_trackProperties)
+    mixpanel.track eventName, eventOptions
+
+  _trackProperties: {}
+
+  registerTrackingProperty: (key, val) ->
+    @_trackProperties[key] = val

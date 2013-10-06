@@ -1,6 +1,7 @@
 Sysys.Router.map ->
   @resource "dataPoint", path: "/data_point/:data_point_id", ->
     @route "new"
+
   @resource "dataPoints", path: "/data_points", ->
     @route  "new"
 
@@ -11,12 +12,16 @@ Sysys.Router.map ->
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
      dpPromise = @get('store').find 'data_point', params.data_point_id
+  activate: ->
+    utils.track("data point activate")
 
 Sysys.DataPointIndexRoute = Ember.Route.extend()
 
 Sysys.DataPointsRoute = Ember.Route.extend
   model: (params)->
      dpPromise = @get('store').findAll 'data_point'
+  activate: ->
+    utils.track("data points activate")
 
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:
