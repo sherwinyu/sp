@@ -6,9 +6,6 @@ require "action_mailer/railtie"
 require "active_resource/railtie"
 require "sprockets/railtie"
 
-Dir["#{RAILS_ROOT}/app/importers/*.rb"].each do |filename|
-  require filename
-end
 
 
 
