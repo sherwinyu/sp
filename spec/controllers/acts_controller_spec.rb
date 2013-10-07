@@ -1,8 +1,9 @@
 require 'spec_helper'
 
-describe ActsController do
+=begin
+ ActsController do
   let(:valid_attributes) do
-    { 
+    {
       description: "some_description",
       detail: {
         a: 5
@@ -66,3 +67,4 @@ describe ActsController do
   end
 
 end
+=end
