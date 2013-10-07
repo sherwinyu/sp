@@ -9,9 +9,18 @@ def rTDP
   RescueTimeDp
 end
 
+def reload_env!
+    Dir["#{::Rails.root}/app/importers/*.rb"].each do |filename|
+      if Rails.env.development? # if we're in console (development), load the file. otherwise, just require it
+        load filename
+      else
+        require filename
+      end
+    end
+end
+
 # Initialize the rails application
 Sysys::Application.initialize!
 
-Dir["#{::Rails.root}/app/importers/*.rb"].each do |filename|
-  require filename
-end
+# Reload custom definitions
+reload_env!
