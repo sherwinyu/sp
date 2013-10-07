@@ -5,17 +5,23 @@ class RescueTimeDp
   field :activities
 
   def self.import
+    # group by day (emitting a hash of date: [rtr]), then map those into
+    # a [date, {hour: [rtrs]}]
+    # then, the call to Hash[] converts the list of lists into list of
+    # key value pairs
     grouped = Hash[
       RescueTimeRaw.all.group_by(&:day).map do |date, rtrs|
         [date, rtrs.group_by(&:hour)]
       end
     ]
+
     grouped.each do |date, hours|
       hours.each do |hour, rtrs|
 
         activities = {}
         rtrs.each do |rtr|
-          activities[rtr.activity.gsub ".", "-"] = {
+          activity = rtr.activity.gsub ".", "-"
+          activities[activity] = {
             duration: rtr.duration,
             productivity: rtr.productivity,
             category: rtr.category
