@@ -42,4 +42,6 @@ RSpec.configure do |config|
       DatabaseCleaner[:mongoid].clean
   end
 
+  config.include FactoryGirl::Syntax::Methods
+
 end
