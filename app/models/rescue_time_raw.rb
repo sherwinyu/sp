@@ -5,11 +5,15 @@ class RescueTimeRaw
   field :date, type: Time
 
   field :rt_date
-  field :rt_time_spent
+  field :rt_time_spent, type: Integer
   field :rt_number_of_people, type: Integer
   field :rt_activity, type: String
   field :rt_category, type: String
   field :rt_productivity, type: Integer
+
+  before_save do |document|
+    document.date = Time.parse(rt_date)
+  end
 
   def sync_timezone
     # calculate where i was "at this time" (aka, when I experienced 4pm)
