@@ -3,6 +3,11 @@ task :import_rescue_time => :environment do
   puts "Importing from rescue time..."
 
   rtdps, report = RescueTimeImporter.import
+
+  report[:existing_rtrs] ||= []
+  report[:existing_rtdps] ||= []
+  report[:new_rtrs] ||= []
+  report[:new_rtdps] ||= []
   existing_rtr_times = report[:existing_rtrs].map(&:experienced_time)
   new_rtr_times = report[:new_rtrs].map(&:experienced_time)
 
