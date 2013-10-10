@@ -78,6 +78,7 @@ test:
         # low amounts for fast failures.
         max_retries: 1
         retry_interval: 0
+
 production:
   sessions:
     default:
@@ -85,5 +86,10 @@ production:
       options:
         safe: true
         skip_version_check: true
-# staging:
-# TODO(syu): do we need this?
+staging:
+  sessions:
+    default:
+      uri: <%= ENV['MONGOLAB_URI'] %>
+      options:
+        safe: true
+        skip_version_check: true
