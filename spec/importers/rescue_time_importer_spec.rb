@@ -35,7 +35,7 @@ describe RescueTimeImporter do
         rtr.rt_category.should eq "General Software Development"
         rtr.category.should eq "General Software Development"
 
-        rtr.date.should eq Time.parse "2013-10-07T17:00:00"
+        rtr.experienced_time.should eq Time.parse "2013-10-07T17:00:00"
       end
     end
     context "update" do
