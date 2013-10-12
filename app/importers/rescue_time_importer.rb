@@ -51,7 +51,7 @@ class RescueTimeImporter
 
         rtdp.update_attributes(
           activities: activities_hash_from_rtrs(rtrs),
-          time: rtdp.experienced_time
+          time: Util.convert_to_absolute_time(rtrs.first.rt_date)
         )
         rtdps << rtdp
       end
@@ -100,6 +100,5 @@ class RescueTimeImporter
     )
     rtr
   end
-
 
 end

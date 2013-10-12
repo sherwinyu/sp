@@ -6,10 +6,10 @@ class RescueTimeDp
   attr_readonly :rt_date
 
   field :time, type: Time # stored as UTC, can be updated; zone is implicit from offset with `experienced_time`
-  field :activities
+  field :activities, type: HumonNode
 
   def experienced_time
-    Time.parse rt_date rescue nil
+    Time.parse(rt_date + "UTC") rescue nil
   end
 
   def hour
@@ -37,4 +37,15 @@ class RescueTimeDp
     date2 = date + 1.day
     self.where(:date_time => date1..date2)
   end
+
+  def resync_against_raw!(report=nil)
+    rtdps = RescueTimeImporter.instantiate_rtdps_from_rtrs RescueTimeRaw.where(rt_date: rt_date), report
+    reload
+    rtdps
+  end
+
+  def resync_time!
+    self.update_attribute :time, Util.convert_to_absolute_time(rt_date)
+  end
+
 end
