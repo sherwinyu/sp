@@ -1,7 +1,14 @@
-{{rtdp.time}}
+{{time}} --
+<span {{bind-attr style=view.fillStyle}} class="rtdp-productivity">
+  Productivity index: {{weightedProductivity}}
+</span>
+<span {{bind-attr style=view.fillStyle}} class="rtdp-productivity">
+  Total time index: {{weightedProductivity}}
+</span>
+<br>
 {{#each activity in rtdp.displayActivities}}
 <div>
-  {{activity.name}}
-  {{activity.duration}}
+  <span class="rtdp-activity">{{activity.name}}</span>
+  : {{activity.duration}}
 </div>
 {{/each}}
