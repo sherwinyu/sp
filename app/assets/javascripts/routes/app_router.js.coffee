@@ -30,7 +30,7 @@ Sysys.RescueTimeDpsRoute = Ember.Route.extend
   model: (params)->
      rtdpPromise = @get('store').findAll 'rescue_time_dp'
   activate: ->
-    utils.track("data points activate")
+    utils.track("rescue time dps activate")
 
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:
