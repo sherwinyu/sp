@@ -1,12 +1,3 @@
 {{#each rtdp in content}}
-<div>
-  {{rtdp.time}}
-  {{#each activity in rtdp.displayActivities}}
-  <div>
-    {{activity.name}}
-    {{activity.duration}}
-  </div>
-  {{/each}}
-
-</div>
+  {{render 'rescueTimeDp' rtdp}}
 {{/each}}
