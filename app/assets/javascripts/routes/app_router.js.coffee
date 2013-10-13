@@ -9,6 +9,9 @@ Sysys.Router.map ->
     @route "new"
     @route "activeAct", path: 'activeAct/:act_id'
 
+  @resource "rescueTimeDps", path: "/rtdps", ->
+    @route "new"
+
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
      dpPromise = @get('store').find 'data_point', params.data_point_id
@@ -20,6 +23,12 @@ Sysys.DataPointIndexRoute = Ember.Route.extend()
 Sysys.DataPointsRoute = Ember.Route.extend
   model: (params)->
      dpPromise = @get('store').findAll 'data_point'
+  activate: ->
+    utils.track("data points activate")
+
+Sysys.RescueTimeDpsRoute = Ember.Route.extend
+  model: (params)->
+     rtdpPromise = @get('store').findAll 'rescue_time_dp'
   activate: ->
     utils.track("data points activate")
 
@@ -44,6 +53,7 @@ Sysys.ApplicationRoute = Ember.Route.extend
       return if idx == -1
       idx = (idx + elements.length - 1) % elements.length
       Sysys.vfi($(elements[idx]).attr('id')).smartFocus()
+
 Sysys.IndexRoute = Ember.Route.extend
   actions:
     jsonChanged: ->
