@@ -2,8 +2,7 @@ Sysys::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   resources :data_points
-
-
+  resources :rescue_time_dps
   resources :acts
   root to: 'pages#home'
 
