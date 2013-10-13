@@ -4,7 +4,7 @@ class RescueTimeDpsController < ApplicationController
   # GET /rescue_time_dps
   # GET /rescue_time_dps.json
   def index
-    @rtdps = RescueTimeDp.all
+    @rtdps = RescueTimeDp.all.desc(:time).to_a
 
     respond_to do |format|
       format.html # index.html.erb

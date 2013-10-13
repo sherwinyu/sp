@@ -4,7 +4,7 @@ Sysys.RescueTimeDp = DS.Model.extend
   activities: Sysys.attr()
 
   displayActivities: (->
-    ( ({name: k, duration: @displayDuration(v.duration * 1000), category: v.category} )for k, v of @get('activities'))
+    ( ({name: k, duration: @displayDuration(v.duration), category: v.category} )for k, v of @get('activities'))
   ).property 'activities'
 
   weightedProductivity: (->
@@ -15,6 +15,7 @@ Sysys.RescueTimeDp = DS.Model.extend
       weightedSum += act.productivity * act.duration
     (weightedSum/totalLength).toFixed 3
   ).property('activities')
+
   totalDuration: (->
     totalLength = 0
     for name, act of @get('activities')
@@ -24,4 +25,23 @@ Sysys.RescueTimeDp = DS.Model.extend
   ).property('activities')
 
   displayDuration: (duration) ->
-    moment(duration).utc().format("h[m] mm[s]")
+    moment(1000 * duration).utc().format("m[m] s[s]")
+
+  displayTime: (->
+    mmt = moment(@get('time'))
+    mmt.format('dddd, MMM D @ ha')
+  ).property 'time'
+
+  displayTimeRange: (->
+    mmt = moment(@get('time'))
+    mmt2 = mmt.add('hours', 1)
+    mmt2.format('Ha')
+  ).property 'time'
+
+  displayTimeRelative: (->
+    mmt = moment(@get('time'))
+    if Math.abs(mmt.diff(moment(), 'hours')) > 22
+      mmt.calendar()
+    else
+      mmt.fromNow()
+  ).property 'time'

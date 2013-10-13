@@ -7,6 +7,7 @@ $rtdpWidth: 700px;
   border-radius: 3px;
   padding: 3px;
   margin: 3px;
+  min-height: 60px;
 
   span.options {
     position: relative;
@@ -29,13 +30,39 @@ $rtdpWidth: 700px;
     font-weight: bold;
     position: absolute;
     right: 0px;
-    padding: 5px;
+    top: 0px;
+    margin: 5px;
     padding: 3px;
+
     border-radius: 3px;
     border: 1px solid $grayLightest1;
     border-radius: 3px;
   }
+
+  .rtdp-total-duration {
+    font-weight: bold;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    margin: 5px;
+    padding: 5px;
+  }
+
   .rtdp-activity {
     font-weight: 600;
+  }
+  .rtdp-time {
+    font-weight: bolder;
+  }
+
+  .rtdp-time-hint {
+    font-weight: light;
+    display: none;
+  }
+  &:hover .rtdp-time-hint {
+    display: inline;
+  }
+  .relative {
+    font-style: italic
   }
 }
