@@ -63,7 +63,7 @@ class RescueTimeImporter
   def self.activities_hash_from_rtrs rtrs
     activities = {}
     rtrs.each do |rtr|
-      activity = rtr.activity.gsub ".", "-"
+      activity = sanitize_rt_activity_string rtr.rt_activity
       activities[activity] = {
         duration: rtr.duration,
         productivity: rtr.productivity,
@@ -71,6 +71,10 @@ class RescueTimeImporter
       }
     end
     activities
+  end
+
+  def self.sanitize_rt_activity_string rt_activity
+    rt_activity.downcase.gsub /[. -\/]/, '_'
   end
 
   def self.group_rtrs_by_date_and_hour rtrs
