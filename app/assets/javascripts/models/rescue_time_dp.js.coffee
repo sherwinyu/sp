@@ -21,11 +21,18 @@ Sysys.RescueTimeDp = DS.Model.extend
     for name, act of @get('activities')
       totalLength += act.duration
     totalLength
-    @displayDuration totalLength
+    # moment.duration(totalLength*1000).humanize()
+    @displayDuration(totalLength*1000)
   ).property('activities')
 
   displayDuration: (duration) ->
-    moment(1000 * duration).utc().format("m[m] s[s]")
+    fmtStr = "m[m] s[s]"
+    ret = moment(1000 * duration).utc().format(fmtStr)
+    if duration >= 1000 * 60 * 60
+      ret = "1h " + ret
+      # fmtStr = "h[h] m[m] s[s]"
+      # moment(1000 * duration).utc().format(fmtStr)
+    ret
 
   displayTime: (->
     mmt = moment(@get('time'))
@@ -35,7 +42,7 @@ Sysys.RescueTimeDp = DS.Model.extend
   displayTimeRange: (->
     mmt = moment(@get('time'))
     mmt2 = mmt.add('hours', 1)
-    mmt2.format('Ha')
+    mmt2.format('ha')
   ).property 'time'
 
   displayTimeRelative: (->
