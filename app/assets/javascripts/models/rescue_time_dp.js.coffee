@@ -22,7 +22,7 @@ Sysys.RescueTimeDp = DS.Model.extend
       totalLength += act.duration
     totalLength
     # moment.duration(totalLength*1000).humanize()
-    @displayDuration(totalLength*1000)
+    @displayDuration(totalLength)
   ).property('activities')
 
   displayDuration: (duration) ->
