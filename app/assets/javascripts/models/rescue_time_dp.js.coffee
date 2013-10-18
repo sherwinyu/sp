@@ -4,7 +4,11 @@ Sysys.RescueTimeDp = DS.Model.extend
   activities: Sysys.attr()
 
   displayActivities: (->
-    ( ({name: k, duration: @displayDuration(v.duration), category: v.category} )for k, v of @get('activities'))
+   ({
+    name: k,
+    duration: @displayDuration(v.duration),
+    category: v.category}
+   ) for k, v of @get('activities')
   ).property 'activities'
 
   weightedProductivity: (->
