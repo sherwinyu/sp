@@ -1,6 +1,9 @@
 {{#each activity in arrangedContent itemController="rtdpActivity"}}
 <div>
   <span class="rtdp-activity">{{activity.name}}</span>
-  : {{activity.durationString}}
+  :
+  <span {{bind-attr style=activity.fillStyle}}>
+    {{activity.durationString}}
+  </span>
 </div>
 {{/each}}

@@ -56,14 +56,13 @@ $rtdpWidth: 700px;
   }
 
   .rtdp-time-hint {
-    font-weight: light;
     display: none;
   }
   &:hover .rtdp-time-hint {
     display: inline;
   }
   .relative {
-    font-style: italic;
+    font-weight: lighter;
     margin-left: 5px;
   }
 }

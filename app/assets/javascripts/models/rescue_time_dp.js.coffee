@@ -7,7 +7,9 @@ Sysys.RescueTimeDp = DS.Model.extend
    ({
     name: k,
     duration: v.duration
-    category: v.category}
+    category: v.category
+    productivity: v.productivity
+   }
    ) for k, v of @get('activities')
   ).property 'activities'
 
