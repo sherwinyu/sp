@@ -19,4 +19,10 @@ task :import_rescue_time => :environment do
   puts "#{report[:new_rtrs].count} new RTRs created, spanning time range #{new_rtr_times.min} - #{new_rtr_times.max}"
   puts "#{report[:existing_rtdps].count} existing RTDPs upserted spanning time range #{existing_rtdp_times.min} - #{existing_rtdp_times.max}"
   puts "#{report[:new_rtdps].count} new RTDPs created spanning time range #{new_rtdp_times.min} - #{new_rtdp_times.max}"
+
+  if Figaro.env.PING_URL
+    puts "Pinging server at #{ENV['PING_URL']}"
+    uri = URI(ENV['PING_URL'])
+    Net::HTTP.get_response(uri)
+  end
 end
