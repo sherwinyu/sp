@@ -1,17 +1,17 @@
 <span class="rtdp-time">
-  {{displayTime}}
+  {{timeString}}
   <span class="rtdp-time-hint">
-    -{{displayTimeRange}}
+    -{{timeRangeString}}
   </span>
   <span class="rtdp-time-hint relative">
-    ({{displayTimeRelative}})
+    ({{relativeTimeString}})
   </span>
 </span>
 <span {{bind-attr style=view.fillStyle}} class="rtdp-productivity">
-  Productivity index: {{weightedProductivity}}
+  Productivity index: {{productivityIndex}}
 </span>
 <span class="rtdp-total-duration">
-  Total time index: {{totalDuration}}
+  Total time index: {{totalDurationString}}
 </span>
 <br>
 
