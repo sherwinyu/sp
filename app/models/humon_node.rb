@@ -1,5 +1,4 @@
 class HumonNode < Hashie::Mash
-
   def mongoize
     self.to_hash
   end
@@ -11,11 +10,11 @@ class HumonNode < Hashie::Mash
     end
   end
 
+  # called when serializing
   def self.demongoize mongodb_payload
     case mongodb_payload
     when Hash then HumonNode.new mongodb_payload
     else mongodb_payload
     end
   end
-
 end

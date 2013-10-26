@@ -7,7 +7,6 @@ class Act
   field :canonical_day, type: Date
   field :start_time, type: DateTime
   field :end_time, type: DateTime
-  # field :seq_id, type: Integer
   auto_increment :seq_id
 
   # before_create :set_seq_id
@@ -32,8 +31,8 @@ end
     field name type string
     embeds_many children_details
 
-details = 
-  name: 
+details =
+  name:
 
 productivity
 
@@ -45,7 +44,7 @@ productivity
     { name: productivity, value: 100 }
 
 
-  
+
 }
 
 productivity: 100
@@ -64,14 +63,14 @@ workout:
 -->
   { name: workout
     details: [
-      { 
+      {
         name: bench_press
         children: [
           { name: bench_press set
-            details: 
-            
-          
-      
+            details:
+
+
+
 
 
 
@@ -81,7 +80,7 @@ THINGS TO TEST
   how to store arbitrarily complicated data?
 
   storing everything in the same model (Act.detail = DS.attr... something) --- works!
-  having views descend from that model 
+  having views descend from that model
     ember paths for non ember attrs?  arbitrary objects..
 
   enumerable (flat) object
@@ -95,11 +94,15 @@ THINGS TO TEST
     ifIsArray val
     else
       key: value
-    
+
   {{/each}}
 
 
 Ember.EnumerableJSONObject
+===
+Besides asdfs
 
 
 =end
+
+
