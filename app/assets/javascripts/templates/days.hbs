@@ -1,1 +1,6 @@
-hello
+<h1> Days </h1>
+{{#each day in controller}}
+{{day.date}} <br>
+{{day.note}}
+{{humon-editor json=day.sleep rootKey="sleep"}} {{! downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"}}
+{{/each}}
