@@ -12,23 +12,23 @@ Sysys.Router.map ->
   @resource "rescueTimeDps", path: "/rtdps", ->
     @route "new"
 
-  @resource "days", path: "/days", ->
-    @resource "day", path: "/:day_id"
+  @resource "spDays", path: "/days"
+  @resource "spDay", path: "/days/:sp_day_id"
 
 
-Sysys.DaysRoute = Ember.Route.extend
+Sysys.SpDaysRoute = Ember.Route.extend
   model: (params) ->
     daysPromise = @get('store').findAll 'sp_day'
 
   ativate: ->
-    utils.track("days activate")
+    utils.track("sp days activate")
 
-Sysys.DayRoute = Ember.Route.extend
+Sysys.SpDayRoute = Ember.Route.extend
   model: (params) ->
-    daysPromise = @get('store').find 'sp_day', params.day_id
+    dayPromise = @get('store').find 'sp_day', params.sp_day_id
 
   ativate: ->
-    utils.track("day activate")
+    utils.track("sp day activate")
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
@@ -40,7 +40,7 @@ Sysys.DataPointIndexRoute = Ember.Route.extend()
 
 Sysys.DataPointsRoute = Ember.Route.extend
   model: (params)->
-     dpPromise = @get('store').findAll 'data_point'
+     dpsPromise = @get('store').findAll 'data_point'
   activate: ->
     utils.track("data points activate")
 
