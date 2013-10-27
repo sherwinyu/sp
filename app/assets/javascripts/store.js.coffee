@@ -1,4 +1,5 @@
 #= require store/sysys_attr.js.coffee
+#= require store/day_transform.js.coffee
 Sysys.ApplicationSerializer = DS.RESTSerializer.extend
 
   # to convert camelcased js attributes to

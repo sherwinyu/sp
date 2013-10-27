@@ -3,13 +3,14 @@ Sysys.attr is identical to DS.attr, except when dealing with complex (non litera
 DS.attr sets the `isDirty` flag via `didSetProperty` when oldValue != newValue, which is
 a comparison based on object identity.
 
-Sysys.attr gets around this by pre-emptively comparing (for equality) oldValue and value,
-and if they are equal, setting oldVal to value before sending `didSetProperty`
+Sysys.attr gets around this by pre-emptively comparing (for equality) oldValue and value, and if they are equal,
+setting oldVal to value before sending `didSetProperty` (both
+oldValue and value are objects, so this assignments sets the identities to the same)
 
 `hasValue`, `getValue`, and `getDefaultValue` are both helper functions closed in
 ember-data
 
-TODO(syu): determine whether using JSON.stringify is safe
+TODO(syu): determine whether using JSON.stringify is safe for an equality comparison
   * e.g., if keys are not stringified in consistent order
 ###
 
