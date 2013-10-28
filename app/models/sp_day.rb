@@ -12,14 +12,18 @@ class SpDay
     up_energy
   ]
 
-  field :date, type: Date
   field :note, type: String
+  field :_id, type: Time, default: -> { Date.today }
+
+  def date
+    self.id.to_date
+  end
 
   def weekday
     date.strftime("%A")
   end
 
-  validates_presence_of :date
-  index({ date: 1 }, { unique: true, name: "date_index" })
+  validates_presence_of :_id
+  validates_uniqueness_of :_id
 end
 
