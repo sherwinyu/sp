@@ -23,6 +23,10 @@ class SpDay
     date.strftime("%A")
   end
 
+  def self.latest
+    SpDay.asc(:_id).last
+  end
+
   validates_presence_of :_id
   validates_uniqueness_of :_id
 end
