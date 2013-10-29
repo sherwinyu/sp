@@ -10,6 +10,7 @@
 @import "humon_node";
 @import "data_point";
 @import "rescue_time_dp";
+@import "sp_day";
 
 .caption {
   font-weight: bold;
@@ -18,78 +19,3 @@
 .dirty {
   border: red 1px dashed;
 }
-
-$detailsSelectBorder: 1px rgba(128, 128, 128, .4) dashed;
-
-.details.highlighted {
-  border: $detailsSelectBorder;
-  background: whitesmoke;
-  color: rgba(128, 128, 128, .8)
-}
-
-.details.highlighted .details{
-  border: 1px rgba(128,128,128,.1) solid;
-  background: whitesmoke;
-  color: rgba(128, 128, 128, .8)
-}
-
-.details {
-  margin-left: 30px;
-  position: relative;
-  border: 1px gray solid;
-  padding: 2px;
-}
-
-.details div.detailsbar{
-  top: -18px;
-  position: absolute;
-  border-top: $detailsSelectBorder;
-  border-left: $detailsSelectBorder;
-  border-right: $detailsSelectBorder;
-  color: black;
-}
-
-.details div.collapsible {
-}
-
-/*
-details-edit{
-  top: -18px;
-  position: absolute;
-  border-top: $detailsSelectBorder;
-  border-left: $detailsSelectBorder;
-  border-right: $detailsSelectBorder;
-}
-*/
-
-.details-iter{
-  border: 1px solid orange;
-}
-
-/*
-.details div {
-  background: transparent;
-}
-
-.details:hover div {
-  background: white;
-}
-
-.details div:hover {
-  background:yellow;
-}
-*/
-
-
-
-/* css for timepicker */
-.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
-.ui-timepicker-div dl { text-align: left; }
-.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
-.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
-.ui-timepicker-div td { font-size: 90%; }
-.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
-
-.ui-timepicker-rtl{ direction: rtl; }
-.ui-timepicker-rtl dl { text-align: right; }
-.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
