@@ -2,8 +2,16 @@ class SpDaysController < ApplicationController
   respond_to :html, :json
 
   def index
-    @sp_days  = SpDay.all
-    respond_with @sp_days
+    @latest_sp_day = SpDay.latest
+
+    if @latest_sp_day.new_record?
+      @latest_sp_day.save
+      @latest_sp_day.note = "Just created"
+    end
+
+    respond_with [@latest_sp_day]
+    # @sp_days  = SpDay.all
+    # respond_with @sp_days
   end
 
   def show

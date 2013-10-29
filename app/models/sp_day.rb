@@ -13,7 +13,7 @@ class SpDay
   ]
 
   field :note, type: String
-  field :_id, type: Time, default: -> { Date.today }
+  field :date, type: Date, default: -> {Date.today}
 
   def date
     self.id.to_date
@@ -24,10 +24,9 @@ class SpDay
   end
 
   def self.latest
-    SpDay.asc(:_id).last
+    date = Util.time_to_experienced_date Time.now
+    spd = SpDay.find_or_initialize_by _id: date
   end
 
-  validates_presence_of :_id
-  validates_uniqueness_of :_id
 end
 
