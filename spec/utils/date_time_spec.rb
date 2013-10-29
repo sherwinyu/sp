@@ -37,7 +37,6 @@ describe "Util: time_to_experienced_date" do
 
 
   it "converts 3am to previous day" do
-    binding.pry
     Util.time_to_experienced_date(monday_dawn).should eq sunday
     Util.time_to_experienced_date(tuesday_dawn).should eq monday
   end

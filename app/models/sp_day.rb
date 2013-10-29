@@ -15,9 +15,10 @@ class SpDay
   field :note, type: String
   field :date, type: Date, default: -> {Date.today}
 
-  def date
-    self.id.to_date
-  end
+  validates_uniqueness_of :date
+  validates_presence_of :date
+
+  default_scope asc(:date)
 
   def weekday
     date.strftime("%A")
@@ -25,7 +26,19 @@ class SpDay
 
   def self.latest
     date = Util.time_to_experienced_date Time.now
-    spd = SpDay.find_or_initialize_by _id: date
+    spd = SpDay.find_or_initialize_by date: date
+  end
+
+  def yesterday
+    SpDay.find_by date: date.yesterday
+  end
+
+  def tomorrow
+    SpDay.find_by date: date.tomorrow
+  end
+
+  def inspect
+    "#{date.strftime}: #{super}"
   end
 
 end
