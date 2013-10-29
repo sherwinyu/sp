@@ -1,0 +1,48 @@
+$spDayWidth: 700px;
+
+.sp-day {
+  position: relative;
+  width: $spDayWidth;
+  border: 1px solid $grayLightest1;
+  border-radius: 3px;
+  padding: 3px;
+  margin: 3px;
+
+  span.options {
+    position: relative;
+    display: none;
+    float: right;
+    right: 5px;
+    top: 5px;
+  }
+  &:hover span.options {
+    position: relative;
+    display: block;
+    z-index: 100;
+  }
+  &.active span.options {
+    position: relative;
+    display: block;
+    z-index: 100;
+  }
+}
+
+.sp-day-header {
+  margin: 0 auto;
+  border-bottom: $grayDarkest;
+  text-align: center;
+  width: 450px;
+}
+
+.sp-day-title {
+  color: black;
+  font-weight: bold;
+}
+
+.sp-day-yesterday {
+  float: left;
+}
+.sp-day-tomorrow {
+  float: right;
+}
+
