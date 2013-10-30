@@ -94,13 +94,13 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         Ember.run.sync()
         @send 'smartFocus'
 
-# calls commitEverything
-# then, if the active (just committed) node is a collection,
-#   we switch to insertChild
-# otherwise,
-#   insert a sibling after the active node
-# then conditionally decides whether to insert a sibling or a child,
-# depending on whether active node is a collection
+    # calls commitEverything
+    # then, if the active (just committed) node is a collection,
+    #   we switch to insertChild
+    # otherwise,
+    #   insert a sibling after the active node
+    # then conditionally decides whether to insert a sibling or a child,
+    # depending on whether active node is a collection
     commitAndContinueNew: (payload) ->
       ahn = @get 'activeHumonNode'
       @send 'commitEverything', payload
@@ -153,9 +153,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         if newType != oldType
           node.get('nodeView')?.rerender()
 
-######################################
-##  Setting Active Node
-######################################
+  ######################################
+  ##  Setting Active Node
+  ######################################
 
   # nextNode -- controler method for shifting the active node up or down
   # does NOT affect the UI focus

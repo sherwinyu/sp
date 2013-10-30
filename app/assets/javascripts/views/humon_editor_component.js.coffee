@@ -82,12 +82,3 @@ Sysys.HumonEditorView = Ember.View.extend
 
     @set 'controller', detailController
     @_super()
-
-window.appendHev = (selector, initialJson) ->
-  @hev = Sysys.HumonEditorView.create
-    hooks:
-      didUp: ->
-        console.log 'didUp'
-    json: initialJson
-  @hev.appendTo(selector)
-  @hev
