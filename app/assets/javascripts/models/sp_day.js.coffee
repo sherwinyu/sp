@@ -4,3 +4,7 @@ Sysys.SpDay = DS.Model.extend
   sleep: Sysys.attr()
   yesterday: DS.belongsTo('sp_day')
   tomorrow: DS.belongsTo('sp_day')
+
+  startedAt: (->
+    @get('sleep.awake_at')
+  ).property('sleep')

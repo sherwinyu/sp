@@ -24,6 +24,7 @@ class SpDay
     date.strftime("%A")
   end
 
+  #
   def self.latest
     date = Util.time_to_experienced_date Time.now
     spd = SpDay.find_or_initialize_by date: date

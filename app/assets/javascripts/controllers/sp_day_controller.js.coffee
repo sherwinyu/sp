@@ -8,3 +8,7 @@ Sysys.SpDayController = Ember.ObjectController.extend
     mmt.format('dddd, MMM D')
   ).property 'date'
 
+  startedAt: (->
+    moment(@get('content.startedAt')).format "H:M"
+  ).property('content.startedAt')
+
