@@ -23,21 +23,15 @@ Sysys.ContentEditableField = Ember.View.extend
     e.stopPropagation()
 
   # focusIn -- responds to focus event on the contentField
-  # We don't do any foucs cancelling here; instead we handle it at the HNV level.
-  # This means that all 'focus' events are 'real -- if this function
+  # We don't do any focus cancelling here; instead we handle it at the HNV level.
+  # This means that all 'focus' events are 'real' -- if this function
   # is called, this content field WILL become focused.
-  #
-  # Can be overridden by subclasses
-  #   1) calls @autogrow
-  #   2) bubbles the event
   focusIn: (e, args...) ->
     true
 
   # focusOut -- responds to focus out event on the contentField
   # In context: this focusOut bubbles to HNV, which triggers commitEverything
   # can be overridden by subclasses
-  #   1) removes the autogrow on the field
-  #   2) bubbles the event
   focusOut: (e, options)->
     true
 
