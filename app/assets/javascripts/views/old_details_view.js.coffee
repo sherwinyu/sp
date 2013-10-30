@@ -1,3 +1,4 @@
+###
 Sysys.DetailsView = Ember.View.extend
   templateName: "details"
   tagName: "div"
@@ -110,3 +111,4 @@ Sysys.DetailsView = Ember.View.extend
 
   init: ->
     @_super()
+###k
