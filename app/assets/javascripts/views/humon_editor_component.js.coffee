@@ -32,15 +32,6 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   ###
   initClassNames: (->)
 
-  ###
-  _inited: false
-  initialJsonDidChange: (->
-    @initContentFromJson()
-    @get('childViews')[0].rerender()
-    @_inited = true
-  ).observes "initialJson"
-  ###
-
   initContentFromJson: ->
     initialJson = @get('json')
     if typeof initialJson is 'undefined'

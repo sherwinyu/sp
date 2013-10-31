@@ -1,8 +1,6 @@
 Sysys.HumonControllerMixin = Ember.Mixin.create
 # content:  the root HumonNode
 
-  activeHumonNodeViewBinding: 'activeHumonNode.nodeView'
-  activeHumonNodeView: null
   activeHumonNode: null
   init: ->
     @_super()
@@ -79,7 +77,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       @set 'activeHumonNode', node
 
     smartFocus: ->
-      @get('activeHumonNodeView').smartFocus()
+      @get('activeHumonNode.nodeView').smartFocus()
 
     ###
     action commitLiteral
