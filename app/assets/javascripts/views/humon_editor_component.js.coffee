@@ -11,9 +11,9 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
     * downPressed
   ###
 
-  focusOut: (e)->
+  handleFocusOut: (e)->
     @sendAction 'focusLost'
-  focusIn: (e)->
+  handleFocusIn: (e)->
     @sendAction 'focusGained'
 
   ###

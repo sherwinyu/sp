@@ -90,7 +90,9 @@ Sysys.HumonNodeView = Ember.View.extend
   #  This is primarily called indirectly by event bubbling from content fields
   focusIn: (e) ->
     e.stopPropagation()
-    @get('controller').send 'focusIn'
+
+    # hook for HEC to sendAction focusGained
+    @get('controller').handleFocusIn()
     if @get 'isActive'
       return
     else
@@ -108,7 +110,10 @@ Sysys.HumonNodeView = Ember.View.extend
   #   5) stops propagation (we don't want parent nodes commiting!)
   focusOut: (e) ->
     e.stopPropagation()
-    @get('controller').send 'focusOut'
+
+    # Even though controllerMixin doesn't have a handleFocusOut method,
+    # HumonEditorComponent implements it.
+    @get('controller').handleFocusOut()
     @get('controller').send('activateNode', null)
     # prepare payload: pull from $().val, etc
     # send to `commitEverything
