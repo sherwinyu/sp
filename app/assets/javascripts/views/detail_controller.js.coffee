@@ -49,4 +49,5 @@ Sysys.ActController = Sysys.DetailController.extend
     @forceDirty key.replace(' ', '_')
 
   withinScope: -> false
+
 Sysys.HumonRootController = Sysys.DetailController.extend()

@@ -1,3 +1,4 @@
+###
 xdescribe "details view (enumerable object)", ->
   beforeEach ->
     @serialized =
