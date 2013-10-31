@@ -128,7 +128,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       blank = Sysys.j2hn null
       Ember.run =>
         idx = ahn.get('nodeIdx') + 1
-        parent.get('nodeView').rerender()
+        # Appears that the next `rerender` call is unnecessary.
+        # rerender the parent view BEFORE inserting the child
+        # parent.get('nodeView').rerender()
         parent.insertAt(idx,  blank)
       # Activate the newly inserted blank, and smart focus it
       @send 'activateNode', blank
