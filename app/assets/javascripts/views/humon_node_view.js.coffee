@@ -52,12 +52,16 @@ Sysys.HumonNodeView = Ember.View.extend
       payload =
         val: @valField()?.val()
         key: @keyField()?.val()
+      # If current node's parent is a collection most common case)
+      # then we send commitAndContinueNew, which will both commit,
+      # and insert a child
       if @get('controller.activeHumonNode.nodeParent.isCollection')
         @get('controller').send 'commitAndContinueNew', payload
+      # If current node is NOT in a collection
+      # Example use case: single node bindings (e.g., data_point.startedAt)
+      # TODO(syu): more elegant way to handle this distinction
       else
         @get('controller').send 'commitLiteral', payload
-
-        console.log 'activeNode', @get('controller.activeHumonNode')
 
 
     moveLeft: ->
@@ -187,11 +191,9 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('nodeContent')?.set 'nodeView', null
 
   didInsertElement: ->
-    console.debug "didInsertElement"
     if @get("_focusedField")
       # needs to be in a deferred because the child views (node fields)
       # might not have had their text set up (via didInsertElement)
-      console.debug "didInsertElement and focus field is set"
       Ember.run.scheduleOnce "afterRender", @, =>
         console.debug "afterRender focusField"
         @focusField(@get("_focusedField"))
@@ -211,7 +213,7 @@ Sysys.HumonNodeView = Ember.View.extend
   focusField: (opts) ->
     if typeof opts is "string"
       opts = field: opts
-    console.log "focusing field, #{opts.field}, #{opts.pos}"
+      # console.log "focusing field, #{opts.field}, #{opts.pos}"
 
     # if no field is present
     # this can happen in cases such as

@@ -24,12 +24,12 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   #   - rootJson: json representation of the root node
   #   - key: a string if the key was committed; null otherwise
   didCommit: (params)->
-    console.log 'didCommit', JSON.stringify rootJson
+    # console.log 'didCommit', JSON.stringify rootJson
 
   didUp: (e)->
-    console.log 'didUp'
+    # console.log 'didUp'
   didDown: (e)->
-    console.log 'didDown'
+    # console.log 'didDown'
 
   actions:
     ######################################
@@ -94,27 +94,43 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         Ember.run.sync()
         @send 'smartFocus'
 
-    # calls commitEverything
-    # then, if the active (just committed) node is a collection,
-    #   we switch to insertChild
-    # otherwise,
-    #   insert a sibling after the active node
+    # First calls `commitEverything` for ahn
+    # Next, if the active (just committed) node is a collection (e.g., commiting a []),
+    #   (Re)activate the recently committed node (because ahn will have
+    #   been set to null by _commitVal (focusOut) #TODO(syu): inelegant
+    #   Then, call `insertChild`
+    # Otherwise,
+    #   Insert a sibling after the active node
     # then conditionally decides whether to insert a sibling or a child,
     # depending on whether active node is a collection
+    #
+    # Preconditions:
+    #   ahn.parent is a collection (ensured by HNV.enterPressed right now)
     commitAndContinueNew: (payload) ->
       ahn = @get 'activeHumonNode'
+
+      # Commit everything
       @send 'commitEverything', payload
       Ember.run.sync()
+
+      # If the commited payload was a collection, we just insert a child
       if ahn.get 'isCollection'
+        # If the ahn commited by `commitEverything` was a collection, HNV.focusOut was
+        # probably called, meaning ahn has been set to null. So we need to reactivate it.
         @send 'activateNode', ahn
         @insertChild()
         return
+
+      # If the commited payload was a literal, we insert a sibling
+      #   (we can assume a sibling exists because  only path to `commitAndContinueNew`
+      #   is from HNV.enterPressed, which pre checks for the non-sibling case
       parent = ahn.get 'nodeParent'
       blank = Sysys.j2hn null
       Ember.run =>
         idx = ahn.get('nodeIdx') + 1
         parent.get('nodeView').rerender()
         parent.insertAt(idx,  blank)
+      # Activate the newly inserted blank, and smart focus it
       @send 'activateNode', blank
       Ember.run.sync()
       @send 'smartFocus'
@@ -170,7 +186,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       @send 'activateNode', newNode
     else
       @didDown(e)
-    console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
+      # console.log "DC#nextNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
   prevNode: (e)->
@@ -179,7 +195,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
       @send 'activateNode', newNode
     else
       @didUp(e)
-    console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
+      # console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
   withinScope: (testNode) ->
