@@ -125,6 +125,7 @@ Sysys.HumonNodeView = Ember.View.extend
     # if the value has been modified, include val in the payload
     if @valField()?.val() isnt @get("templateStrings.asString")
       payload.val = @valField()?.val()
+    console.log('focusOut, payload', payload)
     @get('controller').send 'commitEverything', payload
 
   # smartFocus -- "auto" sets the focus for this HNV based on context
@@ -218,7 +219,7 @@ Sysys.HumonNodeView = Ember.View.extend
   focusField: (opts) ->
     if typeof opts is "string"
       opts = field: opts
-      # console.log "focusing field, #{opts.field}, #{opts.pos}"
+    console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts}"
 
     # if no field is present
     # this can happen in cases such as

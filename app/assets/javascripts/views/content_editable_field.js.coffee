@@ -79,7 +79,8 @@ Sysys.ContentEditableField = Ember.View.extend
         @get('controller').send('indent')
       'ctrl+backspace': (e) =>
         e.preventDefault()
-        @get('controller').send('deleteActive')
+        # @get('controller').send('deleteActive')
+        @get('controller').deleteActive()
       'ctrl+shift+l': (e) =>
         console.log 'ctrl shift l'
         @get('controller').send('forceList')

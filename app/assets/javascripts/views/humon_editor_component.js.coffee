@@ -47,7 +47,7 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   # TODO(syu): is this safe? if this object never gets cloned?
   hooks:
     didCommit: (params) ->
-      console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
+      # console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
       @sendAction 'jsonChanged', params.rootJson
       @set 'json', params.rootJson
 

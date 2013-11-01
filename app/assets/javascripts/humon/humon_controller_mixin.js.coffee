@@ -53,6 +53,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     #     - `commitAndContinueNew`, prior to inserting blank
     #     - `HNV#focusOut`
     commitEverything: (payload) ->
+      console.log "commitEverything, payload: ", payload
       node = payload.node || @get('activeHumonNode')
       node.set('nodeKey', payload.key) if payload.key?
       @_commitVal payload.val, node: node if payload.val?
@@ -116,7 +117,9 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         # If the ahn commited by `commitEverything` was a collection, HNV.focusOut was
         # probably called, meaning ahn has been set to null. So we need to reactivate it.
         @send 'activateNode', ahn
-        @insertChild()
+        # TODO(syu): decide on whether we want to insert a chlid here;
+        @send 'smartFocus'
+        # @insertChild()
         return
 
       # If the commited payload was a literal, we insert a sibling
