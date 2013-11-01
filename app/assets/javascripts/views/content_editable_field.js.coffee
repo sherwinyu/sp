@@ -7,6 +7,10 @@ Sysys.ContentEditableField = Ember.View.extend
   tabindex: '0'
   attributeBindings: ["contenteditable:contenteditable",  'tabindex:tabindex']
 
+  # Shim for editing or setting the field, jQuery style.
+  # Basically just wraps $.text() and $.text(textArg)
+  # If an argument is passed, then $.text(textArg) is called
+  # Otherwise, $.text() is called and the current text is returned
   val: (args...) ->
     @$().text.apply(@$(), args)
 
@@ -45,9 +49,6 @@ Sysys.ContentEditableField = Ember.View.extend
   # is this an event?
   enter: ->
     @get('parentView').send 'enterPressed'
-
-  cancel: ->
-    @refresh()
 
   initHotKeys: ->
     @createHotKeys()
