@@ -113,3 +113,10 @@ window.utils =
     ret = moment(1000 * seconds).utc().format(fmtStr)
     ret
 
+  tick: (milliseconds=1000)->
+    if @ticking
+      clearInterval @tickIntervalId
+      @ticking = false
+    else
+      @tickIntervalId = setInterval((-> console.log(moment().format "HH:mm:s.SS")), milliseconds)
+      @ticking = true
