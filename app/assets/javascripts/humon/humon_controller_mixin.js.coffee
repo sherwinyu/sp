@@ -89,6 +89,8 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
         @send 'commitEverything', payload
       Ember.run =>
         @send 'activateNode', ahn
+        # TODO(syu): hypothesized that this (and other em.run.sync before smartFocus) is unneeded
+        # now that we don't have activeHumonNodeView bindings
         Ember.run.sync()
         @send 'smartFocus'
 
