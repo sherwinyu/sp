@@ -1,3 +1,42 @@
+### Notes
+
+Principles
+  * everything has a canonical text-only representation
+  * any node can be put into this mode
+  * Separation of display from content
+
+Complex objects
+  * graceful fallback -- if no sleep object is defined, then it is just displayed
+  as a normal object
+
+
+Templating
+  * manipulation control
+  * complex data types
+  * structured data types that include arbitrary permissions
+  * switch between "object view" and "pretty view" ?
+
+== How is a complex type represented as a HumonNode structure?
+e.g., what is inside the nodeVal? does it contain additional child nodes?
+
+== Difference between complex type (humon node) and complex type display (templating)
+I.e., linking up a HumonNodeSleep to a template that isnt?
+
+== Should server be able to specify the template?
+Like, what would be most easy to use in the future?
+"Object template" should be straight up JSON
+  * includes permissions
+  * permissivity
+  * optionality
+
+Examples of complex objects
+  * tag list
+  * time-stamped-object
+
+
+
+If complex types are essentially just big blobs, how does j2hn know to parse it as a complex type?
+
 ### TEMPLATES
 
 details:
@@ -5,6 +44,50 @@ details:
     start: 23:00
     end: 07:00
     energy at lights out:
+
+Template operators:
+  $type
+  $required
+  $permit other values (only if this is a collection)
+  $path
+  $required child attributes
+
+typedef timestamped-object:
+  $collection: true
+  $permit other values: false
+  time stamp:
+    $type datetime
+    $required true
+    $path: this.timestamp
+  payload:
+    $type anything
+    $required optional
+    $path: this.payload
+
+typedef taglist
+  $collection: true
+  $array: true
+  $each:
+    $type: string
+  $each_validates_uniqueness: true
+
+typedef list of list of integers
+  $collection: true
+  $array: rue
+  $each:
+    $type:
+      $array: true
+
+
+typedef meal
+  time:
+    $type: datetime
+  name:
+    $type: validation
+
+
+
+**how to handle enums?**
 
 meta:
   sleep:
