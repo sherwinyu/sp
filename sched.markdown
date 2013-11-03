@@ -45,6 +45,17 @@ HumonTypes.register "SurveyResponse0to10"
   nodeTypeDef:
 
 
+Functionality:
+  PARSING
+    -- given a JSON object, and told that the object adheres to this template, generate a HumonNode that contains all this
+    information
+  HANDLING TEMPLATE INFORMATION
+    -- commit and continue
+    -- up, down, bubble up, bubble down, delete,
+
+
+  VALIDATING --
+    when a subtype's value is committed, need to validate against the type's specifications for that subtype
 
 
 Low priorty:
