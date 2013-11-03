@@ -1,4 +1,4 @@
-### Notes
+### Notes ###
 
 Principles
   * everything has a canonical text-only representation
@@ -16,11 +16,204 @@ Templating
   * structured data types that include arbitrary permissions
   * switch between "object view" and "pretty view" ?
 
-== How is a complex type represented as a HumonNode structure?
+Storing of HN data-templates
+  * class Template
+      stores a typedef'd template as a bson document
+
+  omg, we can even edit templates via the web interface
+
+typedef Typedef
+  !name: "Typedef"
+  !key:
+  !or:
+    $each:
+      $type: Typedef
+  !each:
+    !type:
+      $type: Typedef
+    !as:
+      $type: string
+  !required:
+    $type: boolean
+  !included:
+    $type: boolean
+  !required children:
+    $each:
+      $type: String
+  !as:
+    $type: String
+  *key*:
+    type:
+  !attrs:
+    $each:
+      name:
+        $type: string
+      !type:
+
+Typedef Mental
+  focus:
+    $type: Integer
+    $required: false
+  sleepiness:
+    $type: Integer
+    $min: 0
+    $max: 10
+  energy:
+    $type: SurveyResponse0to10
+
+
+Typedef SurveyResponse0To10
+  $type: integer .... If $type is defined at upper level, then replace
+  $min: 0
+  $max: 10
+
+Typedef SurveyREsponse0To10
+  value:
+    $type: integer
+    $min: 0
+    $max: 10
+
+Typedef Tag
+  $type: String
+
+Typedef Taglist
+  $each:
+    $type: Tag
+
+Typedef Text
+  $type: String
+  $max length: unlimited
+  $min length: 0
+
+Typedef Post
+  body:
+    $type: Text
+    $required: true
+  comments:
+    $each:
+      $type: Comment
+    $included: always
+  Tags:
+    $type: Taglist
+
+Typedef PostBody
+  $type: Text
+  $required: true
+
+Typedef PostBody
+  text:
+    $type: Text
+    $required: true
+    $
+  tags:
+    $type: Taglist
+
+Typedef Post
+  body:
+    text:
+      $type: Text
+    tags:
+      $type: Taglist
+    $max length: unlimited
+    $min length: 0
+
+
+Typedef Taglist
+  $each:
+    $type: tag
+
+ALGORITHM FOR GENERATING DENORMALIZED TYPE OBJECT
+1. Parse along
+2. If we encounter a $type key, look up its value
+  - if the value is a typedef'd type
+    merge in the value of the typedef'd type at the current path
+  - continue overriding settings with optiosn provided at the current path
+  - Recursively merge in nested $types
+  - If the value is a primitive type, then we're done!
+3.
+
+
+
+
+
+
+
+
+
+
+
+===  How is a complex type represented as a HumonNode structure?
 e.g., what is inside the nodeVal? does it contain additional child nodes?
 
-== Difference between complex type (humon node) and complex type display (templating)
+=== Difference between complex type (humon node) and complex type display (templating)
 I.e., linking up a HumonNodeSleep to a template that isnt?
+
+=== Difference between
+
+=== Case study: date / time objects / time ranges...
+  * Want to be flexible about displaying...
+  * Helper information ("2 hours ago...")
+  * Display as a time
+      - 4:30pm
+  * Collapse to date
+      - Sun, May 12
+  * Collapse to date + year
+      - Sun, May 12, 2013
+  * Joint editing of duration's start and end
+      Start: 4:30pm
+      End: 5:00pm
+      Duration: 30m
+  * Aliasing of attributes
+    UI looks like
+    Sleep:
+      time:
+        started at: 01:30                  at some point, would like to be able to type "8pm for 8 hours" or "8p-4a"
+        ended at:
+        duration: 8 hours
+      lights off at: 7:45 pm
+      asleep at: 8pm
+      initial awake up at: 6am
+      out of bed at: 7am
+      alarm: [
+        7:15am
+        7:20am
+        7:35am
+      ]
+      slept for: 8 hours
+
+typedef AlarmList
+  $collection: true
+  $array: true
+  $each:
+    $type: $alarm
+
+typedef Alarm
+  $or: [
+    0.
+      $type: datetime
+      $as: "time"
+    1.
+      time:
+        $type: datetime (or should this just be a time? seconds past midnight?)
+      snoozes:
+        $collection: true
+        $array: true
+        $each:
+          $type: integer
+          $as: "number of minutes"
+  ]
+
+
+
+  *  as an aside -- difficulty in unifying sleep things.
+
+  Yesterday
+    slept at
+    awake at
+  today
+    awake at == yesterday.sleep.ended
+
+==================================================================
 
 == Should server be able to specify the template?
 Like, what would be most easy to use in the future?
@@ -28,11 +221,6 @@ Like, what would be most easy to use in the future?
   * includes permissions
   * permissivity
   * optionality
-
-Examples of complex objects
-  * tag list
-  * time-stamped-object
-
 
 
 If complex types are essentially just big blobs, how does j2hn know to parse it as a complex type?
