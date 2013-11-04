@@ -1,7 +1,7 @@
 class SpDay
   include Mongoid::Document
   include Mongoid::Timestamps
-  field :sleep, type: HumonNodeSleep
+  # field :sleep, type: HumonNodeSleep
 =begin
 sleep
   begin
