@@ -4,7 +4,7 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   nodeType: null
   nodeParent: null
   nodeView: null
-  keyBinding: 'nodeKey'
+
   compare: (hna, hnb) ->
     a = hna.get('nodeVal')
     b = hnb.get('nodeVal')
@@ -28,12 +28,6 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   json: (->
     Sysys.HumonUtils.humonNode2json @
   ).property('nodeVal', 'nodeKey', 'nodeType').cacheable false
-
-  ###
-  nodeValChanged: (->
-    @get('nodeParent')?.notifyPropertyChange 'nodeVal'
-  ).observes 'nodeVal', 'nodeKey', 'nodeType', 'nodeVal.@each'
-    ###
 
   isHash: (->
     @get('nodeType') == 'hash'
