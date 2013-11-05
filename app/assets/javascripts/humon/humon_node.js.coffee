@@ -46,7 +46,7 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   ).property('isCollection', 'nodeVal', 'nodeVal.@each')
 
   isLiteral: (->
-    literalTypes = ['literal', 'date', 'number', 'boolean', 'string', 'null']
+    literalTypes = ['literal', 'date', 'number', 'boolean', 'string', 'null', 'couple']
     #$.inArray @get('nodeType'), literalTypes
     @get('nodeType') in literalTypes
   ).property('nodeType')
@@ -224,3 +224,7 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   isDescendant: (testNode)->
     path = @pathToNode(testNode)
 
+Sysys.HumonNodeCouple = Ember.Object.extend
+  self: null
+  init: ->
+    @set 'self', []

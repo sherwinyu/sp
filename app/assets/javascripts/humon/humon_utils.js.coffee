@@ -15,6 +15,7 @@ Sysys.HumonUtils =
           key ?= nodeVal.indexOf child
           ret[key] = Sysys.HumonUtils.humonNode2json child
       else
+      #TODO(syu): add back the assert
         Em.assert "node is a literal", node.get('isLiteral')
         ret = HumonTypes.contextualize(type).hnv2j(nodeVal)
       #TODO(syu): handle error case
@@ -32,6 +33,12 @@ Sysys.HumonUtils =
         child.set 'nodeKey', key
         children.pushObject child
       node.set 'nodeVal', children
+    else if Sysys.HumonUtils.isList(json) && json.length == 2
+      # FORCE A HUmonNodeCouple
+      nodeType = 'couple'
+      node.set 'nodeType', nodeType
+      node.set 'nodeVal', HumonTypes.contextualize(nodeType).j2hnv( json, node: node)
+
     else if Sysys.HumonUtils.isList json
       node.set 'nodeType', 'list'
       children = Em.A()
