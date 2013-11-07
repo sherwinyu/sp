@@ -5,17 +5,6 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   nodeParent: null
   nodeView: null
 
-  compare: (hna, hnb) ->
-    a = hna.get('nodeVal')
-    b = hnb.get('nodeVal')
-    as = bs = null
-    ret =
-      if hna.get('nodeType') == 'date' || hnb.get('nodeType') == 'date'
-        Ember.compare(a, b)
-      else
-        0
-    ret
-
   # finds the index of this node in its parentNode's nodeVal (children)
   # if parentNode does not exist, returns undefined
   # otherwise, returns the index (as an int)
@@ -225,6 +214,7 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
     path = @pathToNode(testNode)
 
 Sysys.HumonNodeCouple = Ember.Object.extend
+  type: "couple"
   self: null
   init: ->
     @set 'self', []
