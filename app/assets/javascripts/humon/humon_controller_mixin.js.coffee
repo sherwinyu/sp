@@ -215,6 +215,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
   # If activeNode is a list, convert it to a hash
   forceHash: ->
+    return
     ahn = @get('activeHumonNode')
     if ahn.get('isCollection') && ahn.get('isList')
       ahn.convertToHash()
@@ -226,6 +227,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
   # If activeNode is a list, convert it to a hash
   forceList: ->
+    return
     ahn = @get('activeHumonNode')
     if ahn.get('isCollection') && ahn.get('isHash')
       ahn.convertToList()
@@ -235,6 +237,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
 
   # TODO(syu): test me
   bubbleUp: ->
+    return
     ahn = @get('activeHumonNode')
     dest = @get('activeHumonNode').prevNode()
     destParent = dest?.get('nodeParent')
@@ -247,6 +250,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   bubbleDown: ->
+    return
     ahn = @get 'activeHumonNode'
     dest = @get('activeHumonNode').lastFlattenedChild().nextNode()
     destParent = dest?.get('nodeParent')
@@ -262,6 +266,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   deleteActive: ->
+    return
     ahn = @get('activeHumonNode')
     @set('activeHumonNode', null)
     Ember.run.sync()
@@ -276,6 +281,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
   #   inserts and sets focus on a blank node that is a child
   #   of the active node, which must be a collection.
   insertChild: ->
+    return
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
     blank = Sysys.j2hn null
@@ -285,6 +291,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   outdent: ->
+    return
     ahn = @get 'activeHumonNode'
     newSibling = ahn.get 'nodeParent'
     newParent = newSibling?.get 'nodeParent'
@@ -296,6 +303,7 @@ Sysys.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   indent: ->
+    return
     ahn = @get 'activeHumonNode'
     parent = ahn.get('nodeParent')
     prevSib = parent?.get('nodeVal')[ ahn.get('nodeIdx') - 1]

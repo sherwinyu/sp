@@ -212,9 +212,3 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
 
   isDescendant: (testNode)->
     path = @pathToNode(testNode)
-
-Sysys.HumonNodeCouple = Ember.Object.extend
-  type: "couple"
-  self: null
-  init: ->
-    @set 'self', []

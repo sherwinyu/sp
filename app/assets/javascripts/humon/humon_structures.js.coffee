@@ -1,10 +1,4 @@
 HumonStructures = {}
-Humon.HumonNodeGeneral = Ember.Object.extend
-  nodeKey: ''
-  nodeVal: null
-  nodeType: null
-  nodeParent: null
-  nodeView: null
 
 ###
 compare: (hna, hnb) ->
@@ -124,6 +118,75 @@ Humon.DateTimeRange = Humon.Complex.extend
   }
 
 ###
+
+
+Humon.HumonValue = Ember.Mixin.create
+  node: null
+  nextNode: ->
+  prevNode: ->
+  delete: ->
+
+# Humon.AbstractPrimitive = Ember.Object.extend Humon.HumonValue
+
+Humon.Number = Ember.Object.extend Humon.HumonValue,
+  _value: null
+Humon.Number.reopenClass
+  j2hnv: (json) ->
+    Humon.Number.create(_value: json)
+
+Humon.Number = Ember.Object.extend Humon.HumonValue,
+  _value: null
+Humon.Number.reopenClass
+  j2hnv: (json) ->
+    Humon.Number.create(_value: json)
+
+Humon.Boolean = Ember.Object.extend Humon.HumonValue,
+  _value: null
+Humon.Boolean.reopenClass
+  j2hnv: (json) ->
+    Humon.Boolean.create(_value: json)
+
+Humon.String = Ember.Object.extend Humon.HumonValue,
+  _value: null
+
+  setVal: (val) ->
+    @set('_value', val)
+    @validateSelf()
+
+  length: (->
+    @get('_value').length
+  ).property('_value')
+Humon.String.reopenClass
+  j2hnv: (json) ->
+    Human.String.create(_value: json)
+
+
+Humon.List = Ember.Object.extend Humon.HumonCollection,
+  _value: null
+  toJson: ->
+    ret = []
+    for node in _value
+      ret.pushObject HumonUtils.node2json node
+    ret
+
+  # deleteChild: ->
+Humon.List.reopenClass
+  j2hnv: (json, context=null) ->
+    h = Humon.List.create()
+    children = []
+    for val in json
+      child = Sysys.HumonUtils.json2humonNode val, node
+      children.pushObject child
+    children
+
+
+
+Humon.Hash = Humon.List.extend
+  unknownProperty: (key) ->
+    if isNaN(key)
+      @get('_value')
+
+
 
 
 
