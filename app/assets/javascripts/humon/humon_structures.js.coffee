@@ -31,7 +31,103 @@ deleteAt: (idx, amt)->
 deleteChild: (node)->
 pathToNode: (testNode)->
 isDescendant: (testNode)->
+Controller
+  goToPrev
+  goToNext
+  indent
+  outdent
+  delete
+  insert
+  commitAndContinue
+  goToField
+  bubbleUp
+  bubbleDown
+
+PRINCIPLES:
+  * controller actions interface with humon node
+  * humon node interfaces with Humon*types, which provides a standardized api
+  * a node is something whose value is committed at the same time. atomic values
+
+HumonNode
+  nodeType
+  nodeKey
+  nodeVal -- the wrapper
+  nodeParent
+
+  *isCollection -- proxied attr
+  *isList -- proxied attr
+  *size
+  *isHash -- proxied attr
+  *hasChildren -- proxied attr
+
+  !nextNode
+  !prevNode
+  !delete
+  !replaceWithHumon
+  validate
+
+Humon.HumonValue mixin
+  nextNode()
+  prevNode()
+  delete()
+  class {
+    hnv2j
+    j2hnv
+  }
+  validateSelf()
+  validateHook()
+  typecheck()
+
+Humon.HumonCollection = new mixin# Ember.Array.extend
+  isCollection
+  flatten
+  hasChildren
+  insertChild(position)
+  deleteChild(key or position)
+  childrenModifiable?
+  keys
+  children
+
+Humon.List = Ember.Array.extend Humon.HumonCollection
+  insertChild(position)
+
+Humon.Hash = Humon.List.extend
+  @override
+  getNode
+  getElementAt
+  getUnknownProperty
+
+Humon.Complex = new interface?  -- think, could we have a list with attributes? of course
+Humon.Complex = Humon.Hash.extend
+  validate
+  class {
+    attributes
+  }
+
+Humon.Couple = Humon.List.extend
+  startBinding: "0"
+  endBinding: "1"
+  validateSelf: ->
+    size == 2
+
+Humon.DateTimeRange = Humon.Complex.extend
+  start: null
+  end: null
+
+  validateSelf: ->
+    @start < @end
+
+  class {
+    attributes:
+      start: Humon.DateTime
+      end: Humon.DateTime
+  }
+
 ###
+
+
+
+
 Humon.HumonCollection = Ember.Object.extend
   isCollection: true
   flatten: ->
