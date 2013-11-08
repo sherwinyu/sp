@@ -5,7 +5,7 @@
 #= require ./humon_types_date
 #= require ./humon_controller_mixin
 window.Humon = Ember.Namespace.create
-  _types: ["Number", "Boolean", "Date", "String", "List"]
+  _types: ["Number", "Boolean", "Date", "String", "List", "Hash"]
   # _types: ["Number", "Boolean", "String", "List", "Hash"]
   #
 Humon.HumonValue = Ember.Mixin.create
@@ -74,13 +74,22 @@ Humon.Date.reopenClass
       @_momentFormatAndValidate string, format
     'ddd MMM D YYYY': (string, format)->
       @_momentFormatAndValidate string, format
+    'YYYY MM DD': (string, format)->
+      @_momentFormatAndValidate string, format
+    'YYYY M D': (string, format)->
+      @_momentFormatAndValidate string, format
     _momentFormatAndValidate: (string, format) ->
       date = @_momentFormat(string, format).toDate()
-      valid = Date.parse(string).equals date
+      valid = !isNaN(date.getTime()) && moment(date).format(format) == string
       {valid: valid, date: date}
     _momentFormat: (string, format) ->
       mmt = moment(string, format)
 
+  ###
+  _inferViaDateParse: (string) ->
+    return false if string.constructor != String
+    Date.parse(string) || false
+  ###
 
   _inferAsMomentFormat: (string) ->
     return false if string.constructor != String
@@ -105,11 +114,12 @@ Humon.Date.reopenClass
   _inferFromJson: (json) ->
     ret = false
     ret ||= (typeof json is "object" && json.constructor == Date && json)
+    # ret ||= @_inferViaDateParse(json)
     ret ||= @_inferAsMomentFormat(json)
     ret
 
   j2hnv: (json, context) ->
-    value = @_inferFromJson
+    value = @_inferFromJson(json)
     Humon.Date.create(_value: value)
   matchesJson: (json) ->
     !!@_inferFromJson(json)
@@ -135,10 +145,36 @@ Humon.List.reopenClass
     Em.assert( (json? && json instanceof Array), "json must be an array")
     # set all children node's `nodeParent` to this json payload's corresponding `node`
     childrenNodes = json.map( (x) -> HumonUtils.json2node(x, nodeParent: context.node))
-    Humon.List.create
-      _value: childrenNodes
+    Humon.List.create _value: childrenNodes
   matchesJson: (json) ->
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
 
+Humon.Hash = Humon.List.extend
+  unknownProperty: (keyOrIndex) ->
+    # if it's a string
+    if isNaN(keyOrIndex) && keyOrIndex.constructor == String
+      @_value.findProperty('nodeKey', keyOrIndex)
 
+    # if it's a number (or a string representing a number)
+    else if !isNaN(keyOrIndex)
+      @_value[keyOrIndex]
+    else
+      throw new Error "invalid key or index #{keyOrIndex}"
 
+  toJson: ->
+    ret = {}
+    for node in @_value
+      key = node.get('nodeKey')
+      key ?= @_value.indexOf node
+      ret[key] = HumonUtils.node2json node
+    ret
+Humon.Hash.reopenClass
+  j2hnv: (json, context)->
+    childNodes = []
+    for own key, childVal of json
+      childNode = HumonUtils.json2node(childVal, nodeParent: context.node)
+      childNode.set 'nodeKey', key
+      childNodes.pushObject childNode
+    Humon.Hash.create _value: childNodes
+  matchesJson: (json) ->
+    json? and (typeof json is 'object') and !(json instanceof Array) and json.constructor == Object

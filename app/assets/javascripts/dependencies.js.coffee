@@ -5,8 +5,10 @@
 #= require handlebars
 #= require ember
 #= require ember-data
-#= require moment
-#= require date
+#= require vendor/moment.min
+# require moment ------- not using bundled moment for now because it's stuck on 2.0
+# require moment
+# require date
 #
 #= require vendor/jquery-autogrow-textarea
 #= require vendor/jquery-autogrow-textarea-plus
