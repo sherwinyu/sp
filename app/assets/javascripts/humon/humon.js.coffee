@@ -3,20 +3,28 @@
 #= require ./humon_utils
 #= require ./humon_types
 #= require ./humon_controller_mixin
-window.Humon =
+window.Humon = Ember.Namespace.create
   _types: ["Number", "String", "List"]
   # _types: ["Number", "Boolean", "String", "List", "Hash"]
   #
 Humon.HumonValue = Ember.Mixin.create
-  node: null
+  name: ->
+    @.constructor.toString().split(".")[1].toLowerCase()
   nextNode: ->
   prevNode: ->
   delete: ->
+  toJson: (json)->
 
+Humon.HumonValueClass = Ember.Mixin.create
+  j2hnv: (json) ->
+  matchesJson: (json) ->
 
 
 Humon.Number = Ember.Object.extend Humon.HumonValue,
   _value: null
+  toJson: ->
+    @_value
+
 Humon.Number.reopenClass
   j2hnv: (json) ->
     Humon.Number.create(_value: json)
@@ -31,8 +39,31 @@ Humon.String = Ember.Object.extend Humon.HumonValue,
   length: (->
     @get('_value').length
   ).property('_value')
+
+  toJson: ->
+    @_value
+
 Humon.String.reopenClass
-  j2hnv: (json) ->
-    Human.String.create(_value: json)
+  j2hnv: (json, context) ->
+    Humon.String.create(_value: json)
   matchesJson: (json) ->
     typeof json == "string"
+
+Humon.List = Ember.Object.extend Humon.HumonValue,
+  _value: null
+  toJson: ->
+    ret = []
+    for node in @_value
+      ret.pushObject HumonUtils.node2json node
+    ret
+
+Humon.List.reopenClass
+  j2hnv: (json, context) ->
+    Em.assert( (json? && json instanceof Array), "json must be an array")
+    # set all children node's `nodeParent` to this json payload's corresponding `node`
+    childrenNodes = json.map( (x) -> HumonUtils.json2node(x, nodeParent: context.node))
+    Humon.List.create
+      _value: childrenNodes
+
+  matchesJson: (json) ->
+    json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'

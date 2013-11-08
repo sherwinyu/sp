@@ -10,15 +10,17 @@ window.HumonUtils =
 
     node = Sysys.HumonNode.create
       nodeParent: context.nodeParent
-    context.node = node
 
     if context.type?
+      # If provided, look up the typeClass from the `context` arg.
       typeClass = context.type
-      nodeVal = typeClass.j2hnv json, context
-      node.set 'nodeVal', nodeVal
-      node.set 'nodeType', typeClass.name
     else
-      throw new Error "Couldn't determine a type for #{JSON.stringify json}"
+      # Don't pass in context because this occurs when context isn't provided!
+      typeClass = @resolveTypeFromJson json
+    nodeVal = typeClass.j2hnv json, node: node
+    node.set 'nodeVal', nodeVal
+    node.set 'nodeType', nodeVal.name()
+
     return node
 
   # Called when no context is available
