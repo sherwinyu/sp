@@ -16,7 +16,7 @@ window.HumonUtils =
       typeClass = context.type
     else
       # Don't pass in context because this occurs when context isn't provided!
-      typeClass = @resolveTypeFromJson json
+      typeClass = HumonUtils.resolveTypeFromJson json
     nodeVal = typeClass.j2hnv json, node: node
     node.set 'nodeVal', nodeVal
     node.set 'nodeType', nodeVal.name()

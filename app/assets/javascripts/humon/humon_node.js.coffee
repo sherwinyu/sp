@@ -212,3 +212,10 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
 
   isDescendant: (testNode)->
     path = @pathToNode(testNode)
+
+  unknownProperty: (key) ->
+    @get('nodeVal').get(key)
+
+  # helper method; do not actualyl use
+  val: ->
+    @get('nodeVal').toJson()

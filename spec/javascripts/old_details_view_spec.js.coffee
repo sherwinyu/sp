@@ -168,3 +168,4 @@ xdescribe "details view (enumerable object)", ->
       serialized = JSON.stringify Sysys.JSONWrapper.recursiveSerialize @array2view.get 'details'
       expect(@array2view.get('commitValue')).toEqual serialized
       expect(@array2view.$('textarea').val()).toEqual serialized
+###

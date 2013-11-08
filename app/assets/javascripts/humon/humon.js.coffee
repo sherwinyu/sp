@@ -49,13 +49,23 @@ Humon.String.reopenClass
   matchesJson: (json) ->
     typeof json == "string"
 
-Humon.List = Ember.Object.extend Humon.HumonValue,
+Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   _value: null
   toJson: ->
     ret = []
     for node in @_value
       ret.pushObject HumonUtils.node2json node
     ret
+  replace: ()->
+    true
+    # TODO(syu): do shit
+
+  objectAt: (i) ->
+    @_value[i]
+
+  unknownProperty: (key) ->
+    @_value[key]
+
 
 Humon.List.reopenClass
   j2hnv: (json, context) ->
