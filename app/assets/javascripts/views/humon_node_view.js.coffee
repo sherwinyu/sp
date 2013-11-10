@@ -2,7 +2,7 @@ Sysys.HumonNodeView = Ember.View.extend
   _focusedField: null
 
   layoutName: "humon_node_key_layout"
-  # TODO(syu) @TRANSITION
+  # TODO(syu) #RANSIT
   templateStrings: (->
     if @get('nodeContent.isLiteral')
       HumonTypes.contextualize(@get 'nodeContent')._materializeTemplateStringsForNode(@get 'nodeContent')

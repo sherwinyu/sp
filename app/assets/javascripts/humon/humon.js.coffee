@@ -5,7 +5,7 @@
 #= require ./humon_types_date
 #= require ./humon_controller_mixin
 window.Humon = Ember.Namespace.create
-  _types: ["Number", "Boolean", "Date", "String", "List", "Hash"]
+  _types: ["Number", "Boolean", "Null", "Date", "String", "List", "Hash"]
   # _types: ["Number", "Boolean", "String", "List", "Hash"]
   #
 Humon.HumonValue = Ember.Mixin.create
@@ -50,6 +50,10 @@ Humon.String = Humon.Primitive.extend
 
 
 Humon.Boolean = Humon.Primitive.extend()
+Humon.Null = Humon.Primitive.extend()
+Humon.Null.reopenClass
+  matchesJson: (json) ->
+    json == null
 
 Humon.Date = Humon.Primitive.extend()
 Humon.Date.reopenClass
@@ -94,11 +98,16 @@ Humon.Date.reopenClass
   # problem is that right now yu can't distinguish between a literal false and a false as in failure
   _inferFromJson: (json) ->
     ret = false
-    ret ||= (typeof json is "object" && json.constructor == Date && json)
-    # ret ||= @_inferViaDateParse(json)
-    ret ||= json.constructor == String && @_inferAsMomentFormat(json)
-    ret ||= json.constructor == String && @_inferAsMomentValidDate(json)
-    ret
+    try
+      ret ||= (typeof json is "object" && json.constructor == Date && json)
+      # ret ||= @_inferViaDateParse(json)
+      ret ||= json.constructor == String && @_inferAsMomentFormat(json)
+      ret ||= json.constructor == String && @_inferAsMomentValidDate(json)
+    catch error
+      console.error error.toString()
+      ret = false
+    finally
+      ret
 
   j2hnv: (json, context) ->
     value = @_inferFromJson(json)
