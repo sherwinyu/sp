@@ -3,6 +3,7 @@ Humon.Node = Ember.Object.extend
   nodeType: null
   nodeParent: null
   nodeView: null
+  nodeKey: null
 
   isHashBinding: Ember.Binding.oneWay('nodeVal.isHash')
   isListBinding: Ember.Binding.oneWay('nodeVal.isList')

@@ -116,13 +116,14 @@ HumonTypes.register "date",
   # Here, we're using the function (lazy evaluation) version
   # We can also declare a straight up object.
   templateStrings: (node) ->
-    month:  node.get('nodeVal').getMonth()
-    day:  node.get('nodeVal').getDay()
-    hour:  node.get('nodeVal').getHours()
-    abbreviated:  humanized(node.get('nodeVal'))
-    asString:  asString(node.get('nodeVal'))
-    relative:  relative(node.get('nodeVal'))
-    verbose:  verbose(node.get('nodeVal'))
+    date = node.val()
+    month:  date.getMonth()
+    day:  date.getDay()
+    hour:  date.getHours()
+    abbreviated:  humanized(date)
+    asString:  asString(date)
+    relative:  relative(date)
+    verbose:  verbose(date)
 
   defaultNodeVal: ->
     new Date()

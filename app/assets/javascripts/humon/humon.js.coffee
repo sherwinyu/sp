@@ -4,6 +4,7 @@
 #= require ./humon_types
 #= require ./humon_types_date
 #= require ./humon_controller_mixin
+
 window.Humon = Ember.Namespace.create
   _types: ["Number", "Boolean", "Null", "Date", "String", "List", "Hash"]
   # _types: ["Number", "Boolean", "String", "List", "Hash"]
@@ -23,6 +24,9 @@ Humon.HumonValueClass = Ember.Mixin.create
 
 Humon.Primitive = Ember.Object.extend Humon.HumonValue,
   _value: null
+
+  # TODO(syu): @TRANSITION
+  isLiteral: true
 
   setVal: (val) ->
     @set('_value', val)
@@ -117,12 +121,18 @@ Humon.Date.reopenClass
 
 Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   _value: null
+  isCollection: true
   isList: true
   toJson: ->
     ret = []
     for node in @_value
       ret.pushObject HumonUtils.node2json node
     ret
+
+  children: (->
+    @get('_value')
+  ).property('_value', '_value.@each')
+
   replace: ()->
     true
     # TODO(syu): do shit
