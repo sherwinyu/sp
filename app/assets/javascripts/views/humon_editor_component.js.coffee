@@ -1,4 +1,4 @@
-Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
+Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
   classNames: ['humon-editor', 'humon-editor-inline']
   hooks: null
   json: {}
@@ -56,7 +56,6 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
 
     didDown: (e)->
       @sendAction 'downPressed', e
-
 
 Sysys.HumonEditorView = Ember.View.extend
   templateName: 'humon-editor'

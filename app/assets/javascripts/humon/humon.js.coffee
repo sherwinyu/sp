@@ -1,5 +1,5 @@
 #= require_self
-#= require ./humon_node
+#= require ./node
 #= require ./humon_utils
 #= require ./humon_types
 #= require ./humon_types_date

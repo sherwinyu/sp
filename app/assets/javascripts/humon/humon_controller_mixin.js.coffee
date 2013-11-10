@@ -1,4 +1,4 @@
-Sysys.HumonControllerMixin = Ember.Mixin.create
+Humon.HumonControllerMixin = Ember.Mixin.create
 # content:  the root HumonNode
 
   activeHumonNode: null
