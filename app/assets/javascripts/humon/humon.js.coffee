@@ -17,57 +17,41 @@ Humon.HumonValue = Ember.Mixin.create
   toJson: (json)->
 
 Humon.HumonValueClass = Ember.Mixin.create
+
   j2hnv: (json) ->
   matchesJson: (json) ->
 
-
-Humon.Number = Ember.Object.extend Humon.HumonValue,
+Humon.Primitive = Ember.Object.extend Humon.HumonValue,
   _value: null
-  toJson: ->
-    @_value
-Humon.Number.reopenClass
-  j2hnv: (json) ->
-    Humon.Number.create(_value: json)
-  matchesJson: (json) ->
-    typeof json == "number"
 
-
-
-Humon.String = Ember.Object.extend Humon.HumonValue,
-  _value: null
   setVal: (val) ->
     @set('_value', val)
     @validateSelf()
+
+  toJson: ->
+    @_value
+Humon.Primitive.reopenClass
+  _klass: ->
+    @
+  _name: ->
+    @_klass().toString().split(".")[1].toLowerCase()
+  j2hnv: (json) ->
+    @_klass().create(_value: json)
+  matchesJson: (json) ->
+    typeof json == @_name()
+
+
+Humon.Number = Humon.Primitive.extend()
+
+Humon.String = Humon.Primitive.extend
   length: (->
     @get('_value').length
   ).property('_value')
 
-  toJson: ->
-    @_value
-Humon.String.reopenClass
-  j2hnv: (json, context) ->
-    Humon.String.create(_value: json)
-  matchesJson: (json) ->
-    typeof json == "string"
 
+Humon.Boolean = Humon.Primitive.extend()
 
-
-Humon.Boolean = Ember.Object.extend Humon.HumonValue,
-  _value: null
-  toJson: ->
-    @_value
-Humon.Boolean.reopenClass
-  j2hnv: (json, context) ->
-    Humon.Boolean.create(_value: json)
-  matchesJson: (json) ->
-    typeof json == "boolean"
-
-
-
-Humon.Date = Ember.Object.extend Humon.HumonValue,
-  _value: null
-  toJson: ->
-    @_value
+Humon.Date = Humon.Primitive.extend()
 Humon.Date.reopenClass
   _momentFormatTransforms:
     'ddd MMM D': (string, format) ->
@@ -93,6 +77,9 @@ Humon.Date.reopenClass
         return date
     false
 
+  _inferAsMomentValidDate: (string) ->
+    moment(string).isValid() && moment(string).toDate()
+
   # _inferFromJson -- attempts to convert a json value to this type
   #   param json json: the candidate json object
   #   return: if successful, a value of this type
@@ -109,7 +96,8 @@ Humon.Date.reopenClass
     ret = false
     ret ||= (typeof json is "object" && json.constructor == Date && json)
     # ret ||= @_inferViaDateParse(json)
-    ret ||= @_inferAsMomentFormat(json)
+    ret ||= json.constructor == String && @_inferAsMomentFormat(json)
+    ret ||= json.constructor == String && @_inferAsMomentValidDate(json)
     ret
 
   j2hnv: (json, context) ->
@@ -118,10 +106,9 @@ Humon.Date.reopenClass
   matchesJson: (json) ->
     !!@_inferFromJson(json)
 
-
-
 Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   _value: null
+  isList: true
   toJson: ->
     ret = []
     for node in @_value
@@ -144,6 +131,9 @@ Humon.List.reopenClass
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
 
 Humon.Hash = Humon.List.extend
+  isHash: true
+  isList: false
+
   # @param keyOrIndex the value to access
   # attempts to do a look up against _value
   # If the key is a number of a numeric string, look up by index
