@@ -7,7 +7,6 @@
 #= require ember-data
 #= require vendor/moment.min
 # require moment ------- not using bundled moment for now because it's stuck on 2.0
-# require moment
 # require date
 #
 #= require vendor/jquery-autogrow-textarea
