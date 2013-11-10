@@ -214,7 +214,7 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
     path = @pathToNode(testNode)
 
   unknownProperty: (key) ->
-    @get('nodeVal').get(key)
+    @get("nodeVal.#{key}") #.get(key)
 
   # helper method; do not actualyl use
   val: ->

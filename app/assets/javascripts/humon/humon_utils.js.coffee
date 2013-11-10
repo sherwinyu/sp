@@ -1,11 +1,18 @@
 window.HumonUtils =
-  # @param json
+  # @param json.
   # @param context -- optional
-  # Context:
-  #   nodeParent: the node that will be the parent context of the current json payload
-  #   key: a string, the name of the attribute of the `node` that the payload corresponds to
-  #   type: a subclass of Humon.HumonValue, indicating the type that `json` should resolve to
-  #     # TODO(syu): later, allow this to resolve to multiple types
+  #   - nodeParent: the node that will be the parent context of the current json payload
+  #   - key: a string, the name of the attribute of the `nodeParent` that the payload corresponds to
+  #     TODO(syu): this key is used to determine the `type`, (via a lookup against
+  #     the parent's Humon template), but for now, we are passing the `type` explicitly
+  #   - type: a subclass of Humon.HumonValue, indicating the type that `json` should resolve to
+  #     TODO(syu): later, allow this to resolve to multiple types
+  # @returns HumonNode
+  # The returned HumonNode will have its nodeParent set to `context.nodeParent`
+  # If `type` is provided, the correspoinding HumonTypeClass's `j2hnv` is used to
+  # generate the `nodeVal` from `json`
+  # If `type` is not provided, `resolveTypeFromJson` is used to determine the type class.
+  # The node's `nodeType` is set accordingly (as a string).
   json2node: (json, context={}) ->
 
     node = Sysys.HumonNode.create
@@ -23,14 +30,15 @@ window.HumonUtils =
 
     return node
 
+  # @param json
+  # @return a subclass of `HumonValue`
   # Called when no context is available
-  # @return a subclass of HumonValue
   resolveTypeFromJson: (json) ->
     for type in Humon._types
       typeClass = Humon[type]
       if typeClass.matchesJson(json)
         return typeClass
-    throw "Unresolved type for payload #{JSON.stringify json}!"
+    throw new Error "Unresolved type for payload #{JSON.stringify json}!"
 
   node2json: (node)->
     node.get('nodeVal').toJson()
