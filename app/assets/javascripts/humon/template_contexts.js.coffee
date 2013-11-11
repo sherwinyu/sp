@@ -66,9 +66,9 @@ Humon.TemplateContexts.register "Date",
     month:  date.getMonth()
     day:  date.getDay()
     hour:  date.getHours()
-    abbreviated:  humanized(date)
-    asString:  asString(date)
-    relative:  relative(date)
-    verbose:  verbose(date)
+    abbreviated:  utils.date.humanized(date)
+    asString:  utils.date.asString(date)
+    relative:  utils.date.relative(date)
+    verbose:  utils.date.verbose(date)
 
 Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend()

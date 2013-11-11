@@ -2,8 +2,6 @@
 #= require ./node
 #= require ./humon_utils
 #= require ./template_contexts
-#= require ./humon_types
-#= require ./humon_types_date
 #= require ./humon_controller_mixin
 
 window.Humon = Ember.Namespace.create
