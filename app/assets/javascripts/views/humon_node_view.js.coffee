@@ -4,17 +4,19 @@ Sysys.HumonNodeView = Ember.View.extend
   layoutName: "humon_node_key_layout"
   # TODO(syu) #RANSIT
   templateStrings: (->
+    Ember.run.sync()
+    @get('nodeContent')
     if @get('nodeContent.isLiteral')
-      HumonTypes.contextualize(@get 'nodeContent')._materializeTemplateStringsForNode(@get 'nodeContent')
+      templateContext = Humon.templateContextFor(@get 'nodeContent')
+      templateContext.materializeTemplateStrings(@get 'nodeContent')
   ).property('nodeContent.nodeVal')
 
   # autoTemplate is responsible solely for producing the correct template name
   autoTemplate: (->
+    Ember.run.sync()
     node = @get('nodeContent')
-    if @get('nodeContent.isLiteral')
-      HumonTypes.contextualize(node).templateName
-    else
-      "humon_node"
+    templateContext = Humon.templateContextFor(@get 'nodeContent')
+    templateContext.get('templateName')
   ).property('nodeContent.nodeType')
   templateNameBinding: "autoTemplate"
   nodeContentBinding: Ember.Binding.oneWay('controller.content')

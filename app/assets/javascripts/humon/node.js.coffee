@@ -56,5 +56,11 @@ Humon.Node = Ember.Object.extend
   unknownProperty: (key) ->
     @get("nodeVal.#{key}") #.get(key)
 
+  toJson: ->
+    @get('nodeVal').toJson()
+
   val: ->
     @get('nodeVal').toJson()
+
+  asString: ->
+    @get('nodeVal').asString()

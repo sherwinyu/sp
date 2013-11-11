@@ -1,21 +1,36 @@
 #= require_self
 #= require ./node
 #= require ./humon_utils
+#= require ./template_contexts
 #= require ./humon_types
 #= require ./humon_types_date
 #= require ./humon_controller_mixin
 
 window.Humon = Ember.Namespace.create
   _types: ["Number", "Boolean", "Null", "Date", "String", "List", "Hash"]
-  # _types: ["Number", "Boolean", "String", "List", "Hash"]
-  #
+
+  contextualize: (type) ->
+    if type.constructor == Humon.Node
+      type = type.get('nodeType')
+    key = type[0].toUpperCase() + type.slice(1)
+    Humon[key] || Em.assert("Could not find type Humon.#{key}")
+
+  templateContextFor: (type) ->
+    if type.constructor == Humon.Node
+      type = type.get('nodeType')
+    key = type
+    key = type[0].toUpperCase() + type.slice(1)
+    ctx = Humon.TemplateContexts[key] || Humon.TemplateContext
+    ctx.create()
+
 Humon.HumonValue = Ember.Mixin.create
   name: ->
     @.constructor.toString().split(".")[1].toLowerCase()
+  asString: ->
   nextNode: ->
   prevNode: ->
   delete: ->
-  toJson: (json)->
+  toJson: ->
 
 Humon.HumonValueClass = Ember.Mixin.create
 
@@ -34,6 +49,8 @@ Humon.Primitive = Ember.Object.extend Humon.HumonValue,
 
   toJson: ->
     @_value
+  asString: ->
+    @toJson()
 Humon.Primitive.reopenClass
   _klass: ->
     @

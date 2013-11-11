@@ -35,7 +35,7 @@ window.HumonUtils =
   # Called when no context is available
   resolveTypeFromJson: (json) ->
     for type in Humon._types
-      typeClass = Humon[type]
+      typeClass = Humon.contextualize(type)
       if typeClass.matchesJson(json)
         return typeClass
     throw new Error "Unresolved type for payload #{JSON.stringify json}!"
