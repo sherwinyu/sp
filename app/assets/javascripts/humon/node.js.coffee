@@ -14,7 +14,7 @@ Humon.Node = Ember.Object.extend
   ###
 
   flatten: ->
-    @get('nodeVal').flatten? && @get('nodeVal').flatten()
+    @get('nodeVal').flatten()
 
   lastFlattenedChild: ->
     Em.assert("Node contains a collection", @get('isCollection'))

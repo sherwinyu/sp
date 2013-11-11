@@ -50,7 +50,7 @@ Humon.Primitive = Ember.Object.extend Humon.HumonValue,
     @toJson()
   nextNode: ->
   flatten: ->
-    [@.node]
+    [@node]
 
 Humon.Primitive.reopenClass
   _klass: ->
@@ -154,8 +154,14 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
     @get('_value')
   ).property('_value', '_value.@each')
 
+  # @return [Humon.Node] Returns a flat representation of
+  flatten: ->
+    @get('_value').reduce (flattened, node) ->
+      flattened.concat(node.flatten())
+    , [@.node]
+
   replace: ()->
-    true
+    throw new Error "Not implemented yet"
     # TODO(syu): do shit
   objectAt: (i) ->
     @_value[i]
