@@ -32,7 +32,7 @@ describe 'xHumonValues list', ->
     it "on an empty Humon.List node return just itself", ->
       expect(node3.flatten()).toEqual [node3]
     it "works on a large array", ->
-      expect(node.flatten()).toEqual [node , node0 , node1 , node1_0 , node1_1 , node2 , node2_0 , node2_1 , node2_1_0 , node3]
+      expect(node.flatten()).toEqual [node , node0 , node1 , node1_0 , node1_1 , node2 , node2_0 , node2_1 , node2_1_0 , node3, node4]
 
   describe "nextNode", ->
     it "work for the root node", ->
@@ -46,14 +46,23 @@ describe 'xHumonValues list', ->
       expect(j2n(1).nextNode()).toBe null
     it "works for an empty array", ->
       expect(node3.nextNode()).toBe node4
-    ###
-    it "work when diving nested into the tree", ->
-      expect(nodec2.nextNode()).toBe nodec2nested
-    it "work when node is empty collection", ->
-      expect(noded.nextNode()).toBe nodee
-    it "return null when there's nothing left to recurse", ->
-      expect(nodee.nextNode()).toBe null
-    it "return null on a lone node", ->
-      hn = j2hn 1
-      expect(hn.nextNode()).toBe null
-    ###
+
+  describe "prevNode", ->
+    it "returns null on the root", ->
+      expect(node.prevNode()).toBe null
+    it "returns the parent if its a first child", ->
+      expect(node0.prevNode()).toBe node
+    it "returns the previous sibling if immediately available", ->
+      expect(node2_1.prevNode()).toBe node2_0
+    it "goes in order", ->
+      expect(node.prevNode()).toBe null
+      expect(node0.prevNode()).toBe node
+      expect(node1.prevNode()).toBe node0
+      expect(node1_0.prevNode()).toBe node1
+      expect(node1_1.prevNode()).toBe node1_0
+      expect(node2.prevNode()).toBe node1_1
+      expect(node2_0.prevNode()).toBe node2
+      expect(node2_1.prevNode()).toBe node2_0
+      expect(node2_1_0.prevNode()).toBe node2_1
+      expect(node3.prevNode()).toBe node2_1_0
+      expect(node4.prevNode()).toBe node3

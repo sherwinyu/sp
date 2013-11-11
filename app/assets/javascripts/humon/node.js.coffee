@@ -38,7 +38,18 @@ Humon.Node = Ember.Object.extend
     null
 
   prevNode: ->
-    throw new Error "Not implemented yet"
+    unless @get('nodeParent')
+      return null
+    # If this is the first child, then previous node is just the parent
+    return @get('nodeParent') if @get('nodeParent.children.0') == @
+
+    # Otherwise, start at the previous sibling
+    siblings = @get('nodeParent.children')
+    curNode = siblings[siblings.indexOf(@) - 1]
+    # And keep following the last child
+    while curNode.get('hasChildren')
+      curNode = curNode.get('children.lastObject')
+    return curNode
 
   convertToHash: ->
     throw new Error "Not implemented yet"

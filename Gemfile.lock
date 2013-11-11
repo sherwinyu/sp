@@ -107,7 +107,7 @@ GEM
     diff-lcs (1.2.4)
     ember-bootstrap-rails (0.0.3)
       rails (>= 3.1.0)
-    ember-data-source (1.0.0.beta.2)
+    ember-data-source (1.0.0.beta.3)
       ember-source
     ember-rails (0.12.0)
       active_model_serializers
@@ -352,7 +352,7 @@ DEPENDENCIES
   database_cleaner (= 0.9.1)
   datejs-rails (= 2.0.1)
   ember-bootstrap-rails
-  ember-data-source (= 1.0.0.beta.2)
+  ember-data-source (= 1.0.0.beta.3)
   ember-rails
   ember-source (= 1.0.0)
   factory_girl_rails (= 4.2.1)
