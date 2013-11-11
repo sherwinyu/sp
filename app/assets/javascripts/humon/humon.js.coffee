@@ -143,6 +143,9 @@ Humon.Date.reopenClass
 Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   _value: null
   isCollection: true
+  hasChildren: ( ->
+    @_value.length >= 1
+  ).property('children')
   isList: true
   toJson: ->
     ret = []

@@ -25,6 +25,17 @@ Humon.Node = Ember.Object.extend
   # @returns Humon.Node the next node in the 'flattened' representation of the entire
   # node tree. If no such node exists, returns null
   nextNode: ->
+    if @get('hasChildren')
+      return @get('children')[0]
+    curNode = @
+    isLastChild = (child) ->
+      child.get('nodeParent.children')[ child.get('nodeParent.children.length') - 1] == child
+    while curNode.get('nodeParent') and isLastChild(curNode)
+      curNode = curNode.get('nodeParent')
+    if curNode.get('nodeParent')
+      i = curNode.get('nodeParent.children').indexOf(curNode) + 1
+      return curNode.get("nodeParent.#{i}")
+    null
 
   prevNode: ->
     throw new Error "Not implemented yet"
