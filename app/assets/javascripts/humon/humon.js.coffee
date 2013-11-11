@@ -29,9 +29,9 @@ Humon.HumonValue = Ember.Mixin.create
   prevNode: ->
   delete: ->
   toJson: ->
+  node: null
 
 Humon.HumonValueClass = Ember.Mixin.create
-
   j2hnv: (json) ->
   matchesJson: (json) ->
 
@@ -44,18 +44,24 @@ Humon.Primitive = Ember.Object.extend Humon.HumonValue,
   setVal: (val) ->
     @set('_value', val)
     @validateSelf()
-
   toJson: ->
     @_value
   asString: ->
     @toJson()
+  nextNode: ->
+  flatten: ->
+    [@.node]
+
 Humon.Primitive.reopenClass
   _klass: ->
     @
   _name: ->
     @_klass().toString().split(".")[1].toLowerCase()
-  j2hnv: (json) ->
-    @_klass().create(_value: json)
+  # @param json A JSON payload to be converted into a Humon.Value instance
+  # @param context
+  #   - node: the Humon.Node instance that will be wrapping the returned Humon.Value
+  j2hnv: (json, context) ->
+    @_klass().create(_value: json, node: context.node)
   matchesJson: (json) ->
     typeof json == @_name()
 
@@ -130,7 +136,7 @@ Humon.Date.reopenClass
 
   j2hnv: (json, context) ->
     value = @_inferFromJson(json)
-    Humon.Date.create(_value: value)
+    Humon.Date.create(_value: value, node: context.node)
   matchesJson: (json) ->
     !!@_inferFromJson(json)
 
@@ -160,7 +166,7 @@ Humon.List.reopenClass
     Em.assert( (json? && json instanceof Array), "json must be an array")
     # set all children node's `nodeParent` to this json payload's corresponding `node`
     childrenNodes = json.map( (x) -> HumonUtils.json2node(x, nodeParent: context.node))
-    Humon.List.create _value: childrenNodes
+    Humon.List.create _value: childrenNodes, node: context.node
   matchesJson: (json) ->
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
 
@@ -206,7 +212,7 @@ Humon.Hash.reopenClass
       childNode = HumonUtils.json2node(childVal, nodeParent: context.node)
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
-    Humon.Hash.create _value: childNodes
+    Humon.Hash.create _value: childNodes, node: context.node
 
   # @param json the json payload to test
   # returns true if this is a POJO

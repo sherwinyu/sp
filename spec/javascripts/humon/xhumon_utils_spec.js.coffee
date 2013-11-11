@@ -51,6 +51,7 @@ describe 'xHumon Utils', ->
         expect(node.get('nodeKey')).toBeFalsy()
         expect(node.get('nodeVal').constructor).toBe Humon.Number
         expect(node.get('nodeVal').toJson()).toBe 5
+        expect(node.get('nodeVal.node')).toBe node
 
 
     describe "on date", ->
@@ -68,6 +69,7 @@ describe 'xHumon Utils', ->
         expect(node0.get('nodeKey')).toBeFalsy()
         expect(node0.get('nodeVal').constructor).toBe Humon.Date
         expect(node0.get('nodeVal').toJson()).toEqual new Date(2013, 6, 5)
+        expect(node.get('nodeVal.node')).toBe node
 
       it "parses 2013 07 05", ->
         expect(node.get('0').val()).toEqual new Date(2013, 6, 5)

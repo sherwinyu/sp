@@ -5,11 +5,13 @@ Humon.Node = Ember.Object.extend
   nodeView: null
   nodeKey: null
 
+  ###
   isHashBinding: Ember.Binding.oneWay('nodeVal.isHash')
   isListBinding: Ember.Binding.oneWay('nodeVal.isList')
   isCollectionBinding: Ember.Binding.oneWay('nodeVal.isCollection')
   isLiteralBinding: Ember.Binding.oneWay('nodeVal.isLiteral')
   hasChildrenBinding: Ember.Binding.oneWay('nodeVal.hasChildren')
+  ###
 
   flatten: ->
     @get('nodeVal').flatten? && @get('nodeVal').flatten()
@@ -19,8 +21,10 @@ Humon.Node = Ember.Object.extend
     arr = @flatten()
     arr[arr.length - 1]
 
+  # Public
+  # @returns Humon.Node the next node in the 'flattened' representation of the entire
+  # node tree. If no such node exists, returns null
   nextNode: ->
-    throw new Error "Not implemented yet"
 
   prevNode: ->
     throw new Error "Not implemented yet"
