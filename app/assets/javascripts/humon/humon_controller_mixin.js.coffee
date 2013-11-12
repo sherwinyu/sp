@@ -60,7 +60,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       @didCommit(
         controller: @
         node: node
-        rootJson: Sysys.hn2j @get('content')
+        rootJson: Humon.n2j @get('content')
         payload: payload
       )
 
@@ -128,7 +128,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       #   (we can assume a sibling exists because  only path to `commitAndContinueNew`
       #   is from HNV.enterPressed, which pre checks for the non-sibling case
       parent = ahn.get 'nodeParent'
-      blank = Sysys.j2hn null
+      blank = Humon.j2n null
       Ember.run =>
         idx = ahn.get('nodeIdx') + 1
         # Appears that the next `rerender` call is unnecessary.
@@ -153,14 +153,11 @@ Humon.HumonControllerMixin = Ember.Mixin.create
   _commitVal: (rawString, {node}={node: null}) ->
     node ||= @get('activeHumonNode')
     oldType = node.get('nodeType')
-    json =
-      try
-        humon.parse rawString
-      catch error
-        try
-          JSON.parse rawString
-        catch error
-          rawString
+    # TODO(syu): Fix Humon.parse
+    json = try
+             JSON.parse rawString
+           catch error
+             rawString
     if rawString?
       Ember.run =>
         node.replaceWithJson json
@@ -204,7 +201,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     newNode
 
   withinScope: (testNode) ->
-    return false unless testNode instanceof Sysys.HumonNode
+    return false unless testNode instanceof Humon.Node
     !!@get('content').pathToNode testNode
 
 ##################################

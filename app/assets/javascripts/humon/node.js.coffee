@@ -51,22 +51,43 @@ Humon.Node = Ember.Object.extend
       curNode = curNode.get('children.lastObject')
     return curNode
 
-  convertToHash: ->
-    throw new Error "Not implemented yet"
-
-  convertToList: ->
-    throw new Error "Not implemented yet"
-
+  # TODO figure out how to send `context` to `json2node`
   replaceWithJson: (json) ->
-    throw new Error "Not implemented yet"
+    node = HumonUtils.json2node json
+    @replaceWithHumon node
 
+  # Private
+  # Precondition: newNode has no parent
+  # Replaces the CURRENT NODE's  nodeVal with newNode's nodeVal by REFERENCE
+  # This.nodeVal will point to newNode.nodeVal
+  # If newNode is a collection, sets each of the children's nodeParent to this node
+  # If thisNode is a collection, sets each of this children's nodeParent to null
+  # TODO rename to replaceWithNode
   replaceWithHumon: (newNode) ->
-    throw new Error "Not implemented yet"
+    Em.assert "replaceWithHumonNode(newNode): newNode must be parent less", !newNode.get('nodeParent')
+    # If THIS nodevalue has children, orphan them
+    if @get 'hasChildren'
+      for child in @get('children')
+        child.set 'nodeParent', null
+
+    @set('nodeType', newNode.get 'nodeType')
+    @set('nodeVal', newNode.get 'nodeVal')
+
+    # If newnode has children, set their parent to this
+    if @get 'hasChildren'
+      for child in @get('children')
+        child.set 'nodeParent', @
 
   replaceAt: (idx, amt, nodes...) ->
     throw new Error "Not implemented yet"
 
   insertAt: (idx, nodes...) ->
+    throw new Error "Not implemented yet"
+
+  convertToHash: ->
+    throw new Error "Not implemented yet"
+
+  convertToList: ->
     throw new Error "Not implemented yet"
 
   deleteChild: (node) ->

@@ -1,7 +1,7 @@
 Humon.TemplateContext = Ember.Object.extend
   name: "literal"
 
-  keys: ["asString", "asJson"]
+  keys: ["asString", "asJson", "iconClass"]
   asString: (node) ->  node.asString()
   asJson: (node) -> node.toJson()
 
@@ -16,7 +16,10 @@ Humon.TemplateContext = Ember.Object.extend
   materializeTemplateStrings: (node) ->
     materializedStrings = {}
     for key in @keys
-      materializedStrings[key] = @[key].call(@, node)
+      materializedStrings[key] = if typeof @[key] is "function"
+                                   @[key].call(@, node)
+                                 else
+                                   @[key]
 
     templateStrings = @get('templateStrings')
     # If the registered templateStrings is a function, lazy-evaluate it
