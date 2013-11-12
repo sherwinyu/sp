@@ -74,8 +74,10 @@ Humon.Node = Ember.Object.extend
       for child in @get('children')
         child.set 'nodeParent', null
 
+    # TODO write a test for me! Especially the nodeVal.node backreference case
     @set('nodeType', newNode.get 'nodeType')
     @set('nodeVal', newNode.get 'nodeVal')
+    @set('nodeVal.node', @)
 
     # If newnode has children, set their parent to this
     if @get 'hasChildren'

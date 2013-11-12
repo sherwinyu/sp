@@ -284,7 +284,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   outdent: ->
-    return
     ahn = @get 'activeHumonNode'
     newSibling = ahn.get 'nodeParent'
     newParent = newSibling?.get 'nodeParent'
@@ -296,7 +295,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   indent: ->
-    return
     ahn = @get 'activeHumonNode'
     parent = ahn.get('nodeParent')
     prevSib = parent?.get('children')[ ahn.get('nodeIdx') - 1]
