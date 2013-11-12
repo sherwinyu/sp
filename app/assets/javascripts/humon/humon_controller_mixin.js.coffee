@@ -263,7 +263,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   deleteActive: ->
-    return
     ahn = @get('activeHumonNode')
     @set('activeHumonNode', null)
     Ember.run.sync()
@@ -278,10 +277,9 @@ Humon.HumonControllerMixin = Ember.Mixin.create
   #   inserts and sets focus on a blank node that is a child
   #   of the active node, which must be a collection.
   insertChild: ->
-    return
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
-    blank = Sysys.j2hn null
+    blank = Humon.j2n null
     Em.run => ahn.insertAt 0, blank
     @send 'activateNode', blank
     Ember.run.sync()
@@ -303,10 +301,10 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     return
     ahn = @get 'activeHumonNode'
     parent = ahn.get('nodeParent')
-    prevSib = parent?.get('nodeVal')[ ahn.get('nodeIdx') - 1]
+    prevSib = parent?.get('children')[ ahn.get('nodeIdx') - 1]
     return unless prevSib && prevSib.get('isCollection')
     Ember.run =>
       parent.deleteChild ahn
-      prevSib.insertAt prevSib.get('nodeVal.length'), ahn
+      prevSib.insertAt prevSib.get('children.length'), ahn
       @send 'activateNode', ahn
     @send 'smartFocus'

@@ -108,13 +108,30 @@ Humon.Node = Ember.Object.extend
     args = [idx, 0].concat nodes
     @replaceAt.apply @, args
 
+  # Public
+  # Deletes `amt` elements from the nodeVal array, starting at idx, inclusive.
+  # If amt is not specified, a single element is deleted
+  # If the number of elements to be deleted is greater than the remaining elements in the array, the remaining elemtns are deleted
+  # sets the nodeParent for deleted nodes to null
+  deleteAt: (idx, amt) ->
+    Em.assert("deleteAt(idx, amt) requires idx to be an number", typeof idx == "number")
+    amt ?= 1
+    Em.assert("HumonNode must be a list or a hash to deleteAt(#{idx},#{amt})", @get('isCollection'))
+    @replaceAt(idx, amt)
+
+  # Public
+  # precondition: node must be a child of this node
+  # removes the child node from this.nodeVal array
+  # sets node's nodeParent to null
+  deleteChild: (node) ->
+    Em.assert('Child argument must be a child of this node for deleteChild', node.get('nodeParent') == @)
+    idx = node.get('nodeIdx')
+    @deleteAt(idx)
+
   convertToHash: ->
     throw new Error "Not implemented yet"
 
   convertToList: ->
-    throw new Error "Not implemented yet"
-
-  deleteChild: (node) ->
     throw new Error "Not implemented yet"
 
   pathToNode: (testNode) ->
