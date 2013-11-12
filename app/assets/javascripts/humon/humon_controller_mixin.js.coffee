@@ -234,7 +234,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
 
   # TODO(syu): test me
   bubbleUp: ->
-    return
     ahn = @get('activeHumonNode')
     dest = @get('activeHumonNode').prevNode()
     destParent = dest?.get('nodeParent')
@@ -247,7 +246,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     @send 'smartFocus'
 
   bubbleDown: ->
-    return
     ahn = @get 'activeHumonNode'
     dest = @get('activeHumonNode').lastFlattenedChild().nextNode()
     destParent = dest?.get('nodeParent')

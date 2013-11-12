@@ -22,7 +22,6 @@ Humon.Node = Ember.Object.extend
     @get('nodeVal').flatten()
 
   lastFlattenedChild: ->
-    Em.assert("Node contains a collection", @get('isCollection'))
     arr = @flatten()
     arr[arr.length - 1]
 
@@ -135,7 +134,15 @@ Humon.Node = Ember.Object.extend
     throw new Error "Not implemented yet"
 
   pathToNode: (testNode) ->
-    throw new Error "Not implemented yet"
+    if @ == testNode
+      return [@]
+    else if @get 'isCollection'
+      for child in @get 'children'
+        if curPath = child.pathToNode( testNode )
+          return [@].concat curPath
+      null
+    else
+      null
 
   isDescendant: (testNode) ->
     path = @pathToNode(testNode)
