@@ -1,5 +1,113 @@
 ### Notes ###
 
+## Case study: SpDay
+
+details:
+  sleep
+    wokeup at
+    out of bed at
+    energy at wake up
+    energy at sleep
+    naps:
+
+  goals
+    [
+      0
+        description: "lump the bump"
+        by: 3pm
+      1
+      2
+    ]
+  stories
+    best
+    worst
+  happiness (overall)
+  productivity (overall)
+
+HEC gets called with detail object, and a template:
+
+    Meta-template: (anonymous)
+      $type: Complex < -- extends?
+      $required: [sleep, happiness, productivity]
+
+      sleep:
+        $type: Humon.Sleep
+      goals:
+        $include: List
+        $each:
+          $goal
+      stories:
+        best:
+          $include: Text
+        worst:
+          $include: Text
+      happiness:
+        $type: number
+        $min:
+      productivity:
+        $type: number
+
+
+TYPEDEF Number
+  $min: -infinty
+  $max: +infinity
+
+TYPEDEF String
+  minLength: 0
+  maxLength: 255
+
+TYPEDEF Date
+
+
+TYPEDEF float
+  $extends Number
+  $validation: CUSTOM CAN ONLY BE A FLOAT
+
+TYPEDEF Hash
+  children
+  $each:
+    $type: ANYTHING
+
+TYPEDEF Complex
+  $include Hash
+  $required keys: []
+
+
+TYPEDEF 1to10Answer
+  $type: Integer
+  $min:
+
+
+TYPEDEF Humon.Sleep
+  $include: Complex
+  $required: [wokeup at, out of bed at]
+  wokeup at:
+    $type: DateTime
+    $display as: "HH:MM"
+  energy at wakeup:
+    $type: 1to10Answer
+
+
+
+
+
+So many $TYPE and $INCLUDE do the same thing (pull in a type ref) except $TYPE expicitly sets the
+type, wher as $INCLUDE creates an new anonymous meta
+
+
+
+
+
+
+
+
+
+### Principle
+
+$type semantics
+  OKAY. so TYPE pulls in a TYPE DESCRIPTION to the node at which the TYPE operator is applied.
+  $include vs $type
+  Everything else there overrides
 Principles
   * everything has a canonical text-only representation
   * any node can be put into this mode

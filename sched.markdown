@@ -52,8 +52,6 @@ Functionality:
   HANDLING TEMPLATE INFORMATION
     -- commit and continue
     -- up, down, bubble up, bubble down, delete,
-
-
   VALIDATING --
     when a subtype's value is committed, need to validate against the type's specifications for that subtype
 
