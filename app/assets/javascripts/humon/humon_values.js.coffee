@@ -2,6 +2,8 @@
 #= require ./humon_primitive
 #= require ./humon_list
 #= require ./humon_hash
+#= require ./humon_complex
+#= require ./humon_sleep
 
 Humon.HumonValue = Ember.Mixin.create
   name: ->

@@ -11,7 +11,7 @@ window.HumonUtils =
 
     # If the metatemplate is already typified under Humon.#{metatemplate.name}"
     # then just return the type classs
-    if Humon.HumonValue.detect(Humon[metatemplate.name])
+    if Humon.HumonValue.detect(Humon[metatemplate.name].prototype)
       # TODO(syu): assert that the TypeClass's metatemplate is equivalent to the passed in
       # `metatemplate`
       return Humon[metatemplate.name]
@@ -22,7 +22,7 @@ window.HumonUtils =
   # Turns the metatemplate into a a new type, with a name
   _typifyClassFromMeta: (metatemplate) ->
     throw new Error "not implemented yet"
-    if Humon.HumonValue.detect(metatemplate.extends?)
+    # if Humon.HumonValue.detect(metatemplate.extends?)
 
   # @param json.
   # @param context -- optional

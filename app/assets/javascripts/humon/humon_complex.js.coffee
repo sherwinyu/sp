@@ -1,17 +1,16 @@
 ## sleep example
 Humon.Complex = Humon.Hash.extend(
   isComplex: true
-  # key: name, value: metatemplate
+  #  key: name, value: metatemplate
 
   # _requiredAttributes: null
 
-  ###
-  requiredAttributes: (->
-    for own k, v of @_requiredAttrs
-      attributekey: k
-      attributeVal: @get(k)
-  ).property()
-  ###
+
+  # requiredAttributes: (->
+  #   for own k, v of @_requiredAttrs
+  #     attributekey: k
+  #     attributeVal: @get(k)
+  # ).property()
 )
 
 Humon.Complex.reopenClass(
@@ -34,9 +33,9 @@ Humon.Complex.reopenClass(
       childContext =
         nodeParent: context.node
         metatemplate: @childMetatemplates[key]
-      childNode = HumonUtils.json2node(childVal, context)
+      childNode = HumonUtils.json2node(childVal, childContext)
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
-    @create create _value: childNodes, node: context.node
+    @create _value: childNodes, node: context.node
 
 )
