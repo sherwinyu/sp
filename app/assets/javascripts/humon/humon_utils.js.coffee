@@ -1,4 +1,31 @@
 window.HumonUtils =
+  # @param [metatemplate] metatemplate
+  # @return [instance of Humon.HumonValue]
+  # If metatemplate.typeName is specified, then look it up.
+  # Otherwise, create and memoize it.
+
+  typeClassFromMeta: (metatemplate) ->
+    # If metatemplate has an explicitly defined type class, just use that
+    if metatemplate.type? and Humon.HumonValue.detect(metatemplate.type)
+      return metatemplate.type
+
+    # If the metatemplate is already typified under Humon.#{metatemplate.name}"
+    # then just return the type classs
+    if Humon.HumonValue.detect(Humon[metatemplate.name])
+      # TODO(syu): assert that the TypeClass's metatemplate is equivalent to the passed in
+      # `metatemplate`
+      return Humon[metatemplate.name]
+
+    Em.assert("Metatemplate must have a name", metatemplate.name?)
+
+
+
+
+
+
+
+
+
   # @param json.
   # @param context -- optional
   #   - nodeParent: the node that will be the parent context of the current json payload
@@ -21,6 +48,8 @@ window.HumonUtils =
     if context.type?
       # If provided, look up the typeClass from the `context` arg.
       typeClass = context.type
+    else if context.metatemplate
+      typeClass = HumonUtils.typeClassFromMeta(context.metatemplate)
     else
       # Don't pass in context because this occurs when context isn't provided!
       typeClass = HumonUtils.resolveTypeFromJson json
