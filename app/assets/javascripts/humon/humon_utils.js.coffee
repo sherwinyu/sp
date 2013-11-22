@@ -17,14 +17,12 @@ window.HumonUtils =
       return Humon[metatemplate.name]
 
     Em.assert("Metatemplate must have a name", metatemplate.name?)
+    @_typifyClassFromMeta(metatemplate)
 
-
-
-
-
-
-
-
+  # Turns the metatemplate into a a new type, with a name
+  _typifyClassFromMeta: (metatemplate) ->
+    throw new Error "not implemented yet"
+    if Humon.HumonValue.detect(metatemplate.extends?)
 
   # @param json.
   # @param context -- optional
@@ -53,6 +51,7 @@ window.HumonUtils =
     else
       # Don't pass in context because this occurs when context isn't provided!
       typeClass = HumonUtils.resolveTypeFromJson json
+
     nodeVal = typeClass.j2hnv json, node: node
     node.set 'nodeVal', nodeVal
     node.set 'nodeType', nodeVal.name()
