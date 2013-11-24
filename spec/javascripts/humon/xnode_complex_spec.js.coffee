@@ -1,4 +1,5 @@
 j2n = HumonUtils.json2node
+
 describe "xHumonValues complex", ->
   Humon.ComplexSubClass = Humon.Complex.extend()
   Humon.ComplexSubClass.reopenClass
@@ -30,3 +31,13 @@ describe "xHumon sleep", ->
     expect(node.get('awake_energy.nodeType')).toBe "number"
     expect(node.get('outofbed_at.nodeType')).toBe "date"
     expect(node.get('outofbed_energy.nodeType')).toBe "number"
+
+describe "xHumon time", ->
+  json = "2013 08 15"
+  node = null
+  beforeEach ->
+    node = j2n json
+  it "converts a date", ->
+    expect(node.get('nodeType')).toBe "time"
+  #     dates = ["2013 07 05", new Date(2013, 6, 5), "Fri Jul 5"]
+

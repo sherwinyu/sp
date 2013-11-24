@@ -6,11 +6,13 @@
 #= require ./humon_controller_mixin
 
 window.Humon = Ember.Namespace.create
-  _types: ["Number", "Boolean", "Null", "Date", "String", "List", "Hash"]
+  _types: ["Number", "Boolean", "Null", "Time", "Date", "String", "List", "Hash"]
 
   contextualize: (type) ->
     if type.constructor == Humon.Node
       type = type.get('nodeType')
+
+    # `type` is a string
     key = type[0].toUpperCase() + type.slice(1)
     Humon[key] || Em.assert("Could not find type Humon.#{key}")
 
