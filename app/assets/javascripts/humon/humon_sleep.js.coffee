@@ -6,8 +6,10 @@ Humon.Sleep.reopenClass
       name: "Date"
     outofbed_at:
       name: "Date"
-    awake_energy: "Integer"
-    outofbed_energy: "Integer"
+    awake_energy:
+      name: "Number"
+    outofbed_energy:
+      name: "Number"
     # naps:
     #   name: "list"
     #   each:

@@ -1,3 +1,4 @@
+j2n = HumonUtils.json2node
 describe "xHumonValues complex", ->
   Humon.ComplexSubClass = Humon.Complex.extend()
   Humon.ComplexSubClass.reopenClass
@@ -8,7 +9,6 @@ describe "xHumonValues complex", ->
         name: "String"
 
   json = []
-  j2n = HumonUtils.json2node
   describe "subclasses", ->
     it "properly converts a subclass", ->
       payload = a: "1234567", b: "1234567"
@@ -16,6 +16,17 @@ describe "xHumonValues complex", ->
       expect(x.get("a.nodeType")).toBe "number"
       expect(x.get("b.nodeType")).toBe "string"
 
-
-
-
+describe "xHumon sleep", ->
+  json =
+    awake_at: new Date(2013, 11, 24, 8, 30)
+    awake_energy: 6
+    outofbed_at: new Date(2013, 11, 24, 9, 30)
+    outofbed_energy: 8
+  node = null
+  beforeEach ->
+    node = j2n(json, type: Humon.Sleep)
+  it "has the proper types for children nodes", ->
+    expect(node.get('awake_at.nodeType')).toBe "date"
+    expect(node.get('awake_energy.nodeType')).toBe "number"
+    expect(node.get('outofbed_at.nodeType')).toBe "date"
+    expect(node.get('outofbed_energy.nodeType')).toBe "number"
