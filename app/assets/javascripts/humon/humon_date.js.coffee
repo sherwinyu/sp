@@ -40,20 +40,26 @@ Humon.Date.reopenClass
   # the standard suite. AKA make it work for booleans: return a hash {matchesType, value}
   # problem is that right now yu can't distinguish between a literal false and a false as in failure
   _inferFromJson: (json) ->
-    ret = false
+    ret =
+      matches: false
     try
-      ret ||= (typeof json is "object" && json.constructor == Date && json)
-      # ret ||= @_inferViaDateParse(json)
-      ret ||= json.constructor == String && @_inferAsMomentFormat(json)
-      ret ||= json.constructor == String && @_inferAsMomentValidDate(json)
+      ret.value ||= (typeof json is "object" && json.constructor == Date && json)
+      ret.value ||= json.constructor == String && @_inferAsMomentFormat(json)
+      ret.value ||= json.constructor == String && @_inferAsMomentValidDate(json)
     catch error
       console.error error.toString()
-      ret = false
     finally
-      ret
+      if ret.value
+        ret.matches = true
+      return ret
 
+
+  # Precondition: `json` can be parsed as this type. That is, @matchesJson(json) returns true
+  # @param json [JSON] the json payload to convert into a Humon.Value instance
+  # @param context [JSON]
+  #   - node [Humon.Node] the Humon Node instance that will contain the parsed Humon.Value
   j2hnv: (json, context) ->
-    value = @_inferFromJson(json)
+    value = @_inferFromJson(json).value
     @_klass().create(_value: value, node: context.node)
   matchesJson: (json) ->
-    !!@_inferFromJson(json)
+    @_inferFromJson(json).matches

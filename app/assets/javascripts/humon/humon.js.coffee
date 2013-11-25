@@ -6,6 +6,7 @@
 #= require ./humon_controller_mixin
 
 window.Humon = Ember.Namespace.create
+# _types: ["Number", "Boolean", "Null", "Date", "String", "List", "Hash"]
   _types: ["Number", "Boolean", "Null", "Time", "Date", "String", "List", "Hash"]
 
   contextualize: (type) ->
