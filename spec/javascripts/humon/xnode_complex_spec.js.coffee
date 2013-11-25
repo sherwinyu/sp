@@ -39,8 +39,16 @@ describe "xHumon time", ->
     node = j2n json
   it "doesnot convert a date", ->
     expect(node.get('nodeType')).toBe "date"
-  it "converts a time", ->
+  it "converts a HH:MM time", ->
+    node = j2n("08:43")
+    expect(node.get('nodeType')).toBe "time"
+    mmt = node.get('nodeVal').mmt()
+    expect(mmt.hours()).toBe 8
+    expect(mmt.minutes()).toBe 43
+
+  it "works", ->
     expect(node.get('nodeType')).toBe "date"
     expect(j2n("8:43").get("nodeType")).toBe "time"
+    expect(j2n("2013 07 15").get("nodeType")).toBe "date"
   #     dates = ["2013 07 05", new Date(2013, 6, 5), "Fri Jul 5"]
 

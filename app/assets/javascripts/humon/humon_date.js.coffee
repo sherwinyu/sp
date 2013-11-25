@@ -1,4 +1,8 @@
-Humon.Date = Humon.Primitive.extend()
+Humon.Date = Humon.Primitive.extend(
+  mmt: ->
+    # Should we clone this?
+    moment(@_value)
+)
 Humon.Date.reopenClass
   _momentFormatTransforms:
     'ddd MMM D': (string, format) ->

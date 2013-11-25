@@ -19,11 +19,22 @@ Humon.Time.reopenClass(
     _momentFormat: (string, format) ->
       mmt = moment(string, format)
 
+  _inferAsTimeStampFormat: (string)->
+    #        1       2     3 4
+    #        hour    min     sec
+    regex = /(\d\d?):(\d\d)(:(\d\d))?/
+    if m = string.match regex
+      return moment(string, "HH:mm:ss").toDate()
+
+    # return moment(hour: parseInt(m[1]), minute: parseInt(m[2]), seconds: parseInt(m[4])).toDate()
+    false
+
   _inferFromJson: (json) ->
     ret =
       matches: false
     try
-      ret.value ||= json.constructor == String && @_inferAsMomentFormat(json)
+      # ret.value ||= json.constructor == String && @_inferAsMomentFormat(json)
+      ret.value ||= json.constructor == String && @_inferAsTimeStampFormat json
     catch error
       console.error error.toString()
     finally
