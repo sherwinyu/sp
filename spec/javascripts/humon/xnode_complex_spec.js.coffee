@@ -37,7 +37,10 @@ describe "xHumon time", ->
   node = null
   beforeEach ->
     node = j2n json
-  it "converts a date", ->
-    expect(node.get('nodeType')).toBe "time"
+  it "doesnot convert a date", ->
+    expect(node.get('nodeType')).toBe "date"
+  it "converts a time", ->
+    expect(node.get('nodeType')).toBe "date"
+    expect(j2n("8:43").get("nodeType")).toBe "time"
   #     dates = ["2013 07 05", new Date(2013, 6, 5), "Fri Jul 5"]
 

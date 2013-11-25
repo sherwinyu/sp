@@ -28,17 +28,14 @@ Humon.Date.reopenClass
     moment(string).isValid() && moment(string).toDate()
 
   # _inferFromJson -- attempts to convert a json value to this type
-  #   param json json: the candidate json object
-  #   return: if successful, a value of this type
-  #           if unsuccessful, a falsy value
+  # @param json json: the candidate json object
+  # @return [object]   return: if successful, a value of this type
+  #   - matches [boolean]: whether the match was a success
+  #   - value [underlying value]:
   #
   # Note: _inferFromJson returns the value if `json` could EVER resolve to this type
   # Multiple types can match against the same json; priority is determined by
   # type registration order (calls to HumonType.register)
-  #
-  # TODO(syu): update and generalize to work for all humon types and include it in
-  # the standard suite. AKA make it work for booleans: return a hash {matchesType, value}
-  # problem is that right now yu can't distinguish between a literal false and a false as in failure
   _inferFromJson: (json) ->
     ret =
       matches: false
@@ -58,6 +55,7 @@ Humon.Date.reopenClass
   # @param json [JSON] the json payload to convert into a Humon.Value instance
   # @param context [JSON]
   #   - node [Humon.Node] the Humon Node instance that will contain the parsed Humon.Value
+  # TODO(syu): move default behavior into Humon.Primitive / Humon.whatever
   j2hnv: (json, context) ->
     value = @_inferFromJson(json).value
     @_klass().create(_value: value, node: context.node)
