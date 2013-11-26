@@ -19,26 +19,28 @@ describe "xHumonValues complex", ->
 
 describe "xHumon sleep", ->
   json =
-    awake_at: new Date(2013, 11, 24, 8, 30)
+    awake_at: "8:43"
     awake_energy: 6
-    outofbed_at: new Date(2013, 11, 24, 9, 30)
+    outofbed_at: "9:50"
     outofbed_energy: 8
   node = null
   beforeEach ->
     node = j2n(json, type: Humon.Sleep)
   it "has the proper types for children nodes", ->
-    expect(node.get('awake_at.nodeType')).toBe "date"
+    expect(node.get('awake_at.nodeType')).toBe "time"
     expect(node.get('awake_energy.nodeType')).toBe "number"
-    expect(node.get('outofbed_at.nodeType')).toBe "date"
+    expect(node.get('outofbed_at.nodeType')).toBe "time"
     expect(node.get('outofbed_energy.nodeType')).toBe "number"
+  it "has the proper values for time children", ->
+    mmt = node.get("awake_at.nodeVal").mmt()
+    expect(mmt.hours()).toBe 8
+    expect(mmt.minutes()).toBe 43
+
+    mmt = node.get("outofbed_at.nodeVal").mmt()
+    expect(mmt.hours()).toBe 9
+    expect(mmt.minutes()).toBe 50
 
 describe "xHumon time", ->
-  json = "2013 08 15"
-  node = null
-  beforeEach ->
-    node = j2n json
-  it "doesnot convert a date", ->
-    expect(node.get('nodeType')).toBe "date"
   it "converts a HH:MM time", ->
     node = j2n("08:43")
     expect(node.get('nodeType')).toBe "time"
@@ -47,8 +49,8 @@ describe "xHumon time", ->
     expect(mmt.minutes()).toBe 43
 
   it "works", ->
+    node = j2n("2013 07 05")
     expect(node.get('nodeType')).toBe "date"
     expect(j2n("8:43").get("nodeType")).toBe "time"
     expect(j2n("2013 07 15").get("nodeType")).toBe "date"
-  #     dates = ["2013 07 05", new Date(2013, 6, 5), "Fri Jul 5"]
 
