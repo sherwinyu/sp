@@ -89,3 +89,5 @@ Humon.TemplateContexts.register "Time",
 
 
 Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend()
+Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend()
+Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend()
