@@ -149,3 +149,18 @@ window.utils.date =
       mmt.add days: 1
     mmt.startOf('day')
     mmt.toDate()
+
+utils.time =
+  verbose: (time) ->
+    mmt = moment(time)
+    mmt.format('HH:mm:ss')
+
+  humanized: (time) ->
+    @asString(time)
+
+  asString: (time) ->
+    moment(time).format("HH:mm") + " (#{moment(time).format("ddd, MMM D")})"
+
+  relative: (time) ->
+    mmt = moment(time)
+    mmt.fromNow()

@@ -38,7 +38,7 @@ Humon.TemplateContext = Ember.Object.extend
 
 
 Humon.TemplateContexts = Ember.Namespace.create
-  # @param type string of the type name
+  # @param type [string] type name
   register: (type, opts) ->
     baseClass = Humon.TemplateContext
     if opts.extends instanceof Humon.TemplateContext
@@ -73,5 +73,19 @@ Humon.TemplateContexts.register "Date",
     asString:  utils.date.asString(date)
     relative:  utils.date.relative(date)
     verbose:  utils.date.verbose(date)
+
+Humon.TemplateContexts.register "Time",
+  iconClass: "icon-calendar"
+  templateName: "humon_node_date"
+  templateStrings: (node)->
+    time = node.val()
+    month:  time.getMonth()
+    day:  time.getDay()
+    hour:  time.getHours()
+    abbreviated:  utils.time.humanized(time)
+    asString:  utils.time.asString(time)
+    relative:  utils.time.relative(time)
+    verbose:  utils.time.verbose(time)
+
 
 Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend()
