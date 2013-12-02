@@ -41,4 +41,12 @@ Humon.Time.reopenClass(
       if ret.value
         ret.matches = true
       return ret
+
+  valueFromJson: (json) ->
+    if json.constructor == String
+      @_inferAsTimeStampFormat(json)
+    else if json.constructor == Date
+      json
+    else
+      throw new Error("shouldn't ever happen")
 )
