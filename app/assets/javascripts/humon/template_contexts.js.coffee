@@ -5,7 +5,7 @@ Humon.TemplateContext = Ember.Object.extend
   asString: (node) ->  node.asString()
   asJson: (node) -> node.toJson()
 
-  iconClass: (node) -> "icon-circle-blank"
+  iconClass: (node) -> "fa-circle-o"
   templateName: (->
     "humon_node_#{@name}"
   ).property('name')
@@ -46,23 +46,23 @@ Humon.TemplateContexts = Ember.Namespace.create
     Humon.TemplateContexts[type] = baseClass.extend(opts)
 
 Humon.TemplateContexts.register "String",
-  iconClass: "icon-quote-left"
+  iconClass: "fa-quote-left"
 
 Humon.TemplateContexts.register "Number",
-  iconClass: "icon-superscript"
+  iconClass: "fa-tachometer"
 
 Humon.TemplateContexts.register "Null",
-  iconClass: "icon-ban-circle"
+  iconClass: "fa-ban-circle"
   asString: -> "null"
 
 Humon.TemplateContexts.register "Boolean",
-  iconClass: "icon-check"
+  iconClass: "fa-check"
 
 Humon.TemplateContexts.register "List",
   templateName: "humon_node"
 
 Humon.TemplateContexts.register "Date",
-  iconClass: "icon-calendar"
+  iconClass: "fa-calendar"
   templateName: "humon_node_date"
   templateStrings: (node)->
     date = node.val()
@@ -75,7 +75,7 @@ Humon.TemplateContexts.register "Date",
     verbose:  utils.date.verbose(date)
 
 Humon.TemplateContexts.register "Time",
-  iconClass: "icon-calendar"
+  iconClass: "fa-clock-o"
   templateName: "humon_node_date"
   templateStrings: (node)->
     time = node.val()
@@ -90,4 +90,6 @@ Humon.TemplateContexts.register "Time",
 
 Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend()
 Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend()
-Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend()
+Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend(
+  templateName: "humon_node_sleep"
+)
