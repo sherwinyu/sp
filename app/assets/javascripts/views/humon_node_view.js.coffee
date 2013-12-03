@@ -6,9 +6,9 @@ Sysys.HumonNodeView = Ember.View.extend
   templateStrings: (->
     Ember.run.sync()
     @get('nodeContent')
-    if @get('nodeContent.isLiteral')
-      templateContext = Humon.templateContextFor(@get 'nodeContent')
-      templateContext.materializeTemplateStrings(@get 'nodeContent')
+    # if @get('nodeContent.isLiteral')
+    templateContext = Humon.templateContextFor(@get 'nodeContent')
+    templateContext.materializeTemplateStrings(@get 'nodeContent')
   ).property('nodeContent.nodeVal')
 
   # autoTemplate is responsible solely for producing the correct template name
