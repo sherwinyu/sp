@@ -4,7 +4,7 @@ class RescueTimeDpsController < ApplicationController
   # GET /rescue_time_dps
   # GET /rescue_time_dps.json
   def index
-    @rtdps = RescueTimeDp.where(:time.gte => 7.days.ago).desc(:time).to_a
+    @rtdps = RescueTimeDp.cached_recent
 
     respond_to do |format|
       format.html # index.html.erb
