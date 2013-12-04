@@ -3,11 +3,7 @@ class ApplicationController < ActionController::Base
 
   def mixpanel
     options = {}
-    @mixpanel ||= Mixpanel::Tracker.new(Figaro.env.MIXPANEL_TOKEN) #,  env:  request.try(:env))
-  end
-
-  def mixpanel_waga
-    mixpanel.track "waga", count: 5
+    @mixpanel ||= Mixpanel::Tracker.new(Figaro.env.MIXPANEL_TOKEN)
   end
 
   def authorize
