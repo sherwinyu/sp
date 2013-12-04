@@ -1,4 +1,4 @@
-Sysys.DetailController = Ember.ObjectController.extend Sysys.HumonControllerMixin,
+Sysys.DetailController = Ember.ObjectController.extend Humon.HumonControllerMixin,
   init: ->
     @_super()
 

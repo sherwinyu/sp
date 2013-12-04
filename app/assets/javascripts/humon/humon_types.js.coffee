@@ -62,9 +62,14 @@ window.HumonTypes =
     @_typeKeys.splice 0, 0, type
 
   contextualize: (type) ->
+    if type.constructor == Humon.Node
+      type = type.get('nodeType')
+    @_types[type] || Em.assert("Could not find type #{type}")
+    ###
     if type.constructor == Sysys.HumonNode
       type = type.get('nodeType')
     @_types[type] || Em.assert("Could not find type #{type}")
+    ###
 
   # resolveType
   # param json json: the json that we want to know the type of

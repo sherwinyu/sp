@@ -1,0 +1,60 @@
+Number:
+  typeName: "Number"
+  primitive: true
+  options:
+    minValue: -inf
+    maxValue: +inf
+    integral: false
+    display_as: "3%fd"                               # precision
+
+DateTime:
+  typeName: 'DateTime'
+  primitive: true
+  options:
+    display_as: "YYYY-MM-DD HH:MM:SS"
+
+
+List:
+  each:
+    type: "Anything"
+  options:
+    minLength: 0
+    maxLength: infinity
+
+Hash:
+
+
+Complex:
+  typeName: "Complex"
+  extend: "Hash"
+  required: []
+  optional: []
+
+Sleep:
+  typeName: 'sleep'
+  extend: "complex"
+  required:
+    wokeup_at:
+      type: "DateTime"
+      display_as: "HH:MM"
+    energy_at_wakeup:
+      type: "1to10Answer"
+
+Time:
+  typeName: "Time"
+  extend: 'DateTime'
+  options:
+    display_as: "HH:MM:SS"
+
+1to10Answer:                                                             1to10Answer:
+  typeName: "1to10Answer"                                                  typeName: "1to10Answer"
+  extend: 'integer'                                                        extend: 'integer'
+  options:                                                                 options:
+    min: 0                                                                   min: 0
+    max: 10                                                                  max: 10
+
+
+
+
+
+

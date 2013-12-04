@@ -120,3 +120,47 @@ window.utils =
     else
       @tickIntervalId = setInterval((-> console.log(moment().format "HH:mm:s.SS")), milliseconds)
       @ticking = true
+
+window.utils.date =
+  verbose: (date) ->
+    mmt = moment(date)
+    mmt.format('LLLL')
+
+  asString: (date) ->
+    "#{@humanized(date)} (#{@relative(date)})"
+    @humanized(date)
+
+  humanized: (date) ->
+    mmt = moment(date)
+    if mmt.isSame(new Date(), 'year')
+      mmt.format("ddd, MMM D")
+    else
+      mmt.format("ddd, MMM D, YYYY")
+
+  relative: (date) ->
+    mmt = moment(date)
+    mmt.fromNow()
+
+  # param date Date
+  # returns: a Date
+  tomorrow: (date) ->
+    mmt = moment(date)
+    if mmt.hour() > 3
+      mmt.add days: 1
+    mmt.startOf('day')
+    mmt.toDate()
+
+utils.time =
+  verbose: (time) ->
+    mmt = moment(time)
+    mmt.format('HH:mm:ss')
+
+  humanized: (time) ->
+    @asString(time)
+
+  asString: (time) ->
+    moment(time).format("HH:mm") + " (#{moment(time).format("ddd, MMM D")})"
+
+  relative: (time) ->
+    mmt = moment(time)
+    mmt.fromNow()
