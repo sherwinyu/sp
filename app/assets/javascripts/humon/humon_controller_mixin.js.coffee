@@ -128,7 +128,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       #   (we can assume a sibling exists because  only path to `commitAndContinueNew`
       #   is from HNV.enterPressed, which pre checks for the non-sibling case
       parent = ahn.get 'nodeParent'
-      blank = Humon.j2n null
+      blank = Humon.json2node null
       Ember.run =>
         idx = ahn.get('nodeIdx') + 1
         # Appears that the next `rerender` call is unnecessary.
@@ -277,7 +277,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
-    blank = Humon.j2n null
+    blank = Humon.json2node null
     Em.run => ahn.insertAt 0, blank
     @send 'activateNode', blank
     Ember.run.sync()

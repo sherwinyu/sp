@@ -3,7 +3,7 @@ Sysys.ApplicationController = Ember.Controller.extend
     Sysys.currentPath =  @get('currentPath')
     ).observes 'currentPath'
   init: ->
-    @set 'node', Humon.j2n
+    @set 'node', Humon.json2node
       abc: 123
       waga: [1,2,3, 4]
     @set 'content', @get('node')
