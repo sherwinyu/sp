@@ -9,4 +9,11 @@ class ApplicationController < ActionController::Base
   def mixpanel_waga
     mixpanel.track "waga", count: 5
   end
+
+  def authorize
+    if current_user.is_admin?
+      Rack::MiniProfiler.authorize_request
+    end
+  end
+
 end

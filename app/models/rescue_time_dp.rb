@@ -13,9 +13,9 @@ class RescueTimeDp
     Time.parse(rt_date + "UTC") rescue nil
   end
 
-  after_commit :flush_cache
+  after_save :flush_cache
   def flush_cache
-    Rails.cache.delete([self.class.name, "recent"]
+    Rails.cache.delete([self.class.name, "recent"])
   end
 
   def self.cached_recent

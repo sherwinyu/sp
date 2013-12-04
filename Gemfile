@@ -74,3 +74,4 @@ gem 'rest-client', '1.6.7'
 gem "mixpanel"
 gem 'hashie'
 gem 'awesome_print'
+gem 'rack-mini-profiler'
