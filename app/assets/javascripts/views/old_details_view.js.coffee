@@ -111,4 +111,4 @@ Sysys.DetailsView = Ember.View.extend
 
   init: ->
     @_super()
-###k
+###
