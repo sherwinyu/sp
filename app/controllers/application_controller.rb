@@ -6,10 +6,9 @@ class ApplicationController < ActionController::Base
     @mixpanel ||= Mixpanel::Tracker.new(Figaro.env.MIXPANEL_TOKEN)
   end
 
+  before_filter :authorize
   def authorize
-    if current_user.is_admin?
-      Rack::MiniProfiler.authorize_request
-    end
+    Rack::MiniProfiler.authorize_request
   end
 
 end
