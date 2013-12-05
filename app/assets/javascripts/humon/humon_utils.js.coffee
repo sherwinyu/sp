@@ -73,3 +73,4 @@ window.HumonUtils =
 
 Humon.n2j = HumonUtils.node2json
 Humon.j2n = HumonUtils.json2node
+Humon.json2node = HumonUtils.json2node
