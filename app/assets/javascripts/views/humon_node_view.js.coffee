@@ -27,8 +27,9 @@ Sysys.HumonNodeView = Ember.View.extend
     'parentActive:activeChild',
     'suppressGap']
   classNames: ['node']
+
   updateId: (->
-    @set('_id', $().attr('id'))
+    @set('_id', @$().attr('id'))
   ).on 'didInsertElement'
 
 
