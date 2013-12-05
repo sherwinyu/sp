@@ -74,4 +74,6 @@ Humon.TemplateContexts.register "Date",
     relative:  utils.date.relative(date)
     verbose:  utils.date.verbose(date)
 
-Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend()
+Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend(
+  templateName: "humon_node_hash"
+  )
