@@ -4,7 +4,7 @@ class DataPointsController < ApplicationController
   # GET /data_points
   # GET /data_points.json
   def index
-    @data_points = DataPoint.all
+    @data_points = DataPoint.cached_recent
 
     respond_to do |format|
       format.html # index.html.erb
