@@ -1,20 +1,6 @@
 @import "base";
 @import "humon_node_base";
 
-.humon-editor {
-  padding: $nodeEditorPadding;
-  border: $nodeEditorBorder;
-}
-.humon-editor.humon-editor-inline {
-  padding: 3px 3px;
-  border: none;
-}
-
-
-body {
-  font-family: "Source Sans Pro";
-}
-
 .node {
   font-family: "Source Sans Pro";
   font-weight: 500;
@@ -31,10 +17,20 @@ body {
 .node.node-literal { }
 .node.node-literal:hover { }
 .node.node-collection {
-  // see documentation on humonNodeView.suppressGap
   padding-bottom: 5px;
 }
 .node.node-collection:hover { }
+.node:before {
+  font-weight: 200;
+  transition: all 300ms ease;
+}
+.node.node-collection.suppress-gap {
+  padding-bottom: 0px;// transparent solid;
+  margin-bottom: 0px;// transparent solid;
+  margin-top: 0px;// transparent solid;
+}
+
+
 /*
  * Active node styling
  */
@@ -49,80 +45,18 @@ body {
   font-weight: 700;
   vertical-align: middle;
 }
-.node:before {
-  font-weight: 200;
-  transition: all 300ms ease;
-}
 
 .node.active > .node {
   border-left: $nodeActiveBorderLeft;
   transition: all 300ms ease;
 }
-.node.active > .content-field {
-  border-bottom: $borderUnderline;
-  color: $nodeActiveCopyColor;
-}
-
-.node.active > .content-field.idx-field {
-  transition-property: color;
-  color: $nodeIdxActiveCopyColor;
-  border-bottom: $borderTransparent;
-}
-.content-field:empty:before {
-  content: "\2026"; // ellipsis
-  content: "\0020"; // interpunct
-}
-.node.active > .content-field:empty:before {
-  display: none;
-}
-
-.node.active > span.node-detail {
-  visibility: visible;
-}
-.node:hover > span.node-detail {
-  visibility: visible;
-}
-
-.node.active > span.node-debug {
-  visibility: visible;
-}
-
-span.node-detail  {
-  font-style: italic;
-  visibility: hidden;
-  position: relative;
-  display: inline-block;
-}
-
-span.node-debug {
-  visibility: hidden;
-  position: relative;
-  display: inline-block;
-  position: absolute;
-  right: 5px;
-  font-size: 10px;
-}
-
-span.node-detail.node-icon {
-  height: 10px;
-  width: 10px;
-  font-size: 10px;
-  line-height: 10px;
-  i.icon {
-    height: 10px;
-    top: 0%;
-    position: absolute;
-    left: 0px ;// -12px;
-  }
-}
 /*
  * Active child styling
  */
-// child node glyph
 .node.activeChild {
   &:before {
-    content: "\21B5"; // carraige return
-    content: "\2022"; // bullet •
+    content: "\21B5";
+    content: "\2022";
     color: $childNodeGlyphColor;
 
     display: inline-block;
@@ -130,139 +64,10 @@ span.node-detail.node-icon {
     left: $childNodeGlyphLeftOffset;
 
     width: $childNodeGlyphWidth;
-    // @include rotate(90deg);
-
   }
 }
 
-
-
-/*
- * Content Fields
- */
-.node {
-  .content-field {
-    border-bottom: $borderLightUnderline;
-    border-left: $borderTransparent;
-    color: $nodeCopyColor;
-    transition: all 300ms ease;
-  }
-  div.content-field, span.content-field {
-    height: $lineheight;
-  }
-  textarea.content-field {
-    color: $copygray;
-    height: $lineheight;
-    border: none;
-    padding: 0px;
-    margin: 0px;
-    border-radius: 0px;
-    box-shadow: none;
-    resize: none;
-    background: none;
-    overflow: hidden;
-    vertical-align: top;
-  }
-  textarea.content-field:focus {
-    border: none;
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    box-shadow: none;
-  }
-
-  textarea.content-field {
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-  }
-
-  /*
-   * VAL FIELD
-   */
-
-  textarea.content-field.val-field {
-    min-width: 100px;
-  }
-  textarea.content-field.val-field:focus {
-  }
-  div.val-field {
-    display: inline-block;
-    min-width: $valFieldMinWidth;
-    max-width: $valFieldMaxWidth;
-  }
-
-  span.val-field {
-    display: inline-block;
-    min-width: $valFieldMinWidth;
-    max-width: $valFieldMaxWidth;
-  }
-  span.val-field:focus {
-  }
-
-  /*
-   * Label Field
-   */
-  textarea.content-field.label-field {
-    // padding-left: $fieldWhiteIndent;
-  }
-  /*
-   * index field
-  */
-  textarea.content-field.idx-field {
-    font-size: $nodeCopyFontSize;
-    display: inline-block;
-    color: $nodeIdxCopyColor;
-    min-width: $idxFieldMinWidth;
-    max-width: $idxFieldMaxWidth;
-  }
-  /*
-   * Key Field
-   */
-  textarea.content-field.key-field {
-    min-width: 25px;
-    width: 100px;
-    text-align: left;
-    padding-right: $fieldWhiteIndent;
-  }
-  div.content-field.key-field {
-    min-width: $keyFieldMinWidth;
-    max-width: $keyFieldMaxWidth;
-    height: $lineheight;
-  }
-  span.content-field.key-field {
-    display: inline-block;
-    min-width: $keyFieldMinWidth;
-    max-width: $keyFieldMaxWidth;
-    height: $lineheight;
-
-    text-overflow: ellipsis; // "…"; //\2026";
-    overflow: hidden;
-    white-space: nowrap;
-    vertical-align: bottom;
-  }
-  .content-field.key-field:focus {
-    overflow: visible;
-    max-width: 1000px;
-    transition: all 300ms ease;
-  }
-  /*
-   * Key Fixed Field
-   */
-  span.content-field.key-field.key-field-fixed {
-    color: $rootNodeKeyColor;
-    border-bottom: $borderTransparent;
-    font-weight: 600;
-  }
-  .node.active > span.content-field.key-field.key-field-fixed {
-    color: $rootNodeKeyColor;
-    border-bottom: $borderTransparent;
-  }
-}
-
-
-// see hnv.suppressGap
-.node.node-collection.suppress-gap {
-  padding-bottom: 0px;// transparent solid;
-  margin-bottom: 0px;// transparent solid;
-  margin-top: 0px;// transparent solid;
-}
-
+@import "humon/debug";
+@import "humon/detail";
+@import "humon/content_field";
+@import "humon/editor";

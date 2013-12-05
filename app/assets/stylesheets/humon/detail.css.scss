@@ -1,0 +1,26 @@
+.node.active > span.node-detail {
+  visibility: visible;
+}
+.node:hover > span.node-detail {
+  visibility: visible;
+}
+
+span.node-detail  {
+  font-style: italic;
+  visibility: hidden;
+  position: relative;
+  display: inline-block;
+}
+
+span.node-detail.node-icon {
+  height: 10px;
+  width: 10px;
+  font-size: 10px;
+  line-height: 10px;
+  i.icon {
+    height: 10px;
+    top: 0%;
+    position: absolute;
+    left: 0px ;// -12px;
+  }
+}
