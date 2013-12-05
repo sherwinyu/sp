@@ -88,7 +88,9 @@ Humon.TemplateContexts.register "Time",
     verbose:  utils.time.verbose(time)
 
 
-Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend()
+Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend(
+  templateName: "humon_node_hash"
+)
 Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend()
 Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend(
   templateName: "humon_node_sleep"

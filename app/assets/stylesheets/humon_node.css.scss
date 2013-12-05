@@ -12,11 +12,12 @@
 
 
 body {
-  font-family: "SourceSansPro";
+  font-family: "Source Sans Pro";
 }
 
 .node {
-  font-family: "SourceSansPro";
+  font-family: "Source Sans Pro";
+  font-weight: 500;
   font-size: $nodeCopyFontSize;
   cursor: text;
   color: $copygray;
@@ -45,11 +46,11 @@ body {
   position: absolute;
   left: 0;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 700;
   vertical-align: middle;
 }
 .node:before {
-  font-weight: 100;
+  font-weight: 200;
   transition: all 300ms ease;
 }
 
@@ -74,16 +75,34 @@ body {
 .node.active > .content-field:empty:before {
   display: none;
 }
-.node.active > span.node-detail,
+
+.node.active > span.node-detail {
+  visibility: visible;
+}
 .node:hover > span.node-detail {
   visibility: visible;
 }
-span.node-detail {
+
+.node.active > span.node-debug {
+  visibility: visible;
+}
+
+span.node-detail  {
   font-style: italic;
   visibility: hidden;
   position: relative;
   display: inline-block;
 }
+
+span.node-debug {
+  visibility: hidden;
+  position: relative;
+  display: inline-block;
+  position: absolute;
+  right: 5px;
+  font-size: 10px;
+}
+
 span.node-detail.node-icon {
   height: 10px;
   width: 10px;

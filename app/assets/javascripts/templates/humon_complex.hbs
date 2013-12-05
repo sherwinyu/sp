@@ -1,5 +1,5 @@
 {{!
-humon_node.hbs
+humon_node_complex.hbs
 }}
 
 {{#each attributePair in view.nodeContent.attributes}}
@@ -7,6 +7,6 @@ humon_node.hbs
 {{/each}}
 {{#each nodeChild in view.nodeContent.nodeVal.children}}
   {{#with nodeChild}}
-  {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
+    {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
   {{/with}}
 {{/each}}
