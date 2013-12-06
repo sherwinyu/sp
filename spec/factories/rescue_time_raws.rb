@@ -1,6 +1,6 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
-Dir[Rails.root.join("app/utils/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("lib/util/**/*.rb")].each {|f| require f}
 
 FactoryGirl.define do
   factory :rescue_time_raw do |rtr|
@@ -49,7 +49,7 @@ FactoryGirl.define do
     ]
 ]
 =end
-    rtr.rt_date Util.format_as_rt_date Time.parse "2013-10-07T17:00:00"
+    rtr.rt_date Util::DateTime.format_as_rt_date Time.parse "2013-10-07T17:00:00"
     rt_time_spent 15.minutes
     rt_number_of_people 1
     rt_category "General Utilities"
