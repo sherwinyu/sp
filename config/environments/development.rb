@@ -34,4 +34,8 @@ Sysys::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.autoload_paths += %W[
+    #{Rails.root}/app/utils
+  ]
 end
