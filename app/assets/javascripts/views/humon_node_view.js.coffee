@@ -222,31 +222,49 @@ Sysys.HumonNodeView = Ember.View.extend
         @set "_focusedField", null
     @get('nodeContent')?.set 'nodeView', @
 
+  ##
+  # Helper methods to fetch the Ember.View objects of the corresponding child fields
+  # NOTE this gets the FIRST instance of child field of this type
   labelField: ->
     @get("childViews").find (view) -> view instanceof Sysys.AbstractEditableLabel
   keyField: ->
     @get("childViews").find (view) -> view instanceof Sysys.KeyEditableField
   idxField: ->
-    @get("childViews").find (view) -> view instanceof Sysys.IdxEditableField #KeyEditableField
+    @get("childViews").find (view) -> view instanceof Sysys.IdxEditableField
   valField: ->
-    @get("childViews").find (view) -> view instanceof Sysys.ValEditableField #IdxEditableField#KeyEditableField
+    @get("childViews").find (view) -> view instanceof Sysys.ValEditableField
 
+  ##
+  # Tries to manipulate the focus (either via setCursor or $().focus()) to a child field of this
+  # humon node view.
+  # Note:
+  # @param [JSON] opts a JSON object with the following properties
+  #   - field [string]
+  #   - pos [string] either "left" or "right"
+  #
+  # TODO(syu): Decide on how to handle the case of the keyfixedfield.
+  #   Should the key be editable? Currently it's not (content editable is false)
+  #   but it still extends from ContentEditableField.
+  #   It should probably still stay focusable though.
   focusField: (opts) ->
-    if typeof opts is "string"
-      opts = field: opts
+    Em.assert typeof opts is object
 
     # get the field view
+    # NOTE this gets the FIRST instance of child field of this type
     fieldView = @["#{opts.field}Field"]()
 
     # console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
 
-    # ALWAYS FOCUS IT -- because setCursor won't work when it's not contenteditable!
-    fieldView.$().focus()
 
+    # This is ASSUMING that anything we would ever want to focus on is a subclass of
+    # Sysys.ContentEditableField
     if fieldView instanceof Sysys.ContentEditableField
+      # We explicitly call .focus() because setCursor won't work for noncontenteditable fields
+      #  Example: when KeyFixedField
+      fieldView.$().focus()
       setCursor(fieldView.$().get(0), fieldView.contentLength())
     else
-      # it's possible that this field doesn't exist:
+      # It's possible that this field doesn't exist:
       # "moveRight" on a node-collection's label field
       # no val field exists!
       return
