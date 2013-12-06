@@ -1,6 +1,19 @@
-<button {{action "newDataPoint"}}>
-  New DataPoint
-</button>
-{{#each dataPoint in content}}
-  {{render 'dataPoint' dataPoint}}
-{{/each}}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Data Points</h3>
+  </div>
+  <div class="row"><div class="col-xs-12">
+  </div></div>
+  <div class="panel-body">
+    <button class="btn btn-outline btn-primary btn-lg btn-block" {{action "newDataPoint"}}>
+      New DataPoint
+    </button>
+    <div class="list-group">
+    {{#each dataPoint in content}}
+      <div class="list-group-item">
+      {{render 'dataPoint' dataPoint}}
+      </div>
+    {{/each}}
+    </div>
+  </div>
+</div>

@@ -5,7 +5,16 @@
   visibility: visible;
 }
 
+.node {
+  .node-text {
+    height: $lineheight;
+    vertical-align: bottom;
+    display: inline-block;
+  }
+}
+
 span.node-detail  {
+  @extend .node-text;
   font-style: italic;
   visibility: hidden;
   position: relative;
