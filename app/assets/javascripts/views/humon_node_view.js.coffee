@@ -234,25 +234,16 @@ Sysys.HumonNodeView = Ember.View.extend
   focusField: (opts) ->
     if typeof opts is "string"
       opts = field: opts
-    console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts}"
-
-    # if no field is present
-    # this can happen in cases such as
-    #   current node is a collection (no val field)
-    #   and context is a list (no key field)
-    if opts.field == "none"
-      # 2013 10 31 -- I DON'T THINK THIS EVER HAPPENS
-      # TODO(syu): PURGE
-      $('textarea').blur()
-      $('div').blur()
-      return
 
     # get the field view
     fieldView = @["#{opts.field}Field"]()
 
-    if fieldView instanceof Ember.TextArea
-      fieldView.$().focus()
-    else if fieldView instanceof Sysys.ContentEditableField
+    # console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
+
+    # ALWAYS FOCUS IT -- because setCursor won't work when it's not contenteditable!
+    fieldView.$().focus()
+
+    if fieldView instanceof Sysys.ContentEditableField
       setCursor(fieldView.$().get(0), fieldView.contentLength())
     else
       # it's possible that this field doesn't exist:
