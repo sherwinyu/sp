@@ -42,5 +42,13 @@ class SpDay
     "#{date.strftime}: #{super}"
   end
 
+=begin
+sleep
+  begin
+  energy
+  night
+  lights out
+
+=end
 end
 

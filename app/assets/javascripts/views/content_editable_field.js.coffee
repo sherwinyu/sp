@@ -7,6 +7,10 @@ Sysys.ContentEditableField = Ember.View.extend
   tabindex: '0'
   attributeBindings: ["contenteditable:contenteditable",  'tabindex:tabindex']
 
+  # Shim for editing or setting the field, jQuery style.
+  # Basically just wraps $.text() and $.text(textArg)
+  # If an argument is passed, then $.text(textArg) is called
+  # Otherwise, $.text() is called and the current text is returned
   val: (args...) ->
     @$().text.apply(@$(), args)
 
@@ -23,21 +27,15 @@ Sysys.ContentEditableField = Ember.View.extend
     e.stopPropagation()
 
   # focusIn -- responds to focus event on the contentField
-  # We don't do any foucs cancelling here; instead we handle it at the HNV level.
-  # This means that all 'focus' events are 'real -- if this function
+  # We don't do any focus cancelling here; instead we handle it at the HNV level.
+  # This means that all 'focus' events are 'real' -- if this function
   # is called, this content field WILL become focused.
-  #
-  # Can be overridden by subclasses
-  #   1) calls @autogrow
-  #   2) bubbles the event
   focusIn: (e, args...) ->
     true
 
   # focusOut -- responds to focus out event on the contentField
   # In context: this focusOut bubbles to HNV, which triggers commitEverything
   # can be overridden by subclasses
-  #   1) removes the autogrow on the field
-  #   2) bubbles the event
   focusOut: (e, options)->
     true
 
@@ -51,9 +49,6 @@ Sysys.ContentEditableField = Ember.View.extend
   # is this an event?
   enter: ->
     @get('parentView').send 'enterPressed'
-
-  cancel: ->
-    @refresh()
 
   initHotKeys: ->
     @createHotKeys()
@@ -85,7 +80,8 @@ Sysys.ContentEditableField = Ember.View.extend
         @get('controller').send('indent')
       'ctrl+backspace': (e) =>
         e.preventDefault()
-        @get('controller').send('deleteActive')
+        # @get('controller').send('deleteActive')
+        @get('controller').deleteActive()
       'ctrl+shift+l': (e) =>
         console.log 'ctrl shift l'
         @get('controller').send('forceList')

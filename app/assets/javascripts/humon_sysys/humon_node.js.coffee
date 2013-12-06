@@ -4,17 +4,6 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   nodeType: null
   nodeParent: null
   nodeView: null
-  keyBinding: 'nodeKey'
-  compare: (hna, hnb) ->
-    a = hna.get('nodeVal')
-    b = hnb.get('nodeVal')
-    as = bs = null
-    ret =
-      if hna.get('nodeType') == 'date' || hnb.get('nodeType') == 'date'
-        Ember.compare(a, b)
-      else
-        0
-    ret
 
   # finds the index of this node in its parentNode's nodeVal (children)
   # if parentNode does not exist, returns undefined
@@ -28,12 +17,6 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   json: (->
     Sysys.HumonUtils.humonNode2json @
   ).property('nodeVal', 'nodeKey', 'nodeType').cacheable false
-
-  ###
-  nodeValChanged: (->
-    @get('nodeParent')?.notifyPropertyChange 'nodeVal'
-  ).observes 'nodeVal', 'nodeKey', 'nodeType', 'nodeVal.@each'
-    ###
 
   isHash: (->
     @get('nodeType') == 'hash'
@@ -52,7 +35,7 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   ).property('isCollection', 'nodeVal', 'nodeVal.@each')
 
   isLiteral: (->
-    literalTypes = ['literal', 'date', 'number', 'boolean', 'string', 'null']
+    literalTypes = ['literal', 'date', 'number', 'boolean', 'string', 'null', 'couple']
     #$.inArray @get('nodeType'), literalTypes
     @get('nodeType') in literalTypes
   ).property('nodeType')
@@ -229,4 +212,3 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
 
   isDescendant: (testNode)->
     path = @pathToNode(testNode)
-

@@ -1,0 +1,10 @@
+{{!
+humon_node.hbs
+}}
+
+zzz
+{{#each nodeChild in view.nodeContent.nodeVal.children}}
+  {{#with nodeChild}}
+  {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
+  {{/with}}
+{{/each}}

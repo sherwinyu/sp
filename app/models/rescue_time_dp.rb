@@ -1,6 +1,7 @@
 class RescueTimeDp
   include Mongoid::Document
   include Mongoid::Timestamps
+  scope :recent, where(:time.gte => 7.days.ago).desc(:time)
 
   field :rt_date, type: String
   attr_readonly :rt_date
@@ -10,6 +11,17 @@ class RescueTimeDp
 
   def experienced_time
     Time.parse(rt_date + "UTC") rescue nil
+  end
+
+  after_save :flush_cache
+  def flush_cache
+    Rails.cache.delete([self.class.name, "recent"])
+  end
+
+  def self.cached_recent
+    Rails.cache.fetch [name, "recent"] do
+      recent.to_a
+    end
   end
 
   def hour

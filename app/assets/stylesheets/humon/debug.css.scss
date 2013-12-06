@@ -1,0 +1,13 @@
+.node.active > span.node-debug {
+  visibility: visible;
+}
+
+.node-debug {
+  visibility: hidden;
+  position: relative;
+  display: inline-block;
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+  font-size: 14px;
+}

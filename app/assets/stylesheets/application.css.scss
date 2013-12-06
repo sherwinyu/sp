@@ -1,17 +1,15 @@
-/*
- *= require source-sans-pro
- */
 @import "bootstrap";
 @import "jquery.ui.datepicker";
 @import "jquery.ui.slider";
 @import "font-awesome";
 
 @import "base";
-@import "humon_node";
+
+@import "humon/humon";
+
 @import "data_point";
 @import "rescue_time_dp";
-@import "sp_day";
-
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500,600,700);
 .caption {
   font-weight: bold;
 }
