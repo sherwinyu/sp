@@ -147,6 +147,10 @@ Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
     @refresh()
   ).observes('rawValue')
 
+##
+# This view is usually for the top-level attribute of an object
+# It's styled differently:
+#   - it shouldn't be contenteditable!
 Sysys.KeyFixedField = Sysys.KeyEditableField.extend
   classNames: ['key-field-fixed']
-  contenteditable: "true"
+  contenteditable: "false"

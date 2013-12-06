@@ -63,14 +63,18 @@ Sysys.ApplicationRoute = Ember.Route.extend
       idx = elements.index($(e.target).closest('.node'))
       return if idx == -1
       idx = (idx + elements.length + 1) % elements.length
-      Sysys.vfi($(elements[idx]).attr('id')).smartFocus()
+
+      el = elements[idx]
+      Sysys.vfi($(el).attr('id')).smartFocus()
 
     upPressed: (e)->
       elements = $('[tabIndex]').closest('.node')
       idx = elements.index($(e.target).closest('.node'))
       return if idx == -1
       idx = (idx + elements.length - 1) % elements.length
-      Sysys.vfi($(elements[idx]).attr('id')).smartFocus()
+
+      el = elements[idx]
+      Sysys.vfi($(el).attr('id')).smartFocus()
 
 Sysys.IndexRoute = Ember.Route.extend
   actions:
