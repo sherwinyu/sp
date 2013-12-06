@@ -55,6 +55,9 @@ task :hourly => :environment do
   end
   ping_url "http://farmivore.com"
   ping_url "http://staging.farmivore.com"
+  ping_url "http://demo.weaveenergy.com"
+  ping_url "http://newliving.weaveenergy.com"
+  ping_url "http://staging-newliving.weaveenergy.com"
   import_rescue_time
 end
 
