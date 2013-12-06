@@ -3,56 +3,20 @@
  */
 .node {
   .content-field {
+    display: inline-block;
+    height: $lineheight;
+
     border-bottom: $borderLightUnderline;
     border-left: $borderTransparent;
     color: $nodeCopyColor;
     transition: all 300ms ease;
+    vertical-align: bottom;
   }
-  div.content-field, span.content-field {
-    height: $lineheight;
-  }
-  textarea.content-field {
-    color: $copygray;
-    height: $lineheight;
-    border: none;
-    padding: 0px;
-    margin: 0px;
-    border-radius: 0px;
-    box-shadow: none;
-    resize: none;
-    background: none;
-    overflow: hidden;
-    vertical-align: top;
-  }
-  textarea.content-field:focus {
-    border: none;
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    box-shadow: none;
-  }
-
-  textarea.content-field {
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-  }
-
   /*
    * VAL FIELD
    */
 
-  textarea.content-field.val-field {
-    min-width: 100px;
-  }
-  textarea.content-field.val-field:focus {
-  }
-  div.val-field {
-    display: inline-block;
-    min-width: $valFieldMinWidth;
-    max-width: $valFieldMaxWidth;
-  }
-
   span.val-field {
-    display: inline-block;
     min-width: $valFieldMinWidth;
     max-width: $valFieldMaxWidth;
   }
@@ -62,46 +26,23 @@
   /*
    * Label Field
    */
-  textarea.content-field.label-field {
-    // padding-left: $fieldWhiteIndent;
-  }
+
   /*
    * index field
   */
-  textarea.content-field.idx-field {
-    font-size: $nodeCopyFontSize;
-    display: inline-block;
-    color: $nodeIdxCopyColor;
-    min-width: $idxFieldMinWidth;
-    max-width: $idxFieldMaxWidth;
-  }
+
   /*
    * Key Field
    */
-  textarea.content-field.key-field {
-    min-width: 25px;
-    width: 100px;
-    text-align: left;
-    padding-right: $fieldWhiteIndent;
-  }
-  div.content-field.key-field {
-    min-width: $keyFieldMinWidth;
-    max-width: $keyFieldMaxWidth;
-    height: $lineheight;
-  }
   span.content-field.key-field {
-    display: inline-block;
     min-width: $keyFieldMinWidth;
     max-width: $keyFieldMaxWidth;
-    height: $lineheight;
 
-    text-overflow: ellipsis; // "…"; //\2026";
+    text-overflow: ellipsis; // "…";
     overflow: hidden;
     white-space: nowrap;
-    vertical-align: bottom;
   }
-  .content-field.key-field:focus {
-    overflow: visible;
+  span.content-field.key-field:focus {
     max-width: 1000px;
     transition: all 300ms ease;
   }
