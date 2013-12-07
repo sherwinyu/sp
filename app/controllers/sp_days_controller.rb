@@ -24,5 +24,14 @@ class SpDaysController < ApplicationController
     end
   end
 
-end
+  def update
+    @sp_day = SpDay.find(params[:id])
+    binding.pry
+    if @sp_day.update_attributes params[:sp_day]
+      render json: nil, status: :no_content
+    else
+      render json: @sp_day.errors, status: :unprocessable_entity
+    end
+  end
 
+end

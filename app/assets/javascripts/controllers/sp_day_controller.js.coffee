@@ -14,3 +14,7 @@ Sysys.SpDayController = Ember.ObjectController.extend
       moment(@get('content.startedAt')).format "HH:mm"
   ).property('content.startedAt')
 
+  actions:
+    save: ->
+      @get('content').save()
+

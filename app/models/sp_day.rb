@@ -5,6 +5,7 @@ class SpDay
   extend Forwardable
 
   embeds_one :sleep, class_name: "SpSleep", store_as: 'sleep'
+
   def_delegators :sleep, *%w[
     awake_at
     awake_energy

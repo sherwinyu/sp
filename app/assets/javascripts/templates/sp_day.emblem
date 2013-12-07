@@ -1,6 +1,9 @@
 .sp-day-header.text-center
+  span.options
+    =if isDirty: a{action "save"}: | Save *
+
   span.sp-day-yesterday: =link-to "spDay" yesterday: | <<
-  span.sp-day-title
+  h3.sp-day-title
     = title
     = link-to "spDay" this classNames="zug": | *
   span.sp-day-tomorrow: =link-to "spDay" tomorrow: | >>
@@ -9,4 +12,4 @@ ul
  li Day started: {{startedAt}}
  li date: {{date}}
  li note: {{note}}
-=humon-editor json=sleep rootKey="sleep"
+=humon-editor json=sleep rootKey="sleep" metaTemplate=typeMap.sleep
