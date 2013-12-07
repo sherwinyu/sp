@@ -247,7 +247,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #   but it still extends from ContentEditableField.
   #   It should probably still stay focusable though.
   focusField: (opts) ->
-    Em.assert typeof opts is object
+    Em.assert "opts to FocusField must be POJO", typeof opts is "object"
 
     # get the field view
     # NOTE this gets the FIRST instance of child field of this type
