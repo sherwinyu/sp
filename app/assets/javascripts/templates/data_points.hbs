@@ -5,9 +5,11 @@
   <div class="row"><div class="col-xs-12">
   </div></div>
   <div class="panel-body">
-    <button class="btn btn-outline btn-primary btn-lg btn-block" {{action "newDataPoint"}}>
+
+    <button class="btn new-data-point" {{action "newDataPoint"}}>
       New DataPoint
     </button>
+
     <div class="list-group">
     {{#each dataPoint in content}}
       <div class="list-group-item">

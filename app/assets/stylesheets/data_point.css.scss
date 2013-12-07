@@ -1,3 +1,4 @@
+@import "app_base";
 // $dataPointWidth: 700px;
 
 .data-point {
@@ -24,5 +25,14 @@
     position: relative;
     display: block;
     z-index: 100;
+  }
+}
+
+.data-points {
+  button.new-data-point {
+    // @include button-size(5px, 5px, 16px, 18px,  3px);
+    @include center-block();
+    @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+    margin-bottom: $padding-base-vertical;
   }
 }
