@@ -23,12 +23,11 @@ span.node-detail  {
 }
 
 span.node-detail.node-icon {
-  $nodeIconHeight: 14px;
-  height: $nodeIconHeight;
+  $nodeIconSize: 14px;
   width: 10px;
-  font-size: $nodeIconHeight;
+  font-size: $nodeIconSize;
   position: relative;
-  top: $lineheight - $nodeIconHeight;
+  top: ($nodeCopyFontSize - $nodeIconSize);
 
   i.icon {
     height: 10px;

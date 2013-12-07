@@ -123,7 +123,7 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
     # this is necessary to focus the label field properly
     # when a type change occurs and HNV is rerendered and HNV is rerendered
     @$().bind 'keydown', 'shift+tab', (e) =>
-      @set 'parentView._focusedField', 'label'
+      @set 'parentView._focusedField', field: 'label'
 
   moveLeft: (e)->
     if getCursor(@$()) ==  0
