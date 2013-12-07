@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authorize
   def authorize
-    Rack::MiniProfiler.authorize_request
+    # Rack::MiniProfiler.authorize_request
   end
 
 end

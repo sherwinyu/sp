@@ -1,5 +1,18 @@
+=partial nav
+
 .container
   h1 JSON Admin
+  nav.navbar.navbar-default
+    navbar-header
+      button.navbar-toggle data-toggle="collapse" data-target="#zug"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand href="#" Brand
+    .collapse.navbar-collapse
+      ul.nav navbar-nav
+
   ul.nav.nav-pills
     li.active
       a Dashboard
