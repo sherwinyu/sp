@@ -28,9 +28,9 @@ gem 'ember-source', '1.0.0'
 gem 'ember-data-source', '1.0.0.beta.3'
 gem 'ember-bootstrap-rails'
 gem 'ember-rails'
+gem 'emblem-rails'
 
 gem 'momentjs-rails', '2.0.0.2'
-gem 'datejs-rails', '2.0.1'
 
 gem 'pry', '0.9.11'
 gem 'spring', require: false

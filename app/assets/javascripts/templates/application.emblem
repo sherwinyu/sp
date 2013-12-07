@@ -1,0 +1,13 @@
+.container
+  h1 JSON Admin
+  ul.nav.nav-pills
+    li.active
+      a Dashboard
+    li
+      a Track
+    li
+      a Recent
+
+  .row
+    .col-xs-8.center-block
+      =outlet
