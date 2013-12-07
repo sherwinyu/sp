@@ -36,6 +36,7 @@
  */
 .node.active {
 }
+/* Active node indicator */
 .node.active:before {
   transition: all 300ms ease;
   content: "\00BB"; //»
@@ -43,7 +44,11 @@
   left: 0;
   font-size: 22px;
   font-weight: 700;
-  // vertical-align: middle;
+  vertical-align: bottom;
+  height: 22px;
+  // need to shift up because font-size is nonstandard;
+  top: -5px;
+  display: inline-block;
 }
 
 .node.active > .node {

@@ -54,10 +54,10 @@
     border-bottom: $borderTransparent;
     font-weight: 600;
   }
-  .node.active > span.content-field.key-field.key-field-fixed {
-    color: $rootNodeKeyColor;
-    border-bottom: $borderTransparent;
-  }
+}
+.node.active > span.content-field.key-field.key-field-fixed {
+  color: $rootNodeKeyColor;
+  border-bottom: $borderLightUnderline;
 }
 
 .node.active > .content-field {
