@@ -1,0 +1,11 @@
+.panel.panel-default
+  .panel-heading
+    h3 Recent Sherwin Days
+    h3: small {{controller.length}} days
+  .panel-body
+    button.btn.new-sp-day{action 'newSpDay'}
+      | New Data Point
+    .list-group
+      =each sp_day in controller
+        .list-group-item
+          =render 'sp_day' sp_day
