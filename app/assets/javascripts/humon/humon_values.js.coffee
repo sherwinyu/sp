@@ -9,7 +9,10 @@
 
 Humon.HumonValue = Ember.Mixin.create
   name: ->
-    @.constructor.toString().split(".")[1].toLowerCase()
+    # TODO(syu): test this
+    # TODO(syu): switch over to using the underscored version
+    Ember.String.underscore @.constructor.toString().split(".")[1]
+    # @.constructor.toString().split(".")[1].toLowerCase()
   asString: ->
   nextNode: ->
   prevNode: ->

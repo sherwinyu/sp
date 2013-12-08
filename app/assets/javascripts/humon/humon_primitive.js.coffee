@@ -23,7 +23,8 @@ Humon.Primitive.reopenClass
   _klass: ->
     @
   _name: ->
-    @_klass().toString().split(".")[1].toLowerCase()
+   Em.String.underscore  @_klass().toString().split(".")[1]
+
   # @param json A JSON payload to be converted into a Humon.Value instance
   # @param context
   #   - node: the Humon.Node instance that will be wrapping the returned Humon.Value
