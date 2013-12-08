@@ -1,6 +1,7 @@
 class SpDaySerializer < ActiveModel::Serializer
   attributes :id, :date, :note, :yesterday_id, :tomorrow_id
   has_one :sleep
+  has_one :summary
 
   def yesterday_id
     object.yesterday.try :id

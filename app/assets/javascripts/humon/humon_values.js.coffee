@@ -4,6 +4,7 @@
 #= require ./humon_hash
 #= require ./humon_complex
 #= require ./humon_sleep
+#= require ./humon_day_summary
 #= require ./humon_time
 
 Humon.HumonValue = Ember.Mixin.create

@@ -1,3 +1,4 @@
+###
 window.HumonTypes =
   _types: {}
   _typeKeys: []
@@ -66,9 +67,9 @@ window.HumonTypes =
       type = type.get('nodeType')
     @_types[type] || Em.assert("Could not find type #{type}")
     ###
-    if type.constructor == Sysys.HumonNode
-      type = type.get('nodeType')
-    @_types[type] || Em.assert("Could not find type #{type}")
+    # if type.constructor == Sysys.HumonNode
+    # type = type.get('nodeType')
+    # @_types[type] || Em.assert("Could not find type #{type}")
     ###
 
   # resolveType
