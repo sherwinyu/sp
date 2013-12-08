@@ -41,7 +41,7 @@ group :development, :test do
   gem 'annotate', "2.5.0"
 
   gem 'rb-inotify', require: false
-
+  gem 'konacha'
   gem 'factory_girl_rails', '4.2.1'
   gem 'guard-zeus'
   gem 'guard-rspec', '3.0.0'

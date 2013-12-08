@@ -86,6 +86,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.1)
+    colorize (0.6.0)
     columnize (0.3.6)
     compass (0.12.2)
       chunky_png (~> 1.2)
@@ -192,6 +193,12 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.8.1)
+    konacha (3.0.0)
+      actionpack (>= 3.1, < 5)
+      capybara
+      colorize
+      railties (>= 3.1, < 5)
+      sprockets
     listen (1.2.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -371,6 +378,7 @@ DEPENDENCIES
   jasminerice (= 0.0.10)
   jquery-rails (= 2.2.1)
   jquery-ui-rails (= 4.0.2)
+  konacha
   mixpanel
   momentjs-rails (= 2.0.0.2)
   mongoid (~> 3.0.0)
