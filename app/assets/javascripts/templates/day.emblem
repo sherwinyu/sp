@@ -1,12 +1,12 @@
-.sp-day-header.text-center
+.day-header.text-center
   span.options
     =if isDirty: a{action "save"}: | Save *
 
-  span.sp-day-yesterday: =link-to "spDay" yesterday: | <<
-  h3.sp-day-title
+  span.day-yesterday: =link-to "day" yesterday: | <<
+  h3.day-title
     = title
-    = link-to "spDay" this classNames="zug": | *
-  span.sp-day-tomorrow: =link-to "spDay" tomorrow: | >>
+    = link-to "day" this classNames="zug": | *
+  span.day-tomorrow: =link-to "day" tomorrow: | >>
 
 ul
  li Day started: {{startedAt}}

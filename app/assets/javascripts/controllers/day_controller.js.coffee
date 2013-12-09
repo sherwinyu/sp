@@ -1,4 +1,4 @@
-Sysys.SpDayController = Ember.ObjectController.extend
+Sysys.DayController = Ember.ObjectController.extend
   init: ->
     @get('content')
     @_super()

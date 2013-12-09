@@ -1,6 +1,6 @@
 //$spDayWidth: 700px;
 
-.sp-day {
+.day {
   position: relative;
   // width: $spDayWidth;
   // border: 1px solid $grayLightest1;
@@ -27,27 +27,27 @@
   }
 }
 
-.sp-day-header {
+.day-header {
   border-bottom: $grayDarkest;
 
   // text-align: center;
   // width: 450px;
 }
 
-.sp-day-title {
+.day-title {
   color: black;
   font-weight: 600;
 }
 
-.sp-day-yesterday {
+.day-yesterday {
   float: left;
 }
-.sp-day-tomorrow {
+.day-tomorrow {
   float: right;
 }
 
-.sp-days {
-  btn.new-sp-day {
+.days {
+  btn.new-day {
     @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
     @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $border-radius-base);
   }

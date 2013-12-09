@@ -6,6 +6,6 @@
     button.btn.new-sp-day{action 'newSpDay'}
       | New Data Point
     .list-group
-      =each sp_day in controller
+      =each day in controller
         .list-group-item
-          =render 'sp_day' sp_day
+          =render 'day' day

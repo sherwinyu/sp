@@ -1,4 +1,4 @@
-Sysys.SpDay = DS.Model.extend
+Sysys.Day = DS.Model.extend
   date: Sysys.attr('day')
   note: Sysys.attr('string')
   sleep: Sysys.attr()
@@ -9,8 +9,8 @@ Sysys.SpDay = DS.Model.extend
     note: Humon.String
     summary: Humon.DaySummary
 
-  yesterday: DS.belongsTo('sp_day')
-  tomorrow: DS.belongsTo('sp_day')
+  yesterday: DS.belongsTo('day')
+  tomorrow: DS.belongsTo('day')
 
   startedAt: (->
     @get('sleep.awake_at')
