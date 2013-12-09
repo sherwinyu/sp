@@ -18,9 +18,9 @@ module Util
       tz.local_to_utc(time)
     end
 
-    #
-    # time is a Time.
-    # Returns a Date representing the "experienced day (in eastern time)" that time
+    ##
+    # @param [Time] an absolute time. (Regardless of timezone, seconds since epoch)
+    # @return [Date] representing the "experienced day (in eastern time)" that time
     # coresponds to.
     #
     # E.g., 3am Tuesday in Eastern Time corresponds to Monday
