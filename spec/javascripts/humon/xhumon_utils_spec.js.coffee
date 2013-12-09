@@ -1,3 +1,4 @@
+#= require spec_helper
 shu = HumonUtils
 describe 'xHumon Utils', ->
   describe 'json2node', ->

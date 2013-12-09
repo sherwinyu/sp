@@ -1,3 +1,4 @@
+#= require spec_helper
 describe 'xHumonValues primitive', ->
   json = [31415, "2013-03-02", false, null]
   j2n = HumonUtils.json2node
@@ -15,7 +16,7 @@ describe 'xHumonValues primitive', ->
 
   describe 'flatten', ->
     it "returns an array with just its node", ->
-      expect(node0.flatten()).toEqual [node0]
-      expect(node1.flatten()).toEqual [node1]
-      expect(node2.flatten()).toEqual [node2]
-      expect(node3.flatten()).toEqual [node3]
+      expect(node0.flatten()).to.eql [node0]
+      expect(node1.flatten()).to.eql [node1]
+      expect(node2.flatten()).to.eql [node2]
+      expect(node3.flatten()).to.eql [node3]
