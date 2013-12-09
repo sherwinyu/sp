@@ -1,6 +1,6 @@
 class Summary
   include Mongoid::Document
-  embedded_in :sp_day
+  embedded_in :day
 
   field :best, type: String
   field :worst, type: String

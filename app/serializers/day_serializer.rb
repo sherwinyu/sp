@@ -1,4 +1,4 @@
-class SpDaySerializer < ActiveModel::Serializer
+class DaySerializer < ActiveModel::Serializer
   attributes :id, :date, :note, :yesterday_id, :tomorrow_id
   has_one :sleep
   has_one :summary

@@ -1,4 +1,4 @@
-class SpDay
+class Day
   include Mongoid::Document
   include Mongoid::Timestamps
   # field :sleep, type: HumonNodeSleep
@@ -29,15 +29,15 @@ class SpDay
   #
   def self.latest
     date = Util::DateTime.time_to_experienced_date Time.now
-    spd = SpDay.find_or_initialize_by date: date
+    spd = Day.find_or_initialize_by date: date
   end
 
   def yesterday
-    SpDay.find_by date: date.yesterday
+    Day.find_by date: date.yesterday
   end
 
   def tomorrow
-    SpDay.find_by date: date.tomorrow
+    Day.find_by date: date.tomorrow
   end
 
   def inspect

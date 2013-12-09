@@ -1,6 +1,6 @@
 class SpSleep
   include Mongoid::Document
-  embedded_in :sp_day
+  embedded_in :day
 
   field :awake_at
   field :awake_energy
