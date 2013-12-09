@@ -24,19 +24,19 @@ describe 'xHumon Utils', ->
         node2_3 = node2.get '3'
 
         # check value links
-        expect(node0.val()).toEqual 1
-        expect(node1.val()).toEqual 4
-        expect(node2.val()).toEqual [1, 5, [3, 3], 6]
-        expect(node2_0.val()).toEqual 1
-        expect(node2_1.val()).toEqual 5
-        expect(node2_2.val()).toEqual [3, 3]
-        expect(node2_2_0.val()).toEqual 3
-        expect(node2_3.val()).toEqual 6
+        expect(node0.val()).to.equal 1
+        expect(node1.val()).to.equal 4
+        expect(node2.val()).to.equal [1, 5, [3, 3], 6]
+        expect(node2_0.val()).to.equal 1
+        expect(node2_1.val()).to.equal 5
+        expect(node2_2.val()).to.equal [3, 3]
+        expect(node2_2_0.val()).to.equal 3
+        expect(node2_3.val()).to.equal 6
 
         # check parent links
-        expect(node2_3.nodeParent).toBe node2
-        expect(node2_2_1.nodeParent).toBe node2_2
-        expect(node0.nodeParent).toBe node
+        expect(node2_3.nodeParent).to.equal node2
+        expect(node2_2_1.nodeParent).to.equal node2_2
+        expect(node0.nodeParent).to.equal node
 
     describe "on number", ->
       beforeEach ->
@@ -44,15 +44,15 @@ describe 'xHumon Utils', ->
           node = j2n 5
 
       it "has the proper meta", ->
-        expect(Humon.Number._klass()).toBe Humon.Number
-        expect(Humon.Number._name()).toBe "number"
+        expect(Humon.Number._klass()).to.equal Humon.Number
+        expect(Humon.Number._name()).to.equal "number"
 
       it "parses with correct meta", ->
-        expect(node.get('nodeType')).toBe 'number'
-        expect(node.get('nodeKey')).toBeFalsy()
-        expect(node.get('nodeVal').constructor).toBe Humon.Number
-        expect(node.get('nodeVal').toJson()).toBe 5
-        expect(node.get('nodeVal.node')).toBe node
+        expect(node.get('nodeType')).to.equal 'number'
+        expect(node.get('nodeKey')).to.be.false
+        expect(node.get('nodeVal').constructor).to.equal Humon.Number
+        expect(node.get('nodeVal').toJson()).to.equal 5
+        expect(node.get('nodeVal.node')).to.equal node
 
 
     describe "on date", ->
@@ -63,22 +63,22 @@ describe 'xHumon Utils', ->
           node = j2n dates
           node0 = node.get('0')
       it "has the proper meta", ->
-        expect(Humon.Date._klass()).toBe Humon.Date
-        expect(Humon.Date._name()).toBe "date"
+        expect(Humon.Date._klass()).to.equal Humon.Date
+        expect(Humon.Date._name()).to.equal "date"
       it "parses with correct meta", ->
-        expect(node0.get('nodeType')).toBe 'date'
-        expect(node0.get('nodeKey')).toBeFalsy()
-        expect(node0.get('nodeVal').constructor).toBe Humon.Date
-        expect(node0.get('nodeVal').toJson()).toEqual new Date(2013, 6, 5)
-        expect(node.get('nodeVal.node')).toBe node
+        expect(node0.get('nodeType')).to.equal 'date'
+        expect(node0.get('nodeKey')).to.equalFalsy()
+        expect(node0.get('nodeVal').constructor).to.equal Humon.Date
+        expect(node0.get('nodeVal').toJson()).to.equal new Date(2013, 6, 5)
+        expect(node.get('nodeVal.node')).to.equal node
 
       it "parses 2013 07 05", ->
-        expect(node.get('0').val()).toEqual new Date(2013, 6, 5)
+        expect(node.get('0').val()).to.equal new Date(2013, 6, 5)
       it "parses Date objects", ->
-        expect(node.get('1').val()).toEqual new Date(2013, 6, 5)
+        expect(node.get('1').val()).to.equal new Date(2013, 6, 5)
       it "Fri Jul 5 2013", ->
-        expect(node.get('2').val()).toEqual new Date(2013, 6, 5)
-        expect(node.get('2.nodeType')).toEqual 'date'
+        expect(node.get('2').val()).to.equal new Date(2013, 6, 5)
+        expect(node.get('2.nodeType')).to.equal 'date'
 
     describe "on complex object", ->
       json_src = {a: 1, b: 2, c: [false, 'lalala', {nested: true}], d:[], e: {}}
@@ -98,7 +98,7 @@ describe 'xHumon Utils', ->
         nodee = node.get('e')
 
       it "returns the correct objects", ->
-        expect(node.val()).toEqual json_src
-        expect(nodea.val()).toEqual 1
-        expect(nodeb.val()).toEqual 2
-        expect(nodeb.val()).toEqual 2
+        expect(node.val()).to.equal json_src
+        expect(nodea.val()).to.equal 1
+        expect(nodeb.val()).to.equal 2
+        expect(nodeb.val()).to.equal 2
