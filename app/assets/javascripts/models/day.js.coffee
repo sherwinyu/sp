@@ -7,7 +7,7 @@ Sysys.Day = DS.Model.extend
   typeMap:
     sleep: Humon.Sleep
     note: Humon.String
-    summary: Humon.DaySummary
+    summary: Humon.Summary
 
   yesterday: DS.belongsTo('day')
   tomorrow: DS.belongsTo('day')

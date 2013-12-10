@@ -18,10 +18,16 @@ Humon.Complex = Humon.Hash.extend(
   #     attributekey: k
   #     attributeVal: @get(k)
   # ).property()
+
+
+
+
 )
 
 Humon.Complex.reopenClass(
   childMetatemplates: {}
+  requiredAttributes: []
+  optionalAttributes: []
 
   _metatemplate:
     $include: Humon.Hash._metatemplate
@@ -36,13 +42,19 @@ Humon.Complex.reopenClass(
   # `childMetatemplates` is an available variable that contains metatemplates
   # for all childNodes.
   j2hnv: (json, context) ->
+    json = @_initJsonDefaults(json)
     childNodes = []
     for own key, childVal of json
       childContext =
         nodeParent: context.node
         metatemplate: @childMetatemplates[key]
+      # Whose responsibility is it to make sure `childVal` is valid for @childMetatemplates[key] ?
       childNode = HumonUtils.json2node(childVal, childContext)
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
     @create _value: childNodes, node: context.node
+
+  _initJsonDefaults: (json) ->
+    json
+
 )
