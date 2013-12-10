@@ -1,0 +1,10 @@
+{{!
+humon_node_summary.hbs
+}}
+
+<a {{action addField bubbles=false target="view.nodeContent.nodeVal"}}> Add a field </a>
+
+{{view Sysys.HumonNodeView nodeContentBinding="view.nodeContent.best"}}
+{{view Sysys.HumonNodeView nodeContentBinding="view.nodeContent.worst"}}
+{{view Sysys.HumonNodeView nodeContentBinding="view.nodeContent.funny"}}
+{{view Sysys.HumonNodeView nodeContentBinding="view.nodeContent.insight"}}

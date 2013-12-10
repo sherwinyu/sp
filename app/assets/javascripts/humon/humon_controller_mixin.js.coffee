@@ -125,8 +125,8 @@ Humon.HumonControllerMixin = Ember.Mixin.create
         return
 
       # If the commited payload was a literal, we insert a sibling
-      #   (we can assume a sibling exists because  only path to `commitAndContinueNew`
-      #   is from HNV.enterPressed, which pre checks for the non-sibling case
+      #   (we can assume a sibling exists because only path to `commitAndContinueNew`
+      #   is from HNV.enterPressed, which prechecks for the non-sibling case
       parent = ahn.get 'nodeParent'
       blank = Humon.json2node null
       Ember.run =>

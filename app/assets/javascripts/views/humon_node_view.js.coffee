@@ -34,6 +34,8 @@ Sysys.HumonNodeView = Ember.View.extend
 
 
   actions:
+    addField: (e) ->
+      console.log "FIELD ADD"
 
     # up -- handles the event of moving to the previous node
     # Context: TODO(syu)
@@ -180,6 +182,7 @@ Sysys.HumonNodeView = Ember.View.extend
       opts.field = "val"
       opts.pos = "right"
     @focusField opts
+
 
   # click -- responds to a click event on the HNV
   # primarily for

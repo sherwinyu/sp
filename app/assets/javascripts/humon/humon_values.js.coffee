@@ -17,6 +17,8 @@ Humon.HumonValue = Ember.Mixin.create
   nextNode: ->
   prevNode: ->
   delete: ->
+  ##
+  # @return [JSON] json
   toJson: ->
   node: null
 

@@ -95,3 +95,6 @@ Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend()
 Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend(
   templateName: "humon_node_sleep"
 )
+Humon.TemplateContexts.DaySummary = Humon.TemplateContexts.Complex.extend(
+  templateName: "humon_node_summary"
+)
