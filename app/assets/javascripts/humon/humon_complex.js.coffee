@@ -4,6 +4,10 @@
 ## sleep example
 Humon.Complex = Humon.Hash.extend(
   isComplex: true
+  isCollection: true
+  childrenReorderable: false
+  acceptsArbitraryChildren: false
+
   #  key: name, value: metatemplate
 
   # _requiredAttributes: null

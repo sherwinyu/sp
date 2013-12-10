@@ -3,10 +3,10 @@ Humon.DaySummary = Humon.Complex.extend
 
   init: (args...) ->
     # make sure that all feels exist
-    @set('best', Humon.j2n "") unless @get('best').val()
-    @set('worst', Humon.j2n "") unless @get('best').val()
-    @set('funny', Humon.j2n "asdf") unless @get('funny').val()
-    @set('insight', Humon.j2n "asdf") unless @get('insight').val()
+    @set('best.nodeVal._value',  "") unless @get('best').val()
+    @set('worst.nodeVal._value',  "") unless @get('best').val()
+    @set('funny.nodeVal._value',  "asdf") unless @get('funny').val()
+    @set('insight.nodeVal._value',  "asdf") unless @get('insight').val()
 
 
 

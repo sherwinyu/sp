@@ -1,6 +1,9 @@
 Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   _value: null
   isCollection: true
+  childrenReorderable: true
+  acceptsArbitraryChildren: true
+
   hasChildren: ( ->
     @_value.length >= 1
   ).property('children')
