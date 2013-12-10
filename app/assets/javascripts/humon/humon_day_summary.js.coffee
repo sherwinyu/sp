@@ -16,7 +16,7 @@ Humon.DaySummary.reopenClass
       name: "String"
     worst:
       name: "String"
-    best:
+    funny:
       name: "String"
-    worst:
+    insight:
       name: "String"

@@ -12,5 +12,5 @@ ul
  li Day started: {{startedAt}}
  li date: {{date}}
  li note: {{note}}
-=humon-editor json=sleep rootKey="Sleep" metaTemplate=typeMap.sleep
-=humon-editor json=summary rootKey="Summary" metaTemplate=typeMap.summary
+=humon-editor json=sleep rootKey="Sleep" metaTemplate=typeMap.sleep downPressed="downPressed" upPressed="upPressed"
+=humon-editor json=summary rootKey="Summary" metaTemplate=typeMap.summary downPressed="downPressed" upPressed="upPressed"

@@ -2,10 +2,6 @@
 humon_node.hbs
 }}
 
-{{#if view.nodeContent.isCollection}}
-  {{#each nodeChild in view.nodeContent.nodeVal.children}}
-    {{#with nodeChild}}
-    {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
-    {{/with}}
-  {{/each}}
-{{/if}}
+{{#each nodeChild in view.nodeContent.nodeVal.children}}
+  {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
+{{/each}}

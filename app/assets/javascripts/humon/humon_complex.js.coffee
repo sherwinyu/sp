@@ -41,5 +41,4 @@ Humon.Complex.reopenClass(
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
     @create _value: childNodes, node: context.node
-
 )
