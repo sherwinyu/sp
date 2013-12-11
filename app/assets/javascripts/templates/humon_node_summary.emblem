@@ -1,0 +1,8 @@
+/ humon_node_summary.hbs
+
+a{action addField bubbles=false target="view.nodeContent.nodeVal"}: | Add a field
+
+Sysys.HumonNodeView nodeContentBinding=view.nodeContent.best
+Sysys.HumonNodeView nodeContentBinding=view.nodeContent.worst
+Sysys.HumonNodeView nodeContentBinding=view.nodeContent.funny
+Sysys.HumonNodeView nodeContentBinding=view.nodeContent.insight
