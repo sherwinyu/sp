@@ -65,7 +65,7 @@ Sysys.HumonNodeView = Ember.View.extend
       # If current node's parent is a collection most common case)
       # then we send commitAndContinueNew, which will both commit,
       # and insert a child
-      if @get('controller.activeHumonNode.isCollection') && @get('controller.activeHumonNode.acceptsArbitraryChildren')
+      if @get('controller.activeHumonNode.nodeParent.isCollection') && @get('controller.activeHumonNode.nodeParent.acceptsArbitraryChildren')
         @get('controller').send 'commitAndContinueNew', payload
       # If current node is NOT in a collection
       # Example use case: single node bindings (e.g., data_point.startedAt)

@@ -121,20 +121,20 @@ Humon.HumonControllerMixin = Ember.Mixin.create
         @send 'activateNode', ahn
         # TODO(syu): decide on whether we want to insert a chlid here;
         @send 'smartFocus'
-        # @insertChild()
+        @insertChild()
         return
 
       # If the commited payload was a literal, we insert a sibling
       #   (we can assume a sibling exists because only path to `commitAndContinueNew`
       #   is from HNV.enterPressed, which prechecks for the non-sibling case
       parent = ahn.get 'nodeParent'
-      blank = Humon.json2node null
+      blank = null
       Ember.run =>
         idx = ahn.get('nodeIdx') + 1
         # Appears that the next `rerender` call is unnecessary.
         # rerender the parent view BEFORE inserting the child
         # parent.get('nodeView').rerender()
-        parent.insertAt(idx,  blank)
+        blank = parent.get('nodeVal').insertNewChildAt(idx)
       # Activate the newly inserted blank, and smart focus it
       @send 'activateNode', blank
       Ember.run.sync()
