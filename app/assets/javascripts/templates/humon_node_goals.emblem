@@ -1,0 +1,8 @@
+/ humon_node.hbs
+
+=each nodeChild in view.nodeContent.nodeVal.children
+  Sysys.HumonNodeView nodeContentBinding="nodeChild"
+=else
+  div
+    | No goals yet!
+a{action insertNewChildAt 0 bubbles=false target="view.nodeContent.nodeVal"}: |Add a goal

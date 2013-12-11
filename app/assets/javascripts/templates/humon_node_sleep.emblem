@@ -1,0 +1,5 @@
+/ humon_node.hbs
+
+| zzz
+=each nodeChild in view.nodeContent.nodeVal.children
+  Sysys.HumonNodeView nodeContentBinding="nodeChild"
