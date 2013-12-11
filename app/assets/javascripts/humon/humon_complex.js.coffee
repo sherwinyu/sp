@@ -7,7 +7,11 @@ Humon.Complex = Humon.Hash.extend(
 
   optionalChildren: (->
     @get('children').filter (node) => node.get('nodeKey') in @constructor.optionalAttributes
-  ).property('children')
+  ).property('children', 'children.@each.nodeKey')
+
+  requiredChildren: (->
+    @get('children').filter (node) => node.get('nodeKey') in @constructor.requiredAttributes
+  ).property('children', 'children.@each.nodeKey')
 
   # insertNewChildAt: (idx) ->
 
