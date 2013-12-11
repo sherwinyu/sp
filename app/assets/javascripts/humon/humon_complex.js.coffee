@@ -5,6 +5,13 @@ Humon.Complex = Humon.Hash.extend(
   acceptsArbitraryChildren: false
   hasKeys: true
 
+  optionalChildren: (->
+    @get('children').filter (node) => node.get('nodeKey') in @constructor.optionalAttributes
+  ).property('children')
+
+  # insertNewChildAt: (idx) ->
+
+
   #  key: name, value: metatemplate
 
   # _requiredAttributes: null

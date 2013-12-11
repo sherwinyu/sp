@@ -13,7 +13,6 @@ Humon.Summary.reopenClass
       name: "String"
 
   requiredAttributes: ["best", "worst"]
-
   optionalAttributes: ["funny", "insight"]
 
   # Overrides
@@ -22,8 +21,6 @@ Humon.Summary.reopenClass
     requiredDefaults =
       best: ""
       worst: ""
-      funny: ""
-      insight: ""
     # assuming json has no other fields
     # assuming json.best and json.worst are Strings
     # assuming json.funny, json.insight are Strings -- THIS ASSUMPTION
