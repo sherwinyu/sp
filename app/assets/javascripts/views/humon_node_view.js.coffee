@@ -159,7 +159,7 @@ Sysys.HumonNodeView = Ember.View.extend
   #     e.g., keyFieldPresent, valFieldPresent, idxFieldPresent
   smartFocus: ->
     node = @get('nodeContent')
-    context = node.get('nodeParent.nodeType') || "hash"
+    hasKeys = node.get('nodeParent.hasKeys')
     nodeKey = node.get('nodeKey')
     nodeVal = @valField()?.val()
     isLiteral = node.get('isLiteral')
@@ -167,16 +167,16 @@ Sysys.HumonNodeView = Ember.View.extend
     opts = {}
 
     # the labelfield is key AND a key is present AND valfield is present
-    if context == 'hash' && isLiteral && nodeKey && !nodeVal
+    if hasKeys && isLiteral && nodeKey && !nodeVal
       opts.field = 'label'
     # the labelfield is key AND the key is empty
-    else if context == 'hash' && !nodeKey
+    else if hasKeys && !nodeKey
       opts.field = 'label'
     # the labelfield is key AND no val field is present
-    else if context =='hash' && isCollection
+    else if hasKeys && isCollection
       opts.field = 'label'
     # the labelfield is list AND no val field present
-    else if context =='list'  && isCollection
+    else if !hasKeys && isCollection
       opts.field = 'label'
     else
       opts.field = "val"
@@ -220,7 +220,7 @@ Sysys.HumonNodeView = Ember.View.extend
       # needs to be in a deferred because the child views (node fields)
       # might not have had their text set up (via didInsertElement)
       Ember.run.scheduleOnce "afterRender", @, =>
-        console.debug "afterRender focusField"
+        # console.debug "afterRender focusField"
         @focusField(@get("_focusedField"))
         @set "_focusedField", null
     @get('nodeContent')?.set 'nodeView', @
@@ -256,7 +256,7 @@ Sysys.HumonNodeView = Ember.View.extend
     # NOTE this gets the FIRST instance of child field of this type
     fieldView = @["#{opts.field}Field"]()
 
-    # console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
+    console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
 
 
     # This is ASSUMING that anything we would ever want to focus on is a subclass of

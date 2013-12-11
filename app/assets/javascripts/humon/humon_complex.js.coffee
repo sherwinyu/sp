@@ -3,6 +3,7 @@ Humon.Complex = Humon.Hash.extend(
   isCollection: true
   childrenReorderable: false
   acceptsArbitraryChildren: false
+  hasKeys: true
 
   #  key: name, value: metatemplate
 

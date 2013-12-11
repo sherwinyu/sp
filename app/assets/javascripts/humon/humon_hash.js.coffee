@@ -1,6 +1,7 @@
 Humon.Hash = Humon.List.extend
   isHash: true
   isList: false
+  hasKeys: true
 
   # @param keyOrIndex the value to access
   # attempts to do a look up against _value
