@@ -4,6 +4,7 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   childrenReorderable: true
   acceptsArbitraryChildren: true
   isList: true
+  hasKeys: false
 
   hasChildren: ( ->
     @_value.length >= 1
