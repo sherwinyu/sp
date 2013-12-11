@@ -1,3 +1,4 @@
+###
 Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
   nodeKey: ''
   nodeVal: null
@@ -212,3 +213,4 @@ Sysys.HumonNode = Ember.Object.extend Ember.Comparable,
 
   isDescendant: (testNode)->
     path = @pathToNode(testNode)
+###

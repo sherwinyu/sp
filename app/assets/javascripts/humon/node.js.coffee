@@ -13,7 +13,6 @@ Humon.Node = Ember.Object.extend
   hasChildrenBinding: Ember.Binding.oneWay('nodeVal.hasChildren')
   ###
 
-  # TODO(syu): Delegate this look up to nodeVal
   nodeIdx: ((key, val)->
     @get('nodeParent.children')?.indexOf @
   ).property('nodeParent.children.@each', 'nodeParent.children')
@@ -84,30 +83,10 @@ Humon.Node = Ember.Object.extend
       for child in @get('children')
         child.set 'nodeParent', @
 
-  # Public
-  # precondition: node is a collection node
-  # replaces objects in
-  replaceAt: (idx, amt, nodes...) ->
-    Em.assert("HumonNode must be a list or a hash to replaceAt(#{idx},#{amt},#{nodes})", @get('isCollection'))
-    children = @get 'children'
-
-    # set the `nodeParent` for the removed nodes to null
-    end = Math.min(idx + amt, children.length)
-    for i in [idx...end]
-      children[i]?.set('nodeParent', null)
-
-    # set the nodeParent for the inserted nodes to this node
-    if nodes?
-      for node in nodes
-        node.set('nodeParent', @)
-
-    # TODO(syu) call underlying nodeVal and let it handle this
-    children.replace idx, amt, nodes
 
   insertAt: (idx, nodes...) ->
-    Em.assert("HumonNode must be a list or a hash to insertAt(#{idx},#{nodes})", @get('isCollection'))
-    args = [idx, 0].concat nodes
-    @replaceAt.apply @, args
+    args = [idx].concat nodes
+    @get('nodeVal').insertAt.apply(@get('nodeVal'), args)
 
   # Public
   # Deletes `amt` elements from the nodeVal array, starting at idx, inclusive.
@@ -115,19 +94,15 @@ Humon.Node = Ember.Object.extend
   # If the number of elements to be deleted is greater than the remaining elements in the array, the remaining elemtns are deleted
   # sets the nodeParent for deleted nodes to null
   deleteAt: (idx, amt) ->
-    Em.assert("deleteAt(idx, amt) requires idx to be an number", typeof idx == "number")
-    amt ?= 1
-    Em.assert("HumonNode must be a list or a hash to deleteAt(#{idx},#{amt})", @get('isCollection'))
-    @replaceAt(idx, amt)
+    @get('nodeVal').deleteAt(idx, amt)
+
 
   # Public
   # precondition: node must be a child of this node
   # removes the child node from this.nodeVal array
   # sets node's nodeParent to null
   deleteChild: (node) ->
-    Em.assert('Child argument must be a child of this node for deleteChild', node.get('nodeParent') == @)
-    idx = node.get('nodeIdx')
-    @deleteAt(idx)
+    @get('nodeVal').deleteChild(node)
 
   convertToHash: ->
     throw new Error "Not implemented yet"

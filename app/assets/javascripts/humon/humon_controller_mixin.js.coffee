@@ -239,8 +239,8 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     destParent = dest?.get('nodeParent')
     return unless @withinScope destParent
     Ember.run =>
-      ahn.get('nodeParent').deleteChild ahn
-      dest.get('nodeParent').insertAt(dest.get('nodeIdx'), ahn)
+      ahn.get('nodeParent.nodeVal').deleteChild ahn
+      dest.get('nodeParent.nodeVal').insertAt(dest.get('nodeIdx'), ahn)
     @send 'activateNode', ahn
     Ember.run.sync()
     @send 'smartFocus'
@@ -277,8 +277,8 @@ Humon.HumonControllerMixin = Ember.Mixin.create
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
-    blank = Humon.json2node null
-    Em.run => ahn.insertAt 0, blank
+    blank = null
+    Em.run => blank = ahn.get('nodeVal').insertNewChildAt(0)
     @send 'activateNode', blank
     Ember.run.sync()
     @send 'smartFocus'

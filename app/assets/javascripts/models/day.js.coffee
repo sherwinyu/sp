@@ -3,11 +3,13 @@ Sysys.Day = DS.Model.extend
   note: Sysys.attr('string')
   sleep: Sysys.attr()
   summary: Sysys.attr()
+  goals: Sysys.attr()
 
   typeMap:
     sleep: Humon.Sleep
     note: Humon.String
     summary: Humon.Summary
+    goals: Humon.Goals
 
   yesterday: DS.belongsTo('day')
   tomorrow: DS.belongsTo('day')
@@ -15,3 +17,4 @@ Sysys.Day = DS.Model.extend
   startedAt: (->
     @get('sleep.awake_at')
   ).property('sleep')
+

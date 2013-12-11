@@ -34,8 +34,6 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
 
   initContentFromJson: ->
     initialJson = @get('json')
-    if typeof initialJson is 'undefined'
-      initialJson = 'undefined'
     node = Humon.json2node initialJson, type: @get('metaTemplate')
     node.set('nodeKey', @get('rootKey') || "(root key)")
     @set 'content', node

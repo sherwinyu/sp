@@ -1,7 +1,3 @@
-#= require_self
-#= require ./humon_sleep
-
-## sleep example
 Humon.Complex = Humon.Hash.extend(
   isComplex: true
   isCollection: true

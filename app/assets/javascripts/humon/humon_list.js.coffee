@@ -48,7 +48,6 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
 
     children.replace idx, amt, nodes
 
-
   insertAt: (idx, nodes...) ->
     args = [idx, 0].concat nodes
     @replaceAt.apply @, args
@@ -60,12 +59,24 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
     @insertAt(idx, blank)
     return blank
 
+  deleteAt: (idx, amt) ->
+    amt ?= 1
+    @replaceAt(idx, amt)
+
+  deleteChild: (node) ->
+    idx = node.get('nodeIdx')
+    @deleteAt(idx)
+
 Humon.List.reopenClass
   j2hnv: (json, context) ->
+    json = @_initJsonDefaults(json)
     Em.assert( (json? && json instanceof Array), "json must be an array")
     # set all children node's `nodeParent` to this json payload's corresponding `node`
     childrenNodes = json.map( (x) -> HumonUtils.json2node(x, nodeParent: context.node))
-    Humon.List.create _value: childrenNodes, node: context.node
+    @create _value: childrenNodes, node: context.node
 
   matchesJson: (json) ->
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
+
+  _initJsonDefaults: (json) ->
+    json
