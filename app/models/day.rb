@@ -6,6 +6,7 @@ class Day
 
   embeds_one :sleep, class_name: "SpSleep", store_as: 'sleep'
   embeds_one :summary, class_name: "Summary", store_as: 'summary'
+  embeds_many :goals
 
   def_delegators :sleep, *%w[
     awake_at
