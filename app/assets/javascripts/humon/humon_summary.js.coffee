@@ -1,5 +1,16 @@
 Humon.Summary = Humon.Complex.extend
   addField: (e) ->
+  insertNewChildAt: (idx) ->
+    unusedAttributeKeys = @constructor.optionalAttributes.filter( (key) =>
+      @get(key) == undefined)
+    if (key = unusedAttributeKeys[0])?
+      blank = Humon.json2node ""
+      blank.set "nodeKey", key
+      @insertAt(idx, blank)
+      return blank
+    else
+      null
+
 
 Humon.Summary.reopenClass
   childMetatemplates:

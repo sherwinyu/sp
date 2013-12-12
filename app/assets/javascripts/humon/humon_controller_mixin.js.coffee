@@ -78,7 +78,12 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       @set 'activeHumonNode', node
 
     smartFocus: ->
-      @get('activeHumonNode.nodeView').smartFocus()
+      hnv = @get('activeHumonNode.nodeView')
+      if hnv?
+        hnv.smartFocus()
+      else
+        console.warn "HumonMixinController.smartFocus, but no nodeView found for node:", @get('activeHumonNode')
+
 
     ###
     action commitLiteral
@@ -128,17 +133,20 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       #   (we can assume a sibling exists because only path to `commitAndContinueNew`
       #   is from HNV.enterPressed, which prechecks for the non-sibling case
       parent = ahn.get 'nodeParent'
-      blank = null
+      newChildNode = null
       Ember.run =>
         idx = ahn.get('nodeIdx') + 1
         # Appears that the next `rerender` call is unnecessary.
         # rerender the parent view BEFORE inserting the child
         # parent.get('nodeView').rerender()
-        blank = parent.get('nodeVal').insertNewChildAt(idx)
-      # Activate the newly inserted blank, and smart focus it
-      @send 'activateNode', blank
-      Ember.run.sync()
-      @send 'smartFocus'
+        newChildNode = parent.get('nodeVal').insertNewChildAt(idx)
+
+      # If a child was inserted (blank is non-null),
+      # activate the newly inserted node, and smart focus it
+      if newChildNode?
+        @send 'activateNode', newChildNode
+        Ember.run.sync()
+        @send 'smartFocus'
 
   # _commitVal -- commits the val
   # precondition: activeNode is a literal

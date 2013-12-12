@@ -2,10 +2,8 @@
 
 / a{action addField bubbles=false target="view.nodeContent.nodeVal"}: | Add a field
 
-h4 required
 =each nodeChild in view.nodeContent.nodeVal.requiredChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild"
-h4 optional
 =each nodeChild in view.nodeContent.nodeVal.optionalChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild"
 
