@@ -14,6 +14,19 @@ slowPromise = ->
 Sysys.Router.map ->
   @resource "sexy_articles", ->
 
+  @resource "data_point", path: "/data_point/:data_point_id", ->
+    @route "new"
+
+  @resource "data_points", path: "/data_points", ->
+    @route  "new"
+
+  @resource "rescue_time_dps", path: "/rtdps", ->
+    @route "new"
+
+  @resource "days", path: "/days"
+
+  @resource "day", path: "/days/:day_id"
+
 Sysys.SexyArticlesIndexRoute = Ember.Route.extend
   model: slowPromise
 
