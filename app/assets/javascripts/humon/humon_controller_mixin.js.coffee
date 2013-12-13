@@ -285,9 +285,9 @@ Humon.HumonControllerMixin = Ember.Mixin.create
   insertChild: ->
     ahn = @get('activeHumonNode')
     Em.assert 'humon node should be a collection', ahn.get('isCollection')
-    blank = null
-    Em.run => blank = ahn.get('nodeVal').insertNewChildAt(0)
-    @send 'activateNode', blank
+    newChildNode = null
+    Em.run => newChildNode = ahn.get('nodeVal').insertNewChildAt(0)
+    @send 'activateNode', newChildNode
     Ember.run.sync()
     @send 'smartFocus'
 
