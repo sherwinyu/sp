@@ -39,13 +39,5 @@ class Day
   def tomorrow
     Day.find_by date: date.tomorrow
   end
-=begin
-sleep
-  begin
-  energy
-  night
-  lights out
-
-=end
 end
 

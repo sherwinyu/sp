@@ -1,6 +1,12 @@
 Humon.Summary = Humon.Complex.extend
   addField: (e) ->
+  # @param [int] idx the index at which to insert.
+  # @return [Humon.Node] the inserted childNode
+  #   or null, if all optional attributes already exist
+  # Automatically finds the first optional attribute
+  # that isn't included yet, and inserts that.
   insertNewChildAt: (idx) ->
+    # Get an array of unused attribute keys
     unusedAttributeKeys = @constructor.optionalAttributes.filter( (key) =>
       @get(key) == undefined)
     if (key = unusedAttributeKeys[0])?
@@ -26,7 +32,7 @@ Humon.Summary.reopenClass
   requiredAttributes: ["best", "worst"]
   optionalAttributes: ["funny", "insight"]
 
-  # Overrides
+  # @overrides
   _initJsonDefaults: (json) ->
     json ||= {}
     requiredDefaults =
