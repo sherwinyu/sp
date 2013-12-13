@@ -80,13 +80,4 @@ Humon.List.reopenClass
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
 
   _initJsonDefaults: (json) ->
-    json ||= {}
-    requiredDefaults =
-      best: ""
-      worst: ""
-    # assuming json has no other fields
-    # assuming json.best and json.worst are Strings
-    # assuming json.funny, json.insight are Strings -- THIS ASSUMPTION
-    #   is NOT true because they default to Null!
-    # assuming json is an object
-    return $.extend(requiredDefaults, json)
+    json ||= []

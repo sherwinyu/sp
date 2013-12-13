@@ -1,6 +1,4 @@
-/ humon_node_summary.hbs
-
-/ a{action addField bubbles=false target="view.nodeContent.nodeVal"}: | Add a field
+/ humon_node_complex.hbs
 
 =each nodeChild in view.nodeContent.nodeVal.requiredChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild"

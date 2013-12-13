@@ -11,11 +11,7 @@ Humon.Goals.reopenClass
   _initJsonDefaults: (json) ->
     json ||= []
 
-Humon.Goal = Humon.Complex.extend
-
-  # @override
-  insertNewChildAt: (idx) ->
-    null
+Humon.Goal = Humon.Complex.extend()
 
 Humon.Goal.reopenClass
   childMetatemplates:
@@ -27,7 +23,7 @@ Humon.Goal.reopenClass
       name: "DateTime"
 
   requiredAttributes: ["goal"]
-  optionalAttributes: ["completed", "completedAt"]
+  optionalAttributes: ["completed", "completed_at"]
   _initJsonDefaults: (json) ->
     json ||= {}
     requiredDefaults =

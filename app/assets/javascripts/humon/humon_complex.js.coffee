@@ -13,22 +13,22 @@ Humon.Complex = Humon.Hash.extend(
     @get('children').filter (node) => node.get('nodeKey') in @constructor.requiredAttributes
   ).property('children', 'children.@each.nodeKey')
 
-  # insertNewChildAt: (idx) ->
-
-
-  #  key: name, value: metatemplate
-
-  # _requiredAttributes: null
-
-
-  # requiredAttributes: (->
-  #   for own k, v of @_requiredAttrs
-  #     attributekey: k
-  #     attributeVal: @get(k)
-  # ).property()
-
-
-
+  # @param [int] idx the index at which to insert.
+  # @return [Humon.Node] the inserted childNode
+  #   or null, if all optional attributes already exist
+  # Automatically finds the first optional attribute
+  # that isn't included yet, and inserts that.
+  insertNewChildAt: (idx) ->
+    # Get an array of unused attribute keys
+    unusedAttributeKeys = @constructor.optionalAttributes.filter( (key) =>
+      @get(key) == undefined)
+    if (key = unusedAttributeKeys[0])?
+      blank = Humon.json2node ""
+      blank.set "nodeKey", key
+      @insertAt(idx, blank)
+      return blank
+    else
+      null
 
 )
 

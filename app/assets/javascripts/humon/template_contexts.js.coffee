@@ -91,17 +91,17 @@ Humon.TemplateContexts.register "Time",
 Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend(
   templateName: "humon_node_hash"
 )
-Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend()
+Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend(
+  templateName: "humon_node_complex"
+)
 Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend(
   templateName: "humon_node_sleep"
-)
-Humon.TemplateContexts.Summary = Humon.TemplateContexts.Complex.extend(
-  templateName: "humon_node_summary"
 )
 
 Humon.TemplateContexts.Goals = Humon.TemplateContexts.List.extend(
   templateName: "humon_node_goals"
 )
-Humon.TemplateContexts.Goals = Humon.TemplateContexts.Complex.extend(
-  templateName: "humon_node_goals"
+Humon.TemplateContexts.Goal = Humon.TemplateContexts.Complex.extend(
+)
+Humon.TemplateContexts.Summary = Humon.TemplateContexts.Complex.extend(
 )
