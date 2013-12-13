@@ -1,3 +1,4 @@
+window.delay_param = 250
 slowPromise = ->
 
   new Ember.RSVP.Promise((resolve) ->
@@ -12,6 +13,11 @@ slowPromise = ->
     ), 2500
   )
 
+delayed = (ftn) ->
+  Ember.RSVP.Promise (resolve) ->
+    setTimeout (->
+      resolve ftn.call(null)
+    ), window.delay_param
 Sysys.Router.map ->
   @resource "sexy_articles"
 
@@ -51,7 +57,7 @@ Sysys.DayIndexRoute = Ember.Route.extend
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
-     dpPromise = @get('store').find 'data_point', params.data_point_id
+   dpPromise = @get('store').find 'data_point', params.data_point_id
   activate: ->
     utils.track("data point activate")
 
@@ -59,6 +65,7 @@ Sysys.DataPointIndexRoute = Ember.Route.extend()
 
 Sysys.DataPointsRoute = Ember.Route.extend
   model: (params)->
+    delayed =>
      dpsPromise = @get('store').findAll 'data_point'
   activate: ->
     utils.track("data points activate")
@@ -99,7 +106,9 @@ Sysys.ApplicationRoute = Ember.Route.extend
       Sysys.vfi($(el).attr('id')).smartFocus()
 
     loading: (transition)->
-      @controllerFor('loading').set('destination', transition.targetName)
+      resource = transition.targetName.split(".")[0]
+      dest = Em.String.classify(resource)
+      @controllerFor('loading').set('destination', dest)
       true
 
 
