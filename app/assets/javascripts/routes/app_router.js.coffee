@@ -1,20 +1,24 @@
 Sysys.Router.map ->
-  @resource "dataPoint", path: "/data_point/:data_point_id", ->
+  @resource "data_point", path: "/data_point/:data_point_id", ->
     @route "new"
 
-  @resource "dataPoints", path: "/data_points", ->
+  @resource "data_points", path: "/data_points", ->
     @route  "new"
 
   @resource "acts", ->
     @route "new"
     @route "activeAct", path: 'activeAct/:act_id'
 
-  @resource "rescueTimeDps", path: "/rtdps", ->
+  @resource "rescue_time_dps", path: "/rtdps", ->
     @route "new"
-    @route "loading"
 
   @resource "days", path: "/days"
   @resource "day", path: "/days/:day_id"
+
+  @resource "sexy_articles", ->
+
+Sysys.SexyArticlesIndexRoute = Ember.Route.extend
+  model: slowPromise
 
 
 Sysys.DaysRoute = Ember.Route.extend
@@ -56,22 +60,23 @@ Sysys.RescueTimeDpsRoute = Ember.Route.extend
 
   activate: ->
     utils.track("rescue time dps activate")
-  actions:
-    loading: (transition, originRoute)->
-      debugger
-      return true
 
-Sysys.RescueTimeDpsLoadingRoute = Ember.Route.extend
-  activate: ->
-    debugger
-
+slowPromise = ->
+  new Ember.RSVP.Promise((resolve) ->
+    setTimeout (->
+      resolve [
+        title: "a"
+      ,
+        title: "b"
+      ,
+        title: "c"
+      ]
+    ), 1500
+  )
 
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:
     jsonChanged: (json)->
-    loading: (transition, originRoute)->
-      debugger
-      return true
 
 
     # algorithm:

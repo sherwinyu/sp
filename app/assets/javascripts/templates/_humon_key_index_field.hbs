@@ -1,5 +1,5 @@
 {{#if view.nodeContent.nodeParent.isList}}
   {{view "Sysys.IdxEditableField" valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"}}
 {{else}}
-  {{view "Sysys.KeyEditableField" rawValueBinding=view.nodeContent.nodeKey}}<span class="node-text">:</span>
+  {{view "Sysys.KeyEditableField" rawValueBinding="view.nodeContent.nodeKey"}}<span class="node-text">:</span>
 {{/if}}

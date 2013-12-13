@@ -1,3 +1,6 @@
+| current path is
+=currentPath
+
 nav.navbar.navbar-default role="navigation"
   /! Brand and toggle get grouped for better mobile display
   .navbar-header
@@ -14,6 +17,7 @@ nav.navbar.navbar-default role="navigation"
         a href="#" Dashboard
       li: a href="#" Track
       li: a href="#" Recent
+      li: =link-to 'Articles' 'sexy_articles.index'
     ul.nav.navbar-right.navbar-nav
       li.active: a href="#" Development
       li: a href="#" Production

@@ -6,4 +6,3 @@
   Sysys.HumonNodeView nodeContentBinding="nodeChild"
 =each nodeChild in view.nodeContent.nodeVal.optionalChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild"
-
