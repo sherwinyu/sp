@@ -12,7 +12,7 @@ slowPromise = ->
   )
 
 Sysys.Router.map ->
-  @resource "sexy_articles", ->
+  @resource "sexy_articles"
 
   @resource "data_point", path: "/data_point/:data_point_id", ->
     @route "new"
@@ -21,13 +21,12 @@ Sysys.Router.map ->
     @route  "new"
 
   @resource "rescue_time_dps", path: "/rtdps", ->
-    @route "new"
 
-  @resource "days", path: "/days"
+  @resource "days", path: "/days", ->
 
-  @resource "day", path: "/days/:day_id"
+  @resource "day", path: "/days/:day_id", ->
 
-Sysys.SexyArticlesIndexRoute = Ember.Route.extend
+Sysys.SexyArticlesRoute = Ember.Route.extend
   model: slowPromise
 
 Sysys.DaysRoute = Ember.Route.extend
@@ -37,7 +36,7 @@ Sysys.DaysRoute = Ember.Route.extend
   activate: ->
     utils.track("days activate")
 
-Sysys.DayRoute = Ember.Route.extend
+Sysys.DayIndexRoute = Ember.Route.extend
   model: (params) ->
     dayPromise = @get('store').find 'day', params.day_id
 
@@ -69,7 +68,7 @@ Sysys.RescueTimeDpsRoute = Ember.Route.extend
   activate: ->
     utils.track("rescue time dps activate")
 
-# Sysys.RescueTimeDpsIndexRoute = Ember.Route.extend
+Sysys.RescueTimeDpsIndexRoute = Ember.Route.extend()
 
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:

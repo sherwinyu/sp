@@ -17,7 +17,10 @@ nav.navbar.navbar-default role="navigation"
         a href="#" Dashboard
       li: a href="#" Track
       li: a href="#" Recent
-      li: =link-to 'Articles' 'sexy_articles.index'
+      li: =link-to 'Days' 'days.index'
+      li: =link-to 'Articles' 'sexy_articles'
+      li: =link-to 'RTDP Flow' 'rescue_time_dps.index'
+      li: =link-to 'DataPoint Flow' 'data_points.index'
     ul.nav.navbar-right.navbar-nav
       li.active: a href="#" Development
       li: a href="#" Production

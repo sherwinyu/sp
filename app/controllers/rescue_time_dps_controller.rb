@@ -4,7 +4,6 @@ class RescueTimeDpsController < ApplicationController
   # GET /rescue_time_dps
   # GET /rescue_time_dps.json
   def index
-    binding.pry
     @rtdps = RescueTimeDp.cached_recent
 
     respond_to do |format|
