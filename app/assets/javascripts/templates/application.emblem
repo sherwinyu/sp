@@ -1,9 +1,17 @@
-h1 Application
-p
-  | Current route path
-  = currentPath
-p: = link-to 'Articles' 'sexy_articles.index'
+=partial 'nav'
 
-= outlet
+.container
+  h1 JSON Admin
+  .row
+    .col-xs-8.center-block
+      =outlet
 
+/
+  ul.nav.nav-pills
+    li.active
+      a Dashboard
+    li
+      a Track
+    li
+      a Recent
 

@@ -8,7 +8,7 @@ slowPromise = ->
       ,
         title: "c"
       ]
-    ), 1500
+    ), 2500
   )
 
 Sysys.Router.map ->
