@@ -11,6 +11,7 @@ Sysys.Router.map ->
 
   @resource "rescueTimeDps", path: "/rtdps", ->
     @route "new"
+    @route "loading"
 
   @resource "days", path: "/days"
   @resource "day", path: "/days/:day_id"
@@ -52,12 +53,26 @@ Sysys.DataPointsRoute = Ember.Route.extend
 Sysys.RescueTimeDpsRoute = Ember.Route.extend
   model: (params)->
      rtdpPromise = @get('store').findAll 'rescue_time_dp'
+
   activate: ->
     utils.track("rescue time dps activate")
+  actions:
+    loading: (transition, originRoute)->
+      debugger
+      return true
+
+Sysys.RescueTimeDpsLoadingRoute = Ember.Route.extend
+  activate: ->
+    debugger
+
 
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:
     jsonChanged: (json)->
+    loading: (transition, originRoute)->
+      debugger
+      return true
+
 
     # algorithm:
     #   find all elements with [tabIndex] set
