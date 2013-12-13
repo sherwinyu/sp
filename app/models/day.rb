@@ -27,7 +27,6 @@ class Day
     date.strftime("%A")
   end
 
-  #
   def self.latest
     date = Util::DateTime.time_to_experienced_date Time.now
     spd = Day.find_or_initialize_by date: date
@@ -40,11 +39,6 @@ class Day
   def tomorrow
     Day.find_by date: date.tomorrow
   end
-
-  def inspect
-    "#{date.strftime}: #{super}"
-  end
-
 =begin
 sleep
   begin

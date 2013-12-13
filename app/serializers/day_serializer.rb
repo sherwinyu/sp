@@ -4,11 +4,15 @@ class DaySerializer < ActiveModel::Serializer
   has_one :summary
   has_many :goals
 
+  def id
+    date.to_s
+  end
+
   def yesterday_id
-    object.yesterday.try :id
+    object.yesterday.try :date
   end
 
   def tomorrow_id
-    object.tomorrow.try(:id)
+    object.tomorrow.try :date
   end
 end

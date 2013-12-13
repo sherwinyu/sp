@@ -15,7 +15,7 @@ class DaysController < ApplicationController
   end
 
   def show
-    @day = Day.find(params[:id])
+    @day = Day.find_by(date: params[:id])
 
     if @day
       render json: @day

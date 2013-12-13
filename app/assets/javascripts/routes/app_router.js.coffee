@@ -27,8 +27,13 @@ Sysys.DayRoute = Ember.Route.extend
   model: (params) ->
     dayPromise = @get('store').find 'day', params.day_id
 
-  ativate: ->
+  activate: ->
     utils.track("day activate")
+
+  actions:
+    error: (reason) ->
+      console.log(reason)
+      @transitionTo 'days'
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
