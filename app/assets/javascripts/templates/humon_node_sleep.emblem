@@ -1,4 +1,4 @@
-/ humon_node.hbs
+/ humon_node_sleep.hbs
 
 | zzz
 =each nodeChild in view.nodeContent.nodeVal.children

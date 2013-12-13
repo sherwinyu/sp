@@ -1,4 +1,4 @@
-/ humon_node.hbs
+/ humon_node_goals.hbs
 
 =each nodeChild in view.nodeContent.nodeVal.children
   Sysys.HumonNodeView nodeContentBinding="nodeChild"

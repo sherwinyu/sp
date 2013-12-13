@@ -59,7 +59,7 @@ Humon.TemplateContexts.register "Boolean",
   iconClass: "fa-check"
 
 Humon.TemplateContexts.register "List",
-  templateName: "humon_node"
+  templateName: "humon_node_list"
 
 Humon.TemplateContexts.register "Date",
   iconClass: "fa-calendar"
@@ -99,6 +99,9 @@ Humon.TemplateContexts.Summary = Humon.TemplateContexts.Complex.extend(
   templateName: "humon_node_summary"
 )
 
+Humon.TemplateContexts.Goals = Humon.TemplateContexts.List.extend(
+  templateName: "humon_node_goals"
+)
 Humon.TemplateContexts.Goals = Humon.TemplateContexts.Complex.extend(
   templateName: "humon_node_goals"
 )
