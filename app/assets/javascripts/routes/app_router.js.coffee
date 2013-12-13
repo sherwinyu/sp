@@ -1,4 +1,5 @@
 slowPromise = ->
+
   new Ember.RSVP.Promise((resolve) ->
     setTimeout (->
       resolve [
@@ -96,3 +97,19 @@ Sysys.ApplicationRoute = Ember.Route.extend
 
       el = elements[idx]
       Sysys.vfi($(el).attr('id')).smartFocus()
+
+    loading: (transition)->
+      @controllerFor('loading').set('destination', transition.targetName)
+      true
+
+
+Sysys.LoadingRoute = Ember.Route.extend
+  beforeModel: (transition) ->
+
+  model: (args...)->
+
+  setupController: (model, controller) ->
+
+Sysys.LoadingController = Ember.ObjectController.extend
+  destination: ""
+  needs: "application"
