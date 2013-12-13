@@ -24,11 +24,11 @@ gem 'jquery-rails', '2.2.1'
 gem 'jquery-ui-rails', '4.0.2'
 gem 'bootstrap-sass', '~> 3.0.3.0'
 gem 'simple_form', '2.1.0'
-gem 'ember-source', '1.0.0'
-gem 'ember-data-source', '1.0.0.beta.3'
+gem 'ember-source', '~> 1.2'
+gem 'ember-data-source'
 gem 'ember-bootstrap-rails'
 gem 'ember-rails'
-gem 'emblem-rails'
+gem 'emblem-rails', github: "alexspeller/emblem-rails"
 
 gem 'momentjs-rails', '2.0.0.2'
 

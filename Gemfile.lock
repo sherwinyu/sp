@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/alexspeller/emblem-rails.git
+  revision: 70567c3e3a45c47a3292944f0dd91f572126f9d8
+  specs:
+    emblem-rails (0.2.1)
+      barber-emblem (~> 0.1.1)
+      ember-rails (>= 0.14.0)
+
+GIT
   remote: git://github.com/rails-api/active_model_serializers.git
   revision: 2faa571a9cfac95f992449fe0417a1d7774b84fc
   specs:
@@ -113,26 +121,24 @@ GEM
     diff-lcs (1.2.4)
     ember-bootstrap-rails (0.0.3)
       rails (>= 3.1.0)
-    ember-data-source (1.0.0.beta.3)
+    ember-data-source (0.14)
       ember-source
-    ember-rails (0.12.0)
+    ember-rails (0.14.1)
       active_model_serializers
       barber (>= 0.4.1)
       ember-data-source
-      ember-source (>= 1.0.0.rc2.2)
+      ember-source
       execjs (>= 1.2)
+      handlebars-source
+      jquery-rails (>= 1.0.17)
       railties (>= 3.1)
-    ember-source (1.0.0)
-      handlebars-source (= 1.0.12)
-    emblem-rails (0.1.1)
-      barber-emblem (~> 0.1.1)
-      ember-rails (>= 0.11.1)
+    ember-source (1.2.0.1)
+      handlebars-source (~> 1.1.2)
     emblem-source (0.3.5)
     erubis (2.7.0)
     escape (0.0.4)
     eventmachine (1.0.3)
-    execjs (1.4.0)
-      multi_json (~> 1.0)
+    execjs (2.0.2)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -170,7 +176,7 @@ GEM
       zeus
     haml (4.0.3)
       tilt
-    handlebars-source (1.0.12)
+    handlebars-source (1.1.2)
     has_scope (0.6.0.rc)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
@@ -361,10 +367,10 @@ DEPENDENCIES
   compass-rails
   database_cleaner (= 0.9.1)
   ember-bootstrap-rails
-  ember-data-source (= 1.0.0.beta.3)
+  ember-data-source
   ember-rails
-  ember-source (= 1.0.0)
-  emblem-rails
+  ember-source (~> 1.2)
+  emblem-rails!
   factory_girl_rails (= 4.2.1)
   figaro (= 0.6.3)
   font-awesome-rails

@@ -1,4 +1,4 @@
-=partial nav
+=partial 'nav'
 
 .container
   h1 JSON Admin
