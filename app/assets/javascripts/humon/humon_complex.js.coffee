@@ -55,7 +55,7 @@ Humon.Complex.reopenClass(
   # `childMetatemplates` is an available variable that contains metatemplates
   # for all childNodes.
   j2hnv: (json, context) ->
-    json = @_initJsonDefaults(json)
+    json = @normalizeJson(json, typeName: context?.metatemplate?.name)
     childNodes = []
     for own key, childVal of json
       childContext =
@@ -67,6 +67,8 @@ Humon.Complex.reopenClass(
       childNodes.pushObject childNode
     @create _value: childNodes, node: context.node
 
+  ##
+  # @override
   _initJsonDefaults: (json) ->
     json
 
@@ -74,5 +76,4 @@ Humon.Complex.reopenClass(
   # @override
   coerceToValidJsonInput: (json) ->
     @_super(json)
-
 )

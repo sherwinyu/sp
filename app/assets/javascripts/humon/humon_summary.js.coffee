@@ -16,7 +16,8 @@ Humon.Summary.reopenClass
   requiredAttributes: ["best", "worst"]
   optionalAttributes: ["funny", "insight"]
 
-  # @overrides
+  ##
+  # @override
   _initJsonDefaults: (json) ->
     json ||= {}
     requiredDefaults =

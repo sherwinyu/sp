@@ -82,19 +82,31 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
 
 Humon.List.reopenClass
   j2hnv: (json, context) ->
-    if context.metatemplate?
-      Em.assert("context.metatemplate specified but doesn't match this class!", context.metatemplate.name == @_name() )
-      if not @matchesJson json
-        json = @_coerceToValidJsonInput json
-    json = @_initJsonDefaults (json)
+    json = @normalizeJson(json, typeName: context?.metatemplate?.name)
 
     Em.assert( (json? && json instanceof Array), "json must be an array")
+
     # set all children node's `nodeParent` to this json payload's corresponding `node`
     childrenNodes = json.map( (x) -> HumonUtils.json2node(x, nodeParent: context.node))
     @create _value: childrenNodes, node: context.node
 
+  ##
+  # @override
   matchesJson: (json) ->
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
+
+  ##
+  # @param json A JSON payload to be converted into a Humon.Value instance
+  # @param opts
+  #   - typeName
+  # @return [JSON] properly normalized json that has defaults initialized,
+  #   and passes @matchesJson
+  normalizeJson: (json, {typeName}={} ) ->
+    if typeName?
+      Em.assert("context.metatemplate specified but doesn't match this class!", typeName == @_name() )
+      if !@matchesJson json
+        json = @_coerceToValidJsonInput json
+    json = @_initJsonDefaults json
 
   # TODO(syu): pull into node base class
   coerceToValidJsonInput: (json) ->

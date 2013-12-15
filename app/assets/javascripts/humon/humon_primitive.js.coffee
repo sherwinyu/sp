@@ -29,18 +29,25 @@ Humon.Primitive.reopenClass
   # @param context
   #   - node: the Humon.Node instance that will be wrapping the returned Humon.Value
   j2hnv: (json, context) ->
-    if context.metatemplate?
-      Em.assert("context.metatemplate specified but doesn't match this class!", context.metatemplate.name == @_name() )
-      if !@matchesJson json
-        json = @_coerceToValidJsonInput json
-    json = @_initJsonDefaults json
-
+    json = @normalizeJson(json, typeName: context?.metatemplate?.name)
     @_klass().create(_value: json, node: context.node)
 
   ##
   # Does NOT trigger validations
   matchesJson: (json) ->
     typeof json == @_name()
+
+  # @param json A JSON payload to be converted into a Humon.Value instance
+  # @param opts
+  #   - typeName
+  # @return [JSON] properly normalized json that has defaults initialized,
+  #   and passes @matchesJson
+  normalizeJson: (json, {typeName}={} ) ->
+    if typeName?
+      Em.assert("context.metatemplate specified but doesn't match this class!", typeName == @_name() )
+      if !@matchesJson json
+        json = @_coerceToValidJsonInput json
+    json = @_initJsonDefaults json
 
   ##
   # @param [json] json
