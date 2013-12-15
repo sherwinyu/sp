@@ -4,6 +4,7 @@ Humon.Node = Ember.Object.extend
   nodeParent: null
   nodeView: null
   nodeKey: null
+  nodeMeta: null
 
   ###
   isHashBinding: Ember.Binding.oneWay('nodeVal.isHash')
@@ -23,6 +24,26 @@ Humon.Node = Ember.Object.extend
   lastFlattenedChild: ->
     arr = @flatten()
     arr[arr.length - 1]
+
+  tryToCommit: (jsonInput) ->
+    if @get('nodeVal').precommitInputCoerce(jsonInput)
+      return
+    try
+      json = try
+                    JSON.parse(jsonInput)
+                  catch error
+                    jsonInput
+      node = HumonUtils.json2node json, metatemplate: @get('nodeMeta')
+    catch error
+      # Error will be if jsonInput doesn't fit supplied metaTemplate
+      debugger
+      @invalidate("Provided string doesn't fit into this node's type.")
+      return
+    @replaceWithHumon node
+
+  invalidate: (reason) ->
+    @set('invalidReason', reason)
+    @set('valid', false)
 
   # Public
   # @returns Humon.Node the next node in the 'flattened' representation of the entire

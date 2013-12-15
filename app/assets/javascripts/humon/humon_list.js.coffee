@@ -20,6 +20,12 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
     @get('_value')
   ).property('_value', '_value.@each')
 
+
+  ##
+  # @override
+  enterPressed: (e)->
+    return false
+
   # @return [Humon.Node] Returns a flat representation of
   flatten: ->
     @get('_value').reduce (flattened, node) ->

@@ -53,7 +53,14 @@ Sysys.HumonNodeView = Ember.View.extend
         Ember.run.sync()
         @get('controller').send 'smartFocus'
 
+    # Default: validate and commit
     enterPressed: ->
+      return unless @get('nodeContent.nodeVal').enterPressed()
+      valString = @valField()?.val()
+      @get('nodeContent').tryToCommit( valString )
+
+
+    oldEnterPressed: ->
       if @get('controller.activeHumonNode.isCollection') && @get('controller.activeHumonNode.acceptsArbitraryChildren')
         @get('controller').send('insertChild')
         return

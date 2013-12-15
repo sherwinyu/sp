@@ -18,6 +18,30 @@ Humon.HumonValue = Ember.Mixin.create
   nextNode: ->
   prevNode: ->
   delete: ->
+
+  enterPressed: ->
+    true
+  ##
+  # Attempts to coerce the input string `jsonInput` to become this type.
+  # This is called when trying to commit on a node that is already this HumonValue type.
+  # It should mostly be used for more complex objects, e.g. dates:
+  #
+  #   "8/4" might not be specific enough to qualify as a date
+  #   but if we already know the node is a date, "8/4" can be
+  #   parsed to August 4th.
+  #
+  # TODO(syu): What about the general case, if we node the nodeTemplate but the
+  # NodeVal isn't instantiated yet? E.g., inside json2node
+  #
+  # TODO(syu): Impose the invariant that if this.matchesJson(jsonInput), then
+  # this.precommitInputCoerce(json) should be true as well
+  #
+  # @param [JSON] jsonInput
+  # @return [boolean] whether the precommitInputCoerce was successful
+  precommitInputCoerce: (jsonInput) ->
+    false
+
+
   ##
   # @return [JSON] json
   toJson: ->
