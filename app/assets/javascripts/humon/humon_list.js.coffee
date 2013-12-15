@@ -24,6 +24,7 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   ##
   # @override
   enterPressed: (e)->
+    @insertNewChildAt(0)
     return false
 
   # @return [Humon.Node] Returns a flat representation of

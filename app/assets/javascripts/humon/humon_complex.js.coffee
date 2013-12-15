@@ -18,11 +18,16 @@ Humon.Complex = Humon.Hash.extend(
   #   or null, if all optional attributes already exist
   # Automatically finds the first optional attribute
   # that isn't included yet, and inserts that.
+  #
+  # TODO(syu): ignore idx and insert the proper child
   insertNewChildAt: (idx) ->
     # Get an array of unused attribute keys
     unusedAttributeKeys = @constructor.optionalAttributes.filter( (key) =>
       @get(key) == undefined)
     if (key = unusedAttributeKeys[0])?
+
+      # TODO(syu): Wow this is so ugly
+      idx = @get('requiredChildren').length + @constructor.optionalAttributes.indexOf key
       blank = Humon.json2node ""
       blank.set "nodeKey", key
       @insertAt(idx, blank)
