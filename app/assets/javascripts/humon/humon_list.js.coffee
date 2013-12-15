@@ -93,3 +93,12 @@ Humon.List.reopenClass
 
   _initJsonDefaults: (json) ->
     json ||= []
+
+  # This is called by Humon.json2node
+  # Used when metatemplate is given (type is known)
+  # but matchesJson is false.
+  #   E.g., user types "[1,2,3]"
+  #     json is the array, [1, 2, 3]
+  #     But since we know it cant' be an array, we'll represent it as "[1, 2, 3]"
+  coerceToDefaultJson: (json) ->
+    throw new Error "Can't coerce #{json} to #{@.constructor}"

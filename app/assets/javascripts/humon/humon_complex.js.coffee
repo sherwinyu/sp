@@ -70,4 +70,9 @@ Humon.Complex.reopenClass(
   _initJsonDefaults: (json) ->
     json
 
+  ##
+  # @override
+  coerceToDefaultJson: (json) ->
+    json || {}
+
 )

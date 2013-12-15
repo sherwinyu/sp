@@ -32,3 +32,6 @@ Humon.Primitive.reopenClass
     @_klass().create(_value: json, node: context.node)
   matchesJson: (json) ->
     typeof json == @_name()
+
+  coerceToDefaultJson: (json) ->
+    throw new Error "Can't coerce #{json} to #{@.constructor}"

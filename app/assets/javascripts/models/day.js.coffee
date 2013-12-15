@@ -6,10 +6,14 @@ Sysys.Day = DS.Model.extend
   goals: Sysys.attr()
 
   typeMap:
-    sleep: Humon.Sleep
-    note: Humon.String
-    summary: Humon.Summary
-    goals: Humon.Goals
+    sleep:
+      name: "sleep"
+    note:
+      name: "string"
+    summary:
+      name: "summary"
+    goals:
+      name: "goals"
 
   yesterday: DS.belongsTo('day')
   tomorrow: DS.belongsTo('day')

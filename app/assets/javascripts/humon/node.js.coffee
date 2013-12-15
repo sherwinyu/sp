@@ -30,12 +30,16 @@ Humon.Node = Ember.Object.extend
       return
     try
       json = try
-                    JSON.parse(jsonInput)
-                  catch error
-                    jsonInput
+              # TODO(syu): -- probably shouldn't do this if we have the metatemplate
+              # e.g., no reason to convert "[1, 2, 3]" into [1, 2, 3] if we
+              # know the val is supposed to be a string
+              JSON.parse(jsonInput)
+            catch error
+              jsonInput
       node = HumonUtils.json2node json, metatemplate: @get('nodeMeta')
     catch error
       # Error will be if jsonInput doesn't fit supplied metaTemplate
+      # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
       debugger
       @invalidate("Provided string doesn't fit into this node's type.")
       return
