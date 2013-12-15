@@ -46,10 +46,6 @@ Sysys.ContentEditableField = Ember.View.extend
   refresh: ->
     @val @get('rawValue')
 
-  # is this an event?
-  enter: ->
-    @get('parentView').send 'enterPressed'
-
   initHotKeys: ->
     @createHotKeys()
     for own combo, func of @get 'hotkeys'
@@ -59,13 +55,15 @@ Sysys.ContentEditableField = Ember.View.extend
     @set 'hotkeys',
       'return': (e) =>
         e.preventDefault()
-        @enter()
+        @get('parentView').send 'enterPressed', e
       'down': (e) =>
         e.preventDefault()
         @get('parentView').send 'down', e
       'up': (e) =>
         e.preventDefault()
         @get('parentView').send 'up', e
+
+    ###
       'ctrl+up': (e) =>
         e.preventDefault()
         @get('controller').send('bubbleUp')
@@ -88,6 +86,7 @@ Sysys.ContentEditableField = Ember.View.extend
       'ctrl+shift+h': (e) =>
         console.log 'ctrl+shift+h'
         @get('controller').send('forceHash')
+    ###
 
 Sysys.AbstractEditableLabel = Sysys.ContentEditableField.extend
   classNames: ['label-field']

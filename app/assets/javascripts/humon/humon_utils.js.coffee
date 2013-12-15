@@ -1,4 +1,12 @@
 window.HumonUtils =
+  ## A metatemplate
+  ###
+  #{
+  name: "date"
+
+
+  }
+  ###
   ##
   # @param [metatemplate] metatemplate
   # @return [instance of Humon.HumonValue]

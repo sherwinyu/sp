@@ -26,3 +26,66 @@ Humon.HumonValue = Ember.Mixin.create
 Humon.HumonValueClass = Ember.Mixin.create
   j2hnv: (json) ->
   matchesJson: (json) ->
+
+###
+commitEverything: (payload)
+  - commitVal
+  - setKey
+
+activateNode: (node)
+
+smartFocus:
+  hnv.smartFocus
+
+commitLiteral: (payload)
+  - commitEveryything
+  - activateNode
+  - smartFocus
+
+commitAndContinueNew: (payload)
+  - commitEverything
+
+  if commited a collection
+    - activateNode
+    - smartFocus
+    - insertChild
+
+  if commited a literal
+    - node.nodeVal.insertNewChlidAt
+    - activateNode
+    - smartFocus
+
+_commitVal: (rawString, node=null)o
+  attempts JSON.parse rawString
+  node.replaceWithJson
+  node.nodeView.rerender (if type changed)
+
+nextNode: (e)
+  node.nextNode
+  - activateNode
+
+  - didDown
+
+prevNode: (e)
+  node.prevNode
+  - activateNode
+
+  - didUp
+
+forceHash:
+
+forceList:
+
+bubbleUp:
+  - get ahn
+  ahn.nodeParent.nodeVal.deleteChild
+  ahn.nodeParent.nodeVal.insertAt
+  - activateNode
+  - smartFocus
+
+bubbleUp:
+  - get ahn
+  ahn.nodeParent.nodeVal.deleteChild
+  ahn.nodeParent.nodeVal.insertAt
+  - activateNode
+###
