@@ -57,4 +57,3 @@ Humon.Primitive.reopenClass
 
   _initJsonDefaults: (json) ->
     json
-

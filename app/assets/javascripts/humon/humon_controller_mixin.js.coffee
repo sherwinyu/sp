@@ -159,6 +159,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
   #   to get recalculate HNV.autoTemplate
 
   _commitVal: (rawString, {node}={node: null}) ->
+    return
     node ||= @get('activeHumonNode')
     oldType = node.get('nodeType')
     # TODO(syu): Fix Humon.parse
@@ -177,6 +178,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
         # Also, add the ?. check on nodeView because in the case of dC.delete, the node already has
         # nodeView set to null from HNV#willDeleteElement
         if newType != oldType
+          Em.assert "deprecated"
           node.get('nodeView')?.rerender()
 
   ######################################

@@ -45,6 +45,7 @@ Humon.Node = Ember.Object.extend
       @invalidate("Provided string doesn't fit into this node's type.")
       return
     @replaceWithHumon node
+    @get('nodeView').repaint()
 
   invalidate: (reason) ->
     @set('invalidReason', reason)

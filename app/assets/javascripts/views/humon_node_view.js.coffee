@@ -6,7 +6,6 @@ Sysys.HumonNodeView = Ember.View.extend
   templateStrings: (->
     Ember.run.sync()
     @get('nodeContent')
-    # if @get('nodeContent.isLiteral')
     templateContext = Humon.templateContextFor(@get 'nodeContent')
     templateContext.materializeTemplateStrings(@get 'nodeContent')
   ).property('nodeContent.nodeVal')
@@ -31,7 +30,6 @@ Sysys.HumonNodeView = Ember.View.extend
   updateId: (->
     @set('_id', @$().attr('id'))
   ).on 'didInsertElement'
-
 
   actions:
     addField: (e) ->
@@ -203,7 +201,6 @@ Sysys.HumonNodeView = Ember.View.extend
       @get('controller').send('activateNode', @get('nodeContent'))
     @smartFocus()
 
-
   isActive: (->
     ret = @get('controller.activeHumonNode') == @get('nodeContent') && @get('nodeContent')?
   ).property('controller.activeHumonNode', 'nodeContent')
@@ -218,6 +215,17 @@ Sysys.HumonNodeView = Ember.View.extend
   suppressGap: (->
     @get('nodeContent.nodeParent.nodeVal.lastObject') == @get('nodeContent')
   ).property('nodeContent.nodeParent.nodeVal.lastObject')
+
+  ##
+  # For each child content editable field, this calls refresh()
+  # Context: This is necessary to reinsert the "display string"
+  #  of a val field, when an edit to the input is made, but the
+  #  parsed nodeVal is still the same
+  repaint: ->
+    @get("childViews").forEach( (view) ->
+      if view instanceof Sysys.ContentEditableField
+        view.refresh()
+    )
 
   willDestroyElement: ->
     @get('nodeContent')?.set 'nodeView', null
@@ -289,4 +297,3 @@ Sysys.HumonNodeView = Ember.View.extend
     if opts.pos == "right"
       setCursor(fieldView.$().get(0), fieldView.contentLength())
     return
-
