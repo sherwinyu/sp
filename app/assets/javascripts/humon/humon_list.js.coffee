@@ -82,7 +82,12 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
 
 Humon.List.reopenClass
   j2hnv: (json, context) ->
-    json = @_initJsonDefaults(json)
+    if context.metatemplate?
+      Em.assert("context.metatemplate specified but doesn't match this class!", context.metatemplate.name == @_name() )
+      if not @matchesJson json
+        json = @_coerceToValidJsonInput json
+    json = @_initJsonDefaults (json)
+
     Em.assert( (json? && json instanceof Array), "json must be an array")
     # set all children node's `nodeParent` to this json payload's corresponding `node`
     childrenNodes = json.map( (x) -> HumonUtils.json2node(x, nodeParent: context.node))
@@ -91,14 +96,9 @@ Humon.List.reopenClass
   matchesJson: (json) ->
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
 
+  # TODO(syu): pull into node base class
+  coerceToValidJsonInput: (json) ->
+    throw new Error "Can't coerce #{json} to #{@.constructor}"
+
   _initJsonDefaults: (json) ->
     json ||= []
-
-  # This is called by Humon.json2node
-  # Used when metatemplate is given (type is known)
-  # but matchesJson is false.
-  #   E.g., user types "[1,2,3]"
-  #     json is the array, [1, 2, 3]
-  #     But since we know it cant' be an array, we'll represent it as "[1, 2, 3]"
-  coerceToDefaultJson: (json) ->
-    throw new Error "Can't coerce #{json} to #{@.constructor}"

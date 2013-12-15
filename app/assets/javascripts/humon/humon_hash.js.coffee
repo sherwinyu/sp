@@ -38,6 +38,12 @@ Humon.Hash.reopenClass
   # @param context
   #  context.node: the Humon.Node object that will wrap this Humon.Value
   j2hnv: (json, context)->
+    if context.metatemplate?
+      Em.assert("context.metatemplate specified but doesn't match this class!", context.metatemplate.name == @_name())
+      if not @matchesJson json
+        json = @_coerceToValidJsonInput json
+    json = @_initJsonDefaults (json)
+
     childNodes = []
     for own key, childVal of json
       childNode = HumonUtils.json2node(childVal, nodeParent: context.node)
@@ -49,3 +55,10 @@ Humon.Hash.reopenClass
   # returns true if this is a POJO
   matchesJson: (json) ->
     json? and (typeof json is 'object') and !(json instanceof Array) and json.constructor == Object
+
+  _coerceToValidJsonInput: (json) ->
+    @_super()
+
+  _initJsonDefaults: (json) ->
+    json ||= {}
+

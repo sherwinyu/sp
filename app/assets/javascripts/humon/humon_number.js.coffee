@@ -5,5 +5,5 @@ Humon.Number.reopenClass
   # @return [boolean]
   matchesJson: (json) ->
     matches = false
-    matches ||= (json?.constructor == String && json.match /\d+/)
+    matches ||= (json?.constructor == String && json.match /^\d+$/)
     return matches || @_super(json)

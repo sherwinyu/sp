@@ -3,7 +3,8 @@ Sysys.DataPointView = Ember.View.extend
   classNames: ['data-point']
   classNameBindings: ['controller.active:active']
   templateName: 'data_point'
-  metaTemplate: Humon.Sleep
+  metaTemplate:
+    name: "sleep"
   details:
     awake_at: new Date(2013, 10, 29, 8, 40)
     awake_energy: 6

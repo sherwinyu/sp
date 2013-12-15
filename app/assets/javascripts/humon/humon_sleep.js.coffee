@@ -10,6 +10,10 @@ Humon.Sleep.reopenClass
       name: "Number"
     outofbed_energy:
       name: "Number"
+
+  requiredAttributes: ["awake_at", "outofbed_at"]
+  optionalAttributes: ["awake_energy", "outofbed_energy"]
+
     # naps:
     #   name: "list"
     #   each:

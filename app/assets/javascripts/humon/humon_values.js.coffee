@@ -43,10 +43,13 @@ Humon.HumonValue = Ember.Mixin.create
   precommitInputCoerce: (jsonInput) ->
     false
 
+
+
   ##
   # @return [JSON] json
   toJson: ->
 
+###
 Humon.HumonValueClass = Ember.Mixin.create
   j2hnv: (json) ->
 
@@ -55,7 +58,6 @@ Humon.HumonValueClass = Ember.Mixin.create
   coerceToDefaultJson: (json) ->
     throw new Error "Can't coerce #{json} to #{@.constructor}"
 
-###
 commitEverything: (payload)
   - commitVal
   - setKey

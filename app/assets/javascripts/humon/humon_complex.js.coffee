@@ -28,10 +28,10 @@ Humon.Complex = Humon.Hash.extend(
 
       # TODO(syu): Wow this is so ugly
       idx = @get('requiredChildren').length + @constructor.optionalAttributes.indexOf key
-      blank = Humon.json2node ""
-      blank.set "nodeKey", key
-      @insertAt(idx, blank)
-      return blank
+      newChildNode = Humon.json2node "", metatemplate: @constructor.childMetatemplates[key]
+      newChildNode.set "nodeKey", key
+      @insertAt(idx, newChildNode)
+      return newChildNode
     else
       null
 
@@ -72,7 +72,7 @@ Humon.Complex.reopenClass(
 
   ##
   # @override
-  coerceToDefaultJson: (json) ->
-    json || {}
+  coerceToValidJsonInput: (json) ->
+    @_super(json)
 
 )

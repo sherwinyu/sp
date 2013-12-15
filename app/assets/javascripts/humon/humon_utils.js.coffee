@@ -75,16 +75,6 @@ window.HumonUtils =
       else # Don't pass in context because this occurs when context isn't provided!
         HumonUtils._resolveTypeClassFromJson json
 
-    # If there's a metaTemplate
-    if context.metatemplate?
-      # Em.assert("typeClass should matchesJson json", typeClass.matchesJson json)
-
-      # If the json doesn't actually match this Json
-      if !typeClass.matchesJson json
-        # This can raise an exception
-        json = typeClass.coerceToDefaultJson json
-
-
 
     # TODO(syu):
     # This is messy because MOST types don't need to coerceToDefaultJson, really only

@@ -95,7 +95,7 @@ Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend(
   templateName: "humon_node_complex"
 )
 Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend(
-  templateName: "humon_node_sleep"
+  # templateName: "humon_node_sleep"
 )
 
 Humon.TemplateContexts.Goals = Humon.TemplateContexts.List.extend(

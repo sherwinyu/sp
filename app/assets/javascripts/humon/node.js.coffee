@@ -38,6 +38,7 @@ Humon.Node = Ember.Object.extend
               jsonInput
       node = HumonUtils.json2node json, metatemplate: @get('nodeMeta')
     catch error
+      Em.assert("The error is: UnableToConvertInputToNode")
       # Error will be if jsonInput doesn't fit supplied metaTemplate
       # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
       debugger
