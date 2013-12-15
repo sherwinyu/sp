@@ -4,7 +4,7 @@
 #= require ./humon_boolean
 #= require ./humon_null
 #= require ./humon_date
-Humon.Primitive = Ember.Object.extend Humon.HumonValue,
+Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
   _value: null
   # TODO(syu): @TRANSITION
   isLiteral: true
@@ -48,19 +48,6 @@ Humon.Primitive.reopenClass
       if !@matchesJson json
         json = @_coerceToValidJsonInput json
     json = @_initJsonDefaults json
-
-  ##
-  # @param [json] json
-  # @return [json] -- valid json input
-  # This is called by j2hnv
-  # Used when metatemplate is given (type is known)
-  # but matchesJson is false.
-  #   E.g., user types "[1,2,3]"
-  #     json is the array, [1, 2, 3]
-  #     But since we know it cant' be an array, we'll represent it as "[1, 2, 3]"
-  # By default, throws an error
-  _coerceToValidJsonInput: (json) ->
-    throw new Error "Can't coerce #{JSON.stringify json} to #{@}"
 
   _initJsonDefaults: (json) ->
     json

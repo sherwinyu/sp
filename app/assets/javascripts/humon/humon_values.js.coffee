@@ -8,6 +8,38 @@
 #= require ./humon_time
 #= require ./humon_goals
 
+Humon.BaseHumonValue = Ember.Object.extend()
+Humon.BaseHumonValue.reopenClass
+  j2hnv: (json) -> Em.assert("j2hnv needs to be implemented")
+  matchesJson: (json) -> Em.assert("machesJson needs to be implemented")
+  ##
+  # @param json A JSON payload to be converted into a Humon.Value instance
+  # @param opts
+  #   - typeName
+  # @return [JSON] properly normalized json that has defaults initialized,
+  #   and passes @matchesJson
+  normalizeJson: (json, {typeName}={} ) ->
+    if typeName?
+      Em.assert("context.metatemplate specified but doesn't match this class!", typeName == @_name() )
+      if !@matchesJson json
+        json = @_coerceToValidJsonInput json
+    json = @_initJsonDefaults json
+
+  ##
+  # @param [json] json
+  # @return [json] -- valid json input
+  # This is called by j2hnv
+  # Used when metatemplate is given (type is known)
+  # but matchesJson is false.
+  #   E.g., user types "[1,2,3]"
+  #     json is the array, [1, 2, 3]
+  #     But since we know it cant' be an array, we'll represent it as "[1, 2, 3]"
+  # By default, throws an error
+  _coerceToValidJsonInput: (json) ->
+    throw new Error "Can't coerce #{JSON.stringify json} to #{@}"
+
+  _initJsonDefaults: -> Em.assert "_initJsonDefaults needs to be implemented"
+
 Humon.HumonValue = Ember.Mixin.create
   node: null
   controllerBinding: 'node.nodeView.controller'
@@ -16,10 +48,10 @@ Humon.HumonValue = Ember.Mixin.create
     # TODO(syu): switch over to using the underscored version
     Ember.String.underscore @.constructor.toString().split(".")[1]
     # @.constructor.toString().split(".")[1].toLowerCase()
-  asString: ->
-  nextNode: ->
-  prevNode: ->
-  delete: ->
+  asString: -> Em.assert "needs to be implemented"
+  nextNode: -> Em.assert "needs to be implemented"
+  prevNode: -> Em.assert "needs to be implemented"
+  delete: -> Em.assert "needs to be implemented"
 
   enterPressed: ->
     true
@@ -43,21 +75,12 @@ Humon.HumonValue = Ember.Mixin.create
   precommitInputCoerce: (jsonInput) ->
     false
 
-
-
   ##
   # @return [JSON] json
   toJson: ->
+    Em.assert "needs to be implemented"
 
 ###
-Humon.HumonValueClass = Ember.Mixin.create
-  j2hnv: (json) ->
-
-  matchesJson: (json) ->
-
-  coerceToDefaultJson: (json) ->
-    throw new Error "Can't coerce #{json} to #{@.constructor}"
-
 commitEverything: (payload)
   - commitVal
   - setKey

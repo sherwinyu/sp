@@ -2,6 +2,8 @@ Humon.Hash = Humon.List.extend
   isHash: true
   isList: false
   hasKeys: true
+  asString: ->
+    JSON.stringify(@toJson())
 
   # @param keyOrIndex the value to access
   # attempts to do a look up against _value

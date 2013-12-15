@@ -48,5 +48,5 @@ Humon.Time.reopenClass(
     else if json.constructor == Date
       json
     else
-      throw new Error("shouldn't ever happen")
+      Em.assert "shouldn't ever happen"
 )

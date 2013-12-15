@@ -1,4 +1,4 @@
-Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
+Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   _value: null
   isCollection: true
   childrenReorderable: true
@@ -94,23 +94,6 @@ Humon.List.reopenClass
   # @override
   matchesJson: (json) ->
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
-
-  ##
-  # @param json A JSON payload to be converted into a Humon.Value instance
-  # @param opts
-  #   - typeName
-  # @return [JSON] properly normalized json that has defaults initialized,
-  #   and passes @matchesJson
-  normalizeJson: (json, {typeName}={} ) ->
-    if typeName?
-      Em.assert("context.metatemplate specified but doesn't match this class!", typeName == @_name() )
-      if !@matchesJson json
-        json = @_coerceToValidJsonInput json
-    json = @_initJsonDefaults json
-
-  # TODO(syu): pull into node base class
-  coerceToValidJsonInput: (json) ->
-    throw new Error "Can't coerce #{json} to #{@.constructor}"
 
   _initJsonDefaults: (json) ->
     json ||= []
