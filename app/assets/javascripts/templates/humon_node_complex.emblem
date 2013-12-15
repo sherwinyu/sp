@@ -1,6 +1,6 @@
 / humon_node_complex.hbs
 
 =each nodeChild in view.nodeContent.nodeVal.requiredChildren
-  Sysys.HumonNodeView nodeContentBinding="nodeChild"
+  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="humon_node_fixed_key_layout"
 =each nodeChild in view.nodeContent.nodeVal.optionalChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild"

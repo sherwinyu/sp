@@ -9,6 +9,8 @@
 #= require ./humon_goals
 
 Humon.HumonValue = Ember.Mixin.create
+  node: null
+  controllerBinding: 'node.nodeView.controller'
   name: ->
     # TODO(syu): test this
     # TODO(syu): switch over to using the underscored version
@@ -45,7 +47,6 @@ Humon.HumonValue = Ember.Mixin.create
   ##
   # @return [JSON] json
   toJson: ->
-  node: null
 
 Humon.HumonValueClass = Ember.Mixin.create
   j2hnv: (json) ->

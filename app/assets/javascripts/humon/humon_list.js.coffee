@@ -24,7 +24,12 @@ Humon.List = Ember.Object.extend Humon.HumonValue, Ember.Array,
   ##
   # @override
   enterPressed: (e)->
-    @insertNewChildAt(0)
+    newChildNode = @insertNewChildAt(0)
+    if newChildNode?
+      @get('controller').send 'activateNode', newChildNode
+      @get('controller').send 'smartFocus'
+
+    # suppress default behavior
     return false
 
   # @return [Humon.Node] Returns a flat representation of
