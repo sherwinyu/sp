@@ -28,7 +28,7 @@ Humon.Primitive.reopenClass
   # @param json A JSON payload to be converted into a Humon.Value instance
   # @param context
   #   - node: the Humon.Node instance that will be wrapping the returned Humon.Value
-  j2hnv: (json, context) ->
+  _j2hnv: (json, context) ->
     json = @normalizeJson(json, typeName: context?.metatemplate?.name)
     @_klass().create(_value: json, node: context.node)
 

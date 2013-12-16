@@ -10,8 +10,22 @@
 
 Humon.BaseHumonValue = Ember.Object.extend()
 Humon.BaseHumonValue.reopenClass
-  j2hnv: (json) -> Em.assert("j2hnv needs to be implemented")
+  tryJ2hnv: (json, context) ->
+    validatedJson = @normalizeJson(json)
+    return @_j2hnv(validatedJson, context)
+
+  ##
+  # @param [JSON] json
+  # @param [JSON] context
+  #   - node: the Humon.Node instance that will be wrapping the returned Humon.Value
+  #   - metatemplate
+  _j2hnv: (json, context) -> Em.assert("_j2hnv needs to be implemented")
+
+  ##
+  # @param [JSON] json
+  #
   matchesJson: (json) -> Em.assert("machesJson needs to be implemented")
+
   ##
   # @param json A JSON payload to be converted into a Humon.Value instance
   # @param opts
@@ -28,7 +42,7 @@ Humon.BaseHumonValue.reopenClass
   ##
   # @param [json] json
   # @return [json] -- valid json input
-  # This is called by j2hnv
+  # This is called by _j2hnv
   # Used when metatemplate is given (type is known)
   # but matchesJson is false.
   #   E.g., user types "[1,2,3]"

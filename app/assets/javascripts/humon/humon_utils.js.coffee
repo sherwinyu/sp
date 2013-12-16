@@ -75,18 +75,7 @@ window.HumonUtils =
       else # Don't pass in context because this occurs when context isn't provided!
         HumonUtils._resolveTypeClassFromJson json
 
-
-    # TODO(syu):
-    # This is messy because MOST types don't need to coerceToDefaultJson, really only
-    # just string. It's for cases like [1, 2, 3] if I want to save it as a string.
-    #
-    # For most other types, we'd just concede that the jsonInput was invalid!
-    #
-    # One possible way to address the "coerceToDefaultsJson" fragmentation
-    #   is to pass the context (including metatemplate) to j2hnv.
-    #
-    #   That way, HumonUtils.json2node can be leaner, and j2hnv can be metatemplate aware
-    nodeVal = typeClass.j2hnv json, node: node
+    nodeVal = typeClass.tryJ2hnv json, node: node
     node.set 'nodeMeta', context.metatemplate
     node.set 'nodeVal', nodeVal
     node.set 'nodeType', nodeVal.name()

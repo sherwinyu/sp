@@ -40,12 +40,8 @@ Humon.Hash.reopenClass
   # Each HumonNode has `nodeParent` set to `context.node`
   # @param context
   #  context.node: the Humon.Node object that will wrap this Humon.Value
-  j2hnv: (json, context)->
-    if context.metatemplate?
-      Em.assert("context.metatemplate specified but doesn't match this class!", context.metatemplate.name == @_name())
-      if not @matchesJson json
-        json = @_coerceToValidJsonInput json
-    json = @_initJsonDefaults (json)
+  _j2hnv: (json, context)->
+    json = @normalizeJson(json)
 
     childNodes = []
     for own key, childVal of json

@@ -5,6 +5,7 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   acceptsArbitraryChildren: true
   isList: true
   hasKeys: false
+  asString: -> JSON.stringify(@toJson())
 
   hasChildren: ( ->
     @_value.length >= 1
@@ -81,7 +82,7 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
     @deleteAt(idx)
 
 Humon.List.reopenClass
-  j2hnv: (json, context) ->
+  _j2hnv: (json, context) ->
     json = @normalizeJson(json, typeName: context?.metatemplate?.name)
 
     Em.assert( (json? && json instanceof Array), "json must be an array")

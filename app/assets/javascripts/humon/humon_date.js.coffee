@@ -66,7 +66,7 @@ Humon.Date.reopenClass
   # @param context [JSON]
   #   - node [Humon.Node] the Humon Node instance that will contain the parsed Humon.Value
   # TODO(syu): move default behavior into Humon.Primitive / Humon.whatever
-  j2hnv: (json, context) ->
+  _j2hnv: (json, context) ->
     value = @valueFromJson(json)
     @_klass().create(_value: value, node: context.node)
   matchesJson: (json) ->
