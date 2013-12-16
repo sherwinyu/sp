@@ -24,13 +24,15 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
 
   ##
   # @override
+  # @manipulatesUI
   enterPressed: (e)->
-    newChildNode = @insertNewChildAt(0)
+    newChildNode = null
+    Ember.run => newChildNode = @insertNewChildAt(0)
     if newChildNode?
       @get('controller').send 'activateNode', newChildNode
       @get('controller').send 'smartFocus'
 
-    # suppress default behavior
+    # Returns false, to prevent NodeView#enterPressed from happening
     return false
 
   # @return [Humon.Node] Returns a flat representation of
@@ -66,8 +68,11 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
     args = [idx, 0].concat nodes
     @replaceAt.apply @, args
 
+  ##
   # @param [int] idx
   # @return [Humon.Node]
+  #
+  # Does NOT manipulate the UI, only the node chain.
   insertNewChildAt: (idx) ->
     blank = Humon.json2node null
     @insertAt(idx, blank)
