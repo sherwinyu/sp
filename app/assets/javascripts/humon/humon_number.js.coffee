@@ -7,3 +7,6 @@ Humon.Number.reopenClass
     matches = false
     matches ||= (json?.constructor == String && json.match /^\d+$/)
     return matches || @_super(json)
+
+  _initJsonDefaults: (json) ->
+    json || 0

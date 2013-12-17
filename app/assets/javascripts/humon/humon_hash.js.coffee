@@ -64,4 +64,3 @@ Humon.Hash.reopenClass
   # @override
   _initJsonDefaults: (json) ->
     json ||= {}
-

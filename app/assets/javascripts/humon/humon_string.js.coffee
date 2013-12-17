@@ -8,3 +8,5 @@ Humon.String.reopenClass
   # @override
   coerceToDefaultJson: (json) ->
     "#{json}"
+  _initJsonDefaults: (json) ->
+    json || ""

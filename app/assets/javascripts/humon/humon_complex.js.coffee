@@ -29,7 +29,16 @@ Humon.Complex = Humon.Hash.extend(
 
       # TODO(syu): Wow this is so ugly
       idx = @get('requiredChildren').length + @constructor.optionalAttributes.indexOf key
-      newChildNode = Humon.json2node "", metatemplate: @constructor.childMetatemplates[key]
+      childMetatemplate = @constructor.childMetatemplates[key]
+      # TODO(syu) refactor
+      # This basically sets a defaultValue (so that we can get around the bug#1)
+      # Root problem is we don't have a good "universal-default" value
+      #   because coerceToValidJsonInput throws errors
+      defaultValue = if childMetatemplate?
+                       Humon.contextualize(childMetatemplate.name)._initJsonDefaults(false)
+                     else
+                       null
+      newChildNode = Humon.json2node defaultValue, metatemplate: childMetatemplate
       newChildNode.set "nodeKey", key
       @insertAt(idx, newChildNode)
       return newChildNode

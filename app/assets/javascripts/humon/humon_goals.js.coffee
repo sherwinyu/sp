@@ -16,11 +16,11 @@ Humon.Goal = Humon.Complex.extend()
 Humon.Goal.reopenClass
   childMetatemplates:
     goal:
-      name: "String"
+      name: "string"
     completed:
-      name: "Boolean"
+      name: "boolean"
     completed_at:
-      name: "DateTime"
+      name: "date"
 
   requiredAttributes: ["goal"]
   optionalAttributes: ["completed", "completed_at"]
