@@ -81,6 +81,13 @@ Humon.Complex.reopenClass(
     @create _value: childNodes, node: context.node
 
   ##
+  # TODO(syu): MatchesJson
+  #   - make sure json is a hash
+  #   - make sure all REQUIRE attributes are present
+  #   - make sure all other keys are in OPTIONAL
+  #   - does NOT check validate the values.
+
+  ##
   # @override
   _initJsonDefaults: (json) ->
     @_super(json)

@@ -48,11 +48,16 @@ Humon.BaseHumonValue.reopenClass
     typeName = context?.metatemplate?.name
     if typeName?
       Em.assert("context.metatemplate specified but doesn't match this class!", Humon.contextualize(typeName) == @)
-    if context?.allowInvalid
-      context.node.set('notInitialized', true)
-      return json = @_initJsonDefaults json
+
     if !@matchesJson json
+     if context?.allowInvalid
+        context.node.set('notInitialized', true)
+        Em.assert "JSON must be undefined or null", !json?
+        return json = @_initJsonDefaults json
+
+      # Last ditch coerce, or throw the error
       json = @_coerceToValidJsonInput json
+
     Em.assert "Json should match after coercion", @matchesJson(json)
     json = @_initJsonDefaults json
 
@@ -69,6 +74,11 @@ Humon.BaseHumonValue.reopenClass
   _coerceToValidJsonInput: (json, context) ->
     throw new Error "Can't coerce #{JSON.stringify json} to #{@}"
 
+  ##
+  # @required
+  # Contract:
+  #   if json is undefined, then initialize it to a base value
+  #   then set that base value's defaults
   _initJsonDefaults: -> Em.assert "_initJsonDefaults needs to be implemented"
 
 Humon.HumonValue = Ember.Mixin.create

@@ -58,6 +58,7 @@ Humon.Node = Ember.Object.extend
   clearInvalidation: ->
     @set('invalidReason', "")
     @set('invalid', false)
+
   invalidate: (reason) ->
     @set('invalidReason', reason)
     @set('invalid', true)
