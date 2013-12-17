@@ -9,13 +9,15 @@ window.Humon = Ember.Namespace.create
 # _types: ["Number", "Boolean", "Null", "Date", "String", "List", "Hash"]
   _types: ["Number", "Boolean", "Null", "Time", "Date", "String", "List", "Hash"]
 
-  contextualize: (type) ->
-    if type.constructor == Humon.Node
-      type = type.get('nodeType')
+  ##
+  # @param [String | Humon.Node] type
+  # @return [subclass of Humon.Value] the class corresponding to the provided type
+  contextualize: (typeName) ->
+    if typeName.constructor == Humon.Node
+      typeName = typeName.get('nodeType')
 
-    # `type` is a string
-    key = type[0].toUpperCase() + type.slice(1)
-    Humon[key] || Em.assert("Could not find type Humon.#{key}")
+    className = Em.String.classify(typeName)
+    Humon[className] || Em.assert("Could not find type Humon.#{className}")
 
   ##
   # @param [Humon.Node] node the Humon.Node whose type will be used to look up the template

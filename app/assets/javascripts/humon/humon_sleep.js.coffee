@@ -3,13 +3,13 @@ Humon.Sleep = Humon.Complex.extend(
 Humon.Sleep.reopenClass
   childMetatemplates:
     awake_at:
-      name: "Time"
+      name: "time"
     outofbed_at:
-      name: "Time"
+      name: "time"
     awake_energy:
-      name: "Number"
+      name: "number"
     outofbed_energy:
-      name: "Number"
+      name: "number"
 
   requiredAttributes: ["awake_at", "outofbed_at"]
   optionalAttributes: ["awake_energy", "outofbed_energy"]

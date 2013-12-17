@@ -21,7 +21,8 @@ Humon.BaseHumonValue = Ember.Object.extend
 
 Humon.BaseHumonValue.reopenClass
   tryJ2hnv: (json, context) ->
-    validatedJson = @normalizeJson(json)
+    console.warn "No context.node found" unless context?.node?
+    validatedJson = @normalizeJson(json, context?.metatemplate?.name)
     return @_j2hnv(validatedJson, context)
 
   ##
@@ -44,7 +45,7 @@ Humon.BaseHumonValue.reopenClass
   #   and passes @matchesJson
   normalizeJson: (json, {typeName}={} ) ->
     if typeName?
-      Em.assert("context.metatemplate specified but doesn't match this class!", typeName == @_name() )
+      Em.assert("context.metatemplate specified but doesn't match this class!", Humon.contextualize(typeName) == @)
       if !@matchesJson json
         json = @_coerceToValidJsonInput json
     json = @_initJsonDefaults json

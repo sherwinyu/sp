@@ -47,8 +47,10 @@ Humon.Complex.reopenClass(
     $include: Humon.Hash._metatemplate
     $required: []
 
-  # @param context
-  #  context.node: the Humon.Node object that will wrap this Humon.Value
+  # @param [JSON] context:
+  #
+  #  @required
+  #  - node: the Humon.Node object that will wrap this Humon.Value
   #
   # The metatemplate corresponding to THIS PATH should be @_metatemplate
   # because THIS is already an instance of a Humon.*

@@ -3,6 +3,9 @@ window.HumonUtils =
   ###
   #{
   name: "date"
+  childMetatemplates
+    awake_at:
+      name: "time"       <-- note the name should always be in under_score_snake_case
 
 
   }
@@ -75,7 +78,11 @@ window.HumonUtils =
       else # Don't pass in context because this occurs when context isn't provided!
         HumonUtils._resolveTypeClassFromJson json
 
-    nodeVal = typeClass.tryJ2hnv json, node: node
+    # Create a new context, with the node set to the to-be-returned Humon.Node,
+    # and merge in the current context.
+    nodeValContext = $.extend {node: node}, context
+
+    nodeVal = typeClass.tryJ2hnv json, nodeValContext
     node.set 'nodeMeta', context.metatemplate
     node.set 'nodeVal', nodeVal
     node.set 'nodeType', nodeVal.name()

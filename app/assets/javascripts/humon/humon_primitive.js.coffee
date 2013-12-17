@@ -43,17 +43,5 @@ Humon.Primitive.reopenClass
   matchesJson: (json) ->
     typeof json == @_name()
 
-  # @param json A JSON payload to be converted into a Humon.Value instance
-  # @param opts
-  #   - typeName
-  # @return [JSON] properly normalized json that has defaults initialized,
-  #   and passes @matchesJson
-  normalizeJson: (json, {typeName}={} ) ->
-    if typeName?
-      Em.assert("context.metatemplate specified but doesn't match this class!", typeName == @_name() )
-      if !@matchesJson json
-        json = @_coerceToValidJsonInput json
-    json = @_initJsonDefaults json
-
   _initJsonDefaults: (json) ->
     json
