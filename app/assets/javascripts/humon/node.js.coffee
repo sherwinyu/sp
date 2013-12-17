@@ -5,6 +5,7 @@ Humon.Node = Ember.Object.extend
   nodeView: null
   nodeKey: null
   nodeMeta: null
+  invalid: false
 
   ###
   isHashBinding: Ember.Binding.oneWay('nodeVal.isHash')
@@ -42,18 +43,22 @@ Humon.Node = Ember.Object.extend
       console.error(error.toString())
       # Error will be if jsonInput doesn't fit supplied metaTemplate
       # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
-      debugger
       @invalidate("Provided string doesn't fit into this node's type.")
       return
 
+    # Set valid to true if we successfully committed
+    @clearInvalidation()
     @replaceWithHumon node
     # if node.get('nodeView.templateName') !=
     # @get('nodeView').rerender()
     # @get('nodeView').repaint()
 
+  clearInvalidation: ->
+    @set('invalidReason', "")
+    @set('invalid', false)
   invalidate: (reason) ->
     @set('invalidReason', reason)
-    @set('valid', false)
+    @set('invalid', true)
 
   # Public
   # @returns Humon.Node the next node in the 'flattened' representation of the entire

@@ -6,13 +6,24 @@
   visibility: visible;
 }
 
-.node {
-  .node-text {
-    height: $lineheight;
-    vertical-align: bottom;
-    display: inline-block;
-  }
+.node .node-text {
+  height: $lineheight;
+  vertical-align: bottom;
+  display: inline-block;
 }
+.node.invalid .node-text {
+  display: none;
+}
+
+.node.invalid .node-invalid-reason {
+  height: $lineheight;
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+
+  color: red;
+}
+
 
 span.node-detail  {
   @extend .node-text;

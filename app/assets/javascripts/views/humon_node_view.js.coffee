@@ -27,6 +27,7 @@ Sysys.HumonNodeView = Ember.View.extend
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.nodeType',
     'isActive:active',
+    'nodeContent.invalid:invalid',
     'parentActive:activeChild',
     'suppressGap']
   classNames: ['node']
