@@ -27,7 +27,7 @@ Humon.Sleep.reopenClass
     json ||= {}
     requiredDefaults =
       awake_at: ""
-      out_of_bed_at: ""
+      outofbed_at: ""
     # assuming json has no other fields
     # assuming json.best and json.worst are Strings
     # assuming json.funny, json.insight are Strings -- THIS ASSUMPTION
