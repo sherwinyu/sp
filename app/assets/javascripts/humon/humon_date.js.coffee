@@ -69,5 +69,6 @@ Humon.Date.reopenClass
   _j2hnv: (json, context) ->
     value = @valueFromJson(json)
     @_klass().create(_value: value, node: context.node)
+
   matchesJson: (json) ->
     @_inferFromJson(json).matches

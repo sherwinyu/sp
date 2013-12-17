@@ -55,10 +55,5 @@ Humon.Hash.reopenClass
 
   ##
   # @override
-  _coerceToValidJsonInput: (json) ->
-    @_super()
-
-  ##
-  # @override
   _initJsonDefaults: (json) ->
     json ||= {}

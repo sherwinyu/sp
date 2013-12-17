@@ -33,7 +33,7 @@ Humon.Complex = Humon.Hash.extend(
       # TODO(syu) refactor
       # This basically sets a defaultValue (so that we can get around the bug#1)
       # Root problem is we don't have a good "universal-default" value
-      #   because coerceToValidJsonInput throws errors
+      #   because _coerceToValidJsonInput throws errors
       defaultValue = if childMetatemplate?
                        Humon.contextualize(childMetatemplate.name)._initJsonDefaults(false)
                      else
@@ -81,10 +81,11 @@ Humon.Complex.reopenClass(
   ##
   # @override
   _initJsonDefaults: (json) ->
-    json
+    @_super(json)
 
   ##
   # @override
-  coerceToValidJsonInput: (json) ->
-    @_super(json)
+  _coerceToValidJsonInput: (json) ->
+    console.warn "Coercing json #{JSON.stringify json} to #{@}"
+    return {}
 )

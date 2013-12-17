@@ -6,7 +6,7 @@ Humon.String = Humon.Primitive.extend
 Humon.String.reopenClass
   ##
   # @override
-  coerceToDefaultJson: (json) ->
+  _coerceToValidJsonInput: (json) ->
     "#{json}"
   _initJsonDefaults: (json) ->
     json || ""

@@ -46,8 +46,9 @@ Humon.BaseHumonValue.reopenClass
   normalizeJson: (json, {typeName}={} ) ->
     if typeName?
       Em.assert("context.metatemplate specified but doesn't match this class!", Humon.contextualize(typeName) == @)
-      if !@matchesJson json
-        json = @_coerceToValidJsonInput json
+    if !@matchesJson json
+      json = @_coerceToValidJsonInput json
+    Em.assert "Json should match after coercion", @matchesJson(json)
     json = @_initJsonDefaults json
 
   ##
