@@ -54,16 +54,26 @@ span.node-detail.node-icon {
 }
 
 
-.template-changed{
+.debug-glyphs {
   float: right;
   visibility: visible;
   i {
-    position: absolute;
-    &:after {
-      content: "@";
-      position: absolute;
-      left: -3px;
-      font-size: 50%;
-    }
+    position: relative;
   }
 }
+
+.debug-glyphs i.template-changed:after {
+  content: "@";
+  position: absolute;
+  left: -3px;
+  font-size: 50%;
+}
+
+.debug-glyphs i.not-initialized:after {
+  content: "&";
+  position: absolute;
+  left: -6px;
+  font-size: 50%;
+}
+
+

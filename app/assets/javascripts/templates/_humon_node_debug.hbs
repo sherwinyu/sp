@@ -14,9 +14,13 @@
     <dd>{{view.nodeContent.nodeMeta.name}}</dd>
   </dl>
 </span>
+
 <span class="node-detail class-name">
   {{view.nodeContent.nodeType}}
 </span>
-<span {{bind-attr class="view._templateChanged:template-changed :node-detail"}}>
-  <i></i>
+
+<span class="debug-glyphs">
+  <i {{bind-attr class="view._templateChanged:template-changed"}}></i>
+  <i {{bind-attr class="view.nodeContent.notInitialized:not-initialized"}}></i>
 </span>
+
