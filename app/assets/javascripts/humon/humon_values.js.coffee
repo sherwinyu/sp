@@ -8,7 +8,17 @@
 #= require ./humon_time
 #= require ./humon_goals
 
-Humon.BaseHumonValue = Ember.Object.extend()
+Humon.BaseHumonValue = Ember.Object.extend
+  ##
+  # Called by HNV.focusOut
+  # @param [event] e
+  # @param [JSON] payload
+  #   - key: value of the Key subfield
+  #   - val: value of the Val subfield
+  subFieldFocusLost: (e, payload)->
+    console.warn "#{@constructor} should implement subFiledFocusLost"
+    # Em.assert "Must implement focusOut"
+
 Humon.BaseHumonValue.reopenClass
   tryJ2hnv: (json, context) ->
     validatedJson = @normalizeJson(json)

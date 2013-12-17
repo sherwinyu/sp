@@ -137,9 +137,16 @@ Sysys.HumonNodeView = Ember.View.extend
     # HumonEditorComponent implements it.
     @get('controller').handleFocusOut()
     @get('controller').send('activateNode', null)
+    payload =
+      key: @keyField()?.val()
+      val: @valField()?.val()
+    @get('nodeContent.nodeVal').subFieldFocusLost(e, payload)
+
     # prepare payload: pull from $().val, etc
     # send to `commitEverything
-    node = @get('nodeContent')
+
+    #node = @get('nodeContent')
+    ###
     payload =
       key: @keyField()?.val()
       node: node
@@ -148,8 +155,12 @@ Sysys.HumonNodeView = Ember.View.extend
     if @valField()?.val() isnt @get("templateStrings.asString")
       payload.val = @valField()?.val()
     console.log('focusOut, payload', payload)
-    @get('controller').send 'commitEverything', payload
+    ###
 
+
+      # @get('controller').send 'commitEverything', payload
+
+  ##
   # smartFocus -- "auto" sets the focus for this HNV based on context
   # Triggers the 'focus' event on the DOM element corresponding to a
   # child contentField. The focus event is handled by CF.focusIn, which

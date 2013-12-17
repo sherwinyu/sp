@@ -15,6 +15,7 @@ Humon.Complex = Humon.Hash.extend(
 
   # @param [int] idx the index at which to insert.
   # @return [Humon.Node] the inserted childNode
+  # @override
   #   or null, if all optional attributes already exist
   # Automatically finds the first optional attribute
   # that isn't included yet, and inserts that.

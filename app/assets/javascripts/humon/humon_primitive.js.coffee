@@ -13,11 +13,17 @@ Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
     @validateSelf()
   toJson: ->
     @_value
-  asString: ->
-    @toJson()
+  asString: -> @toJson()
+
   nextNode: ->
+
   flatten: ->
     [@node]
+
+  subFieldFocusLost: (e, payload)->
+    @get('node').tryToCommit(payload.val)
+
+
 
 Humon.Primitive.reopenClass
   _klass: ->
