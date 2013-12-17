@@ -41,3 +41,18 @@ span.node-detail.node-icon {
   color: $grayLighter;
   float: right;
 }
+
+
+.template-changed{
+  float: right;
+  visibility: visible;
+  i {
+    position: absolute;
+    &:after {
+      content: "@";
+      position: absolute;
+      left: -3px;
+      font-size: 50%;
+    }
+  }
+}

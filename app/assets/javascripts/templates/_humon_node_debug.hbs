@@ -2,16 +2,21 @@
 
 <span class="node-debug">
   <dl>
-    <dt>  view.templateName </dt>
-    <dd>{{view.templateName}}</dd>
-    <dt>  view.nodeContent.nodeType </dt>
-    <dd>{{view.nodeContent.nodeType}}</dd>
     <dt>  view.id </dt>
     <dd>{{view._id}}</dd>
+    <dt>  view.templateName </dt>
+    <dd>{{view.templateName}}</dd>
+    <dt>  view._templateChanged  </dt>
+    <dd>{{view._templateChanged}}</dd>
+    <dt>  view.nodeContent.nodeType  </dt>
+    <dd>{{view.nodeContent.nodeType}}</dd>
     <dt>  view.nodeContent.nodeMeta.name  </dt>
     <dd>{{view.nodeContent.nodeMeta.name}}</dd>
   </dl>
 </span>
 <span class="node-detail class-name">
   {{view.nodeContent.nodeType}}
+</span>
+<span {{bind-attr class="view._templateChanged:template-changed :node-detail"}}>
+  <i></i>
 </span>
