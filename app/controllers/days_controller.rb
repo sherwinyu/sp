@@ -15,7 +15,7 @@ class DaysController < ApplicationController
   end
 
   def show
-    @day = Day.find_by(date: params[:id])
+    @day = day
 
     if @day
       render json: @day
@@ -25,13 +25,17 @@ class DaysController < ApplicationController
   end
 
   def update
-    @day = Day.find(params[:id])
-    binding.pry
+    @day = day
     if @day.update_attributes params[:day]
       render json: nil, status: :no_content
     else
       render json: @day.errors, status: :unprocessable_entity
     end
+  end
+
+  private
+  def day
+    Day.find_by(date: params[:id])
   end
 
 end
