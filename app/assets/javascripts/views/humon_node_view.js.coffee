@@ -6,9 +6,10 @@ Sysys.HumonNodeView = Ember.View.extend
   # TODO(syu) #RANSIT
   templateStrings: (->
     Ember.run.sync()
-    @get('nodeContent')
-    templateContext = Humon.templateContextFor(@get 'nodeContent')
-    templateContext.materializeTemplateStrings(@get 'nodeContent')
+    node = @get('nodeContent')
+    unless node.get('notInitialized')
+      templateContext = Humon.templateContextFor(node)
+      templateContext.materializeTemplateStrings(node)
   ).property('nodeContent.nodeVal')
 
   # autoTemplate is responsible solely for producing the correct template name

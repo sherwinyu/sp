@@ -49,6 +49,7 @@ Humon.BaseHumonValue.reopenClass
     if typeName?
       Em.assert("context.metatemplate specified but doesn't match this class!", Humon.contextualize(typeName) == @)
     if context?.allowInvalid
+      context.node.set('notInitialized', true)
       return json = @_initJsonDefaults json
     if !@matchesJson json
       json = @_coerceToValidJsonInput json

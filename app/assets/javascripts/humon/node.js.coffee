@@ -6,6 +6,7 @@ Humon.Node = Ember.Object.extend
   nodeKey: null
   nodeMeta: null
   invalid: false
+  notInitialized: false
 
   ###
   isHashBinding: Ember.Binding.oneWay('nodeVal.isHash')
@@ -27,6 +28,7 @@ Humon.Node = Ember.Object.extend
     arr[arr.length - 1]
 
   tryToCommit: (jsonInput) ->
+    @set('notInitialized', false)
     if @get('nodeVal').precommitInputCoerce(jsonInput)
       return
     try
