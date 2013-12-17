@@ -1,5 +1,6 @@
 Sysys.HumonNodeView = Ember.View.extend
-  _focusedField: null
+  _templateChanged: false
+  _id: null
 
   layoutName: "humon_node_key_layout"
   # TODO(syu) #RANSIT
@@ -18,8 +19,7 @@ Sysys.HumonNodeView = Ember.View.extend
     templateContext.get('templateName')
   ).property('nodeContent.nodeType')
   templateNameDidChange: (->
-    Ember.run.scheduleOnce 'afterRender', @, ->
-      @rerender()
+    @set('_templateChanged', true)
   ).observes('templateName')
   templateNameBinding: "autoTemplate"
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
@@ -45,13 +45,11 @@ Sysys.HumonNodeView = Ember.View.extend
     #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
     up:  (e)->
       if @get('controller').prevNode(e)
-        @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
 
     down: (e)->
       if changed = @get('controller').nextNode(e)
-        @set "_focusedField", null
         Ember.run.sync()
         @get('controller').send 'smartFocus'
 
@@ -89,25 +87,14 @@ Sysys.HumonNodeView = Ember.View.extend
         return
       if @get('layoutName') is 'humon_node_fixed_key_layout'
         return
-      @set '_focusedField',
+      @focusField
         field: 'label'
         pos: 'right'
-      Ember.run.schedule "afterRender", @, ->
-        # TODO(syu): does this trigger even when no type change occurs? (i.e., rerender is
-        # not called?)
-        # INELEGANT
-        # TODO(syu): why do we need to set, and then get?
-        #   for the didInsertElement?
-        #   Why is didInsertElement not taking care of this?
-        @focusField @get '_focusedField'
 
     moveRight: ->
-      # TODO(syu): why are we setting _focusedField and then @focusField @get _focusedField?
-      # What's the point of keeping the "moveRight'd" focusField setting?
-      @set '_focusedField',
+      @focusField
         field: 'val'
         pos: 'left'
-      @focusField @get '_focusedField'
 
   # focusIn
   #  1) cancels propagation
@@ -125,26 +112,38 @@ Sysys.HumonNodeView = Ember.View.extend
     else
       @get('controller').send('activateNode', @get('nodeContent'))
 
-  # focusOut -- handle focusOut from a sub-contentField
-  # This also means that anytime a sub-contentField focuses out, we commit the entire
-  # node as a unit.
-  #
-  #   1) constructs a payload to be sent to @controller `commitEverything`
-  #   2) payload contains {key, val}
-  #   3) key is taken from the key field's value
-  #   4) val is taken from the val field if the val field is dirty #TODO clarify dirty
-  #   5) stops propagation (we don't want parent nodes commiting!)
+  ##
+  # New focus out.
+  #  - First calls controller.handleFocusOut to notify the componet we've focusedout.
+  #  - Sets activeNode to null
+  #  - Constructs a payload with key and val fields, passes it to
+  #   nodeVal.subFieldFocusLost
+  #  - scheudles a potential rerender
   focusOut: (e) ->
     e.stopPropagation()
 
     # Even though controllerMixin doesn't have a handleFocusOut method,
     # HumonEditorComponent implements it.
     @get('controller').handleFocusOut()
+    console.log "FocusOut:", "currentTarget:", e.currentTarget, "target:", e.target, "related", e.relatedTarget
+
+
     @get('controller').send('activateNode', null)
     payload =
       key: @keyField()?.val()
       val: @valField()?.val()
     @get('nodeContent.nodeVal').subFieldFocusLost(e, payload)
+
+    # Prepare to rerender if
+    #   1) the template has changed
+    #   2) This node will no longer be in focus
+    # Note that we need to wrap this under Ember.run.scheduleOnce
+    # because _templateChanged won't have propagated
+    Ember.run.scheduleOnce "afterRender", @, ->
+      if @get('_templateChanged') && not @$().has(e.relatedTarget).length
+        # Make sure we clear templateChanged after a rerender.
+        @set('_templateChanged', false)
+        @rerender()
 
     # prepare payload: pull from $().val, etc
     # send to `commitEverything
@@ -246,13 +245,6 @@ Sysys.HumonNodeView = Ember.View.extend
     @get('nodeContent')?.set 'nodeView', null
 
   didInsertElement: ->
-    if @get("_focusedField")
-      # needs to be in a deferred because the child views (node fields)
-      # might not have had their text set up (via didInsertElement)
-      Ember.run.scheduleOnce "afterRender", @, =>
-        # console.debug "afterRender focusField"
-        @focusField(@get("_focusedField"))
-        @set "_focusedField", null
     @get('nodeContent')?.set 'nodeView', @
 
   ##
