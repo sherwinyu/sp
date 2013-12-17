@@ -22,7 +22,7 @@ Humon.BaseHumonValue = Ember.Object.extend
 Humon.BaseHumonValue.reopenClass
   tryJ2hnv: (json, context) ->
     console.warn "No context.node found" unless context?.node?
-    validatedJson = @normalizeJson(json, context?.metatemplate?.name)
+    validatedJson = @normalizeJson(json, context)
     return @_j2hnv(validatedJson, context)
 
   ##
@@ -30,6 +30,7 @@ Humon.BaseHumonValue.reopenClass
   # @param [JSON] context
   #   - node: the Humon.Node instance that will be wrapping the returned Humon.Value
   #   - metatemplate
+  #   - allowInvalid [boolean] if true, allows this node to be invalid
   _j2hnv: (json, context) -> Em.assert("_j2hnv needs to be implemented")
 
   ##
@@ -43,9 +44,12 @@ Humon.BaseHumonValue.reopenClass
   #   - typeName
   # @return [JSON] properly normalized json that has defaults initialized,
   #   and passes @matchesJson
-  normalizeJson: (json, {typeName}={} ) ->
+  normalizeJson: (json, context) ->
+    typeName = context?.metatemplate?.name
     if typeName?
       Em.assert("context.metatemplate specified but doesn't match this class!", Humon.contextualize(typeName) == @)
+    if context?.allowInvalid
+      return json = @_initJsonDefaults json
     if !@matchesJson json
       json = @_coerceToValidJsonInput json
     Em.assert "Json should match after coercion", @matchesJson(json)
@@ -61,7 +65,7 @@ Humon.BaseHumonValue.reopenClass
   #     json is the array, [1, 2, 3]
   #     But since we know it cant' be an array, we'll represent it as "[1, 2, 3]"
   # By default, throws an error
-  _coerceToValidJsonInput: (json) ->
+  _coerceToValidJsonInput: (json, context) ->
     throw new Error "Can't coerce #{JSON.stringify json} to #{@}"
 
   _initJsonDefaults: -> Em.assert "_initJsonDefaults needs to be implemented"

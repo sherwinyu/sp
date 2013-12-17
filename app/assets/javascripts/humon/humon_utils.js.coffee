@@ -53,8 +53,9 @@ window.HumonUtils =
   # @param [JSON] json the json payload to convert to HumonValue wrapped in a Humon.Node
   # @param context -- optional
   #   - nodeParent: the node that will be the parent context of the current json payload
-  #   - metatemplate:
+  #   - metatemplate
   #     - name: a subclass of Humon.HumonValue, indicating the type that `json` should resolve to
+  #   - allowInvalid [boolean] if true, allows this node to be invalid
   #
   # @return [Humon.Node] the returned node wraps a Humon.Value
   # The returned HumonNode will have its nodeParent set to `context.nodeParent`

@@ -7,6 +7,6 @@ Sysys.DataPointView = Ember.View.extend
     name: "sleep"
   details:
     awake_at: new Date(2013, 10, 29, 8, 40)
-    awake_energy: 6
     outofbed_at: "9:50"
+    awake_energy: 6
     outofbed_energy: 8

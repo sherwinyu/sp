@@ -60,6 +60,8 @@ Humon.Complex.reopenClass(
   #
   #  @required
   #  - node: the Humon.Node object that will wrap this Humon.Value
+  #  - allowInvalid [boolean] if true, allows this node to be invalid
+  #  - metatemplate
   #
   # The metatemplate corresponding to THIS PATH should be @_metatemplate
   # because THIS is already an instance of a Humon.*
@@ -72,6 +74,7 @@ Humon.Complex.reopenClass(
       childContext =
         nodeParent: context.node
         metatemplate: @childMetatemplates[key]
+        allowInvalid: context.allowInvalid
       # Whose responsibility is it to make sure `childVal` is valid for @childMetatemplates[key] ?
       childNode = HumonUtils.json2node(childVal, childContext)
       childNode.set 'nodeKey', key
