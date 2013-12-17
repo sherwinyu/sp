@@ -41,8 +41,6 @@ Humon.Hash.reopenClass
   # @param context
   #  context.node: the Humon.Node object that will wrap this Humon.Value
   _j2hnv: (json, context)->
-    json = @normalizeJson(json)
-
     childNodes = []
     for own key, childVal of json
       childNode = HumonUtils.json2node(childVal, nodeParent: context.node)

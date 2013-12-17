@@ -88,8 +88,6 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
 
 Humon.List.reopenClass
   _j2hnv: (json, context) ->
-    json = @normalizeJson(json, typeName: context?.metatemplate?.name)
-
     Em.assert( (json? && json instanceof Array), "json must be an array")
 
     # set all children node's `nodeParent` to this json payload's corresponding `node`
