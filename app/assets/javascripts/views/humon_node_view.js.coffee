@@ -58,6 +58,13 @@ Sysys.HumonNodeView = Ember.View.extend
       return unless @get('nodeContent.nodeVal').enterPressed()
       valString = @valField()?.val()
       @get('nodeContent').tryToCommit( valString )
+      Ember.run.scheduleOnce "afterRender", @, ->
+        if @get('_templateChanged')
+          # Make sure we clear templateChanged after a rerender.
+          @set('_templateChanged', false)
+          @rerender()
+          Ember.run.later =>
+            @smartFocus()
 
 
     oldEnterPressed: ->

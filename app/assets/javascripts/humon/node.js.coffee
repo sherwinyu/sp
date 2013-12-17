@@ -49,7 +49,7 @@ Humon.Node = Ember.Object.extend
     @replaceWithHumon node
     # if node.get('nodeView.templateName') !=
     # @get('nodeView').rerender()
-    @get('nodeView').repaint()
+    # @get('nodeView').repaint()
 
   invalidate: (reason) ->
     @set('invalidReason', reason)
