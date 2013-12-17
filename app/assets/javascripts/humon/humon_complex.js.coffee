@@ -13,32 +13,30 @@ Humon.Complex = Humon.Hash.extend(
     @get('children').filter (node) => node.get('nodeKey') in @constructor.requiredAttributes
   ).property('children', 'children.@each.nodeKey')
 
-  # @param [int] idx the index at which to insert.
-  # @return [Humon.Node] the inserted childNode
-  # @override
-  #   or null, if all optional attributes already exist
-  # Automatically finds the first optional attribute
-  # that isn't included yet, and inserts that.
+  ##
+  # Automatically finds the first optional attribute that isn't included yet, and inserts that.
+  # The childNode is inserted with allowInvalid: true
   #
-  # TODO(syu): ignore idx and insert the proper child
+  # @param [int] idx the index at which to insert.
+  #   This is currently ignored because Humon.Complex will try to insert the children in proper
+  #   attribute order
+  # @return [Humon.Node] the inserted childNode
+  #   or null, if all optional attributes already exist
+  # @override
   insertNewChildAt: (idx) ->
+
     # Get an array of unused attribute keys
     unusedAttributeKeys = @constructor.optionalAttributes.filter( (key) =>
       @get(key) == undefined)
+
+    # If there are still unused attributes
     if (key = unusedAttributeKeys[0])?
 
       # TODO(syu): Wow this is so ugly
       idx = @get('requiredChildren').length + @constructor.optionalAttributes.indexOf key
       childMetatemplate = @constructor.childMetatemplates[key]
-      # TODO(syu) refactor
-      # This basically sets a defaultValue (so that we can get around the bug#1)
-      # Root problem is we don't have a good "universal-default" value
-      #   because _coerceToValidJsonInput throws errors
-      defaultValue = if childMetatemplate?
-                       Humon.contextualize(childMetatemplate.name)._initJsonDefaults(false)
-                     else
-                       null
-      newChildNode = Humon.json2node defaultValue, metatemplate: childMetatemplate
+
+      newChildNode = Humon.json2node null, metatemplate: childMetatemplate, allowInvalid: true
       newChildNode.set "nodeKey", key
       @insertAt(idx, newChildNode)
       return newChildNode
