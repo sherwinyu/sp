@@ -40,6 +40,7 @@ Sysys.ContentEditableField = Ember.View.extend
     true
 
   didInsertElement: ->
+    console.log("--INSERTING #{@.constructor} / #{@}", @$())
     @refresh()
     @initHotKeys()
 

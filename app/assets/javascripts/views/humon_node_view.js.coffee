@@ -17,6 +17,10 @@ Sysys.HumonNodeView = Ember.View.extend
     templateContext = Humon.templateContextFor(@get 'nodeContent')
     templateContext.get('templateName')
   ).property('nodeContent.nodeType')
+  templateNameDidChange: (->
+    Ember.run.scheduleOnce 'afterRender', @, ->
+      @rerender()
+  ).observes('templateName')
   templateNameBinding: "autoTemplate"
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
   classNameBindings: [
