@@ -19,7 +19,6 @@ Humon.Goals.reopenClass
     json ||= []
 
 Humon.Goal = Humon.Complex.extend
-  completed_at: null
 
   ##
   # @override
@@ -38,7 +37,50 @@ Humon.Goal = Humon.Complex.extend
 
   done: ( (key, value) ->
     !!@get('completed_at')
-  ).property('completed_at', 'completed_at._value')
+  ).property('completed_at')
+
+  $completed_at: (->
+    @_getChildByKey('completed_at')
+  ).property('_value', '_value.@each')
+
+  completed_at: ( (key, value, oldValue) ->
+    node = @get('$completed_at')
+
+    # Handle case when node doesn't yet exist?
+    # Factor node templates into this.
+    # We can leverage existing validation / type checking via tryToCommit
+    # Setter
+    if arguments.length > 1
+      node.tryToCommit val: value
+    # Getter
+    else
+      node = @get('$completed_at')
+      node.val()
+  ).property('$completed_at')
+
+  $goal: (->
+    @_getChildByKey('goal')
+  ).property('_value', '_value.@each')
+
+  goal: ( (key, value, oldValue) ->
+    node = @get('$goal')
+
+    # Handle case when node doesn't yet exist?
+    # Factor node templates into this.
+    # We can leverage existing validation / type checking via tryToCommit
+    # Setter
+    if arguments.length > 1
+      node.tryToCommit val: value
+    # Getter
+    else
+      node = @get('$goal')
+      node.val()
+  ).property('$goal')
+
+  _getChildByKey: (key) ->
+    @_value.findProperty('nodeKey', key)
+
+  unknownProperty: null
 
   enterPressed: ->
     if @get('done')

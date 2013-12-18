@@ -86,7 +86,8 @@ Humon.BaseHumonValue.reopenClass
     if !@matchesJson json
      if context?.allowInvalid
         context.node.set('notInitialized', true)
-        Em.assert "JSON must be undefined or null", !json?
+        console.warn "JSON #{JSON.stringify json} should be undefined or null when defaulting to #{@}" if json?
+        #Em.assert "JSON must be undefined or null", !json?
         return json = @_initJsonDefaults json
 
       # Last ditch coerce, or throw the error

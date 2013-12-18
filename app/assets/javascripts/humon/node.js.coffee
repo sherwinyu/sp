@@ -38,13 +38,14 @@ Humon.Node = Ember.Object.extend
     return valid
 
   clearInvalidation: ->
-    @get('nodeView').enableTemplateStrings()
+    # Note, in the case of hidden nodes, don't do this
+    @get('nodeView')?.enableTemplateStrings()
     @set('notInitialized', false)
     @set('invalidReason', null)
     @set('invalid', false)
 
   invalidate: (reason) ->
-    @get('nodeView').clearTemplateStrings()
+    @get('nodeView')?.clearTemplateStrings()
     @set('invalidReason', reason)
     @set('invalid', true)
 
