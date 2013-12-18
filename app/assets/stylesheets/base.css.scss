@@ -69,4 +69,10 @@ $nodeIdxActiveCopyColor: lighten($nodeActiveCopyColor, 15%);
 $nodeEditorBorder: 1px solid $grayLighter;
 $nodeEditorPadding: 15px 3px;
 
-$rootNodeKeyColor: darken($nodeCopyColor, 15%)
+$rootNodeKeyColor: darken($nodeCopyColor, 15%);
+
+@mixin warning-icon {
+  &:before {
+  content: "\f071" !important;
+  }
+}

@@ -20,18 +20,13 @@
   @include node-text;
 }
 
-.node.invalid .node-invalid-reason {
+.node.invalid > .node-invalid-reason {
   display: inline-block;
   position: relative;
   height: $lineheight;
   vertical-align: bottom;
 
   color: $errorRed;
-}
-
-
-.node.invalid .node-detail {
-  visibility: hidden;
 }
 
 span.node-detail  {
@@ -54,6 +49,11 @@ span.node-detail.node-icon {
     position: absolute;
     left: 0px ;// -12px;
   }
+}
+.node.invalid > .node-detail.node-icon i.icon-element {
+  @include warning-icon;
+  color: $errorRed !important;
+  visibility: visible !important;
 }
 
 .detail-debug {

@@ -72,14 +72,6 @@
   }
 }
 
-
-/*
- * Invalid node styling
- */
-.node.invalid {
-  border-left: $errorRed solid;
-}
-
 @import "humon/debug";
 @import "humon/detail";
 @import "humon/content_field";
