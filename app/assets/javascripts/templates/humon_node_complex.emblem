@@ -1,10 +1,9 @@
 / humon_node_complex.hbs
 
-span.node-detail.node-icon
-  = partial "humon_icon"
-span.node-invalid-reason
-  = view.nodeContent.invalidReason
-=each nodeChild in view.nodeContent.nodeVal.requiredChildren
+= partial "humon_node_header"
+
+= each nodeChild in view.nodeContent.nodeVal.requiredChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="humon_node_fixed_key_layout"
-=each nodeChild in view.nodeContent.nodeVal.optionalChildren
+
+= each nodeChild in view.nodeContent.nodeVal.optionalChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild"

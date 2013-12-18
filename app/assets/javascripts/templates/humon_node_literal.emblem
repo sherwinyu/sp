@@ -1,9 +1,6 @@
 / humon_node_literal.hbs
-=view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString"
+= view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString"
 
 span.node-detail
 
-span.node-detail.node-icon
-  =partial "humon_icon"
-span.node-invalid-reason
-  =view.nodeContent.invalidReason
+= partial "humon_node_header"

@@ -59,6 +59,7 @@ Humon.TemplateContexts.register "Boolean",
   iconClass: "fa-check"
 
 Humon.TemplateContexts.register "List",
+  iconClass: ""
   templateName: "humon_node_list"
 
 Humon.TemplateContexts.register "Date",
