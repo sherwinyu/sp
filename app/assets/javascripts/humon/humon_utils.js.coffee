@@ -25,7 +25,7 @@ window.HumonUtils =
     # If the metatemplate is already typified under Humon.#{metatemplate.name}"
     # then just return the type classs
     typeClassName = Ember.String.classify(metatemplate.name)
-    if Humon.HumonValue.detect(Humon[typeClassName].prototype)
+    if Humon.HumonValue.detect(Humon[typeClassName]?.create())
       # TODO(syu): assert that the TypeClass's metatemplate is equivalent to the passed in
       # `metatemplate`
       return Humon[typeClassName]

@@ -1,5 +1,7 @@
 | current path is &nbsp;
-=currentPath
+= currentPath
+| |
+a{action "toggleDbg"}: | toggle debug
 
 nav.navbar.navbar-default role="navigation"
 

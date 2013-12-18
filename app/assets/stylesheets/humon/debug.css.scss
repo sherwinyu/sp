@@ -6,6 +6,13 @@
   visibility: hidden;
 }
 
+.node:hover, .node.active {
+  & > .debug-inline{
+    color: $nodeCopyColor;
+    visibility: visible;
+  }
+}
+
 .node-debug-panel {
   position: relative;
   display: inline-block;

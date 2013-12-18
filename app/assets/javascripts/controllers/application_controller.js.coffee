@@ -2,8 +2,13 @@ Sysys.ApplicationController = Ember.Controller.extend
   updateCurrentPath: (->
     Sysys.currentPath =  @get('currentPath')
     ).observes 'currentPath'
-  init: ->
-    @set 'node', Humon.json2node
-      abc: 123
-      waga: [1,2,3, 4]
-    @set 'content', @get('node')
+  debug : false
+  actions:
+    toggleDbg: ->
+      sheet = document.styleSheets[0]
+      rules = sheet.cssRules
+      @debug ^= true
+      if @debug
+        sheet.addRule(".node > .debug-auto-hide:not(.node-debug-panel)", "visibility: visible")
+      else
+        sheet.deleteRule( rules.length - 1 )
