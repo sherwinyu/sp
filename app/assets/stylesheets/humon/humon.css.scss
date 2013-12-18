@@ -77,7 +77,7 @@
  * Invalid node styling
  */
 .node.invalid {
-  border-left: red solid;
+  border-left: $errorRed solid;
 }
 
 @import "humon/debug";

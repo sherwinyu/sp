@@ -13,14 +13,26 @@
     <dt>  view.nodeContent.nodeMeta.name  </dt>
     <dd>{{view.nodeContent.nodeMeta.name}}</dd>
   </dl>
+  <dl>
+    <dt>&amp;</dt>
+    <dd>nodeContent.notInitialized</dd>
+    <dt>@</dt>
+    <dd>view.templateChanged</dd>
+    <dt>#</dt>
+    <dd>type-locked</dd>
+    <dt>!</dt>
+    <dd>invalid</dd>
+  </dl>
 </span>
 
-<span class="node-detail class-name">
+<span class="node-detail detail-debug">
   {{view.nodeContent.nodeType}}
+  <span class="debug-glyphs">
+    <i {{bind-attr class="view._templateChanged:template-changed"}}></i>
+    <i {{bind-attr class="view.nodeContent.notInitialized:not-initialized"}}></i>
+    <i {{bind-attr class="view.nodeContent.nodeMeta:type-locked"}}></i>
+    <i {{bind-attr class="view.nodeContent.invalid:invalid"}}></i>
+  </span>
 </span>
 
-<span class="debug-glyphs">
-  <i {{bind-attr class="view._templateChanged:template-changed"}}></i>
-  <i {{bind-attr class="view.nodeContent.notInitialized:not-initialized"}}></i>
-</span>
 

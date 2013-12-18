@@ -1,36 +1,44 @@
 @import "app_base";
-.node.active > span.node-detail {
-  visibility: visible;
-}
-.node:hover > span.node-detail {
-  visibility: visible;
-}
 
-.node .node-text {
+@mixin node-text() {
   height: $lineheight;
   vertical-align: bottom;
   display: inline-block;
 }
-.node.invalid .node-text {
-  display: none;
+
+.node:hover, .node.active {
+  > span.node-detail {
+    visibility: visible;
+  }
+
+  > .detail-debug {
+    visibility: visible;
+  }
+}
+
+.node-text {
+  @include node-text;
 }
 
 .node.invalid .node-invalid-reason {
-  height: $lineheight;
-  position: relative;
   display: inline-block;
+  position: relative;
+  height: $lineheight;
   vertical-align: bottom;
 
-  color: red;
+  color: $errorRed;
 }
 
 
+.node.invalid .node-detail {
+  visibility: hidden;
+}
+
 span.node-detail  {
-  @extend .node-text;
+  @include node-text;
   font-style: italic;
   visibility: hidden;
   position: relative;
-  display: inline-block;
 }
 
 span.node-detail.node-icon {
@@ -48,32 +56,43 @@ span.node-detail.node-icon {
   }
 }
 
-.node-detail.class-name {
-  color: $grayLighter;
+.detail-debug {
+  @include node-text;
+  visibility: hidden;
+
   float: right;
+
+  color: $grayLighter;
 }
 
 
 .debug-glyphs {
   float: right;
-  visibility: visible;
   i {
+    font-style: normal;
     position: relative;
+    width: 5px;
+    display: inline-block;
+    &:after {
+      position: absolute;
+      font-size: 70%;
+    }
   }
 }
 
 .debug-glyphs i.template-changed:after {
   content: "@";
-  position: absolute;
-  left: -3px;
-  font-size: 50%;
 }
 
 .debug-glyphs i.not-initialized:after {
   content: "&";
-  position: absolute;
-  left: -6px;
-  font-size: 50%;
 }
 
+.debug-glyphs i.type-locked:after {
+  content: "#";
+}
 
+.debug-glyphs i.invalid:after {
+  content: "!";
+  color: $errorRed;
+}
