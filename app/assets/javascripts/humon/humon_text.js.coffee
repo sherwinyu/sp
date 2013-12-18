@@ -8,5 +8,11 @@ Humon.Text.reopenClass
   # @override
   _coerceToValidJsonInput: (json) ->
     "#{json}"
+
   _initJsonDefaults: (json) ->
     json || "long-text-here"
+
+  matchesJson: (json) ->
+    typeof json == "string"
+
+

@@ -130,6 +130,24 @@ Sysys.ValEditableField = Sysys.ContentEditableField.extend
     @refresh()
   ).observes('rawValue')
 
+Sysys.ValEditableTextField = Sysys.ValEditableField.extend
+  tagName: 'div'
+  classNames: ['val-text-field']
+
+  initHotKeys: ->
+    @_super()
+    @$().bind 'keydown', 'left', (e) =>
+      @moveLeft(e)
+
+  moveLeft: (e)->
+    if getCursor(@$()) ==  0
+      @get('parentView').send 'moveLeft'
+      e.preventDefault()
+
+  rawValueDidChange: (->
+    @refresh()
+  ).observes('rawValue')
+
 Sysys.IdxEditableField = Sysys.AbstractEditableLabel.extend
   classNames: ['idx-field']
   contenteditable: 'false'

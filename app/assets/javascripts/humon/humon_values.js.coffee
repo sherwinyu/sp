@@ -7,6 +7,7 @@
 #= require ./humon_summary
 #= require ./humon_time
 #= require ./humon_goals
+#= require ./humon_text
 
 Humon.BaseHumonValue = Ember.Object.extend
   ##

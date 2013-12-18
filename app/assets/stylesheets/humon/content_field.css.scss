@@ -13,6 +13,19 @@
     vertical-align: bottom;
   }
   /*
+   * VAL TEXT FIELD
+   */
+  div.val-text-field {
+    display: block;
+    min-height: $lineheight;
+    max-width: 400px;
+  }
+  .node-text-left {
+    display: inline-block;
+    }
+
+
+  /*
    * VAL FIELD
    */
 

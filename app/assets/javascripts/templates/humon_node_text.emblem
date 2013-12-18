@@ -1,0 +1,7 @@
+/ humon_node_text.hbs
+span.node-text-left
+  = view "Sysys.ValEditableTextField" rawValueBinding="view.templateStrings.asString"
+
+span.node-detail
+
+= partial "humon_node_header"

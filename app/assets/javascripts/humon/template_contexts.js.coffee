@@ -108,5 +108,5 @@ Humon.TemplateContexts.Goal = Humon.TemplateContexts.Complex.extend(
 Humon.TemplateContexts.Summary = Humon.TemplateContexts.Complex.extend(
 )
 Humon.TemplateContexts.Text = Humon.TemplateContexts.String.extend(
-  templateName: "humon_text"
+  templateName: "humon_node_text"
 )

@@ -5,13 +5,13 @@ Humon.Summary = Humon.Complex.extend
 Humon.Summary.reopenClass
   childMetatemplates:
     best:
-      name: "String"
+      name: "text"
     worst:
-      name: "String"
+      name: "text"
     funny:
-      name: "String"
+      name: "text"
     insight:
-      name: "String"
+      name: "text"
 
   requiredAttributes: ["best", "worst"]
   optionalAttributes: ["funny", "insight"]
