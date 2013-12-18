@@ -27,6 +27,16 @@ Humon.Node = Ember.Object.extend
     arr = @flatten()
     arr[arr.length - 1]
 
+  validate: ->
+    valid = @get('nodeVal').validate()
+    if not valid
+      @invalidate("Invalid")
+    else
+      @clearInvalidation()
+      if @get('nodeParent')
+        valid &&= @get('nodeParent').validate()
+    return valid
+
   tryToCommit: (jsonInput) ->
     if @get('nodeVal').precommitInputCoerce(jsonInput)
       return
@@ -50,6 +60,7 @@ Humon.Node = Ember.Object.extend
     # Set valid to true if we successfully committed
     @clearInvalidation()
     @replaceWithHumon node
+    @validate()
     # if node.get('nodeView.templateName') !=
     # @get('nodeView').rerender()
     # @get('nodeView').repaint()

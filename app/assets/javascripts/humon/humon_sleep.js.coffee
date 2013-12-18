@@ -1,4 +1,16 @@
 Humon.Sleep = Humon.Complex.extend(
+  validations: [
+    (nodeVal) ->
+    ,
+    (nodeVal) ->
+    ,
+    (nodeVal) ->
+  ]
+
+  validate: ->
+    return false unless @get("awake_at").val() < @get("outofbed_at").val()
+    true
+
 )
 Humon.Sleep.reopenClass
   childMetatemplates:

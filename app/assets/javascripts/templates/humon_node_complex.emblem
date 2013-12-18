@@ -1,5 +1,7 @@
 / humon_node_complex.hbs
 
+span.node-invalid-reason
+  = view.nodeContent.invalidReason
 =each nodeChild in view.nodeContent.nodeVal.requiredChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="humon_node_fixed_key_layout"
 =each nodeChild in view.nodeContent.nodeVal.optionalChildren

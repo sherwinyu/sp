@@ -1,4 +1,8 @@
 {{!  humon_node_list.hbs }}
+<span class="node-invalid-reason">
+  {{view.nodeContent.invalidReason}}
+</span>
+
 {{#each nodeChild in view.nodeContent.nodeVal.children}}
   {{view Sysys.HumonNodeView nodeContentBinding="nodeChild"}}
 {{/each}}

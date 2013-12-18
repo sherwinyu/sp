@@ -19,6 +19,10 @@ Humon.BaseHumonValue = Ember.Object.extend
     console.warn "#{@constructor} should implement subFiledFocusLost"
     # Em.assert "Must implement focusOut"
 
+  validate: ->
+    true
+
+
 Humon.BaseHumonValue.reopenClass
   tryJ2hnv: (json, context) ->
     console.warn "No context.node found" unless context?.node?
