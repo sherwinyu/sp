@@ -38,7 +38,8 @@ Humon.Node = Ember.Object.extend
         valid &&= @get('nodeParent').validate()
     return valid
 
-  tryToCommit: (jsonInput) ->
+  tryToCommit: (payload) ->
+    jsonInput = payload.val
     if @get('nodeVal').precommitInputCoerce(jsonInput)
       return
     try
@@ -60,6 +61,8 @@ Humon.Node = Ember.Object.extend
 
     # Set valid to true if we successfully committed
     @clearInvalidation()
+    if payload.key?
+      @set('nodeKey', payload.key) if payload.key?
     @replaceWithHumon node
     if @validate()
       @get('controller').didCommit

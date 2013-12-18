@@ -67,8 +67,9 @@ Sysys.HumonNodeView = Ember.View.extend
     # Default: validate and commit
     enterPressed: ->
       return unless @get('nodeContent.nodeVal').enterPressed()
-      valString = @valField()?.val()
-      @get('nodeContent').tryToCommit( valString )
+
+      payload = @uiPayload()
+      @get('nodeContent').tryToCommit( payload )
       Ember.run.scheduleOnce "afterRender", @, ->
         if @get('_templateChanged')
           # Make sure we clear templateChanged after a rerender.
@@ -130,6 +131,11 @@ Sysys.HumonNodeView = Ember.View.extend
     else
       @get('controller').send('activateNode', @get('nodeContent'))
 
+  uiPayload: ->
+    payload =
+      key: @keyField()?.val()
+      val: @valField()?.val()
+
   ##
   # New focus out.
   #  - First calls controller.handleFocusOut to notify the componet we've focusedout.
@@ -147,9 +153,7 @@ Sysys.HumonNodeView = Ember.View.extend
 
 
     @get('controller').send('activateNode', null)
-    payload =
-      key: @keyField()?.val()
-      val: @valField()?.val()
+    payload = @uiPayload()
     @get('nodeContent.nodeVal').subFieldFocusLost(e, payload)
 
     # Prepare to rerender if

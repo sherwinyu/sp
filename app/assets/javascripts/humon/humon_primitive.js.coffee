@@ -21,9 +21,7 @@ Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
     [@node]
 
   subFieldFocusLost: (e, payload)->
-    @get('node').tryToCommit(payload.val)
-
-
+    @get('node').tryToCommit(payload)
 
 Humon.Primitive.reopenClass
   _klass: ->
