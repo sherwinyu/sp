@@ -3,6 +3,10 @@ Sysys.ApplicationController = Ember.Controller.extend
     Sysys.currentPath =  @get('currentPath')
     ).observes 'currentPath'
   debug : false
+  git: null
+  init: ->
+    @set 'git', window?._sp_vars?.git
+    @_super()
   actions:
     toggleDbg: ->
       sheet = document.styleSheets[0]

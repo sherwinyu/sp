@@ -1,7 +1,18 @@
 | current path is &nbsp;
 = currentPath
+|
 | |
+|
 a{action "toggleDbg"}: | toggle debug
+|
+| |
+|
+=git.sha1
+| @
+=git.date
+| &nbsp;
+=git.message
+
 
 nav.navbar.navbar-default role="navigation"
 
