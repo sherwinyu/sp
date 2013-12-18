@@ -1,10 +1,7 @@
 / humon_node_goals.hbs
 
 =each nodeChild in view.nodeContent.nodeVal.children
-  br
-  Sysys.IdxEditableField valueBinding="nodeChild.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"
-  span.node-text-left
-    Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName=""
+  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName=""
 =else
   div
     | No goals yet!

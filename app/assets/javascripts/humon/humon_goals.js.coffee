@@ -15,15 +15,25 @@ Humon.Goals.reopenClass
     json ||= []
 
 Humon.Goal = Humon.Complex.extend
+  completed_at: null
+
+  completedTimestamp: (->
+    t = @get('completed_at')
+    if t instanceof Date
+      utils.time.humanized(t)
+    else
+      "invalid"
+  ).property('completed_at')
+
   done: ( (key, value) ->
-    !!@get('completed_at._value')
+    !!@get('completed_at')
   ).property('completed_at', 'completed_at._value')
 
   enterPressed: ->
     if @get('done')
-      @set('completed_at._value', null)
+      @set('completed_at', null)
     else
-      @get('completed_at').set("_value", new Date())
+      @set('completed_at', new Date())
     false
 
 Humon.Goal.reopenClass
@@ -35,7 +45,11 @@ Humon.Goal.reopenClass
       name: "date"
 
   requiredAttributes: ["goal"]
+
   optionalAttributes: ["completed", "completed_at"]
+
+  directAttributes: ["completed_at"]
+
   _initJsonDefaults: (json) ->
     json ||= {}
     requiredDefaults =

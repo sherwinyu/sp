@@ -122,8 +122,12 @@ window.utils =
       @ticking = true
 
 window.utils.date =
+  mmt: (arg) ->
+    console.warn "Expected moment or date" if arg.constructor != Date
+    moment(arg)
+
   verbose: (date) ->
-    mmt = moment(date)
+    mmt = @mmt(date)
     mmt.format('LLLL')
 
   asString: (date) ->
@@ -131,36 +135,41 @@ window.utils.date =
     @humanized(date)
 
   humanized: (date) ->
-    mmt = moment(date)
+    mmt = @mmt(date)
     if mmt.isSame(new Date(), 'year')
       mmt.format("ddd, MMM D")
     else
       mmt.format("ddd, MMM D, YYYY")
 
   relative: (date) ->
-    mmt = moment(date)
+    mmt = @mmt(date)
     mmt.fromNow()
 
   # param date Date
   # returns: a Date
   tomorrow: (date) ->
-    mmt = moment(date)
+    mmt = @mmmt(date)
     if mmt.hour() > 3
       mmt.add days: 1
     mmt.startOf('day')
     mmt.toDate()
 
 utils.time =
+  mmt: (arg) ->
+    console.warn "Expected moment or date" if arg.constructor != Date
+    moment(arg)
+
   verbose: (time) ->
-    mmt = moment(time)
+    mmt = @mmt(time)
     mmt.format('HH:mm:ss')
 
   humanized: (time) ->
     @asString(time)
 
   asString: (time) ->
-    moment(time).format("HH:mm") + " (#{moment(time).format("ddd, MMM D")})"
+    mmt = @mmt(time)
+    mmt.format("HH:mm") + " (#{mmt.format("ddd, MMM D")})"
 
   relative: (time) ->
-    mmt = moment(time)
+    mmt = @mmt(time)
     mmt.fromNow()

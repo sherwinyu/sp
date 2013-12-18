@@ -49,6 +49,7 @@ Humon.Complex.reopenClass(
   childMetatemplates: {}
   requiredAttributes: []
   optionalAttributes: []
+  directAttributes: []
 
   _metatemplate:
     $include: Humon.Hash._metatemplate
