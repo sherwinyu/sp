@@ -14,14 +14,20 @@ Humon.Goals.reopenClass
   _initJsonDefaults: (json) ->
     json ||= []
 
-Humon.Goal = Humon.Complex.extend()
+Humon.Goal = Humon.Complex.extend
+  done: ( (key, value) ->
+    !!@get('completed_at')
+  ).property('completed_at')
+
+  enterPressed: ->
+    @get('completed').toggle()
+    false
 
 Humon.Goal.reopenClass
+
   childMetatemplates:
     goal:
-      name: "string"
-    completed:
-      name: "boolean"
+      name: "text"
     completed_at:
       name: "date"
 

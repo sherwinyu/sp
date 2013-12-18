@@ -103,6 +103,7 @@ Humon.TemplateContexts.Goals = Humon.TemplateContexts.List.extend(
   templateName: "humon_node_goals"
 )
 Humon.TemplateContexts.Goal = Humon.TemplateContexts.Complex.extend(
+  templateName: "humon_node_goal"
   iconClass: ""
 )
 Humon.TemplateContexts.Summary = Humon.TemplateContexts.Complex.extend(
