@@ -23,7 +23,7 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   ).property('_value', '_value.@each')
 
   validateSelf: ->
-    @ensure "_value is an array", _value instanceof Array
+    @ensure "_value is an array", @_value instanceof Array
 
   ##
   # @override

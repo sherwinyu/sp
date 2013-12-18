@@ -1,4 +1,4 @@
-class SpSleepSerializer < ActiveModel::Serializer
+class SleepSerializer < ActiveModel::Serializer
   attributes *%w[
     awake_at
     awake_energy

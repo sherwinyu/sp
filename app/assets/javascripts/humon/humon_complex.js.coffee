@@ -80,7 +80,7 @@ Humon.Complex.reopenClass(
   _j2hnv: (json, context) ->
     childNodes = []
     for own key, childVal of json
-      Em.assert "all keys must be valid attributes", @childMetatemplates[key]?
+      Em.assert "Key `#{key}` is an invalid attribute for #{@}", @childMetatemplates[key]?
       childContext =
         nodeParent: context.node
         metatemplate: @childMetatemplates[key]

@@ -1,4 +1,4 @@
-class SpSleep
+class Sleep
   include Mongoid::Document
   embedded_in :day
 

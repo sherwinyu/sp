@@ -8,22 +8,22 @@ Humon.Sleep = Humon.Complex.extend(
   ]
 
   validateSelf: ->
-    @ensure "Awake at must be before Out of bed", @get("awake_at").val() < @get("outofbed_at").val()
+    @ensure "Awake at must be before Out of bed", @get("awake_at").val() < @get("up_at").val()
     @_super()
 )
 Humon.Sleep.reopenClass
   childMetatemplates:
     awake_at:
       name: "time"
-    outofbed_at:
+    up_at:
       name: "time"
     awake_energy:
       name: "number"
-    outofbed_energy:
+    up_energy:
       name: "number"
 
-  requiredAttributes: ["awake_at", "outofbed_at"]
-  optionalAttributes: ["awake_energy", "outofbed_energy"]
+  requiredAttributes: ["awake_at", "up_at"]
+  optionalAttributes: ["awake_energy", "up_energy"]
 
 
     # naps:
@@ -38,7 +38,7 @@ Humon.Sleep.reopenClass
     json ||= {}
     requiredDefaults =
       awake_at: undefined
-      outofbed_at: undefined
+      up_at: undefined
     # assuming json has no other fields
     # assuming json.best and json.worst are Strings
     # assuming json.funny, json.insight are Strings -- THIS ASSUMPTION

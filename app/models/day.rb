@@ -4,14 +4,14 @@ class Day
   # field :sleep, type: HumonNodeSleep
   extend Forwardable
 
-  embeds_one :sleep, class_name: "SpSleep", store_as: 'sleep'
+  embeds_one :sleep
   embeds_one :summary, class_name: "Summary", store_as: 'summary'
   embeds_many :goals
 
   def_delegators :sleep, *%w[
     awake_at
-    awake_energy
     up_at
+    awake_energy
     up_energy
   ]
 

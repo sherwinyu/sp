@@ -9,3 +9,6 @@ span.options
 = humon-editor json=startedAt rootKey="Started at" metaTemplate=typeMap.startedAt downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
 = humon-editor json=endedAt rootKey="Ended at" metaTemplate=typeMap.endedAt downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
 = humon-editor json=details rootKey="Details" downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
+
+
+= humon-editor json=view.details rootKey="SleepComplex" metaTemplate=view.metaTemplate downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
