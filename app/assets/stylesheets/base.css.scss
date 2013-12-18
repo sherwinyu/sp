@@ -80,3 +80,9 @@ $rootNodeKeyColor: darken($nodeCopyColor, 15%);
   content: "\f071" !important;
   }
 }
+
+@mixin node-text() {
+  height: $lineheight;
+  vertical-align: bottom;
+  display: inline-block;
+}

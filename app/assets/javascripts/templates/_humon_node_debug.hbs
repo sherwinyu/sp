@@ -1,6 +1,6 @@
 {{!  _humon_node_debug.hbs }}
 
-<span class="node-debug">
+<span class="node-debug-panel debug-auto-hide">
   <dl>
     <dt>  view.id </dt>
     <dd>{{view._id}}</dd>
@@ -25,8 +25,8 @@
   </dl>
 </span>
 
-<span class="node-detail node-type">{{view.nodeContent.nodeType}}</span>
-<span class="node-detail detail-debug">
+<span class="debug-inline debug-node-type debug-auto-hide">{{view.nodeContent.nodeType}}</span>
+<span class="debug-inline debug-auto-hide">
   <span class="debug-glyphs">
     <i {{bind-attr class="view._templateStringsEnabled::template-strings-disabled"}}></i>
     <i {{bind-attr class="view._templateChanged:template-changed"}}></i>

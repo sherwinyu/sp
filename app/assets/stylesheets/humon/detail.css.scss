@@ -1,22 +1,27 @@
 @import "app_base";
 
-@mixin node-text() {
-  height: $lineheight;
-  vertical-align: bottom;
-  display: inline-block;
-}
-
+// by default, hide details
 .node:hover, .node.active {
   > span.node-detail {
     visibility: visible;
   }
-
-  > .detail-debug {
-    visibility: visible;
-  }
+}
+span.node-detail  {
+  visibility: hidden;
 }
 
-// Only darken on ACTIVE, not on hover.
+.node-detail {
+  @include node-text;
+  position: relative;
+  font-style: italic;
+}
+
+.node-text, .node-detail {
+  @include node-text;
+  color: $nodeDetailCopyColor;
+}
+
+// When active, darken the colors
 .node.active {
   > .node-text, > .node-detail {
     color: $nodeActiveDetailCopyColor;
@@ -29,14 +34,16 @@
   }
 }
 
-.node-text, .node-detail {
-  @include node-text;
-  color: $nodeDetailCopyColor;
+span.node-detail.node-icon {
+  $nodeIconSize: 14px;
+  margin: 0 3px;
+  font-size: $nodeIconSize;
+  position: relative;
+  top: ($nodeCopyFontSize - $nodeIconSize);
 }
 
 .node-invalid-reason {
   @include node-text;
-  // display: none;
   color: $errorRed;
 }
 .node.active > .node-invalid-reason {
@@ -44,81 +51,8 @@
   color: $errorActiveRed;
 }
 
-span.node-detail  {
-  @include node-text;
-  font-style: italic;
-  visibility: hidden;
-  position: relative;
-}
-
-span.node-detail.node-icon {
-  $nodeIconSize: 14px;
-  width: 10px;
-  font-size: $nodeIconSize;
-  position: relative;
-  top: ($nodeCopyFontSize - $nodeIconSize);
-
-  i.icon {
-    height: 10px;
-    top: 0%;
-    position: absolute;
-    left: 0px ;// -12px;
-  }
-}
-
 .node.invalid > .node-detail.node-icon i.icon-element {
   @include warning-icon;
   color: $errorRed;
   visibility: visible !important;
-}
-
-.node-type.node-detail {
-  position: absolute;
-  right: 10px;
-}
-
-.detail-debug {
-  @include node-text;
-  visibility: hidden;
-
-  float: right;
-
-  color: $nodeDetailCopyColor;
-
-}
-
-
-
-.debug-glyphs {
-  float: right;
-  i {
-    font-style: normal;
-    position: relative;
-    width: 15px;
-    display: inline-block;
-    &:after {
-      position: absolute;
-      font-size: 70%;
-    }
-  }
-}
-
-.debug-glyphs i.template-strings-disabled:after {
-  content: "$!\" ";
-}
-.debug-glyphs i.template-changed:after {
-  content: "$Δ ";
-}
-
-.debug-glyphs i.not-initialized:after {
-  content: "@i ";
-}
-
-.debug-glyphs i.type-locked:after {
-  content: "@L ";
-}
-
-.debug-glyphs i.invalid:after {
-  content: "@! ";
-  color: $errorRed;
 }

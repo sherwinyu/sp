@@ -1,5 +1,7 @@
 / humon_node_complex.hbs
 
+span.node-detail.node-icon
+  = partial "humon_icon"
 span.node-invalid-reason
   = view.nodeContent.invalidReason
 =each nodeChild in view.nodeContent.nodeVal.requiredChildren
