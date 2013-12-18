@@ -16,11 +16,14 @@ Humon.Goals.reopenClass
 
 Humon.Goal = Humon.Complex.extend
   done: ( (key, value) ->
-    !!@get('completed_at')
-  ).property('completed_at')
+    !!@get('completed_at._value')
+  ).property('completed_at', 'completed_at._value')
 
   enterPressed: ->
-    @get('completed').toggle()
+    if @get('done')
+      @set('completed_at._value', null)
+    else
+      @get('completed_at').set("_value", new Date())
     false
 
 Humon.Goal.reopenClass

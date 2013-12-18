@@ -1,11 +1,7 @@
 / humon_node_goal.hbs
 
 / = partial "humon_node_header"
-| viewNCG
-= view.nodeContent.goal
 Sysys.HumonNodeView nodeContentBinding="view.nodeContent.goal" layoutName=""
-= if view.nodeContent.done
-  | DONE!!
-= else
-  | not done
-
+= if view.nodeContent.nodeVal.done
+  | Done! Completed at
+  = view.nodeContent.nodeVal.completed_at._value
