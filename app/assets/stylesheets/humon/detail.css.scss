@@ -21,6 +21,12 @@
   > .node-text, > .node-detail {
     color: $nodeActiveDetailCopyColor;
   }
+  &.invalid > .node-detail.node-icon i.icon-element {
+    color: $errorActiveRed;
+  }
+  &.invalid > .node-invalid-reason {
+    color: $errorActiveRed;
+  }
 }
 
 .node-text, .node-detail {
@@ -28,13 +34,14 @@
   color: $nodeDetailCopyColor;
 }
 
-.node.invalid > .node-invalid-reason {
-  display: inline-block;
-  position: relative;
-  height: $lineheight;
-  vertical-align: bottom;
-
+.node-invalid-reason {
+  @include node-text;
+  // display: none;
   color: $errorRed;
+}
+.node.active > .node-invalid-reason {
+  display: inline-block;
+  color: $errorActiveRed;
 }
 
 span.node-detail  {
@@ -58,9 +65,10 @@ span.node-detail.node-icon {
     left: 0px ;// -12px;
   }
 }
+
 .node.invalid > .node-detail.node-icon i.icon-element {
   @include warning-icon;
-  color: $errorRed !important;
+  color: $errorRed;
   visibility: visible !important;
 }
 

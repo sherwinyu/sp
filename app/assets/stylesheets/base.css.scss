@@ -20,7 +20,9 @@ $lineheight: 20px;
 $nodeWhiteIndent: 15px;
 $nodeLeftBorder: 4px;
 $fieldWhiteIndent: 15px;
-$errorRed: rgba(200, 40, 40, 1);
+
+$errorActiveRed: rgba(210, 40, 40, 1);
+$errorRed: rgba(180, 80, 80, 1);
 
 @mixin imp {
   border: 1px solid red;
