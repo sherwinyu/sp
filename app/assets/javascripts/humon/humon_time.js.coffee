@@ -33,6 +33,7 @@ Humon.Time.reopenClass(
     ret =
       matches: false
     try
+      return {matches: false} unless json?
       ret.value ||= (typeof json is "object" && json.constructor == Date && json)
       ret.value ||= json.constructor == String && @_inferAsTimeStampFormat json
     catch error

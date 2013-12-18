@@ -26,8 +26,8 @@ Humon.Sleep.reopenClass
   _initJsonDefaults: (json) ->
     json ||= {}
     requiredDefaults =
-      awake_at: ""
-      outofbed_at: ""
+      awake_at: undefined
+      outofbed_at: undefined
     # assuming json has no other fields
     # assuming json.best and json.worst are Strings
     # assuming json.funny, json.insight are Strings -- THIS ASSUMPTION

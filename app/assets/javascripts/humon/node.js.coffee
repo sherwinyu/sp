@@ -28,7 +28,6 @@ Humon.Node = Ember.Object.extend
     arr[arr.length - 1]
 
   tryToCommit: (jsonInput) ->
-    @set('notInitialized', false)
     if @get('nodeVal').precommitInputCoerce(jsonInput)
       return
     try
@@ -56,6 +55,7 @@ Humon.Node = Ember.Object.extend
     # @get('nodeView').repaint()
 
   clearInvalidation: ->
+    @set('notInitialized', false)
     @set('invalidReason', "")
     @set('invalid', false)
 

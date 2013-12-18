@@ -4,6 +4,7 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   childrenReorderable: true
   acceptsArbitraryChildren: true
   isList: true
+  isLiteral: false
   hasKeys: false
   asString: -> JSON.stringify(@toJson())
 

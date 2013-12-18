@@ -23,7 +23,18 @@ Humon.BaseHumonValue.reopenClass
   tryJ2hnv: (json, context) ->
     console.warn "No context.node found" unless context?.node?
     validatedJson = @normalizeJson(json, context)
-    return @_j2hnv(validatedJson, context)
+
+    # TODO(syu): SUPER hacky
+    # Basically, if we allowedInvalid in normalizeJson (aka, json is undefined)
+    #   AND this is a literal, we want to bypass @_j2hnv
+    #   because in the case of Date, we'd do tests on the json.
+    #   We can't just ALWAYS bypass @_j2hnv when allowInvalid is true,
+    #   because when the node accepts children, we need to convert
+    #   {requiredAttribute1: undefined, reqAtr2: undefined} to [node, node]
+    if context.node.get('notInitialized') && @create().get('isLiteral')
+      @create(_value: validatedJson, node: context.node)
+    else
+      return @_j2hnv(validatedJson, context)
 
   ##
   # @param [JSON] json
