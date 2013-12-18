@@ -11,12 +11,16 @@ Humon.Hash = Humon.List.extend
   # Otherwise, look up by childNode's nodeKey
   unknownProperty: (keyOrIndex) ->
     getByKey = (key) =>
+      childNode = if key[0] == '$'
+                     @_value.findProperty('nodeKey', key.substring(1))
+                  else
+                     @_value.findProperty('nodeKey', key)
+
+      console.warn "Child $#{key} of #{@} not found" unless childNode?
       if key[0] == '$'
-        child = getByKey(key.substring(1))
-        console.warn "Child $#{key} of #{@} not found" unless child?
-        return child?.val()
+        return childNode
       else
-        return @_value.findProperty('nodeKey', key)
+        return childNode?.val()
 
     # If it's a string, look up by key
     if isNaN(keyOrIndex) && keyOrIndex.constructor == String

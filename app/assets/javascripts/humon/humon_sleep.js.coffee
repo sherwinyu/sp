@@ -8,7 +8,7 @@ Humon.Sleep = Humon.Complex.extend(
   ]
 
   validateSelf: ->
-    @ensure "Awake at must be before Out of bed", @get("awake_at").val() < @get("up_at").val()
+    @ensure "Awake at must be before Out of bed", @get("awake_at") < @get("up_at")
     @_super()
 )
 Humon.Sleep.reopenClass

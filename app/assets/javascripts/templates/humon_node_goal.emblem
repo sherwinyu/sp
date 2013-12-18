@@ -4,7 +4,7 @@
 
 Sysys.IdxEditableField valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"
 span.node-text-left
-  Sysys.HumonNodeView nodeContentBinding="view.nodeContent.goal" layoutName=""
+  Sysys.HumonNodeView nodeContentBinding="view.nodeContent.$goal" layoutName=""
 
   <br>
   <br>
@@ -22,7 +22,7 @@ span.node-text-left
 
   | view.nodeContent.nodeVal.goal
   <br>
-  = view.nodeContent.nodVeal.goal
+  = view.nodeContent.nodeVal.goal
   <br>
   <br>
 
@@ -36,5 +36,4 @@ span.node-text-left
   = if view.nodeContent.nodeVal.done
     | Done! Completed at
     = view.nodeContent.nodeVal.completedTimestamp
-
 = partial "humon_node_debug"
