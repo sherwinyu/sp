@@ -2,8 +2,19 @@ Sysys.HumonNodeView = Ember.View.extend
   _templateChanged: false
   _id: null
   _templateStringsEnabled: true
-
+  clearTemplateStrings: -> @set('_templateStringsEnabled', false)
+  enableTemplateStrings: -> @set('_templateStringsEnabled', true)
+  isActive: (->
+    ret = @get('controller.activeHumonNode') == @get('nodeContent') && @get('nodeContent')?
+  ).property('controller.activeHumonNode', 'nodeContent')
+  parentActive: (->
+    ret = @get('controller.activeHumonNode') == @get('nodeContent.nodeParent')
+  ).property('controller.activeHumonNode', 'nodeContent.nodeParent')
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
+  activateBoundNode: (activate = true) ->
+    arg = if activate then @get('nodeContent') else null
+    @get('controller').send('activateNode', arg)
+
   layoutName: "humon_node_key_layout"
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
@@ -13,37 +24,32 @@ Sysys.HumonNodeView = Ember.View.extend
     'parentActive:activeChild']
   classNames: ['node']
 
+#########################
+## Dynamic templates
+#########################
   ##
   # AutoTemplate is responsible solely for producing the correct template name
+  templateNameBinding: "autoTemplate"
   _templateContext: ->
     Humon.templateContextFor(@get 'nodeContent')
-
   autoTemplate: (->
-    Ember.run.sync()
-    node = @get('nodeContent')
-    templateContext = @_templateContext()
-    templateContext.get('templateName')
+    @_templateContext().get('templateName')
   ).property('nodeContent.nodeType')
   templateStrings: (->
     Ember.run.sync()
     node = @get('nodeContent')
     unless node.get('notInitialized') or !@get('_templateStringsEnabled')
-      Humon.templateContextFor(node).materializeTemplateStrings(node)
-    else
-      {}
+      @_templateContext().materializeTemplateStrings(node)
   ).property('nodeContent.nodeVal', '_templateStringsEnabled')
-  templateNameBinding: "autoTemplate"
-
-  clearTemplateStrings: ->
-    @set('_templateStringsEnabled', false)
-  enableTemplateStrings: ->
-    @set('_templateStringsEnabled', true)
-
   templateNameDidChange: (-> @set('_templateChanged', true)).observes('templateName')
+
   updateId: (-> @set '_id', @$().attr('id')).on 'didInsertElement'
   bindNodeView:   (-> @get('nodeContent')?.set 'nodeView', @).on 'didInsertElement'
   unbindNodeView: (-> @get('nodeContent')?.set 'nodeView', null).on 'willDestroyElement'
 
+#########################
+## Actions start
+#########################
   actions:
     # Default: validate and commit
     enterPressed: ->
@@ -59,7 +65,7 @@ Sysys.HumonNodeView = Ember.View.extend
           Ember.run.later => @smartFocus()
 
     moveLeft: ->
-      # you can't focus left on a list!
+      # You can't focus left on a list!
       if @get('nodeContent.nodeParent.nodeType') is 'list'
         return
       if @get('layoutName') is 'humon_node_fixed_key_layout'
@@ -73,10 +79,6 @@ Sysys.HumonNodeView = Ember.View.extend
         field: 'val'
         pos: 'left'
 
-    # up -- handles the event of moving to the previous node
-    # Context: TODO(syu)
-    #   1) calls prevNode on the controller
-    #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
     up:  (e)->
       if @get('controller').prevNode(e)
         Ember.run.sync()
@@ -86,11 +88,9 @@ Sysys.HumonNodeView = Ember.View.extend
       if changed = @get('controller').nextNode(e)
         Ember.run.sync()
         @get('controller').send 'smartFocus'
-
 #########################################
-## End actions
+## Focus management
 ########################################
-
   ##
   # Prepares a payload from the valfields
   # @return [JSON] payload
@@ -101,22 +101,20 @@ Sysys.HumonNodeView = Ember.View.extend
       key: @keyField()?.val()
       val: @valField()?.val()
 
-  # focusIn
-  #  1) cancels propagation
-  #  2) if current HNV is active returns and does nothing
-  #     if current HNV is not active,  calls activateNode on the current node content
-  #
-  #  This is primarily called indirectly by event bubbling from content fields
+  ##
+  # FocusIn
+  # Focus in handles bubbled focusIn events.
+  # It calls the controller handleFocusIn hook.
+  # Besides, that it activates this node if it isn't already.
   focusIn: (e) ->
     e.stopPropagation()
     # hook for HEC to sendAction focusGained
     @get('controller').handleFocusIn()
     return if @get 'isActive'
-    @get('controller').send('activateNode', @get('nodeContent'))
-
+    @activateBoundNode()
 
   ##
-  # New focus out.
+  # Focus out handles bubbled focusOut events.
   #  - First calls controller.handleFocusOut to notify the componet we've focusedout.
   #  - Sets activeNode to null
   #  - Constructs a payload with key and val fields, passes it to
@@ -124,12 +122,11 @@ Sysys.HumonNodeView = Ember.View.extend
   #  - scheudles a potential rerender
   focusOut: (e) ->
     e.stopPropagation()
-
     # Even though controllerMixin doesn't have a handleFocusOut method,
     # HumonEditorComponent implements it.
     @get('controller').handleFocusOut()
+    @activateBoundNode(no)
 
-    @get('controller').send('activateNode', null)
     payload = @uiPayload()
     @get('nodeContent.nodeVal').subFieldFocusLost(e, payload)
 
@@ -184,25 +181,14 @@ Sysys.HumonNodeView = Ember.View.extend
     @focusField opts
 
 
-  # click -- responds to a click event on the HNV
-  # primarily for
-  #   1) cancels propagation
-  #   2) if HNV is already active, just smart focus
-  #   3) if HNV is not active, set it as active
-  #   4) regardless, call @smartFocus
+  ##
+  # Responds to clicks.click -- responds to a click event on the HNV
+  # If HNV isn't already active, activate it and smart focus.
   click: (e)->
     e.stopPropagation()
-    unless @get('isActive')
-      @get('controller').send('activateNode', @get('nodeContent'))
+    @activateBoundNode() unless @get('isActive')
     @smartFocus()
 
-  isActive: (->
-    ret = @get('controller.activeHumonNode') == @get('nodeContent') && @get('nodeContent')?
-  ).property('controller.activeHumonNode', 'nodeContent')
-
-  parentActive: (->
-    ret = @get('controller.activeHumonNode') == @get('nodeContent.nodeParent')
-  ).property('controller.activeHumonNode', 'nodeContent.nodeParent')
 
   ##
   # Helper methods to fetch the Ember.View objects of the corresponding child fields
@@ -229,7 +215,6 @@ Sysys.HumonNodeView = Ember.View.extend
   #   but it still extends from ContentEditableField.
   #   It should probably still stay focusable though.
   focusField: (opts) ->
-    Em.assert "opts to FocusField must be POJO", typeof opts is "object"
     fieldView = @["#{opts.field}Field"]()
     # console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
 

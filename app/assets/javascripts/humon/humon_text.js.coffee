@@ -10,9 +10,7 @@ Humon.Text.reopenClass
     "#{json}"
 
   _initJsonDefaults: (json) ->
-    json || "long-text-here"
+    json || ""
 
   matchesJson: (json) ->
-    typeof json == "string"
-
-
+    typeof json == "string" && json.length > 255
