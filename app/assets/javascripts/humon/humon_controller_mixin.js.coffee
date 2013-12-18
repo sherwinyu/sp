@@ -159,27 +159,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
   #   to get recalculate HNV.autoTemplate
 
   _commitVal: (rawString, {node}={node: null}) ->
-    return
-    node ||= @get('activeHumonNode')
-    oldType = node.get('nodeType')
-    # TODO(syu): Fix Humon.parse
-    json = try
-             JSON.parse rawString
-           catch error
-             rawString
-    if rawString?
-      Ember.run =>
-        node.replaceWithJson json
-        newType = node.get("nodeType")
-        # rerender this node; _focusField will get us properly refocused
-        # We are manually re-rendering to update autoTemplate.
-        # But we don't want to rerender if we're still on the same humon node --
-        #   because if we do, we can't "right arrow" into the next field -- it'll have been removed!
-        # Also, add the ?. check on nodeView because in the case of dC.delete, the node already has
-        # nodeView set to null from HNV#willDeleteElement
-        if newType != oldType
-          Em.assert "deprecated"
-          node.get('nodeView')?.rerender()
+    Em.assert "No longer implemented!"
 
   ######################################
   ##  Setting Active Node
@@ -217,30 +197,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
 ##################################
 ## Manipulating humon node tree
 ##################################
-
-  # Changes context to a hash
-  # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
-  # If activeNode is a list, convert it to a hash
-  forceHash: ->
-    return
-    ahn = @get('activeHumonNode')
-    if ahn.get('isCollection') && ahn.get('isList')
-      ahn.convertToHash()
-    if ahn.get('isLiteral') && ahn.get('nodeParent.isList')
-      ahn.get('nodeParent')?.convertToHash()
-    @send 'smartFocus'
-
-  # Changes context to a hash
-  # If activeNode is a literal and activeNode's parent is a list, convert the parent to a hash
-  # If activeNode is a list, convert it to a hash
-  forceList: ->
-    return
-    ahn = @get('activeHumonNode')
-    if ahn.get('isCollection') && ahn.get('isHash')
-      ahn.convertToList()
-    if ahn.get('isLiteral') && ahn.get('nodeParent.isHash')
-      ahn.get('nodeParent')?.convertToList()
-    @send 'smartFocus'
 
   # TODO(syu): test me
   bubbleUp: ->

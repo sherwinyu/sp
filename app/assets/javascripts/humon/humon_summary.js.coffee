@@ -1,6 +1,4 @@
-Humon.Summary = Humon.Complex.extend
-  addField: (e) ->
-
+Humon.Summary = Humon.Complex.extend()
 
 Humon.Summary.reopenClass
   childMetatemplates:

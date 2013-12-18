@@ -38,31 +38,14 @@ Sysys.HumonNodeView = Ember.View.extend
     'nodeContent.nodeType',
     'isActive:active',
     'nodeContent.invalid:invalid',
-    'parentActive:activeChild',
-    'suppressGap']
+    'parentActive:activeChild']
   classNames: ['node']
 
-  updateId: (->
-    @set('_id', @$().attr('id'))
-  ).on 'didInsertElement'
+  updateId: (-> @set '_id', @$().attr('id')).on 'didInsertElement'
+  bindNodeView:   (-> @get('nodeContent')?.set 'nodeView', @).on 'didInsertElement'
+  unbindNodeView: (-> @get('nodeContent')?.set 'nodeView', null).on 'willDestroyElement'
 
   actions:
-    addField: (e) ->
-      console.log "FIELD ADD"
-
-    # up -- handles the event of moving to the previous node
-    # Context: TODO(syu)
-    #   1) calls prevNode on the controller
-    #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
-    up:  (e)->
-      if @get('controller').prevNode(e)
-        Ember.run.sync()
-        @get('controller').send 'smartFocus'
-
-    down: (e)->
-      if changed = @get('controller').nextNode(e)
-        Ember.run.sync()
-        @get('controller').send 'smartFocus'
 
     # Default: validate and commit
     enterPressed: ->
@@ -75,30 +58,7 @@ Sysys.HumonNodeView = Ember.View.extend
           # Make sure we clear templateChanged after a rerender.
           @set('_templateChanged', false)
           @rerender()
-          Ember.run.later =>
-            @smartFocus()
-
-
-    oldEnterPressed: ->
-      if @get('controller.activeHumonNode.isCollection') && @get('controller.activeHumonNode.acceptsArbitraryChildren')
-        @get('controller').send('insertChild')
-        return
-      if @valField()?.val() == ''
-        @valField().val '{}'
-      payload =
-        val: @valField()?.val()
-        key: @keyField()?.val()
-      # If current node's parent is a collection most common case)
-      # then we send commitAndContinueNew, which will both commit,
-      # and insert a child
-      if @get('controller.activeHumonNode.nodeParent.isCollection')
-        @get('controller').send 'commitAndContinueNew', payload
-      # If current node is NOT in a collection
-      # Example use case: single node bindings (e.g., data_point.startedAt)
-      # TODO(syu): more elegant way to handle this distinction
-      else
-        @get('controller').send 'commitLiteral', payload
-
+          Ember.run.later => @smartFocus()
 
     moveLeft: ->
       # you can't focus left on a list!
@@ -115,6 +75,34 @@ Sysys.HumonNodeView = Ember.View.extend
         field: 'val'
         pos: 'left'
 
+    # up -- handles the event of moving to the previous node
+    # Context: TODO(syu)
+    #   1) calls prevNode on the controller
+    #   2) if prevNode was successful (returns a new node), then send smartFocus to controller
+    up:  (e)->
+      if @get('controller').prevNode(e)
+        Ember.run.sync()
+        @get('controller').send 'smartFocus'
+
+    down: (e)->
+      if changed = @get('controller').nextNode(e)
+        Ember.run.sync()
+        @get('controller').send 'smartFocus'
+
+#########################################
+## End actions
+########################################
+
+  ##
+  # Prepares a payload from the valfields
+  # @return [JSON] payload
+  #   - key [string]
+  #   - val [string]
+  uiPayload: ->
+    payload =
+      key: @keyField()?.val()
+      val: @valField()?.val()
+
   # focusIn
   #  1) cancels propagation
   #  2) if current HNV is active returns and does nothing
@@ -123,18 +111,11 @@ Sysys.HumonNodeView = Ember.View.extend
   #  This is primarily called indirectly by event bubbling from content fields
   focusIn: (e) ->
     e.stopPropagation()
-
     # hook for HEC to sendAction focusGained
     @get('controller').handleFocusIn()
-    if @get 'isActive'
-      return
-    else
-      @get('controller').send('activateNode', @get('nodeContent'))
+    return if @get 'isActive'
+    @get('controller').send('activateNode', @get('nodeContent'))
 
-  uiPayload: ->
-    payload =
-      key: @keyField()?.val()
-      val: @valField()?.val()
 
   ##
   # New focus out.
@@ -149,8 +130,6 @@ Sysys.HumonNodeView = Ember.View.extend
     # Even though controllerMixin doesn't have a handleFocusOut method,
     # HumonEditorComponent implements it.
     @get('controller').handleFocusOut()
-    # console.log "FocusOut:", "currentTarget:", e.currentTarget, "target:", e.target, "related", e.relatedTarget
-
 
     @get('controller').send('activateNode', null)
     payload = @uiPayload()
@@ -166,24 +145,6 @@ Sysys.HumonNodeView = Ember.View.extend
         # Make sure we clear templateChanged after a rerender.
         @set('_templateChanged', false)
         @rerender()
-
-    # prepare payload: pull from $().val, etc
-    # send to `commitEverything
-
-    #node = @get('nodeContent')
-    ###
-    payload =
-      key: @keyField()?.val()
-      node: node
-
-    # if the value has been modified, include val in the payload
-    if @valField()?.val() isnt @get("templateStrings.asString")
-      payload.val = @valField()?.val()
-    console.log('focusOut, payload', payload)
-    ###
-
-
-      # @get('controller').send 'commitEverything', payload
 
   ##
   # smartFocus -- "auto" sets the focus for this HNV based on context
@@ -245,30 +206,6 @@ Sysys.HumonNodeView = Ember.View.extend
     ret = @get('controller.activeHumonNode') == @get('nodeContent.nodeParent')
   ).property('controller.activeHumonNode', 'nodeContent.nodeParent')
 
-  # normally, there is a 5px gap at the bottom of node-collections to make room for the [ ] and { } glyphs.
-  # However, if multiple collections all exit, we don't want a ton of white space, so we only show the gap
-  # if this nodeCollection has an additional sibling after it
-  suppressGap: (->
-    @get('nodeContent.nodeParent.nodeVal.lastObject') == @get('nodeContent')
-  ).property('nodeContent.nodeParent.nodeVal.lastObject')
-
-  ##
-  # For each child content editable field, this calls refresh()
-  # Context: This is necessary to reinsert the "display string"
-  #  of a val field, when an edit to the input is made, but the
-  #  parsed nodeVal is still the same
-  repaint: ->
-    @get("childViews").forEach( (view) ->
-      if view instanceof Sysys.ContentEditableField
-        view.refresh()
-    )
-
-  willDestroyElement: ->
-    @get('nodeContent')?.set 'nodeView', null
-
-  didInsertElement: ->
-    @get('nodeContent')?.set 'nodeView', @
-
   ##
   # Helper methods to fetch the Ember.View objects of the corresponding child fields
   # NOTE this gets the FIRST instance of child field of this type
@@ -295,13 +232,8 @@ Sysys.HumonNodeView = Ember.View.extend
   #   It should probably still stay focusable though.
   focusField: (opts) ->
     Em.assert "opts to FocusField must be POJO", typeof opts is "object"
-
-    # get the field view
-    # NOTE this gets the FIRST instance of child field of this type
     fieldView = @["#{opts.field}Field"]()
-
     # console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
-
 
     # This is ASSUMING that anything we would ever want to focus on is a subclass of
     # Sysys.ContentEditableField

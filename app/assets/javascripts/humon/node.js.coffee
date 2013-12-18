@@ -167,12 +167,6 @@ Humon.Node = Ember.Object.extend
   deleteChild: (node) ->
     @get('nodeVal').deleteChild(node)
 
-  convertToHash: ->
-    throw new Error "Not implemented yet"
-
-  convertToList: ->
-    throw new Error "Not implemented yet"
-
   pathToNode: (testNode) ->
     if @ == testNode
       return [@]
