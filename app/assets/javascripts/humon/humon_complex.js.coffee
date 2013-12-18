@@ -14,6 +14,16 @@ Humon.Complex = Humon.Hash.extend(
   ).property('children', 'children.@each.nodeKey')
 
   ##
+  # @override
+  # For every required attribute, make sure a node is present
+  # For every attribute, make sure its in childMetatemplates
+  validateSelf: ->
+    for key in @constructor.requiredAttributes
+      @ensure "Attribute `#{key}` is required", @get(key)
+    for key in @get('children').mapProperty('nodeKey')
+      @ensure "Attribute `#{key}` is not a valid child", @constructor.childMetatemplates[key]?
+
+  ##
   # Automatically finds the first optional attribute that isn't included yet, and inserts that.
   # The childNode is inserted with allowInvalid: true
   #

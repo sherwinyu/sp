@@ -10,6 +10,7 @@
 #= require ./humon_text
 
 Humon.BaseHumonValue = Ember.Object.extend
+  _errors: null
   ##
   # Called by HNV.focusOut
   # @param [event] e
@@ -20,8 +21,25 @@ Humon.BaseHumonValue = Ember.Object.extend
     console.warn "#{@constructor} should implement subFiledFocusLost"
     # Em.assert "Must implement focusOut"
 
+  ##
+  # Calls @validateSelf, which can optionally call superclass.validateSelf
+  # @return [JSON]
+  #   - valid [boolean]
+  #   - reasons [Array<String>] reasons List of reasons this is invalid
   validate: ->
-    true
+    @_errors = []
+    @validateSelf()
+    ret =
+      valid: @_errors.length == 0
+      errors: @_errors
+
+  ##
+  # @return nothing
+  validateSelf: ->
+    Em.assert "Need to implement validate self"
+
+  ensure: (string, assertion) ->
+    @_errors.push string unless assertion
 
 
 Humon.BaseHumonValue.reopenClass

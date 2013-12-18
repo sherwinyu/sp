@@ -28,11 +28,16 @@ Humon.Node = Ember.Object.extend
     arr = @flatten()
     arr[arr.length - 1]
 
+  ##
+  # @return true if no errors were found
+  #         false otherwise
+  #
+  #         if errors are found,
   validate: ->
-    valid = @get('nodeVal').validate()
+    {valid, errors} = @get('nodeVal').validate()
     if not valid
-      @invalidate("Invalid")
-    else
+      @invalidate( errors )
+    else # is valid!
       @clearInvalidation()
       if @get('nodeParent')
         valid &&= @get('nodeParent').validate()
@@ -73,7 +78,7 @@ Humon.Node = Ember.Object.extend
   clearInvalidation: ->
     @get('nodeView').enableTemplateStrings()
     @set('notInitialized', false)
-    @set('invalidReason', "")
+    @set('invalidReason', null)
     @set('invalid', false)
 
   invalidate: (reason) ->

@@ -17,6 +17,14 @@ Humon.Goals.reopenClass
 Humon.Goal = Humon.Complex.extend
   completed_at: null
 
+  ##
+  # @override
+  # @callsSuper
+  # @return nothing
+  validateSelf: ->
+    @ensure "Awake at must be before Out of bed", @get("awake_at").val() < @get("outofbed_at").val()
+    @_super()
+
   completedTimestamp: (->
     t = @get('completed_at')
     if t instanceof Date

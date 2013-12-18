@@ -22,6 +22,8 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
     @get('_value')
   ).property('_value', '_value.@each')
 
+  validateSelf: ->
+    @ensure "_value is an array", _value instanceof Array
 
   ##
   # @override
@@ -102,7 +104,6 @@ Humon.List.reopenClass
       metatemplate: @childMetatemplates.$each
       allowInvalid: context.allowInvalid
     return HumonUtils.json2node(json, childContext)
-
 
   ##
   # @override
