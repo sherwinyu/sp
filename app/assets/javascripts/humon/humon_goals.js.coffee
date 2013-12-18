@@ -1,8 +1,12 @@
 Humon.Goals = Humon.List.extend
   insertNewChildAt: (idx) ->
-    blank = Humon.json2node {}, metatemplate: {name: "goal"}
+    blank = Humon.json2node undefined, metatemplate: {name: "goal"}
     @insertAt(idx, blank)
     return blank
+
+  validateSelf: ->
+    @_super()
+    @ensure "Must have at least 2 goals", @_value.length > 1
 
 Humon.Goals.reopenClass
   requiredAttributes: ["goal", "completed"]

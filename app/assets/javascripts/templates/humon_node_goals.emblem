@@ -1,8 +1,9 @@
 / humon_node_goals.hbs
 
-=each nodeChild in view.nodeContent.nodeVal.children
+= partial "humon_node_header"
+= each nodeChild in view.nodeContent.nodeVal.children
   Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName=""
-=else
+= else
   div
     | No goals yet!
 a{action insertNewChildAt 0 bubbles=false target="view.nodeContent.nodeVal"}: |Add a goal
