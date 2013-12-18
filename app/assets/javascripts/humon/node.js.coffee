@@ -1,4 +1,5 @@
 Humon.Node = Ember.Object.extend
+  controllerBinding: 'nodeView.controller'
   nodeVal: null
   nodeType: null
   nodeParent: null
@@ -60,10 +61,11 @@ Humon.Node = Ember.Object.extend
     # Set valid to true if we successfully committed
     @clearInvalidation()
     @replaceWithHumon node
-    @validate()
-    # if node.get('nodeView.templateName') !=
-    # @get('nodeView').rerender()
-    # @get('nodeView').repaint()
+    if @validate()
+      @get('controller').didCommit
+        node: @
+        rootJson: @get('controller.content').val()
+        payload: json
 
   clearInvalidation: ->
     @get('nodeView').enableTemplateStrings()
