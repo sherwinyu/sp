@@ -3,36 +3,8 @@ Sysys.HumonNodeView = Ember.View.extend
   _id: null
   _templateStringsEnabled: true
 
-  layoutName: "humon_node_key_layout"
-  # TODO(syu) #RANSIT
-  templateStrings: (->
-    Ember.run.sync()
-    node = @get('nodeContent')
-    unless node.get('notInitialized') or !@get('_templateStringsEnabled')
-      templateContext = Humon.templateContextFor(node)
-      templateContext.materializeTemplateStrings(node)
-    else
-      {}
-  ).property('nodeContent.nodeVal', '_templateStringsEnabled')
-
-  clearTemplateStrings: ->
-    @set('_templateStringsEnabled', false)
-  enableTemplateStrings: ->
-    @set('_templateStringsEnabled', true)
-
-
-  # autoTemplate is responsible solely for producing the correct template name
-  autoTemplate: (->
-    Ember.run.sync()
-    node = @get('nodeContent')
-    templateContext = Humon.templateContextFor(@get 'nodeContent')
-    templateContext.get('templateName')
-  ).property('nodeContent.nodeType')
-  templateNameDidChange: (->
-    @set('_templateChanged', true)
-  ).observes('templateName')
-  templateNameBinding: "autoTemplate"
   nodeContentBinding: Ember.Binding.oneWay('controller.content')
+  layoutName: "humon_node_key_layout"
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.nodeType',
@@ -41,12 +13,38 @@ Sysys.HumonNodeView = Ember.View.extend
     'parentActive:activeChild']
   classNames: ['node']
 
+  ##
+  # AutoTemplate is responsible solely for producing the correct template name
+  _templateContext: ->
+    Humon.templateContextFor(@get 'nodeContent')
+
+  autoTemplate: (->
+    Ember.run.sync()
+    node = @get('nodeContent')
+    templateContext = @_templateContext()
+    templateContext.get('templateName')
+  ).property('nodeContent.nodeType')
+  templateStrings: (->
+    Ember.run.sync()
+    node = @get('nodeContent')
+    unless node.get('notInitialized') or !@get('_templateStringsEnabled')
+      Humon.templateContextFor(node).materializeTemplateStrings(node)
+    else
+      {}
+  ).property('nodeContent.nodeVal', '_templateStringsEnabled')
+  templateNameBinding: "autoTemplate"
+
+  clearTemplateStrings: ->
+    @set('_templateStringsEnabled', false)
+  enableTemplateStrings: ->
+    @set('_templateStringsEnabled', true)
+
+  templateNameDidChange: (-> @set('_templateChanged', true)).observes('templateName')
   updateId: (-> @set '_id', @$().attr('id')).on 'didInsertElement'
   bindNodeView:   (-> @get('nodeContent')?.set 'nodeView', @).on 'didInsertElement'
   unbindNodeView: (-> @get('nodeContent')?.set 'nodeView', null).on 'willDestroyElement'
 
   actions:
-
     # Default: validate and commit
     enterPressed: ->
       return unless @get('nodeContent.nodeVal').enterPressed()

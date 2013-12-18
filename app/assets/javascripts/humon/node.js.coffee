@@ -9,25 +9,18 @@ Humon.Node = Ember.Object.extend
   invalid: false
   invalidReason: ""
   notInitialized: false
-
-  ###
-  isHashBinding: Ember.Binding.oneWay('nodeVal.isHash')
-  isListBinding: Ember.Binding.oneWay('nodeVal.isList')
-  isCollectionBinding: Ember.Binding.oneWay('nodeVal.isCollection')
-  isLiteralBinding: Ember.Binding.oneWay('nodeVal.isLiteral')
-  hasChildrenBinding: Ember.Binding.oneWay('nodeVal.hasChildren')
-  ###
-
   nodeIdx: ((key, val)->
     @get('nodeParent.children')?.indexOf @
   ).property('nodeParent.children.@each', 'nodeParent.children')
 
-  flatten: ->
-    @get('nodeVal').flatten()
-
-  lastFlattenedChild: ->
-    arr = @flatten()
-    arr[arr.length - 1]
+  toJson: ->
+    @get('nodeVal').toJson()
+  val: ->
+    @get('nodeVal').toJson()
+  asString: ->
+    @get('nodeVal').asString()
+  unknownProperty: (key) ->
+    @get("nodeVal.#{key}") #.get(key)
 
   ##
   # @return true if no errors were found
@@ -43,6 +36,17 @@ Humon.Node = Ember.Object.extend
       if @get('nodeParent')
         valid &&= @get('nodeParent').validate()
     return valid
+
+  clearInvalidation: ->
+    @get('nodeView').enableTemplateStrings()
+    @set('notInitialized', false)
+    @set('invalidReason', null)
+    @set('invalid', false)
+
+  invalidate: (reason) ->
+    @get('nodeView').clearTemplateStrings()
+    @set('invalidReason', reason)
+    @set('invalid', true)
 
   tryToCommit: (payload) ->
     jsonInput = payload.val
@@ -76,16 +80,48 @@ Humon.Node = Ember.Object.extend
         rootJson: @get('controller.content').val()
         payload: json
 
-  clearInvalidation: ->
-    @get('nodeView').enableTemplateStrings()
-    @set('notInitialized', false)
-    @set('invalidReason', null)
-    @set('invalid', false)
+  # Precondition: newNode has no parent
+  # Replaces the CURRENT NODE's  nodeVal with newNode's nodeVal by REFERENCE
+  # This.nodeVal will point to newNode.nodeVal
+  # If newNode is a collection, sets each of the children's nodeParent to this node
+  # If thisNode is a collection, sets each of this children's nodeParent to null
+  # TODO rename to replaceWithNode
+  replaceWithHumon: (newNode) ->
+    Em.assert "replaceWithHumonNode(newNode): newNode must be parent less", !newNode.get('nodeParent')
+    # If THIS nodevalue has children, orphan them
+    if @get 'hasChildren'
+      for child in @get('children')
+        child.set 'nodeParent', null
 
-  invalidate: (reason) ->
-    @get('nodeView').clearTemplateStrings()
-    @set('invalidReason', reason)
-    @set('invalid', true)
+    # TODO write a test for me! Especially the nodeVal.node backreference case
+    @set('nodeType', newNode.get 'nodeType')
+    @set('nodeVal', newNode.get 'nodeVal')
+    @set('nodeVal.node', @)
+
+    # If newnode has children, set their parent to this
+    if @get 'hasChildren'
+      for child in @get('children')
+        child.set 'nodeParent', @
+
+  insertAt: (idx, nodes...) ->
+    args = [idx].concat nodes
+    @get('nodeVal').insertAt.apply(@get('nodeVal'), args)
+
+  # Public
+  # Deletes `amt` elements from the nodeVal array, starting at idx, inclusive.
+  # If amt is not specified, a single element is deleted
+  # If the number of elements to be deleted is greater than the remaining elements in the array, the remaining elemtns are deleted
+  # sets the nodeParent for deleted nodes to null
+  deleteAt: (idx, amt) ->
+    @get('nodeVal').deleteAt(idx, amt)
+
+
+  # Public
+  # precondition: node must be a child of this node
+  # removes the child node from this.nodeVal array
+  # sets node's nodeParent to null
+  deleteChild: (node) ->
+    @get('nodeVal').deleteChild(node)
 
   # Public
   # @returns Humon.Node the next node in the 'flattened' representation of the entire
@@ -117,55 +153,12 @@ Humon.Node = Ember.Object.extend
       curNode = curNode.get('children.lastObject')
     return curNode
 
-  # TODO figure out how to send `context` to `json2node`
-  replaceWithJson: (json) ->
-    node = HumonUtils.json2node json
-    @replaceWithHumon node
+  flatten: ->
+    @get('nodeVal').flatten()
 
-  # Private
-  # Precondition: newNode has no parent
-  # Replaces the CURRENT NODE's  nodeVal with newNode's nodeVal by REFERENCE
-  # This.nodeVal will point to newNode.nodeVal
-  # If newNode is a collection, sets each of the children's nodeParent to this node
-  # If thisNode is a collection, sets each of this children's nodeParent to null
-  # TODO rename to replaceWithNode
-  replaceWithHumon: (newNode) ->
-    Em.assert "replaceWithHumonNode(newNode): newNode must be parent less", !newNode.get('nodeParent')
-    # If THIS nodevalue has children, orphan them
-    if @get 'hasChildren'
-      for child in @get('children')
-        child.set 'nodeParent', null
-
-    # TODO write a test for me! Especially the nodeVal.node backreference case
-    @set('nodeType', newNode.get 'nodeType')
-    @set('nodeVal', newNode.get 'nodeVal')
-    @set('nodeVal.node', @)
-
-    # If newnode has children, set their parent to this
-    if @get 'hasChildren'
-      for child in @get('children')
-        child.set 'nodeParent', @
-
-
-  insertAt: (idx, nodes...) ->
-    args = [idx].concat nodes
-    @get('nodeVal').insertAt.apply(@get('nodeVal'), args)
-
-  # Public
-  # Deletes `amt` elements from the nodeVal array, starting at idx, inclusive.
-  # If amt is not specified, a single element is deleted
-  # If the number of elements to be deleted is greater than the remaining elements in the array, the remaining elemtns are deleted
-  # sets the nodeParent for deleted nodes to null
-  deleteAt: (idx, amt) ->
-    @get('nodeVal').deleteAt(idx, amt)
-
-
-  # Public
-  # precondition: node must be a child of this node
-  # removes the child node from this.nodeVal array
-  # sets node's nodeParent to null
-  deleteChild: (node) ->
-    @get('nodeVal').deleteChild(node)
+  lastFlattenedChild: ->
+    arr = @flatten()
+    arr[arr.length - 1]
 
   pathToNode: (testNode) ->
     if @ == testNode
@@ -182,14 +175,3 @@ Humon.Node = Ember.Object.extend
     path = @pathToNode(testNode)
     !!path
 
-  unknownProperty: (key) ->
-    @get("nodeVal.#{key}") #.get(key)
-
-  toJson: ->
-    @get('nodeVal').toJson()
-
-  val: ->
-    @get('nodeVal').toJson()
-
-  asString: ->
-    @get('nodeVal').asString()
