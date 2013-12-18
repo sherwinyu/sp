@@ -1,6 +1,7 @@
 / humon_node_goals.hbs
 
 = partial "humon_node_header"
+= partial "humon_node_debug"
 = each nodeChild in view.nodeContent.nodeVal.children
   Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName=""
 = else

@@ -8,6 +8,10 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   hasKeys: false
   asString: -> JSON.stringify(@toJson())
 
+  length: (->
+    @get('_value').length
+  ).property('_value')
+
   hasChildren: ( ->
     @_value.length >= 1
   ).property('children')

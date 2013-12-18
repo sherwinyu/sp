@@ -10,9 +10,18 @@ Humon.Hash = Humon.List.extend
   # If the key is a number of a numeric string, look up by index
   # Otherwise, look up by childNode's nodeKey
   unknownProperty: (keyOrIndex) ->
+    getByKey = (key) =>
+      if key[0] == '$'
+        child = getByKey(key.substring(1))
+        console.warn "Child $#{key} of #{@} not found" unless child?
+        return child?.val()
+      else
+        return @_value.findProperty('nodeKey', key)
+
     # If it's a string, look up by key
     if isNaN(keyOrIndex) && keyOrIndex.constructor == String
-      @_value.findProperty('nodeKey', keyOrIndex)
+      getByKey(keyOrIndex)
+      # @_value.findProperty('nodeKey', keyOrIndex)
     # If it's a number (or numeric string), look up by index
     else if !isNaN(keyOrIndex)
       @_value[keyOrIndex]

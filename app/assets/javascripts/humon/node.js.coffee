@@ -7,6 +7,7 @@ Humon.Node = Ember.Object.extend
   nodeKey: null
   nodeMeta: null
   invalid: false
+  invalidReason: ""
   notInitialized: false
 
   ###
