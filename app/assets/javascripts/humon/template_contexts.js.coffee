@@ -71,7 +71,7 @@ Humon.TemplateContexts.register "Date",
     hour:  date.getHours()
     abbreviated:  utils.date.humanized(date)
     asString:  utils.date.asString(date)
-    relative:  utils.date.relative(date)
+    relative:  "(#{utils.date.relative(date)})"
     verbose:  utils.date.verbose(date)
 
 Humon.TemplateContexts.register "Time",

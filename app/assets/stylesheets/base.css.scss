@@ -62,6 +62,8 @@ $childNodeGlyphColor: $grayLightest1;
 
 $nodeCopyColor: $copygray;
 $nodeActiveCopyColor: $grayDarkest1;
+$nodeDetailCopyColor: $grayLighter;
+$nodeActiveDetailCopyColor: $copygray;
 
 $nodeIdxCopyColor: lighten($nodeCopyColor, 15%);
 $nodeIdxActiveCopyColor: lighten($nodeActiveCopyColor, 15%);

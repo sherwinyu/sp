@@ -1,16 +1,25 @@
 Sysys.HumonNodeView = Ember.View.extend
   _templateChanged: false
   _id: null
+  _templateStringsEnabled: true
 
   layoutName: "humon_node_key_layout"
   # TODO(syu) #RANSIT
   templateStrings: (->
     Ember.run.sync()
     node = @get('nodeContent')
-    unless node.get('notInitialized')
+    unless node.get('notInitialized') or !@get('_templateStringsEnabled')
       templateContext = Humon.templateContextFor(node)
       templateContext.materializeTemplateStrings(node)
-  ).property('nodeContent.nodeVal')
+    else
+      {}
+  ).property('nodeContent.nodeVal', '_templateStringsEnabled')
+
+  clearTemplateStrings: ->
+    @set('_templateStringsEnabled', false)
+  enableTemplateStrings: ->
+    @set('_templateStringsEnabled', true)
+
 
   # autoTemplate is responsible solely for producing the correct template name
   autoTemplate: (->

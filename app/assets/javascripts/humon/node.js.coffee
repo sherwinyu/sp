@@ -66,11 +66,13 @@ Humon.Node = Ember.Object.extend
     # @get('nodeView').repaint()
 
   clearInvalidation: ->
+    @get('nodeView').enableTemplateStrings()
     @set('notInitialized', false)
     @set('invalidReason', "")
     @set('invalid', false)
 
   invalidate: (reason) ->
+    @get('nodeView').clearTemplateStrings()
     @set('invalidReason', reason)
     @set('invalid', true)
 

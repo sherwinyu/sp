@@ -16,8 +16,16 @@
   }
 }
 
-.node-text {
+// Only darken on ACTIVE, not on hover.
+.node.active {
+  > .node-text, > .node-detail {
+    color: $nodeActiveDetailCopyColor;
+  }
+}
+
+.node-text, .node-detail {
   @include node-text;
+  color: $nodeDetailCopyColor;
 }
 
 .node.invalid > .node-invalid-reason {
@@ -56,14 +64,21 @@ span.node-detail.node-icon {
   visibility: visible !important;
 }
 
+.node-type.node-detail {
+  position: absolute;
+  right: 10px;
+}
+
 .detail-debug {
   @include node-text;
   visibility: hidden;
 
   float: right;
 
-  color: $grayLighter;
+  color: $nodeDetailCopyColor;
+
 }
+
 
 
 .debug-glyphs {
@@ -71,7 +86,7 @@ span.node-detail.node-icon {
   i {
     font-style: normal;
     position: relative;
-    width: 5px;
+    width: 15px;
     display: inline-block;
     &:after {
       position: absolute;
@@ -80,19 +95,22 @@ span.node-detail.node-icon {
   }
 }
 
+.debug-glyphs i.template-strings-disabled:after {
+  content: "$!\" ";
+}
 .debug-glyphs i.template-changed:after {
-  content: "@";
+  content: "$Δ ";
 }
 
 .debug-glyphs i.not-initialized:after {
-  content: "&";
+  content: "@i ";
 }
 
 .debug-glyphs i.type-locked:after {
-  content: "#";
+  content: "@L ";
 }
 
 .debug-glyphs i.invalid:after {
-  content: "!";
+  content: "@! ";
   color: $errorRed;
 }
