@@ -83,6 +83,6 @@ $rootNodeKeyColor: darken($nodeCopyColor, 15%);
 
 @mixin node-text() {
   height: $lineheight;
-  vertical-align: bottom;
+  vertical-align: top;
   display: inline-block;
 }

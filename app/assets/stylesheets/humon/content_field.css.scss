@@ -1,28 +1,16 @@
+@import "base";
 /*
  * Content Fields
  */
 .node {
   .content-field {
-    display: inline-block;
-    height: $lineheight;
+    @include node-text;
 
     border-bottom: $borderLightUnderline;
     border-left: $borderTransparent;
     color: $nodeCopyColor;
     transition: all 300ms ease;
-    vertical-align: bottom;
   }
-  /*
-   * VAL TEXT FIELD
-   */
-  div.val-text-field {
-    display: block;
-    min-height: $lineheight;
-    max-width: 400px;
-  }
-  .node-text-left {
-    display: inline-block;
-    }
 
 
   /*

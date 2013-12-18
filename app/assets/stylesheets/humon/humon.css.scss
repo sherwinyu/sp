@@ -44,11 +44,10 @@
   left: 0;
   font-size: 22px;
   font-weight: 700;
-  vertical-align: bottom;
+  @include node-text;
   height: 22px;
   // need to shift up because font-size is nonstandard;
   top: -5px;
-  display: inline-block;
 }
 
 .node.active > .node {
@@ -76,3 +75,4 @@
 @import "humon/detail";
 @import "humon/content_field";
 @import "humon/editor";
+@import "humon/types/text";

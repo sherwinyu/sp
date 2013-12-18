@@ -7,7 +7,7 @@
 
 window.Humon = Ember.Namespace.create
 # _types: ["Number", "Boolean", "Null", "Date", "String", "List", "Hash"]
-  _types: ["Number", "Boolean", "Null", "Time", "Date", "String", "Text", "List", "Hash"]
+  _types: ["Number", "Boolean", "Null", "Time", "Date", "Text", "String", "List", "Hash"]
 
   ##
   # @param [String | Humon.Node] type
