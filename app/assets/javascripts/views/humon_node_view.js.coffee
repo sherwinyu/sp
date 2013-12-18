@@ -149,7 +149,7 @@ Sysys.HumonNodeView = Ember.View.extend
     # Even though controllerMixin doesn't have a handleFocusOut method,
     # HumonEditorComponent implements it.
     @get('controller').handleFocusOut()
-    console.log "FocusOut:", "currentTarget:", e.currentTarget, "target:", e.target, "related", e.relatedTarget
+    # console.log "FocusOut:", "currentTarget:", e.currentTarget, "target:", e.target, "related", e.relatedTarget
 
 
     @get('controller').send('activateNode', null)
@@ -300,7 +300,7 @@ Sysys.HumonNodeView = Ember.View.extend
     # NOTE this gets the FIRST instance of child field of this type
     fieldView = @["#{opts.field}Field"]()
 
-    console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
+    # console.log "focusing field, field: #{opts.field}, pos: #{opts.pos}, opts: #{JSON.stringify opts} fieldView: ", fieldView.$()
 
 
     # This is ASSUMING that anything we would ever want to focus on is a subclass of

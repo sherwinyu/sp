@@ -88,12 +88,21 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
     @deleteAt(idx)
 
 Humon.List.reopenClass
+  childMetatemplates: {}
   _j2hnv: (json, context) ->
     Em.assert( (json? && json instanceof Array), "json must be an array")
 
     # set all children node's `nodeParent` to this json payload's corresponding `node`
-    childrenNodes = json.map( (x) -> HumonUtils.json2node(x, nodeParent: context.node))
+    childrenNodes = json.map( (x) => @_j2hnvChild(x, context))
     @create _value: childrenNodes, node: context.node
+
+  _j2hnvChild: (json, context) ->
+    childContext =
+      nodeParent: context.node
+      metatemplate: @childMetatemplates.$each
+      allowInvalid: context.allowInvalid
+    return HumonUtils.json2node(json, childContext)
+
 
   ##
   # @override

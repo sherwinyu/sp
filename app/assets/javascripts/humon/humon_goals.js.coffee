@@ -6,6 +6,9 @@ Humon.Goals = Humon.List.extend
 
 Humon.Goals.reopenClass
   requiredAttributes: ["goal", "completed"]
+  childMetatemplates:
+    $each:
+      name: "goal"
 
   # @override
   _initJsonDefaults: (json) ->
