@@ -27,6 +27,15 @@ Humon.Goal = Humon.Complex.extend
   validateSelf: ->
     @_super()
 
+  _depDepProp: []
+  depProp: (->
+    @get('_depDepProp')
+  ).property('_depDepProp', '_depDepProp.@each')
+
+  testMe: (->
+    "#{@get 'zug'} a bug"
+  ).property('zug')
+
   completedTimestamp: (->
     t = @get('completed_at')
     if t instanceof Date
@@ -46,16 +55,18 @@ Humon.Goal = Humon.Complex.extend
       @set('completed_at', new Date())
     false
 
-  $completed_at: ((key, value, oldValue)->
+  $completed_at: ((key, value, oldValue) ->
+    console.log key, value, oldValue
     # Setter
     if arguments.length > 1
       @_setChildByKey(key, value)
     # Getter
     else
       node = @_getChildByKey('completed_at')
-  ).property('_value', '_value.@each').volatile()
+  ).property('_value', '_value.@each', '_depDepProp', '_depDepProp.@each')
 
   completed_at: ( (key, value, oldValue) ->
+    console.log key, value, oldValue
     node = @get('$completed_at')
 
     # Handle case when node doesn't yet exist?
@@ -76,9 +87,10 @@ Humon.Goal = Humon.Complex.extend
     else
       node = @get('$completed_at')
       node?.val()
-  ).property('$completed_at', '$completed_at._value').volatile()
+  ).property( '_value', '_value.@each', '_depDepProp', '_depDepProp.@each')
 
-  $goal: (->
+  $goal: ( (key, value, oldValue) ->
+    console.log key, value, oldValue
     # Setter
     if arguments.length > 1
       @_setChildByKey(key, value)
@@ -88,6 +100,7 @@ Humon.Goal = Humon.Complex.extend
   ).property('_value', '_value.@each').volatile()
 
   goal: ( (key, value, oldValue) ->
+    console.log key, value, oldValue
     node = @get('$goal')
 
     # Handle case when node doesn't yet exist?
@@ -137,7 +150,7 @@ Humon.Goal.reopenClass
     goal:
       name: "text"
     completed_at:
-      name: "date"
+      name: "time"
 
   _j2hnv: (json, context) ->
     value = @valueFromJson(json, context)

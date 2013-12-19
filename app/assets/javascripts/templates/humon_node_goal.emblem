@@ -8,53 +8,45 @@
 
 = each nodeChild in view.nodeContent.nodeVal.optionalChildren
   Sysys.HumonNodeView nodeContentBinding="nodeChild"
+hr
+| Zug test
+| view id :
+= view._id
+ul
+  li | view.nodeContent.nodeVal.zug:
+  li = view.nodeContent.nodeVal.zug
+  li | view.nodeContent.nodeVal.testMe:
+  li = view.nodeContent.nodeVal.testMe
 
 hr
 
 span.node-text-left
-  Sysys.HumonNodeView nodeContentBinding="view.nodeContent.$goal" layoutName="humon_node_fixed_key_layout"
-  <br>
-  <br>
-  | view.nodeContent.nodeVal.0
-  <br>
-  = view.nodeContent.nodeVal.0
-  <br>
-  <br>
+  / Sysys.HumonNodeView nodeContentBinding="view.nodeContent.$goal" layoutName="humon_node_fixed_key_layout"
+ul
+  li | view.nodeContent.nodeVal.0
+  li = view.nodeContent.nodeVal.0
 
-  <br>
-  <br>
-  | view.nodeContent.nodeVal.0._value
-  <br>
-  = view.nodeContent.nodeVal.0._value
-  <br>
-  <br>
+  li
+  li | view.nodeContent.nodeVal.0._value
+  li = view.nodeContent.nodeVal.0._value
 
-  <br>
-  <br>
-  | view.nodeContent.$goal
-  <br>
-  = view.nodeContent.$goal
-  <br>
-  <br>
+  li
+  li | view.nodeContent.nodeVal.completed_at
+  li = view.nodeContent.nodeVal.completed_at
 
-  | view.nodeContent.goal
-  <br>
-  = view.nodeContent.goal
-  <br>
-  <br>
+  li
+  li | view.nodeContent.nodeVal.$completed_at
+  li = view.nodeContent.nodeVal.$completed_at
 
-  | view.nodeContent.nodeVal.goal
-  <br>
-  = view.nodeContent.nodeVal.goal
-  <br>
-  <br>
+  li
+  li | view.nodeContent.nodeVal.goal
+  li = view.nodeContent.nodeVal.goal
+
+  li
+  li | view.nodeContent.nodeVal.$goal
+  li = view.nodeContent.nodeVal.$goal
 
 
-  | view.nodeContent.nodeVal.$goal
-  <br>
-  = view.nodeContent.nodeVal.$goal
-  <br>
-  <br>
 
   = if view.nodeContent.nodeVal.done
     | Done! Completed at
