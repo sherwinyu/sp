@@ -29,7 +29,7 @@ textarea,
 }
 
 .node {
-  .key-field:focus, .val-field:focus {
+  .idx-field:focus, .key-field:focus, .val-field:focus {
     outline: none;
   }
 }

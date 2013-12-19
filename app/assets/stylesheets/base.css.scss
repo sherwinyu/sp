@@ -84,8 +84,9 @@ $rootNodeKeyColor: darken($nodeCopyColor, 15%);
   }
 }
 
-@mixin node-text() {
-  height: $lineheight;
+@mixin node-text-mixin($factor: 1) {
+  height: $lineheight * $factor;
+  font-size: $nodeCopyFontSize * $factor;
   vertical-align: top;
   display: inline-block;
 }

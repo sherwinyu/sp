@@ -1,4 +1,4 @@
-@import "app_base";
+@import "base";
 
 // by default, hide details
 .node:hover, .node.active {
@@ -11,19 +11,14 @@ span.node-detail  {
 }
 
 .node-detail {
-  @include node-text;
+  @include node-text-mixin();
   position: relative;
   font-style: italic;
 }
 
-.node-text, .node-detail {
-  @include node-text;
-  color: $nodeDetailCopyColor;
-}
-
 // When active, darken the colors
 .node.active {
-  > .node-text, > .node-detail {
+  > .copy,  {
     color: $nodeActiveDetailCopyColor;
   }
   &.invalid > .node-detail.node-icon i.icon-element {
@@ -43,9 +38,9 @@ span.node-detail.node-icon {
 }
 
 .node-invalid-reason {
-  @include node-text;
   color: $errorRed;
 }
+
 .node.active > .node-invalid-reason {
   display: inline-block;
   color: $errorActiveRed;

@@ -2,7 +2,7 @@
 = view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString"
 = partial "humon_node_header"
 
-span.node-text
+span.copy
   = view.templateStrings.relative
-span.node-detail
+span.copy.node-detail
   = view.templateStrings.verbose

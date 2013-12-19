@@ -2,7 +2,12 @@
 }
 
 .node.goal {
-  border: 1px solid gray;
-  border-radius: 3px;
+  .content-field {
+    // font-size: 150%;
+  }
+  .val-field {
 
+  }
+  // border: 1px solid gray;
+  border-radius: 3px;
 }

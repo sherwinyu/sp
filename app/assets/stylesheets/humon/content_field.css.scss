@@ -4,7 +4,7 @@
  */
 .node {
   .content-field {
-    @include node-text;
+    @include node-text-mixin();
 
     border-bottom: $borderLightUnderline;
     border-left: $borderTransparent;
@@ -30,7 +30,7 @@
 
   /*
    * index field
-  */
+   */
 
   /*
    * Key Field

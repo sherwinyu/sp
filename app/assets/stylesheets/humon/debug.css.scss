@@ -1,4 +1,3 @@
-@import "app_base";
 .node.active > span.debug-auto-hide {
   visibility: visible;
 }
@@ -24,7 +23,7 @@
 
 
 .debug-inline {
-  @include node-text;
+  @include node-text-mixin();
   float: right;
   color: $nodeDetailCopyColor;
 }

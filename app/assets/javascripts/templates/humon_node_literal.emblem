@@ -1,6 +1,4 @@
 / humon_node_literal.hbs
 = view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString"
 
-span.node-detail
-
 = partial "humon_node_header"

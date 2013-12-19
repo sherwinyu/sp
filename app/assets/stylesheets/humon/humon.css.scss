@@ -1,10 +1,10 @@
 @import "base";
-@import "humon/node_base";
+@import "humon/bootstrap_node_defaults";
 
 .node {
   font-family: "Source Sans Pro";
   font-weight: 500;
-  font-size: $nodeCopyFontSize;
+  // font-size: $nodeCopyFontSize;
   cursor: text;
   color: $copygray;
   position: relative;
@@ -14,11 +14,12 @@
   transition: all 300ms ease;
 }
 
-.node.node-literal { }
-.node.node-literal:hover { }
-.node.node-collection {
+// ==
+// Suppress gap
+.node:not(.node-collection):last-of-type {
   padding-bottom: 5px;
 }
+
 .node.node-collection:hover { }
 .node:before {
   font-weight: 200;
@@ -31,20 +32,21 @@
 }
 
 
-/*
- * Active node styling
- */
+// ===
+// Active node styling
 .node.active {
 }
-/* Active node indicator */
+
+// ===
+// Active node indicator
 .node.active:before {
+  @include node-text-mixin();
   transition: all 300ms ease;
   content: "\00BB"; //»
   position: absolute;
   left: 0;
   font-size: 22px;
   font-weight: 700;
-  @include node-text;
   height: 22px;
   // need to shift up because font-size is nonstandard;
   top: -5px;
@@ -69,6 +71,13 @@
 
     width: $childNodeGlyphWidth;
   }
+}
+
+// ==
+// Generic helper class, should
+.node .copy {
+  @include node-text-mixin();
+  color: $nodeDetailCopyColor;
 }
 
 @import "humon/debug";
