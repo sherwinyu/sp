@@ -35,6 +35,7 @@ Humon.Sleep.reopenClass
   ##
   # @override
   _initJsonDefaults: (json) ->
+    Em.assert 'error'
     json ||= {}
     requiredDefaults =
       awake_at: undefined

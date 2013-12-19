@@ -55,21 +55,10 @@ Humon.Date.reopenClass
         ret.matches = true
       return ret
 
-  # We already know that json contains a valid payload for this value.
-  # @param [JSON] json the json value
-  # @return [Date] the value to be stored as _value
+  ##
+  # @override
   valueFromJson: (json) ->
     @_inferFromJson(json).value
-
-
-  # Precondition: `json` can be parsed as this type. That is, @matchesJson(json) returns true
-  # @param json [JSON] the json payload to convert into a Humon.Value instance
-  # @param context [JSON]
-  #   - node [Humon.Node] the Humon Node instance that will contain the parsed Humon.Value
-  # TODO(syu): move default behavior into Humon.Primitive / Humon.whatever
-  _j2hnv: (json, context) ->
-    value = @valueFromJson(json)
-    @_klass().create(_value: value, node: context.node)
 
   matchesJson: (json) ->
     @_inferFromJson(json).matches

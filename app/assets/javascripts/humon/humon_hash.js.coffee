@@ -53,23 +53,20 @@ Humon.Hash.reopenClass
   # Each HumonNode has `nodeParent` set to `context.node`
   # @param context
   #  context.node: the Humon.Node object that will wrap this Humon.Value
-  _j2hnv: (json, context)->
+  valueFromJson: (json, context)->
     childNodes = []
     for own key, childVal of json
       childNode = HumonUtils.json2node(childVal, nodeParent: context.node)
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
-    Humon.Hash.create _value: childNodes, node: context.node
+    return childNodes
 
+  ##
+  # @override
   # @param json the json payload to test
   # returns true if this is a POJO
   matchesJson: (json) ->
     json? and (typeof json is 'object') and !(json instanceof Array) and json.constructor == Object
-
-  ##
-  # @override
-  _initJsonDefaults: (json) ->
-    json ||= {}
 
   _baseJson: (json) ->
     {}

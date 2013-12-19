@@ -65,6 +65,18 @@ Humon.Complex.reopenClass(
     $include: Humon.Hash._metatemplate
     $required: []
 
+  matchesJson: (json) ->
+    # Make sure it's a hash first.
+    return false unless @_super(json)
+
+    for key in @requiredAttributes
+      return false unless key of json
+      # TODO(syu): Check the actual values of the keys
+      # and that they belong to the metatemplate.
+    for key of json
+      return false unless @childMetatemplates[key]?
+    return true
+
   # @param [JSON] context:
   #
   #  @required
@@ -77,7 +89,7 @@ Humon.Complex.reopenClass(
   #
   # `childMetatemplates` is an available variable that contains metatemplates
   # for all childNodes.
-  _j2hnv: (json, context) ->
+  valueFromJson: (json, context) ->
     childNodes = []
     for own key, childVal of json
       Em.assert "Key `#{key}` is an invalid attribute for #{@}", @childMetatemplates[key]?
@@ -89,19 +101,7 @@ Humon.Complex.reopenClass(
       childNode = HumonUtils.json2node(childVal, childContext)
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
-    @create _value: childNodes, node: context.node
-
-  ##
-  # TODO(syu): MatchesJson
-  #   - make sure json is a hash
-  #   - make sure all REQUIRE attributes are present
-  #   - make sure all other keys are in OPTIONAL
-  #   - does NOT check validate the values.
-
-  ##
-  # @override
-  _initJsonDefaults: (json) ->
-    @_super(json)
+    return childNodes
 
   _baseJson: (json) ->
     json = {} unless Humon.Hash.matchesJson(json)
@@ -116,7 +116,6 @@ Humon.Complex.reopenClass(
       json[key] ?= undefined
     for key of json
       delete json[key] unless @childMetatemplates[key]?
-
     json
 
   ##

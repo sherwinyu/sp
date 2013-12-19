@@ -38,7 +38,14 @@ Humon.Primitive.reopenClass
   #   - metatemplate
   #   - allowInvalid [boolean] if true, allows this node to be invalid
   _j2hnv: (json, context) ->
-    @_klass().create(_value: json, node: context.node)
+    if context.node.get('notInitialized')
+      value = json
+    else
+      value = @valueFromJson(json, context)
+    @create(_value: value, node: context.node)
+
+  valueFromJson:(json)  ->
+    json
 
   ##
   # Does NOT trigger validations
@@ -47,7 +54,3 @@ Humon.Primitive.reopenClass
 
   _baseJson: (json) ->
     undefined
-
-  _initJsonDefaults: (json) ->
-    Em.assert "nope"
-    json

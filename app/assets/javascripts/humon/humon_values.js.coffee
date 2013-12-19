@@ -54,10 +54,7 @@ Humon.BaseHumonValue.reopenClass
     #   We can't just ALWAYS bypass @_j2hnv when allowInvalid is true,
     #   because when the node accepts children, we need to convert
     #   {requiredAttribute1: undefined, reqAtr2: undefined} to [node, node]
-    if context.node.get('notInitialized')
-      @create(_value: validatedJson, node: context.node)
-    else
-      return @_j2hnv(validatedJson, context)
+    return @_j2hnv(validatedJson, context)
 
   ##
   # @param [JSON] json
@@ -73,6 +70,12 @@ Humon.BaseHumonValue.reopenClass
   matchesJson: (json) -> Em.assert("matchesJson needs to be implemented")
 
   _baseJson: (json) -> Em.assert "_baseJson needs to be implemented"
+
+  ##
+  # PRE CONDITION: matchesJson(json) is true
+  # returns a VALID _value
+  valueFromJson: (json, context) -> Em.assert "must implement"
+
 
   ##
   # @param json A JSON payload to be converted into a Humon.Value instance
@@ -91,7 +94,7 @@ Humon.BaseHumonValue.reopenClass
         context.node.set('notInitialized', true)
         return json = @_baseJson(json)
 
-     Em.assert "JSON #{json} couldn't be coerced into #{@}"
+     throw new Error "JSON #{json} couldn't be coerced into #{@}"
     ###
 
 
