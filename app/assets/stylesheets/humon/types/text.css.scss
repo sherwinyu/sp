@@ -1,4 +1,7 @@
 .node.text {
+  span.key-field{
+    min-width: $keyFieldMaxWidth / 2;
+  }
 
   /*
    * VAL TEXT FIELD
@@ -6,7 +9,8 @@
   div.val-text-field {
     display: block;
     min-height: $lineheight;
-    max-width: 400px;
+    max-width: $valTextFieldMaxWidth;
+    text-align: justify;
   }
   .content-field {
     vertical-align: top;

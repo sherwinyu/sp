@@ -3,7 +3,7 @@
 .container
   h1 JSON Admin
   .row
-    .col-xs-8.center-block
+    .col-xs-9.center-block
       =outlet
 
 /

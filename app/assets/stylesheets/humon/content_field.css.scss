@@ -54,6 +54,9 @@
     color: $rootNodeKeyColor;
     border-bottom: $borderTransparent;
     font-weight: 600;
+    min-width: $keyFieldMaxWidth / 1.8;
+    max-width: $keyFieldMaxWidth / 1.5;
+    margin-right: 10px;
   }
 }
 .node.active > span.content-field.key-field.key-field-fixed {

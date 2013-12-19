@@ -10,40 +10,6 @@ Sysys.IdxEditableField valueBinding="view.nodeContent.nodeIdx" rawValueBinding="
 
 Sysys.HumonNodeView nodeContentBinding="view.nodeContent._goal" layoutName="humon_node_fixed_key_layout"
 
-ul
-  li | view.nodeContent.nodeVal.zug:
-  li = view.nodeContent.nodeVal.zug
-  li | view.nodeContent.nodeVal.testMe:
-  li = view.nodeContent.nodeVal.testMe
-
-hr
-
-ul
-  li | view.nodeContent.nodeVal.0
-  li = view.nodeContent.nodeVal.0
-
-  li
-  li | view.nodeContent.nodeVal.0._value
-  li = view.nodeContent.nodeVal.0._value
-
-  li
-  li | view.nodeContent.nodeVal.completed_at
-  li = view.nodeContent.nodeVal.completed_at
-
-  li
-  li | view.nodeContent.nodeVal.$completed_at
-  li = view.nodeContent.nodeVal.$completed_at
-
-  li
-  li | view.nodeContent.nodeVal.goal
-  li = view.nodeContent.nodeVal.goal
-
-  li
-  li | view.nodeContent.nodeVal.$goal
-  li = view.nodeContent.nodeVal.$goal
-
-
-
   = if view.nodeContent.nodeVal.done
     | Done! Completed at
     = view.nodeContent.nodeVal.completedTimestamp

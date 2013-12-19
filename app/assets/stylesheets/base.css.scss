@@ -36,13 +36,16 @@ $lineheight: 20px;
 $nodeCopyFontSize: 16px;
 
 $contentFieldMinWidth: 10px;
-$contentFieldMaxWidth: 640px;
+$contentFieldMaxWidth: 500px;
 
 $keyFieldMinWidth: $contentFieldMinWidth;
 $keyFieldMaxWidth: 120px;
 
 $valFieldMinWidth: $contentFieldMinWidth;
 $valFieldMaxWidth: $contentFieldMaxWidth;
+
+$valTextFieldMinWidth: $contentFieldMinWidth;
+$valTextFieldMaxWidth: $contentFieldMaxWidth - 100px;
 
 $idxFieldMinWidth: 5px;
 $idxFieldMaxWidth: 12px;
