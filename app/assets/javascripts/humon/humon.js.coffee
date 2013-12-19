@@ -49,7 +49,7 @@ Humon.nodeAttr = (attrKey) ->
       # Getter
       else
         @_getChildByKey(attrKey)
-    ).property('_value', '_value.@each')
+    ).property('_value.@each.nodeVal')
   return ftn
 
 
