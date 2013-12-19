@@ -71,7 +71,7 @@ Humon.valAttr = (attrAccessorKey)->
               node.tryToCommit val: value
             else
               # TODO(syu): ADD NODE PARENT
-              node = Humon.j2n value, metatemplate: @constructor.childMetatemplates[attrAccessorKey]
+              node = Humon.j2n value, metatemplate: @constructor.childMetatemplates[attrAccessorKey], nodeParent: @node
               node.set 'nodeKey', attrAccessorKey
               @set(nodeAccessorKey, node)
               node.val()

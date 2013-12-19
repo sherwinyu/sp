@@ -32,7 +32,8 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   ##
   # @override
   # @manipulatesUI
-  enterPressed: (e)->
+  enterPressed: (e, payload)->
+    return if e._handled?
     newChildNode = null
     Ember.run => newChildNode = @insertNewChildAt(0)
     if newChildNode?
@@ -81,7 +82,7 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   #
   # Does NOT manipulate the UI, only the node chain.
   insertNewChildAt: (idx) ->
-    blank = Humon.json2node null
+    blank = Humon.json2node null, nodeParent: @node
     @insertAt(idx, blank)
     return blank
 

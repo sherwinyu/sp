@@ -1,5 +1,6 @@
 Humon.Node = Ember.Object.extend
-  controllerBinding: 'nodeView.controller'
+  controller: null
+  # Binding: 'nodeView.controller'
   nodeVal: null
   nodeType: null
   nodeParent: null
@@ -69,7 +70,7 @@ Humon.Node = Ember.Object.extend
                 JSON.parse(jsonInput)
               catch error
                 jsonInput
-        node = HumonUtils.json2node json, metatemplate: @get('nodeMeta')
+        node = HumonUtils.json2node json, metatemplate: @get('nodeMeta'), suppressNodeParentWarning: yes, controller: @controller
       catch error
         Em.assert("The error should be: UnableToConvertInputToNode", true)
         console.error(error.toString())

@@ -54,10 +54,10 @@ Sysys.HumonNodeView = Ember.View.extend
     # Default: validate and commit
     enterPressed: (e) ->
       uiPayload = @uiPayload()
+      @get('nodeContent.nodeVal').enterPressed(e, uiPayload)
       e._handled ?=
         node: @get('nodeContent')
         view: @
-      @get('nodeContent.nodeVal').enterPressed(e, uiPayload)
       @get('nodeContent.nodeParent.nodeView')?.send 'enterPressed', e
 
     moveLeft: ->

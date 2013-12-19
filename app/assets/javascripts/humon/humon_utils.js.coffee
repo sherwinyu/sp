@@ -67,8 +67,16 @@ window.HumonUtils =
   #   TODO(syu): what about setting nodeKey?
   json2node: (json, context={}) ->
 
+    if context.suppressNodeParentWarning?
+      delete context.suppressNodeParentWarning
+    else
+      console.warn "No nodeParent found: j2n(#{JSON.stringify json}), context: #{JSON.stringify json} " unless context.nodeParent?
+    if context.nodeParent?
+      Em.assert "Node parent #{context.nodeParent} must be a Humon.Node", context.nodeParent instanceof Humon.Node
+
     node = Humon.Node.create
       nodeParent: context.nodeParent
+      controller: context.controller || context?.nodeParent?.controller || Em.assert("Controller should be present")
 
     typeClass =
       if context.type?

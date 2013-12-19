@@ -1,6 +1,6 @@
 Humon.Goals = Humon.List.extend
   insertNewChildAt: (idx) ->
-    blank = Humon.json2node undefined, metatemplate: {name: "goal"}, allowInvalid: true
+    blank = Humon.json2node undefined, metatemplate: {name: "goal"}, allowInvalid: true, nodeParent: @node
     @insertAt(idx, blank)
     return blank
 

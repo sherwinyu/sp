@@ -46,7 +46,7 @@ Humon.Complex = Humon.Hash.extend(
       idx = @get('requiredChildren').length + @constructor.optionalAttributes.indexOf key
       childMetatemplate = @constructor.childMetatemplates[key]
 
-      newChildNode = Humon.json2node null, metatemplate: childMetatemplate, allowInvalid: true
+      newChildNode = Humon.json2node null, metatemplate: childMetatemplate, allowInvalid: true, nodeParent: @node
       newChildNode.set "nodeKey", key
       @insertAt(idx, newChildNode)
       return newChildNode
