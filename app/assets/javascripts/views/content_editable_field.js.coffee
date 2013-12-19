@@ -1,7 +1,7 @@
 Sysys.ContentEditableField = Ember.View.extend
   tagName: "span"
   rawValueBinding: null
-  classNames: ['content-field']
+  classNames: ['content-field', 'copy-item']
   classNameBindings: ['dirty:dirty:clean', 'autogrowing']
   contenteditable: 'true'
   tabindex: '0'

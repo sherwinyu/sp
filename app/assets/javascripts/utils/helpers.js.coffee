@@ -164,11 +164,12 @@ utils.time =
     mmt.format('HH:mm:ss')
 
   humanized: (time) ->
-    @asString(time)
+    mmt = @mmt(time)
+    mmt.format("HH:mm") + " (#{mmt.format("ddd, MMM D")})"
 
   asString: (time) ->
     mmt = @mmt(time)
-    mmt.format("HH:mm") + " (#{mmt.format("ddd, MMM D")})"
+    mmt.format("HH:mm")
 
   relative: (time) ->
     mmt = @mmt(time)

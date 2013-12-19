@@ -3,6 +3,17 @@
 
 .node.goal {
   .content-field {
+    @include node-text-mixin(2.0);
+  }
+
+  .copy {
+    @include node-text-mixin(2.0);
+  }
+  .debug-inline {
+    @include node-text-mixin(1.0);
+  }
+
+  .content-field {
     // font-size: 150%;
   }
   .val-field {

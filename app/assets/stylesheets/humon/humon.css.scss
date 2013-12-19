@@ -49,7 +49,7 @@
   font-weight: 700;
   height: 22px;
   // need to shift up because font-size is nonstandard;
-  top: -5px;
+  top: -6px;
 }
 
 .node.active > .node {
@@ -79,9 +79,14 @@
   @include node-text-mixin();
   color: $nodeDetailCopyColor;
 }
+
 .node .copy-item {
   padding-left: 4px;
   padding-right: 4px;
+}
+
+.node {
+  // @include node-text-mixin();
 }
 
 @import "humon/debug";

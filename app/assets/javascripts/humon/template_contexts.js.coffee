@@ -86,7 +86,7 @@ Humon.TemplateContexts.register "Time",
     abbreviated:  utils.time.humanized(time)
     asString:  utils.time.asString(time)
     relative:  utils.time.relative(time)
-    verbose:  utils.time.verbose(time)
+    verbose:  utils.time.humanized(time)
 
 
 Humon.TemplateContexts.Hash = Humon.TemplateContexts.List.extend(
