@@ -45,5 +45,9 @@ Humon.Primitive.reopenClass
   matchesJson: (json) ->
     typeof json == @_name()
 
+  _baseJson: (json) ->
+    undefined
+
   _initJsonDefaults: (json) ->
+    Em.assert "nope"
     json

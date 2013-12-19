@@ -116,3 +116,7 @@ Humon.List.reopenClass
 
   _initJsonDefaults: (json) ->
     json ||= []
+
+  # precondition: matchesJson was false
+  _baseJson: (json) ->
+    []

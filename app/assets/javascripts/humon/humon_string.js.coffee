@@ -9,4 +9,4 @@ Humon.String.reopenClass
   _coerceToValidJsonInput: (json) ->
     "#{json}"
   _initJsonDefaults: (json) ->
-    json || ""
+    []

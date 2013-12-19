@@ -54,7 +54,7 @@ Humon.BaseHumonValue.reopenClass
     #   We can't just ALWAYS bypass @_j2hnv when allowInvalid is true,
     #   because when the node accepts children, we need to convert
     #   {requiredAttribute1: undefined, reqAtr2: undefined} to [node, node]
-    if context.node.get('notInitialized') && @create().get('isLiteral')
+    if context.node.get('notInitialized')
       @create(_value: validatedJson, node: context.node)
     else
       return @_j2hnv(validatedJson, context)
@@ -70,16 +70,36 @@ Humon.BaseHumonValue.reopenClass
   ##
   # @param [JSON] json
   #
-  matchesJson: (json) -> Em.assert("machesJson needs to be implemented")
+  matchesJson: (json) -> Em.assert("matchesJson needs to be implemented")
+
+  _baseJson: (json) -> Em.assert "_baseJson needs to be implemented"
 
   ##
   # @param json A JSON payload to be converted into a Humon.Value instance
-  # @param opts
-  #   - typeName
-  # @return [JSON] properly normalized json that has defaults initialized,
+  # @return [JSON] that matchesJson
+  # properly normalized json that has defaults initialized,
   #   and passes @matchesJson
+
   normalizeJson: (json, context) ->
     typeName = context?.metatemplate?.name
+    matched = @matchesJson(json)
+    typeSpecified = typeName?
+    if matched
+      return json
+    if not matched and typeSpecified
+      if context?.allowInvalid
+        context.node.set('notInitialized', true)
+        return json = @_baseJson(json)
+
+     Em.assert "JSON #{json} couldn't be coerced into #{@}"
+    ###
+
+
+
+
+
+
+
     if typeName?
       Em.assert("context.metatemplate specified but doesn't match this class!", Humon.contextualize(typeName) == @)
 
@@ -95,6 +115,7 @@ Humon.BaseHumonValue.reopenClass
 
     Em.assert "Json should match after coercion", @matchesJson(json)
     json = @_initJsonDefaults json
+    ###
 
   ##
   # @param [json] json

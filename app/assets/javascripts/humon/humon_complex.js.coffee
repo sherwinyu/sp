@@ -103,6 +103,22 @@ Humon.Complex.reopenClass(
   _initJsonDefaults: (json) ->
     @_super(json)
 
+  _baseJson: (json) ->
+    json = {} unless Humon.Hash.matchesJson(json)
+    for key in @requiredAttributes
+      # TODO(syu): initialize values to the corresponding
+      #   typeClass._baseJson(json[key])
+      ###
+      typeClass = @childMetatemplate[key].name
+      if typeClass?
+        json[key] ?=
+      ###
+      json[key] ?= undefined
+    for key of json
+      delete json[key] unless @childMetatemplates[key]?
+
+    json
+
   ##
   # @override
   _coerceToValidJsonInput: (json) ->
