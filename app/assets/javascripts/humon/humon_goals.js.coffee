@@ -84,9 +84,12 @@ Humon.Goal = Humon.Complex.extend
         node = Humon.j2n value, metatemplate: @constructor.childMetatemplates['completed_at']
         node.set 'nodeKey', 'completed_at'
         @set('_completed_at', node)
+        node.val()
     # Getter
     else
       node = @get('_completed_at')
+      if node?
+        Em.assert "node #{node} is a Humon.node", node instanceof Humon.Node
       node?.val()
   ).property('_completed_at', '_completed_at._value')
 
@@ -118,10 +121,13 @@ Humon.Goal = Humon.Complex.extend
         node = Humon.j2n value, metatemplate: @constructor.childMetatemplates['goal']
         node.set 'nodeKey', 'goal'
         @set('_goal', node)
+        node.val()
 
     # Getter
     else
       node = @get('_goal')
+      if node?
+        Em.assert "node #{node} is a Humon.node", node instanceof Humon.Node
       node?.val()
   ).property('_goal', '_goal._value')
 
@@ -129,11 +135,11 @@ Humon.Goal = Humon.Complex.extend
     @_value.findProperty('nodeKey', key)
 
   _setChildByKey: (key, node) ->
-    # remove it:
-    node = @_value.findProperty('nodeKey', key)
     Em.assert "Node #{node} must be of type Humon.Node", node instanceof Humon.Node
-    if node?
-      @_value.removeObject(node)
+    # remove it:
+    oldNode = @_value.findProperty('nodeKey', key)
+    if oldNode?
+      @_value.removeObject(oldNode)
     @_value.pushObject node
 
   unknownProperty: null
