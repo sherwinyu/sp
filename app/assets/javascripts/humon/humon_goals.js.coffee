@@ -1,6 +1,6 @@
 Humon.Goals = Humon.List.extend
   insertNewChildAt: (idx) ->
-    blank = Humon.json2node undefined, metatemplate: {name: "goal"}
+    blank = Humon.json2node undefined, metatemplate: {name: "goal"}, allowInvalid: true
     @insertAt(idx, blank)
     return blank
 
@@ -39,8 +39,13 @@ Humon.Goal = Humon.Complex.extend
     !!@get('completed_at')
   ).property('completed_at')
 
-  $completed_at: (->
-    @_getChildByKey('completed_at')
+  $completed_at: ((key, value, oldValue)->
+    # Setter
+    if arguments.length > 1
+      @_setChildByKey(key, value)
+    # Getter
+    else
+      node = @_getChildByKey('completed_at')
   ).property('_value', '_value.@each')
 
   completed_at: ( (key, value, oldValue) ->
@@ -51,15 +56,25 @@ Humon.Goal = Humon.Complex.extend
     # We can leverage existing validation / type checking via tryToCommit
     # Setter
     if arguments.length > 1
-      node.tryToCommit val: value
+      if node?
+        node.tryToCommit val: value
+      else
+        node = Humon.j2n value, metatemplate: @constructor.childMetatemplates['completed_at']
+        node.set 'nodeKey', 'completed_at'
+        @set('$completed_at', node)
     # Getter
     else
       node = @get('$completed_at')
-      node.val()
+      node?.val()
   ).property('$completed_at')
 
   $goal: (->
-    @_getChildByKey('goal')
+    # Setter
+    if arguments.length > 1
+      @_setChildByKey(key, value)
+    # Getter
+    else
+      @_getChildByKey('goal')
   ).property('_value', '_value.@each')
 
   goal: ( (key, value, oldValue) ->
@@ -70,15 +85,29 @@ Humon.Goal = Humon.Complex.extend
     # We can leverage existing validation / type checking via tryToCommit
     # Setter
     if arguments.length > 1
-      node.tryToCommit val: value
+      if node?
+        node.tryToCommit val: value
+      else
+        node = Humon.j2n value, metatemplate: @constructor.childMetatemplates['goal']
+        node.set 'nodeKey', 'goal'
+        @set('$goal', node)
+
     # Getter
     else
       node = @get('$goal')
-      node.val()
+      node?.val()
   ).property('$goal')
 
   _getChildByKey: (key) ->
     @_value.findProperty('nodeKey', key)
+
+  _setChildByKey: (key, node) ->
+    Em.assert "Node #{node} must be of type Humon.Node", node instanceof Humon.Node
+    # remove it:
+    node = @_value.findProperty('nodeKey', key)
+    if node?
+      @_value.removeObject(node)
+    @_value.pushObject node
 
   unknownProperty: null
 
