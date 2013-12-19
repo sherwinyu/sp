@@ -16,8 +16,5 @@ Humon.Text.reopenClass
   _coerceToValidJsonInput: (json) ->
     "#{json}"
 
-  _initJsonDefaults: (json) ->
-    json || ""
-
   matchesJson: (json) ->
     typeof json == "string" # && json.length > 255

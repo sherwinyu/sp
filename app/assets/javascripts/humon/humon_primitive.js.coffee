@@ -48,9 +48,13 @@ Humon.Primitive.reopenClass
     json
 
   ##
-  # Does NOT trigger validations
+  # @override
   matchesJson: (json) ->
     typeof json == @_name()
 
+  ##
+  # By default, we want baseJson for literals to simply
+  # be undefined
+  # @override
   _baseJson: (json) ->
     undefined

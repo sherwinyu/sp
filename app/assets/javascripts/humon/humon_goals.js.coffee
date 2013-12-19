@@ -14,10 +14,6 @@ Humon.Goals.reopenClass
     $each:
       name: "goal"
 
-  # @override
-  _initJsonDefaults: (json) ->
-    json ||= []
-
 Humon.Goal = Humon.Complex.extend
   _value: null
 

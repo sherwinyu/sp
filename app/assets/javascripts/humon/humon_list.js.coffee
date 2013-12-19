@@ -122,9 +122,6 @@ Humon.List.reopenClass
   matchesJson: (json) ->
     json? and typeof json is 'object' and json instanceof Array and typeof json.length is 'number'
 
-  _initJsonDefaults: (json) ->
-    json ||= []
-
   # precondition: matchesJson was false
   _baseJson: (json) ->
     []

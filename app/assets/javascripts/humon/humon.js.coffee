@@ -42,7 +42,7 @@ window.Humon = Ember.Namespace.create
 
 Humon.nodeAttr = (attrKey) ->
   ftn = ( (key, value, oldValue) ->
-      console.log key, value, oldValue
+      # console.log key, value, oldValue
       # Setter
       if arguments.length > 1
         @_setChildByKey(key, value)
@@ -56,7 +56,7 @@ Humon.nodeAttr = (attrKey) ->
 Humon.valAttr = (attrAccessorKey)->
   nodeAccessorKey = '_' + attrAccessorKey
   ftn = ( (key, value, oldValue) ->
-          console.log key, value, oldValue
+          # console.log key, value, oldValue
           node = @get(nodeAccessorKey)
 
           # Handle case when node doesn't yet exist?
@@ -84,4 +84,3 @@ Humon.valAttr = (attrAccessorKey)->
             node?.val()
         ).property(nodeAccessorKey, nodeAccessorKey + '._value')
   return ftn
-
