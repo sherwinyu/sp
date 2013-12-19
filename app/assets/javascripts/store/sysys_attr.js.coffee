@@ -59,3 +59,6 @@ Sysys.attr = (type, options) ->
     else
       getDefaultValue @, options, key
   ).property('data').meta(meta)
+
+
+

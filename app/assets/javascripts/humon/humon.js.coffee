@@ -40,36 +40,48 @@ window.Humon = Ember.Namespace.create
     # Instantiate the template context
     ctx.create()
 
-Humon.attr = (type, options) ->
-  options ||= {}
-  meta =
-    type: type
-    isAttribute: true
-    options: options
-  property = (->
+Humon.nodeAttr = (attrKey) ->
+  ftn = ( (key, value, oldValue) ->
+      console.log key, value, oldValue
+      # Setter
+      if arguments.length > 1
+        @_setChildByKey(key, value)
+      # Getter
+      else
+        @_getChildByKey(attrKey)
+    ).property('_value', '_value.@each')
+  return ftn
 
-  ).property()
-###
-  Ember.computed( (key, value, oldValue) ->
-    currentValue = null
-    if arguments.length > 1
-      Ember.assert "You may not set `id` as an attribute on your model. Please remove any lines that look like: `id: DS.attr('<type>')` from " + @constructor.toString(), key isnt "id"
-      oldVal = @_attributes[key] or @_inFlightAttributes[key] or @_data[key]
 
-      # Compare by equality. If they're the same, then
-      #   set the object references to mtatch, so that `didSetProperty` does its thing properly
-      if JSON.stringify(oldVal) == JSON.stringify(value)
-        oldVal = value
-      @send "didSetProperty",
-        name: key
-        oldValue: oldVal
-        value: value
+Humon.valAttr = (attrAccessorKey)->
+  nodeAccessorKey = '_' + attrAccessorKey
+  ftn = ( (key, value, oldValue) ->
+          console.log key, value, oldValue
+          node = @get(nodeAccessorKey)
 
-      @_attributes[key] = value
-      value
-    else if hasValue(@, key)
-      getValue @, key
-    else
-      getDefaultValue @, options, key
-  ).property('data').meta(meta)
-###
+          # Handle case when node doesn't yet exist?
+          # Factor node templates into this.
+          # We can leverage existing validation / type checking via tryToCommit
+          # Setter
+          if arguments.length > 1
+            if value == undefined
+              @deleteChild(node)
+              return
+            if node?
+              node.tryToCommit val: value
+            else
+              # TODO(syu): ADD NODE PARENT
+              node = Humon.j2n value, metatemplate: @constructor.childMetatemplates[attrAccessorKey]
+              node.set 'nodeKey', attrAccessorKey
+              @set(nodeAccessorKey, node)
+              node.val()
+
+          # Getter
+          else
+            node = @get(nodeAccessorKey)
+            if node?
+              Em.assert "node #{node} is a Humon.node", node instanceof Humon.Node
+            node?.val()
+        ).property(nodeAccessorKey, nodeAccessorKey + '._value')
+  return ftn
+
