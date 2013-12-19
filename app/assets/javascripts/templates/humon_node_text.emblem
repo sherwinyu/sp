@@ -1,6 +1,16 @@
 / humon_node_text.hbs
 span.node-text-left
   = view "Sysys.ValEditableTextField" rawValueBinding="view.templateStrings.asString"
+  ul
+    li
+      | view.nodeContent.nodeVal._value
+      = view.nodeContent.nodeVal._value
+    li
+      | view.templateStrings.asString
+      = view.templateStrings.asString
+    li
+      | view.nodeContent.nodeVal._value
+      = view.nodeContent.nodeVal._value
 
 span.node-detail
 

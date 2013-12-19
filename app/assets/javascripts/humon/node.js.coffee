@@ -39,42 +39,52 @@ Humon.Node = Ember.Object.extend
 
   clearInvalidation: ->
     # Note, in the case of hidden nodes, don't do this
-    @get('nodeView')?.enableTemplateStrings()
+    nv = @get('nodeView')
+    if nv?
+      nv.enableTemplateStrings()
+    else
+      console.warn "#{@}#clearInvalidation: node view not found"
     @set('notInitialized', false)
     @set('invalidReason', null)
     @set('invalid', false)
 
   invalidate: (reason) ->
-    @get('nodeView')?.clearTemplateStrings()
+    nv = @get('nodeView')
+    if nv?
+      nv.clearTemplateStrings()
+    else
+      console.warn "#{@}#clearInvalidation: node view not found"
     @set('invalidReason', reason)
     @set('invalid', true)
 
   tryToCommit: (payload) ->
     jsonInput = payload.val
-    if @get('nodeVal').precommitInputCoerce(jsonInput)
-      return
-    try
-      json = try
-              # TODO(syu): -- probably shouldn't do this if we have the metatemplate
-              # e.g., no reason to convert "[1, 2, 3]" into [1, 2, 3] if we
-              # know the val is supposed to be a string
-              JSON.parse(jsonInput)
-            catch error
-              jsonInput
-      node = HumonUtils.json2node json, metatemplate: @get('nodeMeta')
-    catch error
-      Em.assert("The error should be: UnableToConvertInputToNode", true)
-      console.error(error.toString())
-      # Error will be if jsonInput doesn't fit supplied metaTemplate
-      # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
-      @invalidate("Provided string doesn't fit into this node's type.")
-      return
+    coerceSuccessful = @get('nodeVal').precommitInputCoerce(jsonInput)
+    unless coerceSuccessful
+      try
+        json = try
+                # TODO(syu): -- probably shouldn't do this if we have the metatemplate
+                # e.g., no reason to convert "[1, 2, 3]" into [1, 2, 3] if we
+                # know the val is supposed to be a string
+                JSON.parse(jsonInput)
+              catch error
+                jsonInput
+        node = HumonUtils.json2node json, metatemplate: @get('nodeMeta')
+      catch error
+        Em.assert("The error should be: UnableToConvertInputToNode", true)
+        console.error(error.toString())
+        # Error will be if jsonInput doesn't fit supplied metaTemplate
+        # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
+        @invalidate("Provided string doesn't fit into this node's type.")
+        return
+      @replaceWithHumon node
 
-    # Set valid to true if we successfully committed
+    # At this point, commit was successful!
+    # Set valid to true (for self)
     @clearInvalidation()
     if payload.key?
       @set('nodeKey', payload.key) if payload.key?
-    @replaceWithHumon node
+
     if @validate()
       @get('controller').didCommit
         node: @
