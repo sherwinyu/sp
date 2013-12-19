@@ -19,6 +19,7 @@ Humon.Goals.reopenClass
     json ||= []
 
 Humon.Goal = Humon.Complex.extend
+  _value: null
 
   ##
   # @override
@@ -29,8 +30,8 @@ Humon.Goal = Humon.Complex.extend
 
   _depDepProp: []
   depProp: (->
-    @get('_depDepProp')
-  ).property('_depDepProp', '_depDepProp.@each')
+    @get('_depPropProp')
+  ).property('_depPropProp', '_depPropProp.@each')
 
   testMe: (->
     "#{@get 'zug'} a bug"
@@ -55,7 +56,7 @@ Humon.Goal = Humon.Complex.extend
       @set('completed_at', new Date())
     false
 
-  $completed_at: ((key, value, oldValue) ->
+  _completed_at: ((key, value, oldValue) ->
     console.log key, value, oldValue
     # Setter
     if arguments.length > 1
@@ -63,11 +64,11 @@ Humon.Goal = Humon.Complex.extend
     # Getter
     else
       node = @_getChildByKey('completed_at')
-  ).property('_value', '_value.@each', '_depDepProp', '_depDepProp.@each')
+  ).property('_value', '_value.@each')
 
   completed_at: ( (key, value, oldValue) ->
     console.log key, value, oldValue
-    node = @get('$completed_at')
+    node = @get('_completed_at')
 
     # Handle case when node doesn't yet exist?
     # Factor node templates into this.
@@ -82,14 +83,14 @@ Humon.Goal = Humon.Complex.extend
       else
         node = Humon.j2n value, metatemplate: @constructor.childMetatemplates['completed_at']
         node.set 'nodeKey', 'completed_at'
-        @set('$completed_at', node)
+        @set('_completed_at', node)
     # Getter
     else
-      node = @get('$completed_at')
+      node = @get('_completed_at')
       node?.val()
-  ).property( '_value', '_value.@each', '_depDepProp', '_depDepProp.@each')
+  ).property('_completed_at', '_completed_at._value')
 
-  $goal: ( (key, value, oldValue) ->
+  _goal: ( (key, value, oldValue) ->
     console.log key, value, oldValue
     # Setter
     if arguments.length > 1
@@ -97,11 +98,11 @@ Humon.Goal = Humon.Complex.extend
     # Getter
     else
       @_getChildByKey('goal')
-  ).property('_value', '_value.@each').volatile()
+  ).property('_value', '_value.@each')
 
   goal: ( (key, value, oldValue) ->
     console.log key, value, oldValue
-    node = @get('$goal')
+    node = @get('_goal')
 
     # Handle case when node doesn't yet exist?
     # Factor node templates into this.
@@ -116,13 +117,13 @@ Humon.Goal = Humon.Complex.extend
       else
         node = Humon.j2n value, metatemplate: @constructor.childMetatemplates['goal']
         node.set 'nodeKey', 'goal'
-        @set('$goal', node)
+        @set('_goal', node)
 
     # Getter
     else
-      node = @get('$goal')
+      node = @get('_goal')
       node?.val()
-  ).property('$goal', '$goal._value').volatile()
+  ).property('_goal', '_goal._value')
 
   _getChildByKey: (key) ->
     @_value.findProperty('nodeKey', key)
@@ -139,9 +140,9 @@ Humon.Goal = Humon.Complex.extend
 
   getProps: ->
     @get 'goal'
-    @get '$goal'
+    @get '_goal'
     @get 'completed_at'
-    @get '$completed_at'
+    @get '_completed_at'
 
 
 Humon.Goal.reopenClass
@@ -168,4 +169,4 @@ Humon.Goal.reopenClass
     json ||= {}
     requiredDefaults =
       goal: "Enter your goal"
-    return $.extend(requiredDefaults, json)
+    return _.extend(requiredDefaults, json)
