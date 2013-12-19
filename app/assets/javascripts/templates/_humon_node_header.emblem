@@ -1,4 +1,4 @@
-span.copy.node-detail.node-icon
+span.copy.node-detail.node-icon.copy-item
   =partial "humon_icon"
 span.copy.node-invalid-reason
   =view.nodeContent.invalidReason

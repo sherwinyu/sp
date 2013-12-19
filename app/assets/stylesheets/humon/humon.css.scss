@@ -79,6 +79,10 @@
   @include node-text-mixin();
   color: $nodeDetailCopyColor;
 }
+.node .copy-item {
+  padding-left: 4px;
+  padding-right: 4px;
+}
 
 @import "humon/debug";
 @import "humon/detail";

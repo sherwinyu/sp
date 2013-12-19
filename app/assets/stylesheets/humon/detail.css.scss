@@ -11,9 +11,7 @@ span.node-detail  {
 }
 
 .node-detail {
-  @include node-text-mixin();
   position: relative;
-  font-style: italic;
 }
 
 // When active, darken the colors
@@ -32,6 +30,7 @@ span.node-detail  {
 span.node-detail.node-icon {
   $nodeIconSize: 14px;
   margin: 0 3px;
+  margin-left: 5px;
   font-size: $nodeIconSize;
   position: relative;
   top: ($nodeCopyFontSize - $nodeIconSize);

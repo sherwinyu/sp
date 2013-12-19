@@ -4,5 +4,5 @@
 
 span.copy
   = view.templateStrings.relative
-span.copy.node-detail
+span.copy.node-detail.copy-item
   = view.templateStrings.verbose
