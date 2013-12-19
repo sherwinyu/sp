@@ -56,6 +56,17 @@ Humon.Complex = Humon.Hash.extend(
   deleteChild: (node) ->
     @_value.removeObject(node)
 
+  unknownProperty: null
+  _getChildByKey: (key) ->
+    @_value.findProperty('nodeKey', key)
+  _setChildByKey: (key, node) ->
+    Em.assert "Node #{node} must be of type Humon.Node", node instanceof Humon.Node
+    # remove it:
+    oldNode = @_value.findProperty('nodeKey', key)
+    if oldNode?
+      @_value.removeObject(oldNode)
+    @_value.pushObject node
+
 )
 
 Humon.Complex.reopenClass(
@@ -80,18 +91,6 @@ Humon.Complex.reopenClass(
       return false unless @childMetatemplates[key]?
     return true
 
-  # @param [JSON] context:
-  #
-  #  @required
-  #  - node: the Humon.Node object that will wrap this Humon.Value
-  #  - allowInvalid [boolean] if true, allows this node to be invalid
-  #  - metatemplate
-  #
-  # The metatemplate corresponding to THIS PATH should be @_metatemplate
-  # because THIS is already an instance of a Humon.*
-  #
-  # `childMetatemplates` is an available variable that contains metatemplates
-  # for all childNodes.
   valueFromJson: (json, context) ->
     childNodes = []
     for own key, childVal of json
@@ -121,9 +120,11 @@ Humon.Complex.reopenClass(
       delete json[key] unless @childMetatemplates[key]?
     json
 
-  ##
-  # @override
-  _coerceToValidJsonInput: (json) ->
-    console.warn "Coercing json #{JSON.stringify json} to #{@}"
-    return {}
+  _generateAccessors: ->
+    for key of @childMetatemplates
+      methods = {}
+      methods[key] = Humon.valAttr(key)
+      methods["_" +key] = Humon.nodeAttr(key)
+      @reopen methods
+
 )

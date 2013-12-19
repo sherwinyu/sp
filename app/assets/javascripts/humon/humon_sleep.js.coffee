@@ -46,3 +46,4 @@ Humon.Sleep.reopenClass
     #   is NOT true because they default to Null!
     # assuming json is an object
     return $.extend(requiredDefaults, json)
+Humon.Sleep._generateAccessors()

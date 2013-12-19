@@ -27,3 +27,5 @@ Humon.Summary.reopenClass
     #   is NOT true because they default to Null!
     # assuming json is an object
     return $.extend(requiredDefaults, json)
+
+Humon.Summary._generateAccessors()
