@@ -19,6 +19,17 @@ Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
 
   flatten: ->
     [@node]
+  enterPressed: (e, payload) ->
+    return if e._handled?
+    @get('node').tryToCommit( payload )
+    nodeView = @get('node.nodeView')
+    Ember.run.scheduleOnce "afterRender", nodeView, ->
+      if @get('_templateChanged')
+        # Make sure we clear templateChanged after a rerender.
+        @set('_templateChanged', false)
+        @rerender()
+        Ember.run.later => @smartFocus()
+
 
   subFieldFocusLost: (e, payload)->
     @get('node').tryToCommit(payload)

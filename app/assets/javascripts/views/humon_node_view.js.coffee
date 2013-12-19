@@ -52,17 +52,13 @@ Sysys.HumonNodeView = Ember.View.extend
 #########################
   actions:
     # Default: validate and commit
-    enterPressed: ->
-      return unless @get('nodeContent.nodeVal').enterPressed()
-
-      payload = @uiPayload()
-      @get('nodeContent').tryToCommit( payload )
-      Ember.run.scheduleOnce "afterRender", @, ->
-        if @get('_templateChanged')
-          # Make sure we clear templateChanged after a rerender.
-          @set('_templateChanged', false)
-          @rerender()
-          Ember.run.later => @smartFocus()
+    enterPressed: (e) ->
+      uiPayload = @uiPayload()
+      e._handled ?=
+        node: @get('nodeContent')
+        view: @
+      @get('nodeContent.nodeVal').enterPressed(e, uiPayload)
+      @get('nodeContent.nodeParent.nodeView')?.send 'enterPressed', e
 
     moveLeft: ->
       # You can't focus left on a list!
