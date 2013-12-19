@@ -9,10 +9,11 @@ Sysys.IdxEditableField valueBinding="view.nodeContent.nodeIdx" rawValueBinding="
     Sysys.HumonNodeView nodeContentBinding="nodeChild"
 
 Sysys.HumonNodeView nodeContentBinding="view.nodeContent._goal" layoutName="humon_node_fixed_key_layout"
+hr
 
-  = if view.nodeContent.nodeVal.done
-    | Done! Completed at
-    = view.nodeContent.nodeVal.completedTimestamp
-  = else
-    | Incomplete
+= if view.nodeContent.nodeVal.done
+  | Done! Completed at
+  = view.nodeContent.nodeVal.completedTimestamp
+= else
+  | Incomplete
 = partial "humon_node_debug"
