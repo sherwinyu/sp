@@ -109,6 +109,9 @@ Humon.Node = Ember.Object.extend
     @set('nodeVal', newNode.get 'nodeVal')
     @set('nodeVal.node', @)
 
+    # Trigger observers
+    @get('nodeParent.nodeVal').notifyPropertyChange("_value")
+
     # If newnode has children, set their parent to this
     if @get 'hasChildren'
       for child in @get('children')
