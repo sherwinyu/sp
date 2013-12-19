@@ -39,6 +39,13 @@ Humon.Goal = Humon.Complex.extend
     !!@get('completed_at')
   ).property('completed_at')
 
+  enterPressed: ->
+    if @get('done')
+      @set('completed_at', undefined)
+    else
+      @set('completed_at', new Date())
+    false
+
   $completed_at: ((key, value, oldValue)->
     # Setter
     if arguments.length > 1
@@ -46,7 +53,7 @@ Humon.Goal = Humon.Complex.extend
     # Getter
     else
       node = @_getChildByKey('completed_at')
-  ).property('_value', '_value.@each')
+  ).property('_value', '_value.@each').volatile()
 
   completed_at: ( (key, value, oldValue) ->
     node = @get('$completed_at')
@@ -56,6 +63,9 @@ Humon.Goal = Humon.Complex.extend
     # We can leverage existing validation / type checking via tryToCommit
     # Setter
     if arguments.length > 1
+      if value == undefined
+        @deleteChild(node)
+        return
       if node?
         node.tryToCommit val: value
       else
@@ -66,7 +76,7 @@ Humon.Goal = Humon.Complex.extend
     else
       node = @get('$completed_at')
       node?.val()
-  ).property('$completed_at')
+  ).property('$completed_at', '$completed_at._value').volatile()
 
   $goal: (->
     # Setter
@@ -75,7 +85,7 @@ Humon.Goal = Humon.Complex.extend
     # Getter
     else
       @_getChildByKey('goal')
-  ).property('_value', '_value.@each')
+  ).property('_value', '_value.@each').volatile()
 
   goal: ( (key, value, oldValue) ->
     node = @get('$goal')
@@ -85,6 +95,9 @@ Humon.Goal = Humon.Complex.extend
     # We can leverage existing validation / type checking via tryToCommit
     # Setter
     if arguments.length > 1
+      if value == undefined
+        @deleteChild(node)
+        return
       if node?
         node.tryToCommit val: value
       else
@@ -96,27 +109,27 @@ Humon.Goal = Humon.Complex.extend
     else
       node = @get('$goal')
       node?.val()
-  ).property('$goal')
+  ).property('$goal', '$goal._value').volatile()
 
   _getChildByKey: (key) ->
     @_value.findProperty('nodeKey', key)
 
   _setChildByKey: (key, node) ->
-    Em.assert "Node #{node} must be of type Humon.Node", node instanceof Humon.Node
     # remove it:
     node = @_value.findProperty('nodeKey', key)
+    Em.assert "Node #{node} must be of type Humon.Node", node instanceof Humon.Node
     if node?
       @_value.removeObject(node)
     @_value.pushObject node
 
   unknownProperty: null
 
-  enterPressed: ->
-    if @get('done')
-      @set('completed_at', null)
-    else
-      @set('completed_at', new Date())
-    false
+  getProps: ->
+    @get 'goal'
+    @get '$goal'
+    @get 'completed_at'
+    @get '$completed_at'
+
 
 Humon.Goal.reopenClass
 
@@ -125,6 +138,12 @@ Humon.Goal.reopenClass
       name: "text"
     completed_at:
       name: "date"
+
+  _j2hnv: (json, context) ->
+    value = @valueFromJson(json, context)
+    nodeVal = @create(_value: value, node: context.node)
+    nodeVal.getProps()
+    nodeVal
 
   requiredAttributes: ["goal"]
 

@@ -53,6 +53,9 @@ Humon.Complex = Humon.Hash.extend(
     else
       null
 
+  deleteChild: (node) ->
+    @_value.removeObject(node)
+
 )
 
 Humon.Complex.reopenClass(
