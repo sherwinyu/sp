@@ -1,12 +1,10 @@
 .node.goals {
+  @include node_large_mx();
 }
 
 .node.goal {
   @include node_large_mx();
   &.active {
-    .copy {
-      color: $nodeDetailCopyColor
-    }
   }
 
   // Text child

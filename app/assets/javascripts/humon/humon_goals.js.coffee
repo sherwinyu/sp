@@ -16,6 +16,9 @@ Humon.Goals.reopenClass
 
 Humon.Goal = Humon.Complex.extend
   _value: null
+  validateSelf: ->
+    @_super()
+    @ensure "Can't be empty", @get('goal').length > 0
 
   completedTimestamp: (->
     t = @get('completed_at')
@@ -45,13 +48,14 @@ Humon.Goal.reopenClass
       name: "time"
 
   requiredAttributes: ["goal"]
-
   optionalAttributes: ["completed", "completed_at"]
 
-  directAttributes: ["completed_at"]
 Humon.Goal._generateAccessors()
 
-Humon.NodeGoalView = Humon.NodeView.extend()
+Humon.NodeGoalView = Humon.NodeView.extend(
+  smartFocus: ->
+    @get('nodeContent.nodeVal._goal.node.nodeView').smartFocus()
+)
 
 Humon.NodeGoalDescriptionView = Humon.NodeView.extend
   activateBoundNode: (activate = true) ->

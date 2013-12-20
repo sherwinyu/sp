@@ -2,9 +2,8 @@
 
 span.n-goal-push-right
   Humon.NodeGoalDescriptionView nodeContentBinding="view.nodeContent._goal" layoutName="" templateName_="humon_simple"
-br
 div.node
-  span.copy.little
+  span.copy.little.copy-item
     = if view.nodeContent.nodeVal.done
       ' Done! Completed at
       = view.nodeContent.nodeVal.completedTimestamp
