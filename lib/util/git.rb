@@ -8,12 +8,13 @@ module Util
       git.sha1 = git_lines[0].split.last
 
       # "Author: Sherwin Yu <sherwin.x.yu@gmail.com>"
-      git.author = git_lines[1].split[1..4].join(" ")
+      git.author = git_lines[1..4].select{|s| s=~/^Author/}.first.split[1..4].join(" ")
 
       # "Date:   Tue Dec 17 23:27:43 2013 -0500"
-      git.date = ::DateTime.parse git_lines[2].partition(/Date:\s+/)[2]
+      git.date = ::DateTime.parse git_lines[1..4].select{|s| s=~/^Date/}.first.partition(/Date:\s+/)[2]
 
-      git.message = git_lines[3..-1].map(&:strip).join ' '
+      message_start_idx = git_lines.index {|s| s.empty?}
+      git.message = git_lines[message_start_idx..-1].map(&:strip).join ' '
       git
     end
   end
