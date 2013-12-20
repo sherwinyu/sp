@@ -1,6 +1,7 @@
 Sysys.HumonNodeView = Ember.View.extend
   _templateChanged: false
   _id: null
+  templateName_: null
   _templateStringsEnabled: true
   clearTemplateStrings: -> @set('_templateStringsEnabled', false)
   enableTemplateStrings: -> @set('_templateStringsEnabled', true)
@@ -33,7 +34,7 @@ Sysys.HumonNodeView = Ember.View.extend
   _templateContext: ->
     Humon.templateContextFor(@get 'nodeContent')
   autoTemplate: (->
-    @_templateContext().get('templateName')
+    @templateName_ || @_templateContext().get('templateName')
   ).property('nodeContent.nodeType')
   templateStrings: (->
     Ember.run.sync()

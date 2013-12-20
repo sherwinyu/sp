@@ -40,7 +40,7 @@
 // ===
 // Active node indicator
 .node.active:before {
-  @include node-text-mixin();
+  @include node_text_inline_mx();
   transition: all 300ms ease;
   content: "\00BB"; //»
   position: absolute;
@@ -76,8 +76,12 @@
 // ==
 // Generic helper class, should
 .node .copy {
-  @include node-text-mixin();
+  @include node_text_inline_mx();
   color: $nodeDetailCopyColor;
+}
+
+.little {
+  font-size: 50%;
 }
 
 .node .copy-item {
@@ -86,7 +90,6 @@
 }
 
 .node {
-  // @include node-text-mixin();
 }
 
 @import "humon/debug";

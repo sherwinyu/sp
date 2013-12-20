@@ -2,18 +2,14 @@
 
 = partial "humon_node_header"
 Sysys.IdxEditableField valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"
-/
-  = each nodeChild in view.nodeContent.nodeVal.requiredChildren
-    Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="humon_node_fixed_key_layout"
-  = each nodeChild in view.nodeContent.nodeVal.optionalChildren
-    Sysys.HumonNodeView nodeContentBinding="nodeChild"
 
-Sysys.HumonNodeView nodeContentBinding="view.nodeContent._goal" layoutName="humon_node_fixed_key_layout"
-hr
-
-= if view.nodeContent.nodeVal.done
-  | Done! Completed at
-  = view.nodeContent.nodeVal.completedTimestamp
-= else
-  | Incomplete
+span.n-goal-push-right
+  Sysys.HumonNodeView nodeContentBinding="view.nodeContent._goal" layoutName="" templateName_="humon_simple"
+br
+span.copy.little
+  = if view.nodeContent.nodeVal.done
+    ' Done! Completed at
+    = view.nodeContent.nodeVal.completedTimestamp
+  = else
+    | Incomplete
 = partial "humon_node_debug"

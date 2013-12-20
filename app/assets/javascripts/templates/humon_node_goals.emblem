@@ -2,8 +2,11 @@
 
 = partial "humon_node_header"
 = partial "humon_node_debug"
+
 = each nodeChild in view.nodeContent.nodeVal.children
+  / Goal view
   Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName=""
+
 = else
   div
     | No goals yet!

@@ -2,15 +2,10 @@
 }
 
 .node.goal {
-  .content-field {
-    @include node-text-mixin(2.0);
-  }
-
-  .copy {
-    @include node-text-mixin(2.0);
-  }
-  .debug-inline {
-    @include node-text-mixin(1.0);
+  @include node_large_active_indicator();
+  @include node_large_mx();
+  .node.active:before {
+    display: none;
   }
 
   .content-field {
@@ -19,6 +14,10 @@
   .val-field {
 
   }
-  // border: 1px solid gray;
+  padding: 5px 0;
   border-radius: 3px;
+
+  .n-goal-push-right {
+    display: inline-block;
+  }
 }

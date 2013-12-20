@@ -90,14 +90,35 @@ $rootNodeKeyColor: darken($nodeCopyColor, 15%);
 @mixin node_text_structure_mx($factor: 1) {
   @include node_font_mx($factor);
   height: $lineheight * $factor;
+  line-height: $lineheight * $factor;
   vertical-align: top;
 }
-@mixin node-text-mixin($factor: 1) {
-  @include node_text_inline_mx($factor);
-};
 
 @mixin node_text_inline_mx($factor: 1) {
   @include node_text_structure_mx($factor);
   display: inline-block;
+}
+
+@mixin node_active_indicator_mx($factor: 1, $top: -6px) {
+  @include node_text_inline_mx($factor);
+  top: $top;
+}
+
+@mixin node_large_active_indicator() {
+  &.active:before {
+    @include node_active_indicator_mx(1.5, 0px);
+  }
+}
+@mixin node_large_mx {
+  @include node_large_active_indicator;
+  .content-field {
+    @include node_text_inline_mx(1.5);
+  }
+  .copy {
+    @include node_text_inline_mx(1.5);
+  }
+  .debug-inline {
+    @include node_text_inline_mx(1.0);
+  }
 }
 
