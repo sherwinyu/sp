@@ -1,5 +1,5 @@
 #= require_self
-#= require ./views/node_view
+#= require_tree ./views
 #= require ./node
 #= require ./humon_values
 #= require ./humon_utils

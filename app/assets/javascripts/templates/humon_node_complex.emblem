@@ -2,7 +2,7 @@
 
 = partial 'humon_node_header'
 = each nodeChild in view.nodeContent.nodeVal.requiredChildren
-  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="layouts/node_key"
+  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="layouts/node_required"
 
 = each nodeChild in view.nodeContent.nodeVal.optionalChildren
-  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="layouts/node_required"
+  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="layouts/node_key"

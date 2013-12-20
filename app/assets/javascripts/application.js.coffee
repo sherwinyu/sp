@@ -12,3 +12,6 @@
 #= require dependencies
 #= require sysys
 @Test = false
+
+# window.onbeforeunload = (event) ->
+# 'Be careful!'

@@ -1,0 +1,31 @@
+@import "base";
+
+.node {
+
+  span.content-field.key-field {
+    min-width: $keyFieldMinWidth;
+    max-width: $keyFieldMaxWidth;
+
+    text-overflow: ellipsis; // "…";
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  span.content-field.key-field:focus {
+    max-width: 1000px;
+    transition: all 300ms ease;
+  }
+  span.content-field.key-field.key-field-fixed {
+    border-bottom: $borderTransparent;
+  }
+
+}
+
+.node.active > span.content-field.key-field.key-field-fixed {
+  border-bottom: $borderTransparent;
+}
+
+.node.active > .content-field.idx-field {
+  transition-property: color;
+  color: $nodeIdxActiveCopyColor;
+  border-bottom: $borderTransparent;
+}

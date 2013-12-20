@@ -1,0 +1,11 @@
+@import "base";
+.node span.content-field.title-field {
+  color: $hecTitleKeyColor;
+  border-bottom: $borderTransparent;
+  font-weight: 600;
+  font-size: $hecTitleFontSize;
+
+}
+.node.active > span.content-field.title-field {
+  color: $hecTitleKeyColor;
+}

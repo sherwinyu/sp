@@ -1,84 +1,24 @@
 @import "base";
+@import "title_field";
+@import "val_field";
+@import "key_field";
+
 /*
  * Content Fields
  */
-.node {
-  .content-field {
-    @include node_text_inline_mx();
 
-    border-bottom: $borderLightUnderline;
-    border-left: $borderTransparent;
-    color: $nodeCopyColor;
-    transition: all 300ms ease;
-  }
+.node .content-field {
+  @include node_text_inline_mx();
 
-
-  /*
-   * VAL FIELD
-   */
-
-  span.val-field {
-    min-width: $valFieldMinWidth;
-    max-width: $valFieldMaxWidth;
-  }
-  span.val-field:focus {
-  }
-
-  /*
-   * Label Field
-   */
-
-  /*
-   * index field
-   */
-
-  /*
-   * Key Field
-   */
-  span.content-field.key-field {
-    min-width: $keyFieldMinWidth;
-    max-width: $keyFieldMaxWidth;
-
-    text-overflow: ellipsis; // "…";
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  span.content-field.key-field:focus {
-    max-width: 1000px;
-    transition: all 300ms ease;
-  }
-  /*
-   * Key Fixed Field
-   */
-  span.content-field.key-field.key-field-fixed {
-    border-bottom: $borderTransparent;
-  }
-
-  span.content-field.key-field.title-field {
-    color: $hecTitleKeyColor;
-    border-bottom: $borderTransparent;
-    font-weight: 600;
-    font-size: $hecTitleFontSize;
-  }
-
-}
-.node.active > span.content-field.key-field.key-field-fixed {
   border-bottom: $borderLightUnderline;
-}
-
-.node.active > span.content-field.key-field.title-field {
-  color: $hecTitleKeyColor;
+  border-left: $borderTransparent;
+  color: $nodeCopyColor;
+  transition: all 300ms ease;
 }
 
 .node.active > .content-field {
   border-bottom: $borderUnderline;
   color: $nodeActiveCopyColor;
-}
-
-.node.active > .content-field.idx-field {
-  transition-property: color;
-  color: $nodeIdxActiveCopyColor;
-  border-bottom: $borderTransparent;
 }
 
 .content-field:empty:before {
