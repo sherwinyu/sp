@@ -36,9 +36,7 @@ Humon.Goal = Humon.Complex.extend
       @set('completed_at', new Date())
     false
 
-
   unknownProperty: null
-
 Humon.Goal.reopenClass
   childMetatemplates:
     goal:
@@ -51,5 +49,11 @@ Humon.Goal.reopenClass
   optionalAttributes: ["completed", "completed_at"]
 
   directAttributes: ["completed_at"]
-
 Humon.Goal._generateAccessors()
+
+Humon.NodeGoalView = Humon.NodeView.extend()
+
+Humon.NodeGoalDescriptionView = Humon.NodeView.extend
+  activateBoundNode: (activate = true) ->
+    arg = if activate then @get('nodeContent.nodeParent') else null
+    @get('controller').send('activateNode', arg)

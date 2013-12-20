@@ -1,4 +1,5 @@
 #= require_self
+#= require ./views/node_view
 #= require ./node
 #= require ./humon_values
 #= require ./humon_utils
@@ -66,15 +67,16 @@ Humon.valAttr = (attrAccessorKey)->
           if arguments.length > 1
             if value == undefined
               @deleteChild(node)
-              return
+              return undefined
             if node?
               node.tryToCommit val: value
+              return node.val()
             else
               # TODO(syu): ADD NODE PARENT
               node = Humon.j2n value, metatemplate: @constructor.childMetatemplates[attrAccessorKey], nodeParent: @node
               node.set 'nodeKey', attrAccessorKey
               @set(nodeAccessorKey, node)
-              node.val()
+              return node.val()
 
           # Getter
           else

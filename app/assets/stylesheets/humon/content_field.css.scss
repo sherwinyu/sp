@@ -51,17 +51,23 @@
    * Key Fixed Field
    */
   span.content-field.key-field.key-field-fixed {
-    color: $rootNodeKeyColor;
+    border-bottom: $borderTransparent;
+  }
+
+  span.content-field.key-field.title-field {
+    color: $hecTitleKeyColor;
     border-bottom: $borderTransparent;
     font-weight: 600;
-    min-width: $keyFieldMaxWidth / 1.8;
-    max-width: $keyFieldMaxWidth / 1.5;
-    margin-right: 10px;
+    font-size: $hecTitleFontSize;
   }
+
 }
 .node.active > span.content-field.key-field.key-field-fixed {
-  color: $rootNodeKeyColor;
   border-bottom: $borderLightUnderline;
+}
+
+.node.active > span.content-field.key-field.title-field {
+  color: $hecTitleKeyColor;
 }
 
 .node.active > .content-field {
@@ -74,10 +80,12 @@
   color: $nodeIdxActiveCopyColor;
   border-bottom: $borderTransparent;
 }
+
 .content-field:empty:before {
   content: "\2026"; // ellipsis
   content: "\0020"; // interpunct
 }
+
 .node.active > .content-field:empty:before {
   display: none;
 }

@@ -5,7 +5,7 @@
 
 = each nodeChild in view.nodeContent.nodeVal.children
   / Goal view
-  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName=""
+  Humon.NodeGoalView nodeContentBinding="nodeChild" layoutName=""
 
 = else
   div

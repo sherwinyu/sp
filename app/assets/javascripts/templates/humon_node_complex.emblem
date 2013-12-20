@@ -1,9 +1,8 @@
 / humon_node_complex.hbs
 
-= partial "humon_node_header"
-
+= partial 'humon_node_header'
 = each nodeChild in view.nodeContent.nodeVal.requiredChildren
-  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="humon_node_fixed_key_layout"
+  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="layouts/node_key"
 
 = each nodeChild in view.nodeContent.nodeVal.optionalChildren
-  Sysys.HumonNodeView nodeContentBinding="nodeChild"
+  Sysys.HumonNodeView nodeContentBinding="nodeChild" layoutName="layouts/node_required"

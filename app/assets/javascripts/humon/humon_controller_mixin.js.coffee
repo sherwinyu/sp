@@ -84,83 +84,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       else
         console.warn "HumonMixinController.smartFocus, but no nodeView found for node:", @get('activeHumonNode')
 
-
-    ###
-    action commitLiteral
-    triggered when `enter` is pressed on a node that has no parent
-    ###
-    commitLiteral: (payload) ->
-      ahn = @get('activeHumonNode')
-      Ember.run =>
-        @send 'commitEverything', payload
-      Ember.run =>
-        @send 'activateNode', ahn
-        # TODO(syu): hypothesized that this (and other em.run.sync before smartFocus) is unneeded
-        # now that we don't have activeHumonNodeView bindings
-        Ember.run.sync()
-        @send 'smartFocus'
-
-    # First calls `commitEverything` for ahn
-    # Next, if the active (just committed) node is a collection (e.g., commiting a []),
-    #   (Re)activate the recently committed node (because ahn will have
-    #   been set to null by _commitVal (focusOut) #TODO(syu): inelegant
-    #   Then, call `insertChild`
-    # Otherwise,
-    #   Insert a sibling after the active node
-    # then conditionally decides whether to insert a sibling or a child,
-    # depending on whether active node is a collection
-    #
-    # Preconditions:
-    #   ahn.parent is a collection (ensured by HNV.enterPressed right now)
-    commitAndContinueNew: (payload) ->
-      ahn = @get 'activeHumonNode'
-
-      # Commit everything
-      @send 'commitEverything', payload
-      Ember.run.sync()
-
-      # If the commited payload was a collection, we just insert a child
-      if ahn.get 'isCollection'
-        # If the ahn commited by `commitEverything` was a collection, HNV.focusOut was
-        # probably called, meaning ahn has been set to null. So we need to reactivate it.
-        @send 'activateNode', ahn
-        # TODO(syu): decide on whether we want to insert a chlid here;
-        @send 'smartFocus'
-        @insertChild()
-        return
-
-      # If the commited payload was a literal, we insert a sibling
-      #   (we can assume a sibling exists because only path to `commitAndContinueNew`
-      #   is from HNV.enterPressed, which prechecks for the non-sibling case
-      parent = ahn.get 'nodeParent'
-      newChildNode = null
-      Ember.run =>
-        idx = ahn.get('nodeIdx') + 1
-        # Appears that the next `rerender` call is unnecessary.
-        # rerender the parent view BEFORE inserting the child
-        # parent.get('nodeView').rerender()
-        newChildNode = parent.get('nodeVal').insertNewChildAt(idx)
-
-      # If a child was inserted (blank is non-null),
-      # activate the newly inserted node, and smart focus it
-      if newChildNode?
-        @send 'activateNode', newChildNode
-        Ember.run.sync()
-        @send 'smartFocus'
-
-  # _commitVal -- commits the val
-  # precondition: activeNode is a literal
-  # param rawString: the rawString to parse and replace ahn with
-  # param options: options hash with
-  #   node: the node to comit to. defaults to activeHumonNode
-  #
-  # Note:
-  #   if the node changes type, then we need to rerender the entire humonnode
-  #   to get recalculate HNV.autoTemplate
-
-  _commitVal: (rawString, {node}={node: null}) ->
-    Em.assert "No longer implemented!"
-
   ######################################
   ##  Setting Active Node
   ######################################
@@ -198,7 +121,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
 ## Manipulating humon node tree
 ##################################
 
-  # TODO(syu): test me
+###
   bubbleUp: ->
     ahn = @get('activeHumonNode')
     dest = @get('activeHumonNode').prevNode()
@@ -270,3 +193,4 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       prevSib.insertAt prevSib.get('children.length'), ahn
       @send 'activateNode', ahn
     @send 'smartFocus'
+###

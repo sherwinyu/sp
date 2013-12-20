@@ -76,7 +76,8 @@ $nodeIdxActiveCopyColor: lighten($nodeActiveCopyColor, 15%);
 $nodeEditorBorder: 1px solid $grayLighter;
 $nodeEditorPadding: 15px 3px;
 
-$rootNodeKeyColor: darken($nodeCopyColor, 15%);
+$hecTitleKeyColor: darken($nodeCopyColor, 15%);
+$hecTitleFontSize: $nodeCopyFontSize * 1.3;
 
 @mixin warning-icon {
   &:before {
@@ -99,18 +100,20 @@ $rootNodeKeyColor: darken($nodeCopyColor, 15%);
   display: inline-block;
 }
 
-@mixin node_active_indicator_mx($factor: 1, $top: -6px) {
+$activeIndicatorFontSize: 22.0 * $nodeCopyFontSize / 16.0;
+$activeIndicatorHeight: $activeIndicatorFontSize;
+
+@mixin node_active_indicator_mx($factor: 1, $top: 0px) {
   @include node_text_inline_mx($factor);
-  top: $top;
+  font-size: $activeIndicatorFontSize * $factor;
+  height: $activeIndicatorHeight * $factor;
 }
 
-@mixin node_large_active_indicator() {
-  &.active:before {
-    @include node_active_indicator_mx(1.5, 0px);
-  }
-}
+
 @mixin node_large_mx {
-  @include node_large_active_indicator;
+  &.active:before {
+    @include node_active_indicator_mx(1.5);
+  }
   .content-field {
     @include node_text_inline_mx(1.5);
   }

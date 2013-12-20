@@ -2,11 +2,25 @@
 }
 
 .node.goal {
-  @include node_large_active_indicator();
   @include node_large_mx();
-  .node.active:before {
-    display: none;
+  &.active {
+    .copy {
+      color: $nodeDetailCopyColor
+    }
   }
+
+  // Text child
+  .node.text {
+    &.active:before {
+      display: none;
+    }
+    // padding-left: 0px;
+
+    .val-text-field {
+    }
+  }
+
+
 
   .content-field {
     // font-size: 150%;
