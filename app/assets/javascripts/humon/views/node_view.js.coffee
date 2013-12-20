@@ -52,6 +52,10 @@ Humon.NodeView = Ember.View.extend
 ## Actions start
 #########################
   actions:
+    deletePressed: (e) ->
+      Ember.run =>
+        @get('nodeContent.nodeVal').deletePressed()
+
     # Default: validate and commit
     enterPressed: (e) ->
       uiPayload = @uiPayload()

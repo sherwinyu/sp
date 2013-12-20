@@ -16,13 +16,13 @@ span.node-detail  {
 
 // When active, darken the colors
 .node.active {
-  > .copy,  {
+  & :not(.node) .copy,  {
     color: $nodeActiveDetailCopyColor;
   }
-  &.invalid > .node-detail.node-icon i.icon-element {
+  &.invalid :not(.node) .node-detail.node-icon i.icon-element {
     color: $errorActiveRed;
   }
-  &.invalid > .node-invalid-reason {
+  &.invalid :not(.node) .node-invalid-reason {
     color: $errorActiveRed;
   }
 }
@@ -40,12 +40,7 @@ span.node-detail.node-icon {
   color: $errorRed;
 }
 
-.node.active > .node-invalid-reason {
-  display: inline-block;
-  color: $errorActiveRed;
-}
-
-.node.invalid > .node-detail.node-icon i.icon-element {
+.node.invalid :not(.node) .node-detail.node-icon i.icon-element {
   @include warning-icon;
   color: $errorRed;
   visibility: visible !important;

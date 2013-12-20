@@ -55,6 +55,9 @@ Sysys.ContentEditableField = Ember.View.extend
       'up': (e) =>
         e.preventDefault()
         @get('parentView').send 'up', e
+      'shift+backspace': (e) =>
+        e.preventDefault()
+        @get('parentView').send 'deletePressed', e
 
 Sysys.ValEditableField = Sysys.ContentEditableField.extend
   classNames: ['val-field']

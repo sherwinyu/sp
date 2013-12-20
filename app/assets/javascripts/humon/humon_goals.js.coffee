@@ -61,3 +61,7 @@ Humon.NodeGoalDescriptionView = Humon.NodeView.extend
   activateBoundNode: (activate = true) ->
     arg = if activate then @get('nodeContent.nodeParent') else null
     @get('controller').send('activateNode', arg)
+
+  actions:
+    deletePressed: ->
+      @get('nodeContent.nodeParent.nodeView').send 'deletePressed'

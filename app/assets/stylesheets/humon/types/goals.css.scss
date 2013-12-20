@@ -9,6 +9,7 @@
 
   // Text child
   .node.text {
+    @include node_large_mx();
     &.active:before {
       display: none;
     }

@@ -161,3 +161,6 @@ Humon.HumonValue = Ember.Mixin.create
   enterPressed: ->
     true
 
+  deletePressed: ->
+    @get('node.nodeParent.nodeVal')?.deleteChild(@get('node'))
+
