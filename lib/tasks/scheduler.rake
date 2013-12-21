@@ -9,10 +9,22 @@ def ping_url url
   start = Time.now
   puts "Pinging server at #{url}"
   uri = URI(url)
-  h = Net::HTTP.get_response(uri)
-  delta = Time.now - start
-  puts "Response: #{h.code} -- #{h.message}. Delta: #{delta}"
-  mp_track("ping", target: url, delta: delta, http_result: h.code)
+
+  report = OpenStruct.new
+
+  begin
+    h = Net::HTTP.get_response(uri)
+    report.http_result = h.code
+    delta = Time.now - start
+    report.delta = delta
+  rescue Exception => e
+    report.error = e.to_s
+  ensure
+    report.target = url
+    puts "Result: "
+    ap report.marshal_dump
+    mp_track("ping", report.marshal_dump)
+  end
 end
 
 def import_rescue_time
@@ -47,7 +59,6 @@ def import_rescue_time
   puts "#{report[:existing_rtdps].count} existing RTDPs upserted spanning time range #{existing_rtdp_times.min} - #{existing_rtdp_times.max}"
   puts "#{report[:new_rtdps].count} new RTDPs created spanning time range #{new_rtdp_times.min} - #{new_rtdp_times.max}"
 end
-
 
 task :hourly => :environment do
   if Figaro.env.PING_URL
