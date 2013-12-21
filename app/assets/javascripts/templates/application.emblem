@@ -1,7 +1,7 @@
 =partial 'nav'
 
 .container
-  h1 JSON Admin
+  h1 Dashboard
   .row
     .col-xs-9.center-block
       =outlet

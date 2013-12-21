@@ -1,16 +1,14 @@
-| current path is &nbsp;
+' current path is
 = currentPath
-|
-| |
-|
-a{action "toggleDbg"}: | toggle debug
-|
-| |
-|
+'
+' |
+a{action "toggleDbg"}: ' toggle debug
+' |
 =git.sha1
-| @
+'
+' @
 =git.date
-| &nbsp;
+'
 =git.message
 
 
