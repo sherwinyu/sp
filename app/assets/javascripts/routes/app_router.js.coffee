@@ -43,7 +43,7 @@ Sysys.DaysRoute = Ember.Route.extend
   afterModel: (model, transition, params) ->
     utils.track "visit", route: 'days'
 
-Sysys.DayIndexRoute = Ember.Route.extend
+Sysys.DayRoute = Ember.Route.extend
   model: (params) ->
     dayPromise = @get('store').find 'day', params.day_id
 
