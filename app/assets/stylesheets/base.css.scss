@@ -45,13 +45,14 @@ $valFieldMinWidth: $contentFieldMinWidth;
 $valFieldMaxWidth: $contentFieldMaxWidth;
 
 $valTextFieldMinWidth: $contentFieldMinWidth;
-$valTextFieldMaxWidth: $contentFieldMaxWidth - 100px;
+$valTextFieldMaxWidth: $contentFieldMaxWidth;
 
 $idxFieldMinWidth: 5px;
 $idxFieldMaxWidth: 12px;
 
 $borderUnderline: 1px solid $grayLight;
 $borderLightUnderline: 1px dotted $grayLightest;
+$borderLightest1Underline: 1px dotted $grayLightest1;
 
 $nodeBorderLeftWidth: 4px;
 $nodeBorderLeft: $nodeBorderLeftWidth transparent solid;
@@ -116,6 +117,9 @@ $activeIndicatorHeight: $activeIndicatorFontSize;
   }
   .content-field {
     @include node_text_inline_mx(1.5);
+  }
+  .content-field.text-field {
+
   }
   .copy {
     @include node_text_inline_mx(1.5);

@@ -6,6 +6,10 @@ span.node-debug-panel.debug-auto-hide
     dd = view._id
     dt view.templateName
     dd = view.templateName
+    dt view.templateName_
+    dd = view.templateName_
+    dt view.layoutName
+    dd = view.layoutName
     dt view._templateChanged
     dd = view._templateChanged
     dt view.nodeContent.nodeType

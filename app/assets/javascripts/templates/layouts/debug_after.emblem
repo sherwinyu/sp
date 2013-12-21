@@ -1,0 +1,2 @@
+= yield
+= partial 'humon_node_debug'

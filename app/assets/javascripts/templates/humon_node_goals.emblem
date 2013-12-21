@@ -1,11 +1,9 @@
 / humon_node_goals.hbs
 
 = partial "humon_node_header"
-= partial "humon_node_debug"
-
 = each nodeChild in view.nodeContent.nodeVal.children
   / Goal view
-  Humon.NodeGoalView nodeContentBinding="nodeChild" layoutName=""
+  Humon.NodeGoalView nodeContentBinding="nodeChild" layoutName="layouts/debug_after"
 
 = else
   div

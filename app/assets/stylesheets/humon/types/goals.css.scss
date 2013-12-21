@@ -9,26 +9,24 @@
 
   // Text child
   .node.text {
-    @include node_large_mx();
     &.active:before {
       display: none;
     }
-    // padding-left: 0px;
-
     .val-text-field {
+      max-width: auto;
     }
   }
 
 
 
   .content-field {
-    // font-size: 150%;
   }
   .val-field {
-
   }
-  padding: 5px 0;
-  border-radius: 3px;
+  padding-left: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: $borderLightest1Underline;
 
   .n-goal-push-right {
     display: inline-block;

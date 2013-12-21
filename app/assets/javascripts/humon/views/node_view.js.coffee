@@ -1,7 +1,7 @@
 Humon.NodeView = Ember.View.extend
   _templateChanged: false
   _id: null
-  templateName_: null
+  templateName_: ''
   _templateStringsEnabled: true
   clearTemplateStrings: -> @set('_templateStringsEnabled', false)
   enableTemplateStrings: -> @set('_templateStringsEnabled', true)
