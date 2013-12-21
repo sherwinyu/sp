@@ -86,6 +86,8 @@ production:
       options:
         safe: true
         skip_version_check: true
+  options:
+    raise_not_found_error: false
 staging:
   sessions:
     default:
@@ -93,3 +95,6 @@ staging:
       options:
         safe: true
         skip_version_check: true
+
+  options:
+    raise_not_found_error: false
