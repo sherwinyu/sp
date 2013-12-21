@@ -40,26 +40,26 @@ Sysys.DaysRoute = Ember.Route.extend
   model: (params) ->
     daysPromise = @get('store').findAll 'day'
 
-  activate: ->
-    utils.track("days activate")
+  afterModel: (model, transition, params) ->
+    utils.track "visit", route: 'days'
 
 Sysys.DayIndexRoute = Ember.Route.extend
   model: (params) ->
     dayPromise = @get('store').find 'day', params.day_id
 
-  activate: ->
-    utils.track("day activate")
+  afterModel: (model, transition, params) ->
+    utils.track "visit", route: 'day', day: model.get('id')
 
   actions:
     error: (reason) ->
-      console.log(reason)
+      console.error "Error!", reason.toString(), reason.stack
       @transitionTo 'days'
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
    dpPromise = @get('store').find 'data_point', params.data_point_id
-  activate: ->
-    utils.track("data point activate")
+  afterModel: (model, transition, params) ->
+    utils.track "visit", route: 'data_point', data_point: model.get('id')
 
 Sysys.DataPointIndexRoute = Ember.Route.extend()
 
@@ -67,14 +67,14 @@ Sysys.DataPointsRoute = Ember.Route.extend
   model: (params)->
     delayed =>
      dpsPromise = @get('store').findAll 'data_point'
-  activate: ->
-    utils.track("data points activate")
+  afterModel: (model, transition, params) ->
+    utils.track "visit", route: 'data_points'
 
 Sysys.RescueTimeDpsRoute = Ember.Route.extend
   model: (params)->
      rtdpPromise = @get('store').findAll 'rescue_time_dp'
-  activate: ->
-    utils.track("rescue time dps activate")
+  afterModel: (model, transition, params) ->
+    utils.track "visit", route: 'rescue_time_dps'
 
 Sysys.RescueTimeDpsIndexRoute = Ember.Route.extend()
 

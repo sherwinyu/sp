@@ -16,3 +16,6 @@
   customEvents: {
     testEvent: 'testEvent'
   }
+Ember.onerror = (error) ->
+  console.error error
+
