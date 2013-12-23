@@ -2,6 +2,7 @@ module Util
   class Git
     def self.git
       git = Hashie::Mash.new
+      return unless Rails.env.development?
       begin
         git_lines = `git log -n1 `.split("\n").map &:strip
 
