@@ -1,8 +1,8 @@
 Sysys.Day = DS.Model.extend
   date: Sysys.attr('day')
-  note: Sysys.attr('string')
-  sleep: Sysys.attr()
-  summary: Sysys.attr()
+  note: Sysys.attr('string', defaultValue: -> "warg")
+  sleep: Sysys.attr('complex')
+  summary: Sysys.attr('complex')
   goals: Sysys.attr()
 
   typeMap:

@@ -70,9 +70,13 @@ window.HumonUtils =
     if context.suppressNodeParentWarning?
       delete context.suppressNodeParentWarning
     else
-      console.warn "No nodeParent found: j2n(#{JSON.stringify json}), context: #{JSON.stringify json} " unless context.nodeParent?
+      console.warn "No nodeParent found: j2n(#{JSON.stringify json}), context: #{JSON.stringify context} " unless context.nodeParent?
     if context.nodeParent?
       Em.assert "Node parent #{context.nodeParent} must be a Humon.Node", context.nodeParent instanceof Humon.Node
+
+    if context.suppressControllerWarning? and !context.controller?
+      delete context.suppressControllerWarning
+      context.controller = "CONTROLLER WARNING SUPPRESSED"
 
     node = Humon.Node.create
       nodeParent: context.nodeParent
