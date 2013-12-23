@@ -8,10 +8,12 @@
     = link-to "day" this classNames="zug": | *
   span.day-tomorrow: =link-to "day" tomorrow: | >>
 
-ul
- li Day started: {{startedAt}}
- li date: {{date}}
- li note: {{note}}
+.day-time-span
+  = timeSpan
+.day-note
+  = note
+
+
 
 =humon-editor json=sleep rootKey="Sleep" metaTemplate=typeMap.sleep downPressed="downPressed" upPressed="upPressed"
 =humon-editor json=summary rootKey="Summary" metaTemplate=typeMap.summary downPressed="downPressed" upPressed="upPressed"

@@ -1,4 +1,8 @@
 Sysys.DayController = Ember.ObjectController.extend
+  timeSpan: (->
+    "#{@get('startedAt')} - 23:00"
+  ).property('startedAt')
+
   init: ->
     @get('content')
     @_super()
