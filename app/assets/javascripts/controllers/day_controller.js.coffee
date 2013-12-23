@@ -3,10 +3,6 @@ Sysys.DayController = Ember.ObjectController.extend
     "#{@get('startedAt')} - 23:00"
   ).property('startedAt')
 
-  init: ->
-    @get('content')
-    @_super()
-
   title: (->
     mmt = moment(@get('date'))
     mmt.format('dddd, MMM D')

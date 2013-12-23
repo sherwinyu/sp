@@ -22,3 +22,7 @@ Sysys.Day = DS.Model.extend
     @get('sleep.awake_at')
   ).property('sleep')
 
+  init: ->
+    @_super()
+    @get('startedAt')
+
