@@ -147,6 +147,9 @@ Humon.HumonValue = Ember.Mixin.create
   # @param [String] the reason the assertion is failing
   # @param [boolean] assertion that must be true to avoid an error
   ensure: (explanation, assertion) ->
+    unless @_errors?
+      console.warn "Initializing default @_errors array for explanation: #{explanation}"
+    @_errors || = []
     @_errors.push explanation unless assertion
 
   name: ->

@@ -65,8 +65,7 @@ Sysys.DataPointIndexRoute = Ember.Route.extend()
 
 Sysys.DataPointsRoute = Ember.Route.extend
   model: (params)->
-    delayed =>
-     dpsPromise = @get('store').findAll 'data_point'
+   dpsPromise = @get('store').findAll 'data_point'
   afterModel: (model, transition, params) ->
     utils.track "visit", route: 'data_points'
 

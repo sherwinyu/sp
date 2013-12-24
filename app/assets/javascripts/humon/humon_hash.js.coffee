@@ -4,6 +4,12 @@ Humon.Hash = Humon.List.extend
   hasKeys: true
   asString: ->
     JSON.stringify(@toJson())
+  ##
+  # @override
+  validateSelf: ->
+    for childNode in @get('children')
+      childNode.get('nodeVal').validateSelf()
+    @_super()
 
   # @param keyOrIndex the value to access
   # attempts to do a look up against _value

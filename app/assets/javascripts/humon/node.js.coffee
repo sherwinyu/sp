@@ -86,6 +86,7 @@ Humon.Node = Ember.Object.extend
     if payload.key?
       @set('nodeKey', payload.key) if payload.key?
 
+    # Bubbles up the NODE hierarchy
     if @validate()
       @get('controller').didCommit
         node: @

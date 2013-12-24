@@ -22,6 +22,7 @@ Humon.Complex = Humon.Hash.extend(
       @ensure "Attribute `#{key}` is required", @get(key)
     for key in @get('children').mapProperty('nodeKey')
       @ensure "Attribute `#{key}` is not a valid child", @constructor.childMetatemplates[key]?
+    @_super()
 
   ##
   # Automatically finds the first optional attribute that isn't included yet, and inserts that.
