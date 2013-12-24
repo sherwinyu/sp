@@ -16,14 +16,17 @@ span.node-detail  {
 
 // When active, darken the colors
 .node.active {
-  & :not(.node) .copy,  {
+  & > .copy  {
     color: $nodeActiveDetailCopyColor;
   }
-  &.invalid :not(.node) .node-detail.node-icon i.icon-element {
+  &.invalid > .node-detail.node-icon i.icon-element {
     color: $errorActiveRed;
   }
-  &.invalid :not(.node) .node-invalid-reason {
+  &.invalid > .node-invalid-reason {
     color: $errorActiveRed;
+  }
+  & > .node-detail.required-caution {
+    color: $cautionYellow;
   }
 }
 
@@ -44,4 +47,9 @@ span.node-detail.node-icon {
   @include warning-icon;
   color: $errorRed;
   visibility: visible !important;
+}
+
+.node-detail.required-caution {
+  color: $cautionYellow;
+  margin-left: -3px;
 }
