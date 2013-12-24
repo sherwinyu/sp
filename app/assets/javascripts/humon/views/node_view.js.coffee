@@ -261,7 +261,8 @@ Humon.NodeView = Ember.View.extend
     # oldWarning = "were"
     @set('warning', text)
     $el = $("<span></span>").text(text)
-    @$().append text
+    $el.appendTo(@$())
+    # @$().append text
     utils.delayed 1000, (->
       $($el).remove()
       )
