@@ -17,12 +17,23 @@ Humon.Sleep.reopenClass
       name: "time"
     up_at:
       name: "time"
+    melatonin_at:
+      name: "time"
+    computer_off_at:
+      name: "time"
+    lights_out_at:
+      name: "time"
+
     awake_energy:
       name: "number"
     up_energy:
       name: "number"
+    computer_off_energy:
+      name: "time"
+    lights_out_energy:
+      name: "time"
 
-  requiredAttributes: ["awake_at", "up_at"]
-  optionalAttributes: ["awake_energy", "up_energy"]
+  requiredAttributes: ["awake_at", "up_at", "computer_off_at", "melatonin_at", "lights_out_at"]
+  optionalAttributes: ["awake_energy", "up_energy", "computer_off_energy", "lights_out_energy"]
 
 Humon.Sleep._generateAccessors()

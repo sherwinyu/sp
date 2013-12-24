@@ -16,5 +16,6 @@ Sysys.DayController = Ember.ObjectController.extend
 
   actions:
     save: ->
+      utils.track "day saved", day: @get('content.id')
       @get('content').save()
 
