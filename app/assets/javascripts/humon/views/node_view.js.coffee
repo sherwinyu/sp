@@ -257,3 +257,15 @@ Humon.NodeView = Ember.View.extend
     if opts.pos == "right"
       setCursor(fieldView.$().get(0), fieldView.contentLength())
     return
+  flashWarn: (text) ->
+    # oldWarning = "were"
+    @set('warning', text)
+    $el = $("<span></span>").text(text)
+    @$().append text
+    utils.delayed 1000, (->
+      $($el).remove()
+      )
+
+    Ember.run.later @, (->
+      $el.remove()
+    ), 1000

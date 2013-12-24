@@ -7,8 +7,11 @@ Humon.Hash = Humon.List.extend
   ##
   # @override
   validateSelf: ->
+    ###
     for childNode in @get('children')
-      childNode.get('nodeVal').validateSelf()
+      unless childNode.get('notInitialized')
+        childNode.get('nodeVal').validateSelf()
+    ###
     @_super()
 
   # @param keyOrIndex the value to access

@@ -43,7 +43,7 @@ span.node-detail.node-icon {
   color: $errorRed;
 }
 
-.node.invalid :not(.node-collection) .node-detail.node-icon i.icon-element {
+.node.invalid > .node-detail.node-icon i.icon-element {
   @include warning-icon;
   color: $errorRed;
   visibility: visible !important;
