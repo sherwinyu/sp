@@ -28,6 +28,9 @@ span.node-detail  {
   & > .node-detail.required-caution {
     color: $cautionYellow;
   }
+  & > .node-type-warning {
+    color: $errorActiveRed;
+  }
 }
 
 span.node-detail.node-icon {
@@ -39,10 +42,6 @@ span.node-detail.node-icon {
   top: ($nodeCopyFontSize - $nodeIconSize);
 }
 
-.copy.node-invalid-reason {
-  color: $errorRed;
-}
-
 .node.invalid > .node-detail.node-icon i.icon-element {
   @include warning-icon;
   color: $errorRed;
@@ -52,4 +51,9 @@ span.node-detail.node-icon {
 .node-detail.required-caution {
   color: $cautionYellow;
   margin-left: -3px;
+}
+
+.node-type-warning {
+  // @extend .copy;
+  color: $errorRed;
 }

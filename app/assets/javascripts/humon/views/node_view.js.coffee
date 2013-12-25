@@ -260,7 +260,7 @@ Humon.NodeView = Ember.View.extend
   flashWarn: (text) ->
     unless @get('warningElement')
       @set('warningElement', text)
-      $el = $("<span class='copy node-invalid-reason'></span>").text(text)
+      $el = $("<span class='node-type-warning'></span>").text(text)
       $el.appendTo(@$())
       @set('warningElement', $el)
       utils.delayed 1000, ( =>

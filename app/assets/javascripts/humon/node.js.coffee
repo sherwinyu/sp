@@ -76,8 +76,12 @@ Humon.Node = Ember.Object.extend
         console.error(error.toString())
         # Error will be if jsonInput doesn't fit supplied metaTemplate
         # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
-        @get('nodeView').flashWarn("Provided string doesn't fit into this node's type.")
-        # @invalidate("Provided string doesn't fit into this node's type.")
+        nv = @get('nodeView')
+        if nv?
+          nv.clearTemplateStrings()
+          nv.flashWarn("Couldn't convert type")
+        else
+          console.warn "#{@}#clearInvalidation: node view not found"
         return
       @replaceWithHumon node
 
