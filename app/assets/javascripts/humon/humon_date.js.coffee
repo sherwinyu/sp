@@ -40,7 +40,7 @@ Humon.Date.reopenClass
   # Note: _inferFromJson returns the value if `json` could EVER resolve to this type
   # Multiple types can match against the same json; priority is determined by
   # type registration order (calls to HumonType.register)
-  _inferFromJson: (json) ->
+  _inferFromJson: (json, context) ->
     ret =
       matches: false
     try
@@ -57,8 +57,10 @@ Humon.Date.reopenClass
 
   ##
   # @override
-  valueFromJson: (json) ->
-    @_inferFromJson(json).value
+  # context
+  #   - dateTimeContext
+  valueFromJson: (json, context) ->
+    @_inferFromJson(json, context).value
 
   matchesJson: (json) ->
     @_inferFromJson(json).matches
