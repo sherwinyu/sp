@@ -258,15 +258,12 @@ Humon.NodeView = Ember.View.extend
       setCursor(fieldView.$().get(0), fieldView.contentLength())
     return
   flashWarn: (text) ->
-    # oldWarning = "were"
-    @set('warning', text)
-    $el = $("<span></span>").text(text)
-    $el.appendTo(@$())
-    # @$().append text
-    utils.delayed 1000, (->
-      $($el).remove()
-      )
-
-    Ember.run.later @, (->
-      $el.remove()
-    ), 1000
+    unless @get('warningElement')
+      @set('warningElement', text)
+      $el = $("<span class='copy node-invalid-reason'></span>").text(text)
+      $el.appendTo(@$())
+      @set('warningElement', $el)
+      utils.delayed 1000, ( =>
+        $(@get('warningElement')).remove()
+        @set('warningElement', null)
+        )
