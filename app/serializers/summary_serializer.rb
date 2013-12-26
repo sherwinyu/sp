@@ -5,17 +5,17 @@ class SummarySerializer < ActiveModel::Serializer
     funny
     insight
   ]
-
-
   def attributes
-    hash =  super
+    hash = super
     puts "\n\n"
+    puts "Object:"
     ap object
+    puts "Hash:"
     ap hash
     puts "\n\n"
     hash
   end
   def filter(keys)
-    keys.reject!{|key| object[key].nil?}
+    keys.reject{|key| object[key].nil?}
   end
 end
