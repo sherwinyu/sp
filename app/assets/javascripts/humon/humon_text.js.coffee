@@ -3,13 +3,6 @@ Humon.Text = Humon.Primitive.extend
     @get('_value').length
   ).property('_value')
 
-###
-  precommitInputCoerce: (json) ->
-    if typeof json == "string"
-      @set '_value', json
-###
-
-
 Humon.Text.reopenClass
   ##
   # @override

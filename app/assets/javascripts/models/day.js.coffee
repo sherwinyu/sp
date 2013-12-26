@@ -5,15 +5,20 @@ Sysys.Day = DS.Model.extend
   summary: Sysys.attr('complex')
   goals: Sysys.attr()
 
-  typeMap:
+  typeMap: (->
     sleep:
       name: "sleep"
+      defaultDate: @get('date')
     note:
       name: "string"
+      defaultDate: @get('date')
     summary:
       name: "summary"
+      defaultDate: @get('date')
     goals:
       name: "goals"
+      defaultDate: @get('date')
+  ).property().volatile()
 
   yesterday: DS.belongsTo('day')
   tomorrow: DS.belongsTo('day')

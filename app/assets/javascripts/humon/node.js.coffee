@@ -60,30 +60,32 @@ Humon.Node = Ember.Object.extend
 
   tryToCommit: (payload) ->
     jsonInput = payload.val
-    coerceSuccessful = @get('nodeVal').precommitInputCoerce(jsonInput)
-    unless coerceSuccessful
-      try
-        json = try
-                # TODO(syu): -- probably shouldn't do this if we have the metatemplate
-                # e.g., no reason to convert "[1, 2, 3]" into [1, 2, 3] if we
-                # know the val is supposed to be a string
-                JSON.parse(jsonInput)
-              catch error
-                jsonInput
-        node = HumonUtils.json2node json, metatemplate: @get('nodeMeta'), suppressNodeParentWarning: yes, controller: @controller
-      catch error
-        Em.assert("The error should be: UnableToConvertInputToNode", true)
-        console.error(error.toString())
-        # Error will be if jsonInput doesn't fit supplied metaTemplate
-        # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
-        nv = @get('nodeView')
-        if nv?
-          nv.clearTemplateStrings()
-          nv.flashWarn("Couldn't convert type")
-        else
-          console.warn "#{@}#clearInvalidation: node view not found"
-        return
-      @replaceWithHumon node
+    {coerceSuccessful, coercedInput} = @get('nodeVal').precommitInputCoerce(jsonInput)
+
+    jsonInput = coercedInput if coerceSuccessful
+
+    try
+      json = try
+              # TODO(syu): -- probably shouldn't do this if we have the metatemplate
+              # e.g., no reason to convert "[1, 2, 3]" into [1, 2, 3] if we
+              # know the val is supposed to be a string
+              JSON.parse(jsonInput)
+            catch error
+              jsonInput
+      node = HumonUtils.json2node json, metatemplate: @get('nodeMeta'), suppressNodeParentWarning: yes, controller: @controller
+    catch error
+      Em.assert("The error should be: UnableToConvertInputToNode", true)
+      console.error(error.toString())
+      # Error will be if jsonInput doesn't fit supplied metaTemplate
+      # TODO(syu): can also be eerror if jsonInput doesn't fit ANY node
+      nv = @get('nodeView')
+      if nv?
+        nv.clearTemplateStrings()
+        nv.flashWarn("Couldn't convert type")
+      else
+        console.warn "#{@}#clearInvalidation: node view not found"
+      return
+    @replaceWithHumon node
 
     # At this point, commit was successful!
     # Set valid to true (for self)

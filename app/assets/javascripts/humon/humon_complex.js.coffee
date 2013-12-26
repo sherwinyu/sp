@@ -98,7 +98,7 @@ Humon.Complex.reopenClass(
       Em.assert "Key `#{key}` is an invalid attribute for #{@}", @childMetatemplates[key]?
       childContext =
         nodeParent: context.node
-        metatemplate: @childMetatemplates[key]
+        metatemplate: $.extend {defaultDate: context?.metatemplate.defaultDate}, @childMetatemplates[key]
         allowInvalid: context.allowInvalid
       # Whose responsibility is it to make sure `childVal` is valid for @childMetatemplates[key] ?
       childNode = HumonUtils.json2node(childVal, childContext)

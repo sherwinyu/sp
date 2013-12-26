@@ -1,4 +1,23 @@
-Humon.Time = Humon.Date.extend()
+Humon.Time = Humon.Date.extend(
+  precommitInputCoerce: (input) ->
+    {matches, value} = Humon.Time._inferFromJson(input)
+
+    #
+    # This means we should probably refactor it
+    if (dd = @get('node.nodeMeta')?.defaultDate)?
+      mmt = moment value
+      defaultMmt = moment dd
+      mmt.date(defaultMmt.date())
+      mmt.year(defaultMmt.year())
+      mmt.month(defaultMmt.month())
+
+      value = mmt.toDate()
+
+    return ret =
+      coerceSuccessful: matches
+      coercedInput: value
+)
+
 
 Humon.Time.reopenClass(
   _inferAsTimeStampFormat: (string)->
@@ -24,18 +43,6 @@ Humon.Time.reopenClass(
       if ret.value
         mmt = moment(ret.value)
 
-        # Note: if this is called from Date#matchesJson(json),
-        # no context will be avaialable, which is why we need
-        # the context?.defaultDate guard.
-        #
-        # This means we should probably refactor it
-        if context?.defaultDate?
-          defaultMmt = moment context.defaultDate
-          mmt.date(defaultMmt.date())
-          mmt.year(defaultMmt.year())
-          mmt.month(defaultMmt.month())
-
-          ret.value = mmt.toDate()
 
         ret.matches = true
       return ret
