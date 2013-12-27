@@ -1,10 +1,17 @@
 class SleepSerializer < ActiveModel::Serializer
   attributes *%w[
     awake_at
-    awake_energy
     up_at
+    melatonin_at
+    computer_off_at
+    lights_out_at
+
+    awake_energy
     up_energy
+    computer_off_energy
+    lights_out_energy
   ]
+
   def attributes
     hash = super
     puts "\n\n"
