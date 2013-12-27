@@ -15,6 +15,6 @@
 
 
 
-=humon-editor json=sleep rootKey="Sleep" metaTemplate=typeMap.sleep downPressed="downPressed" upPressed="upPressed"
-=humon-editor json=summary rootKey="Summary" metaTemplate=typeMap.summary downPressed="downPressed" upPressed="upPressed"
-=humon-editor json=goals rootKey="Daily Goals" metaTemplate=typeMap.goals downPressed="downPressed" upPressed="upPressed" rootLayout="humon_node_key_layout"
+= humon-editor json=sleep rootKey="Sleep" metaTemplate=typeMap.sleep downPressed="downPressed" upPressed="upPressed"
+= humon-editor json=summary rootKey="Summary" metaTemplate=typeMap.summary downPressed="downPressed" upPressed="upPressed"
+= humon-editor json=goals rootKey="Daily Goals" metaTemplate=typeMap.goals downPressed="downPressed" upPressed="upPressed" rootLayout="humon_node_key_layout"

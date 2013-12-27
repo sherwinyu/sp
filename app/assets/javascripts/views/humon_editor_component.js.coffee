@@ -39,6 +39,11 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     node.set('nodeKey', @get('rootKey') || "(root key)")
     @set 'content', node
 
+  _jsonUpdated: (->
+    x = @get('json')
+    console.log(x)
+  ).observes('json')
+
   init: ->
     @_super()
     @initContentFromJson()
