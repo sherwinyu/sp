@@ -2,6 +2,8 @@
 
 span.node-debug-panel.debug-auto-hide
   dl
+    dt parentView.parentView.id
+    dd = view.parentView.parentView._id
     dt view.id
     dd = view._id
     dt view.templateName
