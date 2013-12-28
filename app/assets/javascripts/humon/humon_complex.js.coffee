@@ -94,8 +94,16 @@ Humon.Complex.reopenClass(
 
   valueFromJson: (json, context) ->
     childNodes = []
-    for own key, childVal of json
+    # Safety check to make sure json isn't being passed invalid attributes
+    for key of json
       Em.assert "Key `#{key}` is an invalid attribute for #{@}", @childMetatemplates[key]?
+
+    for key of @childMetatemplates
+      # Skip unless the json specified this key.
+      # Note that we don't skip when json[key] is (explicitly) undefined
+      continue unless key of json
+
+      childVal = json[key]
       childContext =
         nodeParent: context.node
         metatemplate: $.extend {defaultDate: context?.metatemplate.defaultDate}, @childMetatemplates[key]
@@ -104,6 +112,7 @@ Humon.Complex.reopenClass(
       childNode = HumonUtils.json2node(childVal, childContext)
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
+
     return childNodes
 
   _baseJson: (json) ->

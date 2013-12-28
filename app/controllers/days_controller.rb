@@ -16,7 +16,6 @@ class DaysController < ApplicationController
 
   def show
     @day = day
-
     if @day
       render json: @day
     else
