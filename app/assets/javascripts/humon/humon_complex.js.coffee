@@ -55,6 +55,8 @@ Humon.Complex = Humon.Hash.extend(
       null
 
   deleteChild: (node) ->
+    console.warn "Node #{@} attempting to deleteChild but node #{node} is not a child" unless node in @get('children')
+    return if node in @get 'requiredChildren'
     @_value.removeObject(node)
 
   unknownProperty: null
