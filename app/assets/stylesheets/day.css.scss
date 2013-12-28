@@ -18,9 +18,14 @@
     //right: 5px;
     //top: 5px;
   }
+  &:not(:hover) .options {
+     -webkit-animation: fadeOut 0.2s linear;
+  }
   &:hover .options {
     visibility: visible;
     z-index: 100;
+    -webkit-animation: fadeIn 0.2s linear;
+
   }
 }
 

@@ -13,7 +13,9 @@
 @import "data_point";
 @import "rescue_time_dp";
 @import "day";
-// @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500,600,700);
+<% unless Rails.env.development? %>
+  @import "prod_only";
+<% end %>
 .caption {
   font-weight: bold;
 }

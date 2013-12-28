@@ -39,21 +39,3 @@ nav.navbar.navbar-default role="navigation"
       li.active: a href="#" Development
       li: a href="#" Production
       li: a href="#" Staging
-  /
-    ul.nav.navbar-nav.navbar-right
-      li
-        a href="#" Link
-      li.dropdown
-        a.dropdown-toggle data-toggle="dropdown" href="#"
-          | Dropdown
-          b.caret
-        ul.dropdown-menu
-          li
-            a href="#"
-          li
-            a href="#"
-          li
-            a href="#"
-          li.divider
-          li
-            a href="#"

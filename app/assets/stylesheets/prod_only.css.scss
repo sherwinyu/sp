@@ -1,0 +1,13 @@
+@import "base";
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500,600,700);
+
+@include keyframes(fadeOut) {
+  0% {opacity:1;visibility:visible;}
+  99% {opacity:0;}
+  100% {opacity:0;visibility: hidden;}
+}
+
+@include keyframes(fadeIn) {
+  0%{opacity:0;visibility:visible;}
+  100%{opacity:1;}
+}
