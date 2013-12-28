@@ -6,7 +6,7 @@
     = title
 div.options
   div.btn-group.btn-group-sm
-    = link-to "day" this classNames="btn btn-default"
+    a.btn.btn-default.permalink{action "linkTo" "day" this}
       i.fa.fa-link
       | Permalink
     a.btn.btn-default.save-button{action "save"}

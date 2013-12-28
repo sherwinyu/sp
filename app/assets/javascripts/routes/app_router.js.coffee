@@ -110,6 +110,9 @@ Sysys.ApplicationRoute = Ember.Route.extend
       @controllerFor('loading').set('destination', dest)
       true
 
+    linkTo: (routeName, arg) ->
+      @transitionTo routeName, arg
+
 
 Sysys.LoadingRoute = Ember.Route.extend
   beforeModel: (transition) ->
