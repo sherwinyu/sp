@@ -174,3 +174,7 @@ utils.time =
   relative: (time) ->
     mmt = @mmt(time)
     mmt.fromNow()
+
+utils.datetime =
+  isIsoDateString: (string) ->
+    return moment(string, "YYYY-MM-DDTHH:mm:ssZ", true).isValid()

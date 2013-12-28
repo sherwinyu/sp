@@ -20,6 +20,12 @@ Humon.Date.reopenClass
     _momentFormat: (string, format) ->
       mmt = moment(string, format)
 
+  _inferAsISODateString: (json, context) ->
+    if utils.datetime.isIsoDateString(json)
+      return moment(json).toDate()
+    else
+      return undefined
+
   _inferAsMomentFormat: (string) ->
     return false if string.constructor != String
     for format, transform of @_momentFormatTransforms
