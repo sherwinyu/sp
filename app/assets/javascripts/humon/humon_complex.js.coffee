@@ -18,8 +18,8 @@ Humon.Complex = Humon.Hash.extend(
   # For every required attribute, make sure a node is present
   # For every attribute, make sure its in childMetatemplates
   validateSelf: ->
-    for key in @constructor.requiredAttributes
-      @ensure "Attribute `#{key}` is required", @get(key)
+    # for key in @constructor.requiredAttributes
+    # @ensure "Attribute `#{key}` is required", @get(key)
     for key in @get('children').mapProperty('nodeKey')
       @ensure "Attribute `#{key}` is not a valid child", @constructor.childMetatemplates[key]?
     @_super()
