@@ -172,7 +172,7 @@ Humon.NodeView = Ember.View.extend
   #     e.g., keyFieldPresent, valFieldPresent, idxFieldPresent
   smartFocus: ->
     node = @get('nodeContent')
-    hasKeys = @keyField()?
+    hasKeys = @keyField()? && (@keyField().get('contenteditable') == "true")
     nodeKey = node.get('nodeKey')
     nodeVal = @valField()?.val()
     isLiteral = node.get('isLiteral')
