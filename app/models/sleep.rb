@@ -12,7 +12,6 @@ class Sleep
 
   field :awake_energy, type: Integer
   field :up_energy, type: Integer
-  # field :melatonin_energy type: Integer
   field :computer_off_energy, type: Integer
   field :lights_out_energy, type: Integer
 

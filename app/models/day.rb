@@ -40,5 +40,11 @@ class Day
     Day.find_by date: date.tomorrow
   end
 
+  def self.on arg
+    raise "Expected arg to be a string" unless arg.class == String
+    raise "Expected arg to match YYYY-MM-DD foramt" unless arg =~ /\d\d\d\d-\d\d-\d\d/
+    # date = Date.pares(arg)
+    self.find_or_initialize_by date: arg
+  end
 end
 
