@@ -1,6 +1,9 @@
 # responsible for displaying / editing a DataPoint
 Sysys.DayView = Ember.View.extend
   classNames: ['day']
+  classNameBindings: [
+    'controller.isDirty:dirty:clean'
+  ]
   templateName: 'day'
   _id: null
   modelChanged: (->

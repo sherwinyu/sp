@@ -1,15 +1,26 @@
-.day-header.text-center
-  span.options
-    =if isDirty: a{action "save"}: | Save *
+.day-header
 
   span.day-yesterday: =link-to "day" yesterday: | <<
+  span.day-tomorrow: =link-to "day" tomorrow: | >>
   h3.day-title
     = title
-    = link-to "day" this classNames="zug": | *
-  span.day-tomorrow: =link-to "day" tomorrow: | >>
+div.options
+  div.btn-group.btn-group-sm
+    = link-to "day" this classNames="btn btn-default"
+      i.fa.fa-link
+      | Permalink
+    a.btn.btn-default.save-button{action "save"}
+      i.fa.fa-save
+      | Save
+    a.btn.btn-default.delete-button{action "delete"}
+      i.fa.fa-trash-o
+      | Delete
+
+
 
 .day-time-span
   = timeSpan
+
 .day-note
   = note
 

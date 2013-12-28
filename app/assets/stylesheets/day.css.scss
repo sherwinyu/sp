@@ -8,26 +8,31 @@
   // padding: 3px;
   // margin: 3px;
 
-  span.options {
-    position: relative;
-    display: none;
-    float: right;
-    right: 5px;
-    top: 5px;
+  .options {
+    @include text-center;
+    @include block-center;
+    // display: block;
+    //position: absolute;
+    visibility: hidden;
+    //float: right;
+    //right: 5px;
+    //top: 5px;
   }
-  &:hover span.options {
-    position: relative;
-    display: block;
-    z-index: 100;
-  }
-  &.active span.options {
-    position: relative;
-    display: block;
+  &:hover .options {
+    visibility: visible;
     z-index: 100;
   }
 }
 
+.day.clean .save-button {
+  display: none;
+}
+.day.dirty .save-button {
+}
+
+
 .day-header {
+  @include text-center;
   border-bottom: $grayDarkest;
 
   // text-align: center;
@@ -42,8 +47,13 @@
 .day-yesterday {
   float: left;
 }
+
 .day-tomorrow {
   float: right;
+}
+
+.day-time-span {
+  @include text-center;
 }
 
 .days {
