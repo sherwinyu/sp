@@ -5,6 +5,13 @@
 .node.goal {
   @include node_large_mx();
   &.active {
+    .content-field {
+      color: $nodeActiveCopyColor;
+    }
+
+    .copy  {
+      color: $nodeActiveDetailCopyColor;
+    }
   }
 
   // Text child

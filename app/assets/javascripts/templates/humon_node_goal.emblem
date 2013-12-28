@@ -3,7 +3,7 @@
 span.n-goal-push-right
   Humon.NodeGoalDescriptionView nodeContentBinding="view.nodeContent._goal" layoutName=""
     = view "Sysys.ValEditableTextField" rawValueBinding="view.templateStrings.asString"
-div.node
+div.node-indent
   span.copy.little.copy-item
     = if view.nodeContent.nodeVal.done
       ' Done! Completed at
