@@ -7,14 +7,14 @@
 div.options
   div.btn-group.btn-group-sm
     a.btn.btn-default.permalink{action "linkTo" "day" this}
+      ' Permalink
       i.fa.fa-link
-      | Permalink
     a.btn.btn-default.save-button{action "save"}
+      ' Save
       i.fa.fa-save
-      | Save
     a.btn.btn-default.delete-button{action "delete"}
+      ' Delete
       i.fa.fa-trash-o
-      | Delete
 
 
 

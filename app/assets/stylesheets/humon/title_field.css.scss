@@ -4,6 +4,7 @@
   border-bottom: $borderTransparent;
   font-weight: 600;
   font-size: $hecTitleFontSize;
+  max-width: none;
 
 }
 .node.active > span.content-field.title-field {

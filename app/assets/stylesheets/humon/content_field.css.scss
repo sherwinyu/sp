@@ -9,6 +9,8 @@
 
 .node .content-field {
   @include node_text_inline_mx();
+  padding-left: 4px;
+  padding-right: 4px;
 
   border-bottom: $borderLightUnderline;
   border-left: $borderTransparent;
