@@ -72,8 +72,6 @@ module Sysys
     config.ember.variant = :development
 
     config.assets.paths << "#{Rails.root}/app/assets/fonts"
-    config.assets.precompile    = ['*.css.scss.erb']
-
 
     options = {
       # insert_mixpanel_scripts: true

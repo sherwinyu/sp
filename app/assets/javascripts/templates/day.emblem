@@ -16,8 +16,6 @@ div.options
       ' Delete
       i.fa.fa-trash-o
 
-
-
 .day-time-span
   = timeSpan
 
