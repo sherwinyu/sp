@@ -19,10 +19,13 @@ Humon.Sleep.reopenClass
       name: "time"
     melatonin_at:
       name: "time"
+      dayStartsAt: 4
     computer_off_at:
       name: "time"
+      dayStartsAt: 4
     lights_out_at:
       name: "time"
+      dayStartsAt: 4
 
     awake_energy:
       name: "number"
