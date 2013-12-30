@@ -48,11 +48,10 @@ Sysys.DashboardRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @controllerFor('day').set('model', model)
 
+  renderTemplate: ->
+    @render 'day',
+      controller: @controllerFor('day')
 
-#  renderTemplate: ->
-#    @render 'day',
-#      controller: @controllerFor('day')
-#
 Sysys.DaysRoute = Ember.Route.extend
   model: (params) ->
     daysPromise = @get('store').findAll 'day'
