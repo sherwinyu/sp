@@ -7,6 +7,10 @@
  - Featuer / spec estimation, planning, time estimation and mark up
    - can get a better picture of how accurate my estimation is
  - "velocity"
+## Data Points
+ - taking my medicine
+ - mood
+
 
 ## Multi day / week goals
 
