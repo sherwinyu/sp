@@ -30,6 +30,7 @@ Sysys.Router.map ->
   @resource "rescue_time_dps", path: "/rtdps", ->
 
   @resource "days", path: "/days", ->
+    @route 'not_found', path: "/not_found/:day_id"
 
   @resource "day", path: "/days/:day_id", ->
 
@@ -59,6 +60,7 @@ Sysys.DaysRoute = Ember.Route.extend
   afterModel: (model, transition, params) ->
     utils.track "visit", route: 'days'
 
+
 Sysys.DayRoute = Ember.Route.extend
   model: (params) ->
     dayPromise = @get('store').find 'day', params.day_id
@@ -67,9 +69,18 @@ Sysys.DayRoute = Ember.Route.extend
     utils.track "visit", route: 'day', day: model.get('id')
 
   actions:
-    error: (reason) ->
+    error: (reason, transition) ->
       console.error "Error!", reason.toString(), reason.stack
-      @transitionTo 'days'
+      if reason.statusText == 'Not Found'
+        @transitionTo 'days.not_found', transition.params.day_id
+
+Sysys.DaysNotFoundRoute = Ember.Route.extend
+  model: ->
+    throw new Error "zug"
+
+  actions:
+    initializeDay: ->
+      debugger
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->

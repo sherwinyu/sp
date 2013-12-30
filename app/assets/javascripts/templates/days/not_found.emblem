@@ -1,0 +1,17 @@
+h3 Sorry, day not found. Care to create it?
+
+/
+  .panel.panel-default
+    .panel-heading
+      h3 Today
+      h3: small {{controller.length}} days
+    .panel-body
+      = outlet day
+/
+  .panel-body
+    button.btn.new-sp-day{action 'newSpDay'}
+      | New Data Point
+    .list-group
+      =each day in controller
+        .list-group-item
+          =render 'day' day
