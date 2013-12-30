@@ -49,7 +49,10 @@ Sysys.DashboardRoute = Ember.Route.extend
     @controllerFor('day').set('model', model)
 
   renderTemplate: ->
+    @_super()
     @render 'day',
+      into: 'dashboard'
+      outlet: 'day'
       controller: @controllerFor('day')
 
 Sysys.DaysRoute = Ember.Route.extend
