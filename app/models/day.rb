@@ -8,6 +8,8 @@ class Day
   embeds_one :summary, class_name: "Summary", store_as: 'summary'
   embeds_many :goals
 
+  scope :recent, where(:date.gte => 7.days.ago).desc(:date)
+
   def_delegators :sleep, *%w[
     awake_at
     up_at

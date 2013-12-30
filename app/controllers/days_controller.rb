@@ -2,14 +2,17 @@ class DaysController < ApplicationController
   respond_to :html, :json
 
   def index
-    @latest_day = Day.latest
+    @recent_days = Day.recent
 
+
+=begin
     if @latest_day.new_record?
       @latest_day.save
       @latest_day.note = "Just created"
     end
+=end
 
-    respond_with [@latest_day]
+    respond_with @recent_days
     # @days  = Day.all
     # respond_with @days
   end
