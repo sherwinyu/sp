@@ -35,6 +35,10 @@ class DaysController < ApplicationController
     end
   end
 
+  def latest
+    render json: Day.latest
+  end
+
   private
   def day
     Day.find_by(date: params[:id])

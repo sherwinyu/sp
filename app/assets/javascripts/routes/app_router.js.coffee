@@ -40,10 +40,7 @@ Sysys.SexyArticlesRoute = Ember.Route.extend
 
 Sysys.DashboardRoute = Ember.Route.extend
   model: ->
-    daysPromise = @get('store').findAll 'day'
-    daysPromise.then (days) ->
-      days.get('firstObject')
-
+    dayPromise = @get('store').find 'day', 'latest'
 
   setupController: (controller, model) ->
     @controllerFor('day').set('model', model)
