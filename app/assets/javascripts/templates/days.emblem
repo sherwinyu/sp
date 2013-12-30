@@ -9,3 +9,4 @@
       =each day in controller
         .list-group-item
           =render 'day' day
+= outlet

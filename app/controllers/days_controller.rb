@@ -37,7 +37,7 @@ class DaysController < ApplicationController
 
   def latest
     @day = Day.latest
-    d.save
+    @day.save
     render json: @day
   end
 
