@@ -33,8 +33,12 @@ Sysys.Router.map ->
 
   @resource "day", path: "/days/:day_id", ->
 
+  @route "dashboard"
+
 Sysys.SexyArticlesRoute = Ember.Route.extend
   model: slowPromise
+
+Sysys.DashboardRoute = Ember.Route.extend()
 
 Sysys.DaysRoute = Ember.Route.extend
   model: (params) ->
@@ -76,6 +80,10 @@ Sysys.RescueTimeDpsRoute = Ember.Route.extend
     utils.track "visit", route: 'rescue_time_dps'
 
 Sysys.RescueTimeDpsIndexRoute = Ember.Route.extend()
+
+Sysys.IndexRoute = Ember.Route.extend
+  redirect: ->
+    @transitionTo "dashboard"
 
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:

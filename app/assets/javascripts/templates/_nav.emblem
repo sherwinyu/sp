@@ -26,8 +26,7 @@ nav.navbar.navbar-default role="navigation"
   /! Collect the nav links, forms, and other content for toggling
   #bs-example-navbar-collapse-1.collapse.navbar-collapse
     ul.nav.navbar-nav
-      li.active
-        a href="#" Dashboard
+      li: =link-to 'Dashboard' 'dashboard'
       li: a href="#" Track
       li: a href="#" Recent
       li: =link-to 'Days' 'days.index'
