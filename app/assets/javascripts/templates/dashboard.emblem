@@ -2,6 +2,8 @@
   .panel-heading
     h3 Welcome commander
     h3: small {{controller.length}} days
+  .panel-body
+    = outlet day
 /
   .panel-body
     button.btn.new-sp-day{action 'newSpDay'}

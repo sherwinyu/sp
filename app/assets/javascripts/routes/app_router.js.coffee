@@ -38,8 +38,21 @@ Sysys.Router.map ->
 Sysys.SexyArticlesRoute = Ember.Route.extend
   model: slowPromise
 
-Sysys.DashboardRoute = Ember.Route.extend()
+Sysys.DashboardRoute = Ember.Route.extend
+  model: ->
+    daysPromise = @get('store').findAll 'day'
+    daysPromise.then (days) ->
+      days.get('firstObject')
 
+
+  setupController: (controller, model) ->
+    @controllerFor('day').set('model', model)
+
+
+#  renderTemplate: ->
+#    @render 'day',
+#      controller: @controllerFor('day')
+#
 Sysys.DaysRoute = Ember.Route.extend
   model: (params) ->
     daysPromise = @get('store').findAll 'day'
@@ -84,6 +97,7 @@ Sysys.RescueTimeDpsIndexRoute = Ember.Route.extend()
 Sysys.IndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo "dashboard"
+
 
 Sysys.ApplicationRoute = Ember.Route.extend
   actions:
