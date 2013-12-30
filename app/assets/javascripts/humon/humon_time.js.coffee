@@ -2,16 +2,16 @@ Humon.Time = Humon.Date.extend(
   precommitInputCoerce: (input) ->
     {matches, value} = Humon.Time._inferFromJson(input)
 
-    #
-    # This means we should probably refactor it
-    if (dd = @get('node.nodeMeta')?.defaultDate)?
-      mmt = moment value
-      defaultMmt = moment dd
-      mmt.date(defaultMmt.date())
-      mmt.year(defaultMmt.year())
-      mmt.month(defaultMmt.month())
+    meta = @get('node.nodeMeta')
 
-      value = mmt.toDate()
+    # The moment to return
+    mmt = moment value
+
+    defaultDate = meta?.defaultDate || new Date()
+    dayStartsAt = meta?.dayStartsAt || 0
+
+    Humon.Time.setBiasedDateOnTime(mmt, defaultDate, dayStartsAt)
+    value = mmt.toDate()
 
     return ret =
       coerceSuccessful: matches
@@ -47,4 +47,16 @@ Humon.Time.reopenClass(
 
         ret.matches = true
       return ret
+
+  setBiasedDateOnTime: (mmt, defaultDate, dayStartsAt) ->
+    defaultMmt = moment defaultDate
+
+    mmt.year(defaultMmt.year())
+    mmt.month(defaultMmt.month())
+    mmt.date(defaultMmt.date())
+
+    if (mmt.hour() < dayStartsAt)
+      mmt.add 1, 'days'
+
+    return mmt
 )
