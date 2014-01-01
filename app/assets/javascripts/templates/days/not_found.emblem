@@ -1,4 +1,7 @@
 h3 Sorry, day not found. Care to create it?
+=date
+h3 = date
+a{action initializeDay this} create me
 
 /
   .panel.panel-default

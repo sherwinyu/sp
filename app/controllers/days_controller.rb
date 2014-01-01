@@ -26,6 +26,12 @@ class DaysController < ApplicationController
     end
   end
 
+  def create
+    @day = Day.on params[:day][:date]
+    @day.save
+    render json: @day
+  end
+
   def update
     @day = day
     if @day.update_attributes params[:day]

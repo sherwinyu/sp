@@ -73,6 +73,7 @@ Sysys.DayRoute = Ember.Route.extend
       console.error "Error!", reason.toString(), reason.stack
       if reason.statusText == 'Not Found'
         day = @get('store').createRecord 'day' #id: transition.params.day_id
+        day.set 'date', transition.params.day_id
         @transitionTo 'days.not_found', day
 
 Sysys.DaysNotFoundRoute = Ember.Route.extend
@@ -84,8 +85,9 @@ Sysys.DaysNotFoundRoute = Ember.Route.extend
         into: 'application'
 
   actions:
-    initializeDay: ->
-      debugger
+    initializeDay: (day)->
+      day.save()
+      @transitionTo 'day', day
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->

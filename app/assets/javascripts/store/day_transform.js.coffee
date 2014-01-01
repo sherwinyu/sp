@@ -11,4 +11,3 @@ Sysys.DayTransform = DS.Transform.extend
 
   serialize: (date) ->
     moment(date).format('YYYY-MM-DD')
-
