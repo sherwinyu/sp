@@ -18,6 +18,7 @@ delayed = (ftn) ->
     setTimeout (->
       resolve ftn.call(null)
     ), window.delay_param
+
 Sysys.Router.map ->
   @resource "sexy_articles"
 
@@ -77,6 +78,9 @@ Sysys.DayRoute = Ember.Route.extend
         @transitionTo 'days.not_found', day
 
 Sysys.DaysNotFoundRoute = Ember.Route.extend
+  serialize: (model, params)->
+    return day_id: model.get('date')
+
   model: ->
     console.warn "DaysNotFoundRoute#model called; args:", arguments
 
@@ -86,8 +90,8 @@ Sysys.DaysNotFoundRoute = Ember.Route.extend
 
   actions:
     initializeDay: (day)->
-      day.save()
-      @transitionTo 'day', day
+      day.save().then (day) =>
+        @transitionTo 'day', day
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
