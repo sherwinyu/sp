@@ -19,7 +19,7 @@ window.routes = -> _app_.Router.router.recognizer.names
 window.msm = (model)-> model.get('stateManager')
 window.mcp = (model)-> msm(model).get('currentPath')
 window.mcs = (model)-> msm(model).get('currentState')
-window.ts = -> moment().format("HH:mm:ss")
+window.ts = -> utils.ts()
 
 window.getCursor = (node) ->
   # first convert node to a HTMLElement, always
@@ -53,6 +53,8 @@ window.setCursor = (node, pos) ->
   false
 
 window.utils =
+  ts: ->
+    moment().format("HH:mm:ss")
   # expects: URL, data
   ajax: (opts) ->
     opts.data = JSON.stringify opts.data
@@ -118,7 +120,7 @@ window.utils =
       clearInterval @tickIntervalId
       @ticking = false
     else
-      @tickIntervalId = setInterval((-> console.log(moment().format "HH:mm:s.SS")), milliseconds)
+      @tickIntervalId = setInterval((-> console.log utils.ts() ), milliseconds)
       @ticking = true
 
 window.utils.date =

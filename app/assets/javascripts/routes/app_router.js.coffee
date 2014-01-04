@@ -72,6 +72,15 @@ Sysys.DayRoute = Ember.Route.extend
   actions:
     error: (reason, transition) ->
       console.error "Error!", reason.toString(), reason.stack
+
+      errorMsg = "Error on #{transition.params.day_id}"
+      errorMsg += reason.statusText + " "
+      errorMsg += "(#{reason.status}): "
+      errorMsg += "#{reason.responseText}"
+      errorMsg += "[#{reason.toString()}]"
+
+      @send 'notify', errorMsg
+
       if reason.statusText == 'Not Found'
         day = @get('store').createRecord 'day' #id: transition.params.day_id
         day.set 'date', transition.params.day_id
@@ -157,6 +166,12 @@ Sysys.ApplicationRoute = Ember.Route.extend
     linkTo: (routeName, arg) ->
       @transitionTo routeName, arg
 
+    notify: (message) ->
+      style = "color: orange; font-size: x-large"
+
+      message = "#{utils.ts()} #{message}"
+
+      console.info("%c#{message}", "color: blue; font-size: x-large");
 
 Sysys.LoadingRoute = Ember.Route.extend
   beforeModel: (transition) ->
