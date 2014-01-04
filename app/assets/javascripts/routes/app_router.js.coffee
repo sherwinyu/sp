@@ -81,8 +81,9 @@ Sysys.DaysNotFoundRoute = Ember.Route.extend
   serialize: (model, params)->
     return day_id: model.get('date')
 
-  model: ->
-    console.warn "DaysNotFoundRoute#model called; args:", arguments
+  model: (params)->
+    day = @get('store').createRecord 'day' #id: transition.params.day_id
+    day.set 'date', params.day_id
 
   renderTemplate: ->
     @render 'days/not_found',

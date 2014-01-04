@@ -27,7 +27,8 @@ class DaysController < ApplicationController
   end
 
   def create
-    @day = Day.on params[:day][:date]
+    binding.pry
+    @day = Day.new date: params[:day][:date]
     @day.save
     render json: @day
   end
