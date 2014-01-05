@@ -27,10 +27,12 @@ class DaysController < ApplicationController
   end
 
   def create
-    binding.pry
     @day = Day.new date: params[:day][:date]
-    @day.save
-    render json: @day
+    if @day.save
+      render json: @day
+    else
+      render json: @day.errors, status: :unprocessable_entity
+    end
   end
 
   def update

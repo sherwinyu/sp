@@ -1,4 +1,13 @@
 window.delay_param = 250
+
+responseToString = (response) ->
+  errorMsg = ""
+  errorMsg += response.statusText + " "
+  errorMsg += "(#{response.status}): "
+  errorMsg += "#{response.responseText}"
+  errorMsg += "[#{response.toString()}]"
+  return errorMsg
+
 slowPromise = ->
 
   new Ember.RSVP.Promise((resolve) ->
@@ -74,10 +83,7 @@ Sysys.DayRoute = Ember.Route.extend
       console.error "Error!", reason.toString(), reason.stack
 
       errorMsg = "Error on #{transition.params.day_id}"
-      errorMsg += reason.statusText + " "
-      errorMsg += "(#{reason.status}): "
-      errorMsg += "#{reason.responseText}"
-      errorMsg += "[#{reason.toString()}]"
+      errorMsg += responseToString reason
 
       @send 'notify', errorMsg
 
@@ -99,9 +105,10 @@ Sysys.DaysNotFoundRoute = Ember.Route.extend
         into: 'application'
 
   actions:
-    initializeDay: (day)->
-      day.save().then (day) =>
-        @transitionTo 'day', day
+    initializeDay: (day) ->
+      success = (day) => @transitionTo 'day', day
+      failure = (response) => @send 'notify', responseToString response
+      day.save().then success, failure
 
 Sysys.DataPointRoute = Ember.Route.extend
   model: (params)->
@@ -166,12 +173,19 @@ Sysys.ApplicationRoute = Ember.Route.extend
     linkTo: (routeName, arg) ->
       @transitionTo routeName, arg
 
+    error: (reason, transition) ->
+      errorMsg = "ApplicationRoute#error. Params: #{JSON.stringify transition.params}"
+      errorMsg += reason.statusText + " "
+      errorMsg += "(#{reason.status}): "
+      errorMsg += "#{reason.responseText}"
+      errorMsg += "[#{reason.toString()}]"
+
+      @send 'notify', errorMsg
+
     notify: (message) ->
       style = "color: orange; font-size: x-large"
-
       message = "#{utils.ts()} #{message}"
-
-      console.info("%c#{message}", "color: blue; font-size: x-large");
+      console.info "%c#{message}", style
 
 Sysys.LoadingRoute = Ember.Route.extend
   beforeModel: (transition) ->
