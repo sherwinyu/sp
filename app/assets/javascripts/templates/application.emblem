@@ -1,17 +1,6 @@
 =partial 'nav'
 
 .container
-  h1 Dashboard
   .row
     .col-xs-9.center-block
       =outlet
-
-/
-  ul.nav.nav-pills
-    li.active
-      a Dashboard
-    li
-      a Track
-    li
-      a Recent
-

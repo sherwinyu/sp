@@ -1,14 +1,16 @@
+h1 Dashboard
 .panel.panel-default
   .panel-heading
     h3 Today
-    h3: small {{controller.length}} days
   .panel-body
     = outlet day
-/
+  .panel-heading
+    h3 Productivity pulse
   .panel-body
-    button.btn.new-sp-day{action 'newSpDay'}
-      | New Data Point
-    .list-group
-      =each day in controller
-        .list-group-item
-          =render 'day' day
+    dl
+      dt Last hour
+      dd 50
+      dt Last 3 hours
+      dd 60
+      dt Today
+      dd 45

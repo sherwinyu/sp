@@ -62,9 +62,5 @@
 }
 
 .days {
-  btn.new-day {
-    @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
-    @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $border-radius-base);
-  }
 }
 

@@ -1,0 +1,9 @@
+.panel.panel-default
+  .panel-heading
+    h3 Recent Data Points
+  .panel-body
+    button.btn.new-data-point{action newDataPoint} New Data Point
+    .list-group
+      =each data_point in content
+        .list-group-item
+          =render 'data_point' data_point
