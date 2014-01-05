@@ -1,0 +1,2 @@
+=each rtdp in content
+  =render 'rescue_time_dp' rtdp

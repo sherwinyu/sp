@@ -1,0 +1,23 @@
+span.rtdp-time
+  = timeString
+  span.rtdp-time-hint
+    | &ndash;
+    =timeRangeString
+  span.rtdp-time-hint.relative
+    | (
+    = relativeTimeString
+    | )
+
+span.rtdp-productivity{bind-attr style=view.fillStyle}
+  ' Producitvity index:
+  = productivityIndex
+
+span.rtdp-total-duration
+  ' Total time index:
+  = totalDurationString
+
+br
+= render 'rtdpActivities' displayActivities
+
+
+
