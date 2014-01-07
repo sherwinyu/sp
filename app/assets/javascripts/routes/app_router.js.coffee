@@ -37,7 +37,7 @@ Sysys.Router.map ->
   @resource "data_points", path: "/data_points", ->
     @route  "new"
 
-  @resource "rescue_time_dps", path: "/rtdps", ->
+  @resource "rescue_time_dps", path: "/rtdps",  ->
 
   @resource "days", path: "/days", ->
     @route 'not_found', path: "/not_found/:day_id"
@@ -125,9 +125,10 @@ Sysys.DataPointsRoute = Ember.Route.extend
     utils.track "visit", route: 'data_points'
 
 Sysys.RescueTimeDpsRoute = Ember.Route.extend
-  model: (params)->
+  model: (params, transition)->
      rtdpPromise = @get('store').findAll 'rescue_time_dp'
-  afterModel: (model, transition, params) ->
+
+  afterModel: (resolvedModel, transition) ->
     utils.track "visit", route: 'rescue_time_dps'
 
 Sysys.RescueTimeDpsIndexRoute = Ember.Route.extend()

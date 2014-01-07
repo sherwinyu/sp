@@ -1,6 +1,11 @@
 #= require store/sysys_attr.js.coffee
 #= require store/day_transform.js.coffee
 #= require store/complex_transform.js.coffee
+
+Sysys.Store = DS.Store.extend
+  adapter: '_ams'
+
+###
 Sysys.ApplicationSerializer = DS.RESTSerializer.extend
 
   # to convert camelcased js attributes to
@@ -40,3 +45,9 @@ Sysys.ApplicationSerializer = DS.RESTSerializer.extend
     key = attrs && attrs[key] || Ember.String.decamelize(key)
 
     json[key] = value
+
+Sysys.ApplicationAdapter =  DS.RESTAdapter.extend
+  rootForType: (type) ->
+    decamelized = Em.string.decamelize type
+    Em.String.pluralize(decamelized)
+###

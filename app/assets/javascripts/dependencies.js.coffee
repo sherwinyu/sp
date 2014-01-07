@@ -1,3 +1,4 @@
+#= require_self
 #= require vendor/jquery-1.9.1
 #= require handlebars
 #= require ember
@@ -7,3 +8,6 @@
 #
 #= require vendor/jquery.hotkeys
 #= require vendor/humon
+@ENV =
+  FEATURES:
+    'query-params-new': true
