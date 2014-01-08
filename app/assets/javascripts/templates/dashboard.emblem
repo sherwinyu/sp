@@ -14,3 +14,7 @@ h1 Dashboard
       dd 60
       dt Today
       dd 45
+  .panel-heading
+    h3 Productivity pulse
+  .panel-body
+    = outlet rescue_time_dps

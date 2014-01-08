@@ -56,12 +56,24 @@ Sysys.DashboardRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @controllerFor('day').set('model', model)
 
+    rtdpsController = @controllerFor('rescue_time_dps')
+    rtdpsController.set 'start', moment().subtract(12, 'hours')
+
+    rtdps = @store.filter 'rescue_time_dp', {nargle: true}, (rtdp) ->
+      rtdpsController.rtdpWithinTimeRange(rtdp)
+
+    rtdpsController.set('model', rtdps)
+
   renderTemplate: ->
     @_super()
     @render 'day',
       into: 'dashboard'
       outlet: 'day'
       controller: @controllerFor('day')
+    @render 'rescue_time_dps',
+      into: 'dashboard'
+      outlet: 'rescue_time_dps'
+      controller: @controllerFor('rescue_time_dps')
 
 Sysys.DaysRoute = Ember.Route.extend
   model: (params) ->
@@ -139,6 +151,12 @@ Sysys.IndexRoute = Ember.Route.extend
 
 
 Sysys.ApplicationRoute = Ember.Route.extend
+  _emberErrorToString: (error) ->
+    errorMsg = error.message
+    errorMsg += "Stack: "
+    errorMsg += error.stack
+    errorMsg
+
   actions:
     jsonChanged: (json)->
 
@@ -174,17 +192,21 @@ Sysys.ApplicationRoute = Ember.Route.extend
     linkTo: (routeName, arg) ->
       @transitionTo routeName, arg
 
+
     error: (reason, transition) ->
       errorMsg = "ApplicationRoute#error. Params: #{JSON.stringify transition.params}"
-      errorMsg += reason.statusText + " "
-      errorMsg += "(#{reason.status}): "
-      errorMsg += "#{reason.responseText}"
-      errorMsg += "[#{reason.toString()}]"
+      if reason instanceof Ember.Error
+        errorMsg += @_emberErrorToString reason
+      else
+        errorMsg += reason.statusText + " "
+        errorMsg += "(#{reason.status}): "
+        errorMsg += "#{reason.responseText}"
+        errorMsg += "[#{reason.toString()}]"
 
       @send 'notify', errorMsg
 
     notify: (message) ->
-      style = "color: orange; font-size: x-large"
+      style = "color: orange; font-size: 16px"
       message = "#{utils.ts()} #{message}"
       console.info "%c#{message}", style
 
