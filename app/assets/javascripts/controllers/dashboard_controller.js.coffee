@@ -15,3 +15,8 @@ Sysys.DashboardController = Ember.ObjectController.extend
       length: utils.sToDurationString Sysys.RescueTimeDp.totalLength dayRtdps
       score: Sysys.RescueTimeDp.productivityIndex(dayRtdps)
   ).property 'controllers.rescue_time_dps.content.@each', 'controllers.day.startedAt'
+
+  actions:
+    refreshProductivity: ->
+      @get('store').filter 'rescue_time_dp', {refresh: true}, (rtdp) ->
+        true

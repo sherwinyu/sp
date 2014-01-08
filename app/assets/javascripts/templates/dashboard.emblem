@@ -16,7 +16,10 @@ h1 Dashboard
       dd = productivityPulse.length
       dt Today: score
       dd = productivityPulse.score
+
   .panel-heading
     h3 Productivity pulse
+    span{action refreshProductivity} refresh
+
   .panel-body
     = outlet rescue_time_dps
