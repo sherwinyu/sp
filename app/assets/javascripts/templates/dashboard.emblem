@@ -19,7 +19,9 @@ h1 Dashboard
 
   .panel-heading
     h3 Productivity pulse
-    span{action refreshProductivity} refresh
+    a.btn.btn-default.refresh-button{action refreshProductivity}
+      ' refresh
+      i.fa.fa-refresh
 
   .panel-body
     = outlet rescue_time_dps
