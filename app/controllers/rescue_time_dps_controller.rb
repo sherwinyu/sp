@@ -6,11 +6,10 @@ class RescueTimeDpsController < ApplicationController
   def index
     @rtdps = RescueTimeDp.cached_recent
     if params[:refresh]
-      rtdpN = RescueTimeDp.new activities: {im_new: {duration: 3000, productivity: 2, category: "NEW"}}, id: "zug"
-      rtdpN.time = Time.now
-      @rtdps << rtdpN
+      rtdps, report = RescueTimeImporter.import
+      ap report
+      @rtdps.concat rtdps
     end
-
 
     respond_to do |format|
       format.html # index.html.erb
