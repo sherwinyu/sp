@@ -57,7 +57,7 @@ Sysys.DashboardRoute = Ember.Route.extend
     @controllerFor('day').set('model', model)
 
     rtdpsController = @controllerFor('rescue_time_dps')
-    rtdpsController.set 'start', moment().subtract(12, 'hours')
+    rtdpsController.set 'start', moment().subtract(24, 'hours')
 
     rtdps = @store.filter 'rescue_time_dp', {nargle: true}, (rtdp) ->
       rtdpsController.rtdpWithinTimeRange(rtdp)

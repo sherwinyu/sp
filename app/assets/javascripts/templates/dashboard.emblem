@@ -5,22 +5,23 @@ h1 Dashboard
   .panel-body
     = outlet day
   .panel-heading
-    h3 Productivity pulse
+    h3 Realtime summary
   .panel-body
     dl
-      dt Last hour
-      dd 50
-      dt Last 3 hours
-      dd 60
+      dt Last 3 hours: hours logged
+        = last3hourTimeRange_s
+      dd = productivityPulse.last3hours.length
+      dt Last 3 hours: score
+      dd = productivityPulse.last3hours.score
       dt Today: hours logged
-      dd = productivityPulse.length
+      dd = productivityPulse.daily.length
       dt Today: score
-      dd = productivityPulse.score
+      dd = productivityPulse.daily.score
 
   .panel-heading
-    h3 Productivity pulse
+    h3 Recent Activity DPs
     a.btn.btn-default.refresh-button{action refreshProductivity}
-      ' refresh
+      ' Refresh
       i.fa.fa-refresh
 
   .panel-body
