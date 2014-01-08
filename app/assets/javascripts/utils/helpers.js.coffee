@@ -110,7 +110,7 @@ window.utils =
 
   sToDurationString: (seconds) ->
     fmtStr = "m[m] s[s]"
-    if seconds >= 1000 * 60 * 60
+    if seconds >= 60 * 60
       fmtStr = "h[h] m[m] s[s]"
     ret = moment(1000 * seconds).utc().format(fmtStr)
     ret

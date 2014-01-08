@@ -18,6 +18,3 @@ span.rtdp-total-duration
 
 br
 = render 'rtdpActivities' displayActivities
-
-
-

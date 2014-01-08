@@ -12,6 +12,6 @@ Sysys.DashboardController = Ember.ObjectController.extend
       dayStart.isBefore rtdp.get('time')
     )
     return ret =
-      length: Sysys.RescueTimeDp.totalLength dayRtdps
+      length: utils.sToDurationString Sysys.RescueTimeDp.totalLength dayRtdps
       score: Sysys.RescueTimeDp.productivityIndex(dayRtdps)
   ).property 'controllers.rescue_time_dps.content.@each', 'controllers.day.startedAt'

@@ -3,12 +3,17 @@ Sysys.RescueTimeDp = DS.Model.extend
 
   activities: Sysys.attr()
 
-  totalLength: 60
-  productivityIndex: (->
+  totalLength: (->
     totalLength = 0
-    weightedSum = 0
     for name, act of @get('activities')
       totalLength += act.duration
+    return totalLength
+  ).property('activites.@each')
+
+  productivityIndex: (->
+    totalLength = @get('totalLength')
+    weightedSum = 0
+    for name, act of @get('activities')
       weightedSum += act.productivity * act.duration
     (weightedSum/totalLength).toFixed 3
   ).property('activities')
