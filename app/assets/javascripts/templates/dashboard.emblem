@@ -12,8 +12,10 @@ h1 Dashboard
       dd 50
       dt Last 3 hours
       dd 60
-      dt Today
-      dd 45
+      dt Today: hours logged
+      dd = productivityPulse.length
+      dt Today: score
+      dd = productivityPulse.score
   .panel-heading
     h3 Productivity pulse
   .panel-body

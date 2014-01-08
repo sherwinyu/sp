@@ -1,6 +1,6 @@
 Sysys.DayController = Ember.ObjectController.extend
   timeSpan: (->
-    "#{@get('startedAt')} - #{@get('endedAt')}"
+    "#{@get('startedAt_s')} - #{@get('endedAt_s')}"
   ).property('startedAt', 'endedAt')
 
   title: (->
@@ -8,7 +8,7 @@ Sysys.DayController = Ember.ObjectController.extend
     mmt.format('dddd, MMM D')
   ).property 'date'
 
-  startedAt: (->
+  startedAt_s: (->
     date = @get('content.startedAt')
     if date?.constructor == Date
       moment(@get('content.startedAt')).format "HH:mm"
@@ -16,7 +16,7 @@ Sysys.DayController = Ember.ObjectController.extend
       ""
   ).property('content.startedAt')
 
-  endedAt: (->
+  endedAt_s: (->
     date = @get('content.endedAt')
     if date?.constructor == Date
       moment(@get('content.endedAt')).format "HH:mm"
