@@ -1,5 +1,5 @@
 h1 Dashboard
-.panel.panel-default
+.panel.panel-default.dashboard
   .panel-heading
     h3 Today
   .panel-body

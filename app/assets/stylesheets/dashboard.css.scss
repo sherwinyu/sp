@@ -1,0 +1,12 @@
+//$spDayWidth: 700px;
+
+.dashboard {
+  .panel-heading {
+    .btn {
+      float: right;
+      position: relative;
+      top: -40px; // Hacky
+    }
+
+  }
+}
