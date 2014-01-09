@@ -9,12 +9,16 @@ h1 Dashboard
   .panel-body
     dl
       dt
-        ' Last 3 hours: hours logged
+        | Last 3 hours: hours logged (
         = s_last3hourTimeRange
+        | )
       dd = productivityPulse.last3hours.length
       dt Last 3 hours: score
       dd = productivityPulse.last3hours.score
-      dt Today: hours logged
+      dt
+        | Today: hours logged (
+        = s_sinceDayStart
+        | )
       dd = productivityPulse.daily.length
       dt Today: score
       dd = productivityPulse.daily.score

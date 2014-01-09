@@ -7,6 +7,11 @@ Sysys.DashboardController = Ember.ObjectController.extend
     moment().subtract 3, 'hours'
   ).property().volatile()
 
+  # moment
+  dayStart: (->
+    moment(@get('controllers.day.startedAt') || moment("9:30", "H:mm"))
+  ).property('controllers.day.startedAt')
+
   productivityPulse: (->
     start = @get('controllers.rescue_time_dps.start')
 
@@ -17,7 +22,7 @@ Sysys.DashboardController = Ember.ObjectController.extend
     )
 
     # dayStart
-    dayStart = moment( @get('controllers.day.startedAt') || moment("9:30", "H:mm"))
+    dayStart = @get('dayStart')
     dayRtdps = @get('controllers.rescue_time_dps').filter( (rtdp) ->
       dayStart.isBefore rtdp.get('time')
     )
@@ -28,7 +33,7 @@ Sysys.DashboardController = Ember.ObjectController.extend
       daily:
         length: utils.sToDurationString Sysys.RescueTimeDp.totalLength dayRtdps
         score: Sysys.RescueTimeDp.productivityIndex dayRtdps
-  ).property 'controllers.rescue_time_dps.content.@each', 'controllers.day.startedAt'
+  ).property 'controllers.rescue_time_dps.content.@each', 'dayStart'
 
   # TODO(syu) -- make this a handlebars helper
   s_last3hourTimeRange: (->
@@ -36,6 +41,12 @@ Sysys.DashboardController = Ember.ObjectController.extend
     to = moment().format "HH:mm"
     "#{from} - #{to}"
   ).property('last3hoursStart')
+
+  s_sinceDayStart: (->
+    from = @get('dayStart')?.format "HH:mm"
+    to = moment().format "HH:mm"
+    "#{from} - #{to}"
+  ).property('dayStart')
 
 
   actions:
