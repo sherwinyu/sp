@@ -59,6 +59,7 @@ Humon.Complex = Humon.Hash.extend(
     return if node in @get 'requiredChildren'
     @_value.removeObject(node)
 
+
   unknownProperty: null
   _getChildByKey: (key) ->
     @_value.findProperty('nodeKey', key)
