@@ -8,8 +8,9 @@ h1 Dashboard
     h3 Realtime summary
   .panel-body
     dl
-      dt Last 3 hours: hours logged
-        = last3hourTimeRange_s
+      dt
+        ' Last 3 hours: hours logged
+        = s_last3hourTimeRange
       dd = productivityPulse.last3hours.length
       dt Last 3 hours: score
       dd = productivityPulse.last3hours.score
