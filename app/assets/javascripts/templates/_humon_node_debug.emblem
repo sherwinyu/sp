@@ -19,19 +19,21 @@ span.node-debug-panel.debug-auto-hide
     dt view.nodeContent.nodeMeta.name
     dd = view.nodeContent.nodeMeta.name
   dl
-    dt &amp;
-    dd nodeContent.notInitialized
-    dt @
+    dt $!"
+    dd view.templateStringsEnabled
+    dt $Δ
     dd view.templateChanged
-    dt #
+    dt @i
+    dd nodeContent.notInitialized
+    dt @L
     dd type-locked
-    dt !
+    dt @!
     dd invalid
-span.copy.debug-inline.debug-node-type.debug-auto-hide: = view.nodeContent.nodeType
+/ span.copy.debug-inline.debug-node-type.debug-auto-hide: = view.nodeContent.nodeType
 span.copy.debug-inline.debug-auto-hide
   span.debug-glyphs
     i{bind-attr class="view._templateStringsEnabled::template-strings-disabled"}
     i{bind-attr class="view._templateChanged:template-changed"}
     i{bind-attr class="view.nodeContent.notInitialized:not-initialized"}
     i{bind-attr class="view.nodeContent.nodeMeta:type-locked"}
-    i{bind-attr class="view.nodeContent.invalid:invalid"}
+    i{bind-attr  class="view.nodeContent.invalid:invalid"}
