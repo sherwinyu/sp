@@ -1,8 +1,8 @@
 def mp_track name, opts
-  @mp ||= ApplicationController.new.mixpanel
+  mp = Util.mixpanel
   puts "Mix panel tracking: #{name} =>"  #{opts}"
   ap opts
-  @mp.track(name, opts)
+  mp.track(name, opts)
 end
 
 def ping_url url

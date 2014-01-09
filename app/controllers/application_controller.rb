@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def mixpanel
     options = {}
-    @mixpanel ||= Mixpanel::Tracker.new(Figaro.env.MIXPANEL_TOKEN)
+    Util.mixpanel
   end
 
   before_filter :authorize
