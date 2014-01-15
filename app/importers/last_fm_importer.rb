@@ -73,22 +73,17 @@ class LastFmImporter
   def self.instantiate_dp_from_payload track
     return unless track.try(:date)
     puts track.date.uts
-    dp = LastFmDp.find_or_initialize_by(
+    last_fm_params = {
       at: Time.at(track.date.uts.to_i),
       artist: track.artist["#text"],
       name: track.name,
       album: track.album["#text"]
-    )
+      }
+    dp = LastFmDp.find_or_initialize_by last_fm_params
     if dp.persisted?
       puts "Last Fm Clash!"
-      ap(
-        at: Time.at(track.date.uts.to_i),
-        artist: track.artist["#text"],
-        name: track.name,
-        album: track.album["#text"]
-      )
-      ap track
-      raise "LastFmClash"
+      ap last_fm_params
+      Util::Log.warn "Last Fm Import clash", last_fm_params
     end
     raise "Error" unless dp.save
   end

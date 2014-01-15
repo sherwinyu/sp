@@ -2,8 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def mixpanel
-    options = {}
-    Util.mixpanel
+    Util::Log.mixpanel
   end
 
   before_filter :authorize

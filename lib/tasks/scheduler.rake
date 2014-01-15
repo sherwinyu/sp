@@ -1,5 +1,5 @@
 def mp_track name, opts
-  mp = Util.mixpanel
+  mp = Util::Log.mixpanel
   puts "Mix panel tracking: #{name} =>"  #{opts}"
   ap opts
   mp.track(name, opts)

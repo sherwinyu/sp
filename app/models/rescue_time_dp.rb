@@ -57,7 +57,8 @@ class RescueTimeDp
   end
 
   def resync_time!
-    self.update_attribute :time, Util.convert_to_absolute_time(rt_date)
+    raise "not implemented"
+    # self.update_attribute :time, <convert rt_date to absolute time>
   end
 
 end
