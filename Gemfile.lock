@@ -8,9 +8,9 @@ GIT
 
 GIT
   remote: git://github.com/rails-api/active_model_serializers.git
-  revision: 2faa571a9cfac95f992449fe0417a1d7774b84fc
+  revision: 9436d73b9220b64a5940cfdaa176cab861b22441
   specs:
-    active_model_serializers (0.9.0.pre)
+    active_model_serializers (0.9.0.alpha1)
       activemodel (>= 3.2)
 
 GEM
@@ -237,7 +237,7 @@ GEM
       mongoid
       mongoid_auto_increment
     moped (1.5.1)
-    multi_json (1.8.2)
+    multi_json (1.8.4)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     origin (1.1.0)
