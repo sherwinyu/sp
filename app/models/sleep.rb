@@ -17,4 +17,10 @@ class Sleep
 
   # field :alarms
   # field :naps
+
+  def as_json
+    Util::Log.warn "Sleep#as_json called (via default serializer)"
+    ap Kernel.caller.first 10
+    super
+  end
 end

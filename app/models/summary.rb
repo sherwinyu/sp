@@ -9,7 +9,9 @@ class Summary
   field :insight, type: String
 
   def as_json
-    SummarySerializer.new(self).as_json
+    Util::Log.warn "Summary#as_json called (via default serializer)"
+    ap Kernel.caller.first 10
+    super
   end
 
 end
