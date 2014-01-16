@@ -2,11 +2,22 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def mixpanel
-    options = {}
-    @mixpanel ||= Mixpanel::Tracker.new(Figaro.env.MIXPANEL_TOKEN) #,  env:  request.try(:env))
+    Util::Log.mixpanel
   end
 
-  def mixpanel_waga
-    mixpanel.track "waga", count: 5
+  before_filter :authorize
+  def authorize
+    # Rack::MiniProfiler.authorize_request
   end
+
+  before_filter :inject_vars
+  def inject_vars
+    @server_side_vars = Hashie::Mash.new({
+      env: {
+        MIXPANEL_TOKEN: Figaro.env.MIXPANEL_TOKEN
+      },
+      git: Util::Git.git
+    })
+  end
+
 end

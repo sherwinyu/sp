@@ -1,0 +1,66 @@
+//$spDayWidth: 700px;
+
+.day {
+  position: relative;
+  // width: $spDayWidth;
+  // border: 1px solid $grayLightest1;
+  // border-radius: 3px;
+  // padding: 3px;
+  // margin: 3px;
+
+  .options {
+    @include text-center;
+    @include block-center;
+    // display: block;
+    //position: absolute;
+    visibility: hidden;
+    //float: right;
+    //right: 5px;
+    //top: 5px;
+  }
+  &:not(:hover) .options {
+     -webkit-animation: fadeOut 0.2s linear;
+  }
+  &:hover .options {
+    visibility: visible;
+    z-index: 100;
+    -webkit-animation: fadeIn 0.2s linear;
+
+  }
+}
+
+.day.clean .save-button {
+  display: none;
+}
+.day.dirty .save-button {
+}
+
+
+.day-header {
+  @include text-center;
+  border-bottom: $grayDarkest;
+
+  // text-align: center;
+  // width: 450px;
+}
+
+.day-title {
+  color: black;
+  font-weight: 600;
+}
+
+.day-yesterday {
+  float: left;
+}
+
+.day-tomorrow {
+  float: right;
+}
+
+.day-time-span {
+  @include text-center;
+}
+
+.days {
+}
+

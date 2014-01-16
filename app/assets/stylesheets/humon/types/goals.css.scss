@@ -1,0 +1,41 @@
+.node.goals {
+  @include node_large_mx();
+}
+
+.node.goal {
+  @include node_large_mx();
+  &.active {
+    .content-field {
+      color: $nodeActiveCopyColor;
+    }
+
+    .copy  {
+      color: $nodeActiveDetailCopyColor;
+    }
+  }
+
+  // Text child
+  .node.text {
+    &.active:before {
+      display: none;
+    }
+    .val-text-field {
+      max-width: auto;
+    }
+  }
+
+
+
+  .content-field {
+  }
+  .val-field {
+  }
+  padding-left: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: $borderLightest1Underline;
+
+  .n-goal-push-right {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,8 @@
+.humon-editor {
+  padding: $nodeEditorPadding;
+  border: $nodeEditorBorder;
+}
+.humon-editor.humon-editor-inline {
+  padding: 3px 3px;
+  border: none;
+}

@@ -3,48 +3,32 @@ Sysys.RescueTimeDp = DS.Model.extend
 
   activities: Sysys.attr()
 
-  displayActivities: (->
-   ({
-    name: k,
-    duration: v.duration
-    category: v.category
-    productivity: v.productivity
-   }
-   ) for k, v of @get('activities')
-  ).property 'activities'
-
-  productivityIndex: (->
+  totalLength: (->
     totalLength = 0
-    weightedSum = 0
     for name, act of @get('activities')
       totalLength += act.duration
+    return totalLength
+  ).property('activites.@each')
+
+  productivityIndex: (->
+    totalLength = @get('totalLength')
+    weightedSum = 0
+    for name, act of @get('activities')
       weightedSum += act.productivity * act.duration
     (weightedSum/totalLength).toFixed 3
   ).property('activities')
 
-  totalDurationString: (->
+Sysys.RescueTimeDp.reopenClass
+  totalLength: (rtdps) ->
     totalLength = 0
-    for name, act of @get('activities')
-      totalLength += act.duration
-    totalLength
-    utils.sToDurationString totalLength
-  ).property('activities')
+    for rtdp in rtdps
+      totalLength += rtdp.get('totalLength')
+    return totalLength
 
-  timeString: (->
-    mmt = moment(@get('time'))
-    mmt.format('dddd, MMM D @ ha')
-  ).property 'time'
-
-  timeRangeString: (->
-    mmt = moment(@get('time'))
-    mmt2 = mmt.add('hours', 1)
-    mmt2.format('ha')
-  ).property 'time'
-
-  relativeTimeString: (->
-    mmt = moment(@get('time'))
-    if Math.abs(mmt.diff(moment(), 'hours')) > 22
-      mmt.calendar()
-    else
-      mmt.fromNow()
-  ).property 'time'
+  productivityIndex: (rtdps) ->
+    totalLength = 0
+    weightedSum = 0
+    for rtdp in rtdps
+      totalLength += rtdp.get('totalLength')
+      weightedSum += rtdp.get('productivityIndex') * rtdp.get('totalLength')
+    return (weightedSum/totalLength).toFixed 3

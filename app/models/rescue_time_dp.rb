@@ -13,11 +13,15 @@ class RescueTimeDp
     Time.parse(rt_date + "UTC") rescue nil
   end
 
+  after_save :flush_cache
+  def flush_cache
+    Rails.cache.delete([self.class.name, "recent"])
+  end
+
   def self.cached_recent
     Rails.cache.fetch [name, "recent"] do
       recent.to_a
     end
-
   end
 
   def hour
@@ -53,7 +57,8 @@ class RescueTimeDp
   end
 
   def resync_time!
-    self.update_attribute :time, Util.convert_to_absolute_time(rt_date)
+    raise "not implemented"
+    # self.update_attribute :time, <convert rt_date to absolute time>
   end
 
 end

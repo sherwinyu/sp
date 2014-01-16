@@ -1,15 +1,15 @@
 SYSON
 ====
-a key is a string: 
+a key is a string:
   la di da di da: what the wumple
   ladidadida: what the thrumple
-  lumpdidooda: [ ] 
+  lumpdidooda: [ ]
 
 
 STRING INFERENCE
 LIST INFERENCE
 HASH INFERENCE
-  
+
 
 VALUE: string || list || hash || number || bool
 Transform to a canonical format for inferred strings z
@@ -40,7 +40,7 @@ Act
   is_concrete?
   was_auto_generated?
   details
-  auto (raw source of the 
+  auto (raw source of the
   children
   tags
 
@@ -52,11 +52,11 @@ OPEN QUESTIONS
   2.  After importing auto data, do we ... modify it? store it?
       thought: should probably have separate collections for auto improted data
 
-  3.  What does a contains_relationship even mean 
+  3.  What does a contains_relationship even mean
 
-  4. Should we explore mongoid trees?
+  4.  Should we explore mongoid trees?
 
-  5. What is the UX for arbitrary data entering gonna look like?
+  5.  What is the UX for arbitrary data entering gonna look like?
 
 
 Deatils!
@@ -100,13 +100,13 @@ Features
 
 should i have general bucket activities? concrete activities?
 concrete and abstract acts?
-    
+
 Plan is made:: Over next 1.5 hrs, will do three things.
   Start recording an act#
-  
+
 
 Record a plan and act together?
-  
+
 Dashboard should show: active plans
 
 
@@ -143,7 +143,7 @@ On click:
     display text area
     preload input text
     enter edit
-  
+
 Cancel
   remove text area
   discard changes

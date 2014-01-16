@@ -1,3 +1,5 @@
+@import "lib";
+
 $copygray: #666666;
 $grayDark: darken($copygray, 15%);
 $grayDarker: darken($copygray, 30%);
@@ -21,6 +23,13 @@ $nodeWhiteIndent: 15px;
 $nodeLeftBorder: 4px;
 $fieldWhiteIndent: 15px;
 
+$errorActiveRed: rgba(210, 40, 40, 1);
+$errorRed: rgba(180, 80, 80, 1);
+
+$cautionYellow: rgba(245, 150, 20, 1);
+$cautionActiveYellow: rgba(195, 195, 20, 1);
+
+
 @mixin imp {
   border: 1px solid red;
 }
@@ -33,7 +42,7 @@ $lineheight: 20px;
 $nodeCopyFontSize: 16px;
 
 $contentFieldMinWidth: 10px;
-$contentFieldMaxWidth: 640px;
+$contentFieldMaxWidth: 500px;
 
 $keyFieldMinWidth: $contentFieldMinWidth;
 $keyFieldMaxWidth: 120px;
@@ -41,11 +50,15 @@ $keyFieldMaxWidth: 120px;
 $valFieldMinWidth: $contentFieldMinWidth;
 $valFieldMaxWidth: $contentFieldMaxWidth;
 
+$valTextFieldMinWidth: $contentFieldMinWidth;
+$valTextFieldMaxWidth: $contentFieldMaxWidth;
+
 $idxFieldMinWidth: 5px;
 $idxFieldMaxWidth: 12px;
 
 $borderUnderline: 1px solid $grayLight;
 $borderLightUnderline: 1px dotted $grayLightest;
+$borderLightest1Underline: 1px dotted $grayLightest1;
 
 $nodeBorderLeftWidth: 4px;
 $nodeBorderLeft: $nodeBorderLeftWidth transparent solid;
@@ -61,6 +74,8 @@ $childNodeGlyphColor: $grayLightest1;
 
 $nodeCopyColor: $copygray;
 $nodeActiveCopyColor: $grayDarkest1;
+$nodeDetailCopyColor: $grayLighter;
+$nodeActiveDetailCopyColor: $copygray;
 
 $nodeIdxCopyColor: lighten($nodeCopyColor, 15%);
 $nodeIdxActiveCopyColor: lighten($nodeActiveCopyColor, 15%);
@@ -68,4 +83,65 @@ $nodeIdxActiveCopyColor: lighten($nodeActiveCopyColor, 15%);
 $nodeEditorBorder: 1px solid $grayLighter;
 $nodeEditorPadding: 15px 3px;
 
-$rootNodeKeyColor: darken($nodeCopyColor, 15%)
+$hecTitleKeyColor: darken($nodeCopyColor, 15%);
+$hecTitleFontSize: $nodeCopyFontSize * 1.3;
+
+@mixin text-center  {
+  text-align: center;
+}
+@mixin block-center  {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin warning-icon {
+  &:before {
+  content: "\f071" !important;
+  }
+}
+
+@mixin node_font_mx($factor: 1) {
+  font-size: $nodeCopyFontSize * $factor;
+}
+@mixin node_text_structure_mx($factor: 1) {
+  @include node_font_mx($factor);
+  height: $lineheight * $factor;
+  line-height: $lineheight * $factor;
+  vertical-align: top;
+}
+
+@mixin node_text_inline_mx($factor: 1) {
+  @include node_text_structure_mx($factor);
+  display: inline-block;
+}
+
+$activeIndicatorFontSize: 22.0 * $nodeCopyFontSize / 16.0;
+$activeIndicatorHeight: $activeIndicatorFontSize;
+
+@mixin node_active_indicator_mx($factor: 1, $top: 0px) {
+  @include node_text_inline_mx($factor);
+  font-size: $activeIndicatorFontSize * $factor;
+  height: $activeIndicatorHeight * $factor;
+}
+
+
+@mixin node_large_mx {
+  &.active:before {
+    @include node_active_indicator_mx(1.5);
+  }
+  .content-field {
+    @include node_text_inline_mx(1.5);
+  }
+  .content-field.text-field {
+
+  }
+  .copy {
+    @include node_text_inline_mx(1.5);
+  }
+  .debug-inline {
+    @include node_text_inline_mx(1.0);
+  }
+}
+
+// ==
+// To be included under whatever element is right above the node_header

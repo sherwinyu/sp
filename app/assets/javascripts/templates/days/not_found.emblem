@@ -1,0 +1,20 @@
+h3
+  = date
+  | wasn't found.
+h4: a{action initializeDay this} Create itcreate me
+
+/
+  .panel.panel-default
+    .panel-heading
+      h3 Today
+      h3: small {{controller.length}} days
+    .panel-body
+      = outlet day
+/
+  .panel-body
+    button.btn.new-sp-day{action 'newSpDay'}
+      | New Data Point
+    .list-group
+      =each day in controller
+        .list-group-item
+          =render 'day' day

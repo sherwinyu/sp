@@ -1,0 +1,39 @@
+/ {{!  _humon_node_debug.hbs }}
+
+span.node-debug-panel.debug-auto-hide
+  dl
+    dt parentView.parentView.id
+    dd = view.parentView.parentView._id
+    dt view.id
+    dd = view._id
+    dt view.templateName
+    dd = view.templateName
+    dt view.templateName_
+    dd = view.templateName_
+    dt view.layoutName
+    dd = view.layoutName
+    dt view._templateChanged
+    dd = view._templateChanged
+    dt view.nodeContent.nodeType
+    dd = view.nodeContent.nodeType
+    dt view.nodeContent.nodeMeta.name
+    dd = view.nodeContent.nodeMeta.name
+  dl
+    dt $!"
+    dd view.templateStringsEnabled
+    dt $Δ
+    dd view.templateChanged
+    dt @i
+    dd nodeContent.notInitialized
+    dt @L
+    dd type-locked
+    dt @!
+    dd invalid
+/ span.copy.debug-inline.debug-node-type.debug-auto-hide: = view.nodeContent.nodeType
+span.copy.debug-inline.debug-auto-hide
+  span.debug-glyphs
+    i{bind-attr class="view._templateStringsEnabled::template-strings-disabled"}
+    i{bind-attr class="view._templateChanged:template-changed"}
+    i{bind-attr class="view.nodeContent.notInitialized:not-initialized"}
+    i{bind-attr class="view.nodeContent.nodeMeta:type-locked"}
+    i{bind-attr  class="view.nodeContent.invalid:invalid"}

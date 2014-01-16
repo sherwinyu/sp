@@ -1,0 +1,11 @@
+@import "base";
+
+.node {
+  span.val-field {
+    min-width: $valFieldMinWidth;
+    max-width: $valFieldMaxWidth;
+  }
+  span.val-field:focus {
+  }
+}
+

@@ -1,0 +1,10 @@
+.panel.panel-default
+  .panel-heading
+    h3 Recent Sherwin Days
+    h3: small {{controller.length}} days
+  .panel-body
+    .list-group
+      =each day in controller
+        .list-group-item
+          =render 'day' day
+= outlet

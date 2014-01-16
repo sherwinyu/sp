@@ -5,6 +5,11 @@ class RescueTimeDpsController < ApplicationController
   # GET /rescue_time_dps.json
   def index
     @rtdps = RescueTimeDp.cached_recent
+    if params[:refresh]
+      rtdps, report = RescueTimeImporter.import
+      ap report
+      @rtdps.concat rtdps
+    end
 
     respond_to do |format|
       format.html # index.html.erb

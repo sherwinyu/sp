@@ -1,10 +1,20 @@
-Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
+Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
+  rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'humon-editor-inline']
   hooks: null
   json: {}
-  focusOut: (e)->
+  ###
+  # Available public API component actions
+    * jsonChanged
+    * focusLost
+    * focusGained
+    * upPressed
+    * downPressed
+  ###
+
+  handleFocusOut: (e)->
     @sendAction 'focusLost'
-  focusIn: (e)->
+  handleFocusIn: (e)->
     @sendAction 'focusGained'
 
   ###
@@ -23,22 +33,16 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   ###
   initClassNames: (->)
 
-  ###
-  _inited: false
-  initialJsonDidChange: (->
-    @initContentFromJson()
-    @get('childViews')[0].rerender()
-    @_inited = true
-  ).observes "initialJson"
-  ###
-
   initContentFromJson: ->
     initialJson = @get('json')
-    if typeof initialJson is 'undefined'
-      initialJson = 'undefined'
-    node = Sysys.j2hn initialJson
+    node = Humon.json2node initialJson, metatemplate: @get('metaTemplate'), allowInvalid: true, controller: @, suppressNodeParentWarning: yes
     node.set('nodeKey', @get('rootKey') || "(root key)")
     @set 'content', node
+
+  _jsonUpdated: (->
+    x = @get('json')
+    console.log(x)
+  ).observes('json')
 
   init: ->
     @_super()
@@ -47,7 +51,7 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
   # TODO(syu): is this safe? if this object never gets cloned?
   hooks:
     didCommit: (params) ->
-      console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
+      # console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
       @sendAction 'jsonChanged', params.rootJson
       @set 'json', params.rootJson
 
@@ -56,7 +60,6 @@ Sysys.HumonEditorComponent = Ember.Component.extend Sysys.HumonControllerMixin,
 
     didDown: (e)->
       @sendAction 'downPressed', e
-
 
 Sysys.HumonEditorView = Ember.View.extend
   templateName: 'humon-editor'
@@ -82,12 +85,3 @@ Sysys.HumonEditorView = Ember.View.extend
 
     @set 'controller', detailController
     @_super()
-
-window.appendHev = (selector, initialJson) ->
-  @hev = Sysys.HumonEditorView.create
-    hooks:
-      didUp: ->
-        console.log 'didUp'
-    json: initialJson
-  @hev.appendTo(selector)
-  @hev

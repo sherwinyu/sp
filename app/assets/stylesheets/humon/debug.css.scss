@@ -1,0 +1,70 @@
+$nodeDebugInlineCopyColor: $nodeDetailCopyColor;
+.node.active > span.debug-auto-hide {
+  visibility: visible;
+}
+.debug-auto-hide {
+  visibility: hidden;
+}
+
+.node:hover, .node.active {
+  & > .debug-inline{
+    color: $nodeCopyColor;
+    visibility: visible;
+  }
+}
+
+.node-debug-panel {
+  position: relative;
+  display: inline-block;
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+  font-size: 14px;
+  dd {
+    display: inline-block;
+    height: 14px;
+  }
+}
+
+.debug-inline {
+  color: $nodeDebugInlineCopyColor;
+  float: right;
+}
+
+.debug-node-type {
+  position: absolute;
+  right: 10px;
+}
+
+.debug-glyphs {
+  float: right;
+  i {
+    font-style: normal;
+    position: relative;
+    width: 15px;
+    display: inline-block;
+    &:after {
+      position: absolute;
+      font-size: 70%;
+    }
+  }
+}
+
+.debug-glyphs i.template-strings-disabled:after {
+  content: "$!\" ";
+}
+.debug-glyphs i.template-changed:after {
+  content: "$Δ ";
+}
+
+.debug-glyphs i.not-initialized:after {
+  content: "@i ";
+}
+.debug-glyphs i.type-locked:after {
+  content: "@L ";
+}
+.debug-glyphs i.invalid:after {
+  content: "@! ";
+  color: $errorRed;
+}
+

@@ -1,0 +1,13 @@
+/ humon_node_goal.hbs
+
+span.n-goal-push-right
+  Humon.NodeGoalDescriptionView nodeContentBinding="view.nodeContent._goal" layoutName=""
+    = view "Sysys.ValEditableTextField" rawValueBinding="view.templateStrings.asString"
+div.node-indent
+  span.copy.little.copy-item
+    = if view.nodeContent.nodeVal.done
+      ' Done! Completed at
+      = view.nodeContent.nodeVal.completedTimestamp
+    = else
+      | Incomplete
+    = partial "humon_node_header"

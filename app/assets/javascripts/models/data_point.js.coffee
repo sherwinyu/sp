@@ -18,3 +18,8 @@ Sysys.DataPoint = DS.Model.extend
           notes: ""
     )
   )
+  typeMap:
+    startedAt:
+      name: "time"
+    endedAt:
+      name: "time"

@@ -1,0 +1,59 @@
+@import "base";
+
+// by default, hide details
+.node:hover, .node.active {
+  > span.node-detail {
+    visibility: visible;
+  }
+}
+span.node-detail  {
+  visibility: hidden;
+}
+
+.node-detail {
+  position: relative;
+}
+
+// When active, darken the colors
+.node.active {
+  & > .copy  {
+    color: $nodeActiveDetailCopyColor;
+  }
+  &.invalid > .node-detail.node-icon i.icon-element {
+    color: $errorActiveRed;
+  }
+  &.invalid > .node-invalid-reason {
+    color: $errorActiveRed;
+  }
+  & > .node-detail.required-caution {
+    color: $cautionYellow;
+  }
+  & > .node-type-warning {
+    color: $errorActiveRed;
+  }
+}
+
+span.node-detail.node-icon {
+  $nodeIconSize: 14px;
+  margin: 0 3px;
+  margin-left: 5px;
+  font-size: $nodeIconSize;
+  position: relative;
+  top: ($nodeCopyFontSize - $nodeIconSize);
+}
+
+.node.invalid > .node-detail.node-icon i.icon-element {
+  @include warning-icon;
+  color: $errorRed;
+  visibility: visible !important;
+}
+
+.node-detail.required-caution {
+  color: $cautionYellow;
+  margin-left: -3px;
+}
+
+.node-type-warning {
+  // @extend .copy;
+  color: $errorRed;
+}

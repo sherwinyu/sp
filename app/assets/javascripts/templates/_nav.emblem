@@ -1,0 +1,40 @@
+' current path is
+= currentPath
+'
+' |
+a{action "toggleDbg"}: ' toggle debug
+' |
+=git.sha1
+'
+' @
+=git.date
+'
+=git.message
+
+
+nav.navbar.navbar-default role="navigation"
+
+  /! Brand and toggle get grouped for better mobile display
+  .navbar-header
+    button.navbar-toggle data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand#logo href="#" SHERWIN POINTS
+
+  /! Collect the nav links, forms, and other content for toggling
+  #bs-example-navbar-collapse-1.collapse.navbar-collapse
+    ul.nav.navbar-nav
+      li: =link-to 'Dashboard' 'dashboard'
+      li: a href="#" Track
+      li: a href="#" Recent
+      li: =link-to 'Days' 'days.index'
+      / li: =link-to 'Articles' 'sexy_articles'
+      li: =link-to 'RTDP Flow' 'rescue_time_dps.index'
+      li: =link-to 'DataPoint Flow' 'data_points.index'
+
+    ul.nav.navbar-right.navbar-nav
+      li.active: a href="#" Development
+      li: a href="#" Production
+      li: a href="#" Staging

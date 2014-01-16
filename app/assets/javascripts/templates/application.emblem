@@ -1,0 +1,6 @@
+=partial 'nav'
+
+.container
+  .row
+    .col-xs-9.center-block
+      =outlet

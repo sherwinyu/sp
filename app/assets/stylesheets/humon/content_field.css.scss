@@ -1,0 +1,33 @@
+@import "base";
+@import "title_field";
+@import "val_field";
+@import "key_field";
+
+/*
+ * Content Fields
+ */
+
+.node .content-field {
+  @include node_text_inline_mx();
+  padding-left: 4px;
+  padding-right: 4px;
+
+  border-bottom: $borderLightUnderline;
+  border-left: $borderTransparent;
+  color: $nodeCopyColor;
+  transition: all 300ms ease;
+}
+
+.node.active > .content-field {
+  border-bottom: $borderUnderline;
+  color: $nodeActiveCopyColor;
+}
+
+.content-field:empty:before {
+  content: "\2026"; // ellipsis
+  content: "\0020"; // interpunct
+}
+
+.node.active > .content-field:empty:before {
+  display: none;
+}
