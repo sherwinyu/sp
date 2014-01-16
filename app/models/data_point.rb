@@ -2,10 +2,12 @@ class DataPoint
   include Mongoid::Document
   include Mongoid::Timestamps
   field :submitted_at, type: Time
-  field :started_at, type: Time
+  field :at, type: Time
   field :ended_at, type: Time
   field :details
-  scope :recent, desc(:started_at).limit(10)
+
+  scope :recent, desc(:at).limit(10)
+  default_scope desc(:at)
 
   after_save :flush_cache
 
@@ -26,5 +28,9 @@ class DataPoint
     else
       super(args)
     end
+  end
+
+  def self.latest
+    desc(:at).first
   end
 end

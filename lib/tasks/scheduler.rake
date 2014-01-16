@@ -27,6 +27,11 @@ def ping_url url
   end
 end
 
+def import_last_fm
+  puts "Importing from LastFm"
+  lfmdps, report = LastFmImporter.import
+
+end
 def import_rescue_time
   puts "Importing from rescue time..."
   rtdps, report = RescueTimeImporter.import
@@ -64,12 +69,13 @@ task :hourly => :environment do
   if Figaro.env.PING_URL
     delta = ping_url Figaro.env.PING_URL
   end
+  import_rescue_time
+  import_last_fm
   ping_url "http://farmivore.com"
-  ping_url "http://staging.farmivore.com"
+  ping_url "http://www.farmivore.com"
   ping_url "http://demo.weaveenergy.com"
   ping_url "http://newliving.weaveenergy.com"
   ping_url "http://staging-newliving.weaveenergy.com"
-  import_rescue_time
 end
 
 desc "This task is called by the Heroku scheduler add-on"

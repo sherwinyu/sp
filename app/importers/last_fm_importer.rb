@@ -3,32 +3,67 @@ class LastFmImporter
     "http://ws.audioscrobbler.com/2.0/"
   end
 
+  def self.time_start
+    LastFmDp.latest.at || Time.now - 1.hour
+  end
+
+  def self.time_end
+    time_start + 1.1.hours
+  end
+
   def self.api_params
     data = Hash.new
     data[:method] = "user.getrecenttracks"
     data[:user] = "xhuwin"
     data[:api_key] = "ea1576ad4d340a32e801c4f94c43c5f8"
     data[:format] = "json"
-    data
+
+    #  Both `from` and `to` need to be specified to work
+    data[:from] = time_start.to_i
+    data[:to] = time_end.to_i
+    data[:limit] = 200
+    return data
   end
   def self.ourl
     "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=rj&api_key=86158cfaa9584d43627c28c54aa68410&format=json"
   end
+
+=begin
+      "@attr" => {
+                "user" => "xhuwin",
+                "page" => "1",
+             "perPage" => "200",
+          "totalPages" => "1",
+               "total" => "1"
+      }
+=end
   def self.raw_query
     RestClient.log = Logger.new(STDOUT)
     p = api_params
     json = Hashie::Mash.new JSON.parse(RestClient.get url, params: p)
+    return json
   end
+
+
   def self.import
-    last_fm_json = self.raw_query
-    tracks = last_fm_json.recenttracks.track
-    tracks.each{ |track| self.instantiate_dp_from_payload track }
-
     report = {}
+    report[:start] = Time.at(api_params[:from])
+    report[:end] = Time.at(api_params[:to])
+    report[:existing_lfmdps] = 0
+    report[:new_lfmdps] = 0
 
-    # rtrs = rescue_time_json.rows.map{ |row| instantiate_rescue_time_raw_from_row row, report }
-    # rtdps = instantiate_rtdps_from_rtrs rtrs, report
-    # return rtdps, report
+    last_fm_json = self.raw_query
+
+    # We're currently assuming that there will never be more than one page of the results
+    if last_fm_json["recenttracks"]["@attr"][:page].to_i > 1
+      report[:more_than_one_page] = true
+      Util::Log.warn "Last FM Import: more than one page returned", report
+    end
+
+    tracks = last_fm_json.recenttracks.track
+    tracks.each{ |track| self.instantiate_dp_from_payload(track, report) }
+    Util::Log.mixpanel.track "last_fm_import", report
+    return report
   end
 
   ##
@@ -70,7 +105,9 @@ class LastFmImporter
   #       "#text" => "13 Jan 2014, 16:52",
   #         "uts" => "1389631960"
   #   }
-  def self.instantiate_dp_from_payload track
+  def self.instantiate_dp_from_payload(track, report=nil)
+
+    # Skip songs that haven't been saved yet
     return unless track.try(:date)
     puts track.date.uts
     last_fm_params = {
@@ -82,8 +119,17 @@ class LastFmImporter
     dp = LastFmDp.find_or_initialize_by last_fm_params
     if dp.persisted?
       puts "Last Fm Clash!"
+      if report
+        report[:existing_lfmdps] += 1
+      end
       ap last_fm_params
       Util::Log.warn "Last Fm Import clash", last_fm_params
+    else
+      if report
+        report[:new_lfmdps] += 1
+      end
+      puts "Importered:"
+      ap last_fm_params
     end
     raise "Error" unless dp.save
   end
