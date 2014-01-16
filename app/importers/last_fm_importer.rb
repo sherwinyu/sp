@@ -4,7 +4,7 @@ class LastFmImporter
   end
 
   def self.time_start
-    LastFmDp.latest.at || Time.now - 1.hour
+    LastFmDp.latest.try(:at) || Time.now - 1.hour
   end
 
   def self.time_end
