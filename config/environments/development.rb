@@ -36,5 +36,6 @@ Sysys::Application.configure do
   config.assets.debug = true
 
   ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'lib')
+  ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'app', 'importers')
   ActiveSupport::Dependencies.explicitly_unloadable_constants << 'Util'
 end

@@ -19,6 +19,7 @@ def reload_env!
     #
     paths.each do |filename|
       if Rails.env.development? # if we're in console (development), load the file. otherwise, just require it
+        puts "Reloading #{filename}"
         load filename
       else
         require filename
