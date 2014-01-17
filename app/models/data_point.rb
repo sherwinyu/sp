@@ -16,7 +16,7 @@ class DataPoint
   end
 
   def self.cached_recent
-    Rails.cache.fetch [name, "recent"] do
+    Rails.cache.fetch ["DataPoint", "recent"] do
       recent.to_a
     end
   end
