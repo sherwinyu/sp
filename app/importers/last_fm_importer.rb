@@ -8,7 +8,7 @@ class LastFmImporter
   end
 
   def self.time_end
-    time_start + 1.1.hours
+    Time.now
   end
 
   def self.api_params
@@ -54,14 +54,25 @@ class LastFmImporter
 
     last_fm_json = self.raw_query
 
+    tracks = last_fm_json.recenttracks.track
     # We're currently assuming that there will never be more than one page of the results
-    if last_fm_json["recenttracks"]["@attr"][:page].to_i > 1
-      report[:more_than_one_page] = true
-      Util::Log.warn "Last FM Import: more than one page returned", report
+
+    # If tracks were found
+    if tracks
+      # If more than one page was returned
+      if last_fm_json["recenttracks"]["@attr"]["totalPages"].to_i > 1
+        report[:more_than_one_page] = true
+        Util::Log.warn "Last FM Import: more than one page returned", report
+      end
+    else
+      report[:no_tracks_found] = true
+      Util::Log.warn "Last FM Import: no tracks returned", report
     end
 
-    tracks = last_fm_json.recenttracks.track
-    tracks.each{ |track| self.instantiate_dp_from_payload(track, report) }
+    if tracks
+      tracks.each{ |track| self.instantiate_dp_from_payload(track, report) }
+    end
+
     Util::Log.mixpanel.track "last_fm_import", report
     return report
   end

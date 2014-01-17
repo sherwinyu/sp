@@ -12,5 +12,10 @@ describe LastFmImporter do
       LastFmImporter.time_start.should be_within(2).of Time.now - 1.hour
     end
   end
+  describe ".time_end" do
+    it "returns Time.now" do
+      LastFmImporter.time_end.should be_within(2).of Time.now
+    end
+  end
 end
 
