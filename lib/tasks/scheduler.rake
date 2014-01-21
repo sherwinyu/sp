@@ -69,8 +69,7 @@ task :hourly => :environment do
   if Figaro.env.PING_URL
     delta = ping_url Figaro.env.PING_URL
   end
-  import_rescue_time
-  import_last_fm
+  import_dps
   ping_url "http://farmivore.com"
   ping_url "http://www.farmivore.com"
   ping_url "http://demo.weaveenergy.com"
@@ -81,4 +80,9 @@ end
 desc "This task is called by the Heroku scheduler add-on"
 task :import_rescue_time => :environment do
   import_rescue_time
+end
+
+task :import_dps => :environment do
+  import_rescue_time
+  import_last_fm
 end
