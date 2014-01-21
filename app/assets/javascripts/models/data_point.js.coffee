@@ -1,6 +1,6 @@
 Sysys.DataPoint = DS.Model.extend
-  submittedAt: Sysys.attr('date')
-  startedAt: Sysys.attr('date',
+  type: Sysys.attr 'string'
+  at: Sysys.attr('date',
     defaultValue: (-> new Date())
   )
   endedAt: Sysys.attr('date')
@@ -19,7 +19,9 @@ Sysys.DataPoint = DS.Model.extend
     )
   )
   typeMap:
-    startedAt:
+    type:
+      name: "string"
+    at:
       name: "time"
     endedAt:
       name: "time"

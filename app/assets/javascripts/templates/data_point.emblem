@@ -3,7 +3,8 @@ span.options
   =if isDirty
     a{action "save"}: | Save *
 
-= humon-editor json=startedAt rootKey="At" metaTemplate=typeMap.startedAt downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
+= humon-editor json=type rootKey="type" metaTemplate=typeMap.type downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
+= humon-editor json=at rootKey="At" metaTemplate=typeMap.at downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
 / = humon-editor json=endedAt rootKey="Ended at" metaTemplate=typeMap.endedAt downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
 = humon-editor json=details rootKey="Details" downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
 

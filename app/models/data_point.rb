@@ -6,6 +6,15 @@ class DataPoint
   field :ended_at, type: Time
   field :details
 
+  ##
+  # Returns the underlying type (a string)
+  # e.g., "DataPoint", "LastFmDp"
+  #
+  def type
+    _type
+  end
+
+
   scope :recent, desc(:at).limit(10)
   default_scope desc(:at)
 

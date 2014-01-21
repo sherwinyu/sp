@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe DataPointsController do
   describe "#index (integration)" do
-    it "includes the _type field" do
+    it "includes the `type` field" do
       lfmdp = LastFmDp.create at: Time.now - 10.seconds, name: "track1"
       dp = DataPoint.create at: Time.now, details: {hello: "world"}
       get :index, format: :json
       json = JSON.parse response.body
-      expect(json["data_points"][0]["_type"]).to eq "DataPoint"
-      expect(json["data_points"][1]["_type"]).to eq "LastFmDp"
+      expect(json["data_points"][0]["type"]).to eq "DataPoint"
+      expect(json["data_points"][1]["type"]).to eq "LastFmDp"
     end
     context "when LastFmDps are included in recent" do
 
