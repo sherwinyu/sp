@@ -1,3 +1,3 @@
 class DataPointSerializer < ActiveModel::Serializer
-  attributes :id, :submitted_at, :at, :ended_at, :details
+  attributes :id, :at, :ended_at, :details, :_type
 end
