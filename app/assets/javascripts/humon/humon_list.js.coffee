@@ -105,18 +105,25 @@ Humon.List.reopenClass
 
   ##
   # @override
+  # @param json
+  # @param context
+  #   - node [Humon.Node] the wrapping node for this list value
+  # @return [Array<Humon.Node>]
   valueFromJson: (json, context) ->
     Em.assert( (json? && json instanceof Array), "json must be an array")
-    # set all child node's `nodeParent` to this json payload's corresponding `node`
-    childNodes = json.map( (x) => @_j2hnvChild(x, context))
+    childNodes = json.map( (x) => @_j2childNode(x, context))
     return childNodes
 
-  _j2hnvChild: (json, context) ->
+  ##
+  # @param childJson
+  # @param parentContext [JSON] context object from the parent (current List)
+  # @return [Humon.Node] a Node representing the child, with parent and metatemplate correctly set .
+  _j2childNode: (childJson, parentContext) ->
     childContext =
-      nodeParent: context.node
+      nodeParent: parentContext.node
       metatemplate: @childMetatemplates.$each
-      allowInvalid: context.allowInvalid
-    return HumonUtils.json2node(json, childContext)
+      allowInvalid: parentContext.allowInvalid
+    return HumonUtils.json2node(childJson, childContext)
 
   ##
   # @override
