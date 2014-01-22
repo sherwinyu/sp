@@ -18,6 +18,8 @@ span.node-debug-panel.debug-auto-hide
     dd = view.nodeContent.nodeType
     dt view.nodeContent.nodeMeta.name
     dd = view.nodeContent.nodeMeta.name
+    dt view.readOnly
+    dd = view.readOnly
   dl
     dt $!"
     dd view.templateStringsEnabled

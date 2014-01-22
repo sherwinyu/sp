@@ -7,7 +7,13 @@ Sysys.ContentEditableField = Ember.View.extend
   tagName: "span"
   rawValueBinding: null
   classNames: ['content-field']
-  contenteditable: 'true'
+  readOnlyBinding: null
+  contenteditable: (->
+    if @get('readOnly')
+      'false'
+    else
+      'true'
+  ).property('readOnly')
   tabindex: '0'
   attributeBindings: ["contenteditable:contenteditable",  'tabindex:tabindex']
 

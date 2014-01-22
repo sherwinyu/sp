@@ -1,5 +1,5 @@
 = if view.nodeContent.nodeParent.isList
-  Sysys.IdxEditableField valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx"
+  Sysys.IdxEditableField valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx" readOnly=view.readOnly
 = else
-  Sysys.KeyEditableField rawValueBinding="view.nodeContent.nodeKey"
+  Sysys.KeyEditableField rawValueBinding="view.nodeContent.nodeKey" readOnly=view.readOnly
   span.copy :

@@ -1,5 +1,5 @@
 / humon_node_date
-= view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString"
+= view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString" readOnly=view.readOnly
 = partial 'humon_node_header'
 span.copy
   = view.templateStrings.relative

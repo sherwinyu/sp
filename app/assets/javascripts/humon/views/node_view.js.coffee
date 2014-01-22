@@ -1,4 +1,6 @@
 Humon.NodeView = Ember.View.extend
+  # readOnly: passed to KeyField and ValFields (inside node_type.emblem templates)
+  readOnly: false
   _templateChanged: false
   _id: null
   templateName_: ''
@@ -155,7 +157,8 @@ Humon.NodeView = Ember.View.extend
     # Note that we need to wrap this under Ember.run.scheduleOnce
     # because _templateChanged won't have propagated
     Ember.run.scheduleOnce "afterRender", @, ->
-      if @get('_templateChanged') && not @$().has(e.relatedTarget).length
+      lostFocus = not @$().has(e.relatedTarget).length
+      if @get('_templateChanged') && lostFocus
         # Make sure we clear templateChanged after a rerender.
         @set('_templateChanged', false)
         @rerender()
