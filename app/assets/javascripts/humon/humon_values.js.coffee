@@ -28,18 +28,25 @@ Humon.BaseHumonValue.reopenClass
   # @return [JSON] that matchesJson
   # properly normalized json that has defaults initialized,
   #   and passes @matchesJson
+  #   3 cases:
+  #     1) the provided json MATCHES (via @matchesJson)
+  #       then we're already set
+  #     2) the provided json doesn't match, but node is typelocked AND allows invalid
+  #       then use the baseJson
+  #     3) All other cases, throw an error (because we failed to normalize the json, and thus
+  #     can't proceed)
   normalizeJson: (json, context) ->
-    typeName = context?.metatemplate?.name
+    typeName = context.node.nodeMeta?.name
     matched = @matchesJson(json)
     typeSpecified = typeName?
     if matched
       return json
     if not matched and typeSpecified
-      if context?.allowInvalid
+      if context.allowInvalid
         context.node.set('notInitialized', true)
         return json = @_baseJson(json)
 
-     throw new Error "JSON #{json} couldn't be coerced into #{@}"
+    throw new Error "JSON #{json} couldn't be coerced into #{@}"
 
   ##
   # @param [JSON] json
@@ -50,7 +57,7 @@ Humon.BaseHumonValue.reopenClass
   #
   # For example, Humon.Time.matchesJson("8:40") is true.
   #
-  # matchesJson provides a guarantee that _j2hnv will return successfully.
+  # if matchesJson(json) is true, then _j2hnv must return successfully.
   matchesJson: (json) -> Em.assert("matchesJson needs to be implemented")
 
   ##

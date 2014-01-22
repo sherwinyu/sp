@@ -90,6 +90,10 @@ Humon.Complex.reopenClass(
   optionalAttributes: []
   directAttributes: []
 
+  ##
+  # @return [boolean]
+  # Makes sure that it's a hash, that all required attributes are present, and that
+  # all additional attributes are in childMetatemplates
   matchesJson: (json) ->
     # Make sure it's a hash first.
     return false unless @_super(json)
