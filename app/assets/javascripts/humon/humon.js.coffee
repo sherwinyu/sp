@@ -54,8 +54,23 @@ Humon.nodeAttr = (attrKey) ->
   return ftn
 
 
+##
+# A variation of a computed property that basically operates on the underlying json representation
+# of the node child specified by `attrAccessorKey`
+#
+# @param attrAccessorKey [String] the name of the child (key into childMetatemplates)
 Humon.valAttr = (attrAccessorKey)->
   nodeAccessorKey = '_' + attrAccessorKey
+
+  # Setter:
+  #   if `value` is undefined, call @deleteChild and return undefined
+  #   if child already exists (aka @get(key) is a HumonNode)
+  #     use node.tryToCommit
+  #     return the json representation
+  #   otherwise (child node doesn't exist yet)
+  #     create a new node with the appropriate parent and meta (from childMetatemplates)
+  #     call set on the key, with the new node as the value
+  #       NOTE this in turn calls the nodeAttr computed property
   ftn = ( (key, value, oldValue) ->
           # console.log key, value, oldValue
           node = @get(nodeAccessorKey)

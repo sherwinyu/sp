@@ -61,8 +61,19 @@ Humon.Complex = Humon.Hash.extend(
 
 
   unknownProperty: null
+
+  ##
+  # _getChildByKey and _setChildByKey exist as a shim over different
+  # underlying implementations.
+  # So complex is currently implemented as an array, but Humon.valAttr doesn't need to know that;
+  # instead it can just rely on _getChildByKey and _setChildByKey
   _getChildByKey: (key) ->
     @_value.findProperty('nodeKey', key)
+  ##
+  # @param key [string] key
+  # @param node [Humon.Node] value
+  #
+  # Used by the Humon.valAttr computed property
   _setChildByKey: (key, node) ->
     Em.assert "Node #{node} must be of type Humon.Node", node instanceof Humon.Node
     # remove it:
@@ -133,6 +144,11 @@ Humon.Complex.reopenClass(
       delete json[key] unless @childMetatemplates[key]?
     json
 
+  ##
+  # Reopens the class, adding computed properties (as instance methods) for
+  # `<key>` and `_<key>`
+  #  - nodeVal.<key> [Humon.Node] returns the child node belonging to `key`
+  #  - nodeVal._<key> [JSON] returns underlying json representation to node at `key`
   _generateAccessors: ->
     for key of @childMetatemplates
       methods = {}
