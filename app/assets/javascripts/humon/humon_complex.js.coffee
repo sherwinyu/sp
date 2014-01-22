@@ -116,7 +116,7 @@ Humon.Complex.reopenClass(
       childVal = json[key]
       childContext =
         nodeParent: context.node
-        metatemplate: $.extend {defaultDate: context?.metatemplate.defaultDate}, @childMetatemplates[key]
+        metatemplate: @childMetatemplates[key]
         allowInvalid: context.allowInvalid
       # Whose responsibility is it to make sure `childVal` is valid for @childMetatemplates[key] ?
       childNode = HumonUtils.json2node(childVal, childContext)

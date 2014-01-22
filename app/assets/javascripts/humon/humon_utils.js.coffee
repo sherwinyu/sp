@@ -60,6 +60,7 @@ window.HumonUtils =
   _createMetatemplate: (context) ->
     baseMeta =
       readOnly: context.nodeParent?.nodeMeta?.readOnly
+      defaultDate: context.nodeParent?.nodeMeta?.defaultDate
     # Deep clone merge the context.metatemplate (if specified),
     # overriding any settings from baseMeta
     return $.extend(true, baseMeta, context.metatemplate)

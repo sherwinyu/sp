@@ -65,6 +65,7 @@ Humon.Hash.reopenClass
   valueFromJson: (json, context)->
     childNodes = []
     for own key, childVal of json
+      # TODO(syu): propagate / set up metatemplate to childContext
       childNode = HumonUtils.json2node(childVal, nodeParent: context.node)
       childNode.set 'nodeKey', key
       childNodes.pushObject childNode
