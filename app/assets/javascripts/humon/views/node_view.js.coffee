@@ -1,6 +1,7 @@
 Humon.NodeView = Ember.View.extend
   # readOnly: passed to KeyField and ValFields (inside node_type.emblem templates)
-  readOnly: false
+  # readOnlyBinding: "nodeContent.readOnly"
+
   _templateChanged: false
   _id: null
   templateName_: ''

@@ -10,6 +10,7 @@ Humon.Node = Ember.Object.extend
   invalid: false
   invalidReason: ""
   notInitialized: false
+  readOnlyBinding: 'nodeMeta.readOnly'
   nodeIdx: ((key, val)->
     @get('nodeParent.children')?.indexOf @
   ).property('nodeParent.children.@each', 'nodeParent.children')
