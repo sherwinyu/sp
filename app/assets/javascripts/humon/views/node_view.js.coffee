@@ -263,6 +263,7 @@ Humon.NodeView = Ember.View.extend
     if opts.pos == "right"
       setCursor(fieldView.$().get(0), fieldView.contentLength())
     return
+
   flashWarn: (text) ->
     unless @get('warningElement')
       @set('warningElement', text)

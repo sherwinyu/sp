@@ -30,41 +30,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     # console.log 'didDown'
 
   actions:
-    ######################################
-    ##  Committing (keys and values)
-    ######################################
-
-    # action commitEverything --
-    # @param payload: an object with the following properties
-    #   node: a HumonNode that describes which node to commit the values to;
-    #     defaults to activeHumonNode
-    #   key: the key for this humon node. If present, the node's nodeKey is set.
-    #   val: the val to be commitd to the node. If present, the commitVal is called.
-    #
-    # Behavior:
-    #   1) it uses node or defaults it to activeHumonNode
-    #   2) it commits the nodeKey if key is present
-    #   3) it calls _commitVal with the val if val is present
-    #
-    # Context:
-    #   commitEverything is the central pathway for all commiting.
-    #   it fires the didCommit hook
-    #   called by:
-    #     - `commitAndContinueNew`, prior to inserting blank
-    #     - `HNV#focusOut`
-    commitEverything: (payload) ->
-      console.log "commitEverything, payload: ", payload
-      node = payload.node || @get('activeHumonNode')
-      node.set('nodeKey', payload.key) if payload.key?
-      @_commitVal payload.val, node: node if payload.val?
-      @didCommit(
-        controller: @
-        node: node
-        rootJson: Humon.n2j @get('content')
-        payload: payload
-      )
-
-
     ###
     action activateNode
     @param nodeToActivate
@@ -77,16 +42,18 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     activateNode: (node) ->
       @set 'activeHumonNode', node
 
-    smartFocus: ->
-      hnv = @get('activeHumonNode.nodeView')
-      if hnv?
-        hnv.smartFocus()
-      else
-        console.warn "HumonMixinController.smartFocus, but no nodeView found for node:", @get('activeHumonNode')
 
-  ######################################
+
+  withinScope: (testNode) ->
+    return false unless testNode instanceof Humon.Node
+    !!@get('content').pathToNode testNode
+
+##################################
+## Manipulating humon node tree
+##################################
+
+###
   ##  Setting Active Node
-  ######################################
 
   # nextNode -- controler method for shifting the active node up or down
   # does NOT affect the UI focus
@@ -113,15 +80,13 @@ Humon.HumonControllerMixin = Ember.Mixin.create
       # console.log "DC#prevNode; active node key = #{@get('activeHumonNode.nodeKey')}"
     newNode
 
-  withinScope: (testNode) ->
-    return false unless testNode instanceof Humon.Node
-    !!@get('content').pathToNode testNode
+  smartFocus: ->
+    hnv = @get('activeHumonNode.nodeView')
+    if hnv?
+      hnv.smartFocus()
+    else
+      console.warn "HumonMixinController.smartFocus, but no nodeView found for node:", @get('activeHumonNode')
 
-##################################
-## Manipulating humon node tree
-##################################
-
-###
   bubbleUp: ->
     ahn = @get('activeHumonNode')
     dest = @get('activeHumonNode').prevNode()

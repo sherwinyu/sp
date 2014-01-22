@@ -60,28 +60,3 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
 
     didDown: (e)->
       @sendAction 'downPressed', e
-
-Sysys.HumonEditorView = Ember.View.extend
-  templateName: 'humon-editor'
-  classNames: ['humon-editor']
-
-  content: null
-
-  init: ->
-    Em.assert @get('json')?, "json must be defined for HumonEditorView"
-
-    @set 'content', Sysys.j2hn @get 'json'
-
-    @set 'hooks', $.extend(
-      didCommit: (params) =>
-        console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
-        @set 'json', params.rootJson
-    , @get('hooks'))
-
-    detailController = Sysys.DetailController.create
-      hooks: @get 'hooks'
-      container: Sysys.__container__
-      content: @get 'content'
-
-    @set 'controller', detailController
-    @_super()
