@@ -25,3 +25,5 @@ Sysys.DataPoint = DS.Model.extend
       name: "time"
     endedAt:
       name: "time"
+    details:
+      readOnly: true
