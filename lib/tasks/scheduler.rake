@@ -27,11 +27,16 @@ def ping_url url
   end
 end
 
+def import_data
+  import_rescue_time
+  import_last_fm
+end
+
 def import_last_fm
   puts "Importing from LastFm"
   lfmdps, report = LastFmImporter.import
-
 end
+
 def import_rescue_time
   puts "Importing from rescue time..."
   rtdps, report = RescueTimeImporter.import
@@ -69,7 +74,7 @@ task :hourly => :environment do
   if Figaro.env.PING_URL
     delta = ping_url Figaro.env.PING_URL
   end
-  import_dps
+  import_data
   ping_url "http://farmivore.com"
   ping_url "http://www.farmivore.com"
   ping_url "http://demo.weaveenergy.com"
@@ -82,7 +87,10 @@ task :import_rescue_time => :environment do
   import_rescue_time
 end
 
-task :import_dps => :environment do
-  import_rescue_time
+task import_last_fm: :environment do
   import_last_fm
+end
+
+task :import_data => :environment do
+  import_data
 end
