@@ -90,10 +90,6 @@ Humon.Complex.reopenClass(
   optionalAttributes: []
   directAttributes: []
 
-  _metatemplate:
-    $include: Humon.Hash._metatemplate
-    $required: []
-
   matchesJson: (json) ->
     # Make sure it's a hash first.
     return false unless @_super(json)

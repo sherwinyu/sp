@@ -53,6 +53,17 @@ window.setCursor = (node, pos) ->
   false
 
 window.utils =
+
+  ##
+  # @param obj The object to be cloned
+  # @param opts
+  #   - deep [boolean] whether to deep clone
+  clone: (obj, opts={}) ->
+    if opts.deep
+      jQuery.extend(true, {}, obj)
+    else
+      jQuery.extend({}, obj)
+
   ts: ->
     moment().format("HH:mm:ss")
   # expects: URL, data

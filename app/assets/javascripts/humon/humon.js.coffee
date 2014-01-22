@@ -88,7 +88,7 @@ Humon.valAttr = (attrAccessorKey)->
               return node.val()
             else
               # TODO(syu): ADD NODE PARENT
-              node = Humon.j2n value, metatemplate: @constructor.childMetatemplates[attrAccessorKey], nodeParent: @node
+              node = HumonUtils.json2node value, metatemplate: @constructor.childMetatemplates[attrAccessorKey], nodeParent: @node
               node.set 'nodeKey', attrAccessorKey
               @set(nodeAccessorKey, node)
               return node.val()

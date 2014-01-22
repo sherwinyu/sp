@@ -29,9 +29,10 @@ window.HumonUtils =
       # TODO(syu): assert that the TypeClass's metatemplate is equivalent to the passed in
       # `metatemplate`
       return Humon[typeClassName]
-
-    Em.assert("Metatemplate must have a name", metatemplate.name?)
-    @_typifyClassFromMeta(metatemplate)
+    else
+      # Otherwise, create a NEW typeclass dynamically based on the metatemplate.
+      Em.assert("Metatemplate must have a name (not implemeneted yet)", metatemplate.name?)
+      @_typifyClassFromMeta(metatemplate)
 
   ##
   # Turns the metatemplate into a a new type, with a name
@@ -55,7 +56,11 @@ window.HumonUtils =
   #   - nodeParent: the node that will be the parent context of the current json payload
   #   - metatemplate
   #     - name: a subclass of Humon.HumonValue, indicating the type that `json` should resolve to
+  #     - defaultDate
+  #     - readOnly
   #   - allowInvalid [boolean] if true, allows this node to be invalid
+  #   - suppressNodeParentWarning
+  #   - suppressControllerWarning: whether to warn when
   #
   # @return [Humon.Node] the returned node wraps a Humon.Value
   # The returned HumonNode will have its nodeParent set to `context.nodeParent`
@@ -78,6 +83,12 @@ window.HumonUtils =
       delete context.suppressControllerWarning
       context.controller = "CONTROLLER WARNING SUPPRESSED"
 
+    # The node to be returned
+    # - controller
+    #   by default, inherits nodeParent's controller (unless context.controller is directly
+    #   specified, as is in the case of HumonEditorComponent#
+    # - nodeParent: context.nodeParent
+    #   which should only be null when this is the rootNode
     node = Humon.Node.create
       nodeParent: context.nodeParent
       controller: context.controller || context?.nodeParent?.controller || Em.assert("Controller should be present")
@@ -86,7 +97,9 @@ window.HumonUtils =
       if context.type?
         throw new Error("json2node Context should not contain `type` field")
         context.type
-      else if context.metatemplate
+      # TODO this is a temporary fix: have to handle the case when we don't want to fully specify
+      # the `name`, but still want to set metatemplate properties (e.g., readOnly: true)
+      else if context.metatemplate?.name
         HumonUtils._typeClassFromMeta(context.metatemplate)
       else # Don't pass in context because this occurs when context isn't provided!
         HumonUtils._resolveTypeClassFromJson json
@@ -96,7 +109,7 @@ window.HumonUtils =
     nodeValContext = $.extend {node: node}, context
 
     nodeVal = typeClass.tryJ2hnv json, nodeValContext
-    node.set 'nodeMeta', context.metatemplate
+    node.set 'nodeMeta', utils.clone(context.metatemplate)
     node.set 'nodeVal', nodeVal
     node.set 'nodeType', nodeVal.name()
 
