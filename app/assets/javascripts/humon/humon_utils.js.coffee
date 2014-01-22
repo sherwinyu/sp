@@ -51,6 +51,21 @@ window.HumonUtils =
     throw new Error "Unresolved type for payload #{JSON.stringify json}!"
 
   ##
+  # Creates a standalone (deep clone) metatemplate objet from the context.
+  # Also automatically sets up inherited meta settings from nodeParent
+  #   - readOnly: if parent is readOnly, by default this child will be as well
+  # @param context [JSON]
+  #   - nodeMeta
+  #   - nodeParent
+  _createMetatemplate: (context) ->
+    baseMeta =
+      readOnly: context.nodeParent?.nodeMeta?.readOnly
+    # Deep clone merge the context.metatemplate (if specified),
+    # overriding any settings from baseMeta
+    return $.extend(true, baseMeta, context.metatemplate)
+
+
+  ##
   # @param [JSON] json the json payload to convert to HumonValue wrapped in a Humon.Node
   # @param context -- optional
   #   - nodeParent: the node that will be the parent context of the current json payload
@@ -107,9 +122,9 @@ window.HumonUtils =
     # Create a new context, with the node set to the to-be-returned Humon.Node,
     # and merge in the current context.
     nodeValContext = $.extend {node: node}, context
+    node.set 'nodeMeta', @_createMetatemplate(context)
 
     nodeVal = typeClass.tryJ2hnv json, nodeValContext
-    node.set 'nodeMeta', utils.clone(context.metatemplate)
     node.set 'nodeVal', nodeVal
     node.set 'nodeType', nodeVal.name()
 
@@ -118,6 +133,6 @@ window.HumonUtils =
   node2json: (node)->
     node.get('nodeVal').toJson()
 
-Humon.n2j = HumonUtils.node2json
-Humon.j2n = HumonUtils.json2node
-Humon.json2node = HumonUtils.json2node
+Humon.n2j = -> HumonUtils.node2json.apply HumonUtils, arguments
+Humon.j2n = -> HumonUtils.json2node.apply HumonUtils, arguments
+Humon.json2node = -> HumonUtils.json2node.apply HumonUtils, arguments
