@@ -68,9 +68,9 @@ end
 gem "active_model_serializers", :github => "rails-api/active_model_serializers"
 gem "mongoid", "~> 3.1"
 gem "mongoid_auto_increment"
-gem 'activeadmin-mongoid'
 gem 'rest-client', '1.6.7'
 gem "mixpanel"
 gem 'hashie'
 gem 'awesome_print'
 gem 'rack-mini-profiler'
+gem 'devise'
