@@ -1,5 +1,21 @@
-class SessionsController < Devise::SessionsController
+class SessionsController < ApplicationController # Devise::SessionsController
   respond_to :json
+
+  def create
+    @user = User.first
+    password = params[:user][:password]
+    binding.pry
+    if @user && @user.valid_password?(password)
+      sign_in @user
+      render json: @user, status: :created
+    else
+      render json: {
+        errors: {
+          email: "invalid email or password"
+        }
+      }, status: :unprocessable_entity
+    end
+  end
 
   def destroy
     binding.pry

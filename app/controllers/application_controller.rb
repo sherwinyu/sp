@@ -6,11 +6,15 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :authorize
-  before_filter :authenticate_user!
+  # before_filter :authenticate_user!
 
   def authorize
-    binding.pry
     # Rack::MiniProfiler.authorize_request
+  end
+
+  before_filter :check
+  def check
+    binding.pry if Rails.env.development?
   end
 
   before_filter :inject_vars
