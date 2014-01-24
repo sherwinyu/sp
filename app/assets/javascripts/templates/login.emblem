@@ -1,0 +1,8 @@
+form{action login content on="submit"}
+  | Email:
+  Ember.TextField value=email
+
+  | Password:
+  Ember.TextField value=password
+
+  button.btn.btn-primary type="submit" class="btn btn-primary" value="Login" | login

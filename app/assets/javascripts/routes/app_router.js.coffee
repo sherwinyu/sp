@@ -45,9 +45,17 @@ Sysys.Router.map ->
   @resource "day", path: "/days/:day_id", ->
 
   @route "dashboard"
+  @route "login"
+
 
 Sysys.SexyArticlesRoute = Ember.Route.extend
   model: slowPromise
+
+Sysys.LoginRoute = Ember.Route.extend
+  model: -> Ember.Object.create()
+  actions:
+    login: (credentials) ->
+      @controllerFor("auth").login credentials
 
 Sysys.DashboardRoute = Ember.Route.extend
   model: ->
@@ -204,6 +212,9 @@ Sysys.ApplicationRoute = Ember.Route.extend
         errorMsg += "[#{reason.toString()}]"
 
       @send 'notify', errorMsg
+
+      if reason.status == 401
+        @transitionTo "login"
 
     notify: (message) ->
       style = "color: orange; font-size: 16px"

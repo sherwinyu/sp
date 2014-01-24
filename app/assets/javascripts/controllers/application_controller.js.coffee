@@ -16,3 +16,60 @@ Sysys.ApplicationController = Ember.Controller.extend
         sheet.addRule(".node > .debug-auto-hide:not(.node-debug-panel)", "visibility: visible")
       else
         sheet.deleteRule( rules.length - 1 )
+
+Sysys.CurrentUserController = Ember.ObjectController.extend
+  isSignedIn: (->
+    @get('content')?
+  ).property 'content'
+
+
+Ember.Application.initializer
+  name: 'currentUser'
+  initialize: (container) ->
+    store = container.lookup 'store:main'
+    user =
+      name: 'sherwin'
+    if user
+      ctrl('currentUser').set('content', user)
+      container.typeInjection 'controller', 'currentUser', 'controller:currentUser'
+
+Sysys.Session = DS.Model.extend
+  email: DS.attr('string')
+  password: DS.attr('string')
+
+Sysys.AuthController = Ember.ObjectController.extend
+  login: (credentials) ->
+    me = @
+    login = utils.post
+      url: "users/sign_in.json"
+      data:
+        user:
+          email: credentials.email
+          password: credentials.password
+    login.then(
+      (data) ->
+        debugger
+    , (jqXHR, textSTatus, errorThrown) ->
+        debugger
+    )
+
+###
+
+    $.ajax
+      url: "/users/sign_in.json"
+      type: "POST"
+      data:
+        "user[email]": route.currentModel.email
+        "user[password]": route.currentModel.password
+      success: (data) ->
+        log.log "Login Msg #{data.user.dummy_msg}"
+        me.set 'currentUser', data.user
+        route.transitionTo 'home'
+      error: (jqXHR, textStatus, errorThrown) ->
+        if jqXHR.status==401
+          route.controllerFor('login').set "errorMsg", "That email/password combo didn't work.  Please try again"
+        else if jqXHR.status==406
+          route.controllerFor('login').set "errorMsg", "Request not acceptable (406):  make sure Devise responds to JSON."
+        else
+          p "Login Error: #{jqXHR.status} | #{errorThrown}"
+###

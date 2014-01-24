@@ -5,10 +5,11 @@ class ApplicationController < ActionController::Base
     Util::Log.mixpanel
   end
 
+  before_filter :authorize
   before_filter :authenticate_user!
 
-  before_filter :authorize
   def authorize
+    binding.pry
     # Rack::MiniProfiler.authorize_request
   end
 
