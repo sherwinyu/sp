@@ -4,6 +4,10 @@
 ' |
 a{action "toggleDbg"}: ' toggle debug
 ' |
+'
+' email:
+=currentUser.email
+' |
 =git.sha1
 '
 ' @
@@ -11,6 +15,11 @@ a{action "toggleDbg"}: ' toggle debug
 '
 =git.message
 
+| email:
+=currentUser.email
+
+br
+br
 
 nav.navbar.navbar-default role="navigation"
 

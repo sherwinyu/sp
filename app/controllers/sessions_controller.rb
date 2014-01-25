@@ -1,10 +1,9 @@
-class SessionsController < ApplicationController # Devise::SessionsController
+class SessionsController < ApplicationController
   respond_to :json
 
   def create
     @user = User.first
     password = params[:user][:password]
-    binding.pry
     if @user && @user.valid_password?(password)
       sign_in @user
       render json: @user, status: :created
@@ -13,7 +12,7 @@ class SessionsController < ApplicationController # Devise::SessionsController
         errors: {
           email: "invalid email or password"
         }
-      }, status: :unprocessable_entity
+      }, status: 401
     end
   end
 

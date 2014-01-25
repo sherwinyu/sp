@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     # Rack::MiniProfiler.authorize_request
   end
 
-  before_filter :check
+  # before_filter :check
   def check
     binding.pry if Rails.env.development?
   end
@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
       env: {
         MIXPANEL_TOKEN: Figaro.env.MIXPANEL_TOKEN
       },
-      git: Util::Git.git
+      git: Util::Git.git,
+      currentUser: current_user.as_json
     })
   end
 

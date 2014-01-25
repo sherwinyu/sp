@@ -23,21 +23,17 @@ Sysys.CurrentUserController = Ember.ObjectController.extend
   ).property 'content'
 
 
-Ember.Application.initializer
-  name: 'currentUser'
-  initialize: (container) ->
-    store = container.lookup 'store:main'
-    user =
-      name: 'sherwin'
-    if user
-      ctrl('currentUser').set('content', user)
-      container.typeInjection 'controller', 'currentUser', 'controller:currentUser'
-
-Sysys.Session = DS.Model.extend
-  email: DS.attr('string')
-  password: DS.attr('string')
 
 Sysys.AuthController = Ember.ObjectController.extend
+  content: null
+  isAuthenticated: (->
+    !!@get 'content'
+  ).property('content')
+
+  loadCurrentUser: (userPayload) ->
+    # Display a flash?
+    @set('content', Ember.Object.create( email: userPayload.email))
+
   login: (credentials) ->
     me = @
     login = utils.post
@@ -47,11 +43,19 @@ Sysys.AuthController = Ember.ObjectController.extend
           email: credentials.email
           password: credentials.password
     login.then(
-      (data) ->
-        debugger
-    , (jqXHR, textSTatus, errorThrown) ->
-        debugger
+      (data) => @_handleLoginSuccess(data),
+      (jqXHR, textStatus, errorThrown) => @_handleLoginFailure(jqXHR,textStatus, errorThrown)
     )
+
+  _handleLoginSuccess: (data) ->
+    @loadCurrentUser data
+    @send 'notify', "Successfully logged in"
+    @transitionToRoute 'dashboard'
+
+  _handleLoginFailure: (jqXHR, textSTatus, errorThrown) ->
+    if jqXHR.status == 401
+      @send 'notify', "Invalid password or email"
+      @transitionToRoute 'login'
 
 ###
 
@@ -73,3 +77,10 @@ Sysys.AuthController = Ember.ObjectController.extend
         else
           p "Login Error: #{jqXHR.status} | #{errorThrown}"
 ###
+Ember.Application.initializer
+  name: 'currentUser'
+  initialize: (container) ->
+    controller = container.lookup('controller:auth').set 'content'
+    container.typeInjection 'controller', 'currentUser', 'controller:auth'
+    if window._sp_vars?.currentUser?
+      controller.set 'content', Ember.Object.create(email: window._sp_vars.currentUser.email)
