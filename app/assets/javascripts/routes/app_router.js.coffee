@@ -223,6 +223,7 @@ Sysys.ApplicationRoute = Ember.Route.extend
       style = "color: orange; font-size: 16px"
       message = "#{utils.ts()} #{message}"
       console.info "%c#{message}", style
+      @controllerFor('notifications').addNotification message
 
 Sysys.LoadingRoute = Ember.Route.extend
   beforeModel: (transition) ->

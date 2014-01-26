@@ -1,5 +1,7 @@
 =partial 'nav'
 
+=render 'notifications'
+
 .container
   .row
     .col-xs-9.center-block
