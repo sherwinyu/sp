@@ -52,6 +52,9 @@ Sysys.SexyArticlesRoute = Ember.Route.extend
   model: slowPromise
 
 Sysys.LoginRoute = Ember.Route.extend
+  beforeModel: (transition) ->
+    if @controllerFor('auth').get('isSignedIn')
+      @transitionTo "dashboard"
   model: -> Ember.Object.create()
   actions:
     login: (credentials) ->

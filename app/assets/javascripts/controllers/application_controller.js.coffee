@@ -26,7 +26,7 @@ Sysys.CurrentUserController = Ember.ObjectController.extend
 
 Sysys.AuthController = Ember.ObjectController.extend
   content: null
-  isAuthenticated: (->
+  isSignedIn: (->
     !!@get 'content'
   ).property('content')
 

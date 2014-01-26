@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   respond_to :json
 
   def create
-    @user = User.first
+    @user = User.find_by email: params[:user][:email]
     password = params[:user][:password]
     if @user && @user.valid_password?(password)
       sign_in @user
