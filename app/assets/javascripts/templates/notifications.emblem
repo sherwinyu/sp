@@ -1,6 +1,4 @@
 h2 Notifications
 a{action addNotification 'warg'}: | add notification
 = each notification in content
-  = notification.message
-
-| ----------- end
+  = render 'notification' notification
