@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :authorize
+
   def authorize
     # Rack::MiniProfiler.authorize_request
   end
@@ -16,7 +17,8 @@ class ApplicationController < ActionController::Base
       env: {
         MIXPANEL_TOKEN: Figaro.env.MIXPANEL_TOKEN
       },
-      git: Util::Git.git
+      git: Util::Git.git,
+      currentUser: current_user.as_json
     })
   end
 

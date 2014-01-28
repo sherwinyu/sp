@@ -4,6 +4,15 @@
 ' |
 a{action "toggleDbg"}: ' toggle debug
 ' |
+'
+' email:
+= currentUser.email
+if currentUser.isSignedIn
+  linkTo 'logout' | Logout
+else
+  linkTo 'login' | Login
+
+' |
 =git.sha1
 '
 ' @
@@ -11,6 +20,11 @@ a{action "toggleDbg"}: ' toggle debug
 '
 =git.message
 
+| email:
+=currentUser.email
+
+br
+br
 
 nav.navbar.navbar-default role="navigation"
 

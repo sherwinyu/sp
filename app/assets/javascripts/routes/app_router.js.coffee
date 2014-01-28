@@ -45,9 +45,28 @@ Sysys.Router.map ->
   @resource "day", path: "/days/:day_id", ->
 
   @route "dashboard"
+  @route "login"
+  @route "logout"
+
 
 Sysys.SexyArticlesRoute = Ember.Route.extend
   model: slowPromise
+
+Sysys.LoginRoute = Ember.Route.extend
+  beforeModel: (transition) ->
+    if @controllerFor('auth').get('isSignedIn')
+      @transitionTo "dashboard"
+  model: -> Ember.Object.create()
+  actions:
+    login: (credentials) ->
+      @controllerFor("auth").login credentials
+
+Sysys.LogoutRoute = Ember.Route.extend
+  beforeModel: ->
+    logout = utils.delete
+      url: "users/sign_out.json"
+    logout.then ->
+      location.reload()
 
 Sysys.DashboardRoute = Ember.Route.extend
   model: ->
@@ -97,7 +116,7 @@ Sysys.DayRoute = Ember.Route.extend
       errorMsg = "Error on #{transition.params.day_id}"
       errorMsg += responseToString reason
 
-      @send 'notify', errorMsg
+      @send 'debug', errorMsg
 
       if reason.statusText == 'Not Found'
         day = @get('store').createRecord 'day' #id: transition.params.day_id
@@ -119,7 +138,7 @@ Sysys.DaysNotFoundRoute = Ember.Route.extend
   actions:
     initializeDay: (day) ->
       success = (day) => @transitionTo 'day', day
-      failure = (response) => @send 'notify', responseToString response
+      failure = (response) => @send 'debug', responseToString response
       day.save().then success, failure
 
 Sysys.DataPointRoute = Ember.Route.extend
@@ -194,18 +213,24 @@ Sysys.ApplicationRoute = Ember.Route.extend
 
 
     error: (reason, transition) ->
-      errorMsg = "ApplicationRoute#error. Params: #{JSON.stringify transition.params}"
+      errorMsg = "Error:" # Params: #{JSON.stringify transition.params}"
       if reason instanceof Ember.Error
         errorMsg += @_emberErrorToString reason
       else
-        errorMsg += reason.statusText + " "
-        errorMsg += "(#{reason.status}): "
-        errorMsg += "#{reason.responseText}"
-        errorMsg += "[#{reason.toString()}]"
+        errorMsg += " " + reason.statusText + " "
+        errorMsg += " (#{reason.status}): "
+        errorMsg += " #{reason.responseText}"
 
       @send 'notify', errorMsg
+      @send 'debug', errorMsg
+
+      if reason.status == 401
+        @transitionTo "login"
 
     notify: (message) ->
+      @controllerFor('notifications').addNotification message
+
+    debug: (message) ->
       style = "color: orange; font-size: 16px"
       message = "#{utils.ts()} #{message}"
       console.info "%c#{message}", style

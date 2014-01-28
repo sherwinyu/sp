@@ -1,3 +1,4 @@
+###
 Sysys.NotificationsView = Ember.View.extend
   templateName: 'notifications'
 
@@ -60,3 +61,4 @@ Sysys.Notification.reopenClass(
   ERROR: 'ERROR'
   WARNING: 'WARNING'
 )
+###

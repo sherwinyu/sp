@@ -3,13 +3,15 @@
 <head>
   <title>Sherwin points</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_tag do %>
+    window._sp_vars = <%=raw  @server_side_vars.to_json if @server_side_vars %>;
+  <% end %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
   <!-- mixpanel will be inserted here by the gem -->
 </head>
 
-<body class="ass">
-  <%= yield %>
-</body>
+<body <%=raw "id='ember-app'" if @ember%> ></body>
 
 </html>
