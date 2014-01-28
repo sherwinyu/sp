@@ -3,6 +3,11 @@ Sysys.NotificationsController = Ember.ArrayController.extend
     addNotification: (message) ->
       @addNotification(message)
 
+    destroyNotification: (notification) ->
+      @get('content').removeObject notification
+    clearAll: ->
+      @set('content', [])
+
   addNotification: (message) ->
     @get('content').pushObject Ember.Object.create message: message
 

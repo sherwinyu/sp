@@ -1,2 +1,3 @@
-a.close{action destroyNotification}: |  &#215;
+a.close{action destroyNotification this}: |  &#215;
+a.close{action clearAll}: |  &#215;
 = message
