@@ -1,14 +1,1 @@
-== Welcome to Rails
-
-To commit, do
-
-a = Sysys.Act.find(1)
-a.get('transaction')
-a.save()
-
-== To create active admin user
-
-  * AdminUser.create :email => 'admin@example.com', :password => 'password', :password_confirmation => 'password'
-
-
-
+sherwinpoints
