@@ -12,11 +12,6 @@ class ApplicationController < ActionController::Base
     # Rack::MiniProfiler.authorize_request
   end
 
-  # before_filter :check
-  def check
-    binding.pry if Rails.env.development?
-  end
-
   before_filter :inject_vars
   def inject_vars
     @server_side_vars = Hashie::Mash.new({

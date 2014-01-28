@@ -1,5 +1,6 @@
 class DataPointsController < ApplicationController
   respond_to :html, :json
+  before_filter :authenticate_user!
 
   # GET /data_points
   # GET /data_points.json
