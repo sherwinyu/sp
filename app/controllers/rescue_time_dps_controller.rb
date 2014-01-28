@@ -1,5 +1,6 @@
 class RescueTimeDpsController < ApplicationController
   respond_to :html, :json
+  before_filter :authenticate_user!
 
   # GET /rescue_time_dps
   # GET /rescue_time_dps.json

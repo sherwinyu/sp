@@ -1,16 +1,10 @@
 class DaysController < ApplicationController
+  before_filter :authenticate_user!
+
   respond_to :html, :json
 
   def index
     @recent_days = Day.recent
-
-
-=begin
-    if @latest_day.new_record?
-      @latest_day.save
-      @latest_day.note = "Just created"
-    end
-=end
 
     respond_with @recent_days
     # @days  = Day.all

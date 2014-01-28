@@ -1,0 +1,2 @@
+= each notification in content
+  = render 'notification' notification
