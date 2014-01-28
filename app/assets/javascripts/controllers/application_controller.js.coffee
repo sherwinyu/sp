@@ -34,6 +34,7 @@ Sysys.AuthController = Ember.ObjectController.extend
     # Display a flash?
     @set('content', Ember.Object.create( email: userPayload.email))
 
+
   login: (credentials) ->
     me = @
     login = utils.post

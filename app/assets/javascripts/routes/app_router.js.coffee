@@ -46,6 +46,7 @@ Sysys.Router.map ->
 
   @route "dashboard"
   @route "login"
+  @route "logout"
 
 
 Sysys.SexyArticlesRoute = Ember.Route.extend
@@ -59,6 +60,13 @@ Sysys.LoginRoute = Ember.Route.extend
   actions:
     login: (credentials) ->
       @controllerFor("auth").login credentials
+
+Sysys.LogoutRoute = Ember.Route.extend
+  beforeModel: ->
+    logout = utils.delete
+      url: "users/sign_out.json"
+    logout.then ->
+      location.reload()
 
 Sysys.DashboardRoute = Ember.Route.extend
   model: ->

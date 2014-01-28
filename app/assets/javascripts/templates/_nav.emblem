@@ -6,7 +6,12 @@ a{action "toggleDbg"}: ' toggle debug
 ' |
 '
 ' email:
-=currentUser.email
+= currentUser.email
+if currentUser.isSignedIn
+  linkTo 'logout' | Logout
+else
+  linkTo 'login' | Login
+
 ' |
 =git.sha1
 '
