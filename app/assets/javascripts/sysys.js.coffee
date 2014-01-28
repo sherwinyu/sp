@@ -21,7 +21,9 @@
   customEvents: {
     testEvent: 'testEvent'
   }
+
+###
 Ember.onerror = (error) ->
   console.error error.toString()
   console.error error.stack()
-
+###

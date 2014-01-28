@@ -11,17 +11,17 @@ Sysys.NotificationsController = Ember.ArrayController.extend
 
 Sysys.NotificationsView = Ember.View.extend
   templateName: 'notifications'
-  classNames: ['notificatios']
+  classNames: ['notifications']
 
 Sysys.NotificationView = Ember.View.extend
   controller: null
 
   templateName: 'notification'
   classNames: ['alert']
-  classNames: ['notification']
+  classNames: ['notification', 'alert']
   classNameBindings: ['type']
   type: (->
-    'alert-error'
+    'alert-warning'
     ###
     switch @get('context.type')
       when Sysys.Notification.INFO then 'alert-success'
