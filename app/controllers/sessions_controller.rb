@@ -17,8 +17,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    binding.pry
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    # TODO(syu): update client side csrf tokens
     render json: {
       'csrf-param' => request_forgery_protection_token,
       'csrf-token' => form_authenticity_token

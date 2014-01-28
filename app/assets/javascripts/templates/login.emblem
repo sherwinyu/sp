@@ -4,7 +4,7 @@ form.login{action login content on="submit"}
     Ember.TextField class="form-control" value=email
   .form-group
     label password:
-    Ember.TextField class="form-control" value=password
+    Ember.TextField class="form-control" value=password type="password"
   button.btn.btn-primary type="submit" class="btn btn-primary" value="Login": | Login
 
 /
