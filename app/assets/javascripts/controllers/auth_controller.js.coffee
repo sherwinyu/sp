@@ -6,7 +6,6 @@ Sysys.AuthController = Ember.ObjectController.extend
   ).property('content')
 
   loadCurrentUser: (userPayload) ->
-    # Display a flash?
     @set('content', Ember.Object.create( email: userPayload.email))
 
 
