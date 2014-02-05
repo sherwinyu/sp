@@ -2,7 +2,7 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
   rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'humon-editor-inline']
   hooks: null
-  json: {}
+  json: null
   ###
   # Available public API component actions
     * jsonChanged
