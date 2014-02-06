@@ -7,6 +7,7 @@ class Day
   embeds_one :sleep
   embeds_one :summary, class_name: "Summary", store_as: 'summary'
   embeds_many :goals
+  has_many :acts
 
   scope :recent, where(:date.gte => 7.days.ago).desc(:date)
 
@@ -43,10 +44,8 @@ class Day
   end
 
   def self.on arg
-    raise "Expected arg to be a string" unless arg.class == String
-    raise "Expected arg to match YYYY-MM-DD foramt" unless arg =~ /\d\d\d\d-\d\d-\d\d/
-    # date = Date.pares(arg)
-    self.find_or_initialize_by date: arg
+    date = Util::DateTime.to_date arg
+    self.find_or_initialize_by date: date
   end
 end
 

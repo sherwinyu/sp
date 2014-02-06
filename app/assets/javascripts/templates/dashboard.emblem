@@ -24,6 +24,12 @@ h1 Dashboard
       dd = productivityPulse.daily.score
 
   .panel-heading
+    h3 Acts
+  .panel-body
+    = outlet acts
+
+
+  .panel-heading
     h3 Recent Activity DPs
     a.btn.btn-default.refresh-button{action refreshProductivity}
       ' Refresh

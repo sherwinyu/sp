@@ -2,26 +2,29 @@ class Act
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :description, type: String
-  field :duration,  type: Integer
-  field :canonical_day, type: Date
-  field :start_time, type: DateTime
-  field :end_time, type: DateTime
-  auto_increment :seq_id
+  field :at, type: DateTime
+  field :ended_at, type: DateTime
+  field :desc, type: String
+  belongs_to :day
 
-  # before_create :set_seq_id
-  def set_seq_id
-    # if self.id.class == BSON::ObjectId
-    counter = Mongoid.database["counters"].find_and_modify(
-      query: { _id:  "act" },
-      update: { "$inc" => {count: 1} })
-    self.seq_id = Integer(counter["count"])
-    #end
+  validates_presence_of :at
+  validates_presence_of :ended_at
+  validates_presence_of :desc
+  validates_presence_of :day
+
+  validate :ensure_day_in_range, if: :day?
+  ##
+  # For now, makes sure self.at.to_date  == self.day.date
+  def ensure_day_in_range
+    return if at.to_date == self.day.date
+    errors[:at] << "(started_at) must belong to day's date"
   end
 
-  embeds_one :detail
 
-  validates_presence_of :description
+  # Nvm, user must set day manually
+  # after_validation do |document|
+  #  document.day ||= Day.on Util::DateTime.time_to_experienced_date document.at
+  # end
 
 end
 

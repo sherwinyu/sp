@@ -1,7 +1,7 @@
 class ActSerializer < ActiveModel::Serializer
-  attributes :id, :description, :start_time, :end_time, :errors, :detail
-  def attributes
-    hash = super
+  attributes :id, :at, :ended_at, :desc, :errors, :day
+
+  def day
+    object.day.date
   end
-  has_one :detail
 end
