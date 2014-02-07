@@ -85,7 +85,6 @@ Sysys.DashboardRoute = Ember.Route.extend
     actsController = @controllerFor 'acts'
     actsController.set 'model', acts
 
-
   renderTemplate: ->
     @_super()
     @render 'day',
