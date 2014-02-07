@@ -4,6 +4,12 @@ Sysys.Act = DS.Model.extend
 
   desc: Sysys.attr 'string'
 
+  typeMap:
+    at:
+      name: "time"
+    desc:
+      name: "string"
+
 ###
   start_time: DS.attr "humon"
   end_time: DS.attr "humon"

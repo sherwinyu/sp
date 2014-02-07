@@ -1,6 +1,5 @@
-| start ACTS:
-= each act in content
-  = act.at
-  = act.desc
-  br
-| end ACTS:
+button.btn.new-data-point{action newAct} New Act
+.list-group
+  =each act in content
+    .list-group-item
+      =render 'act' act

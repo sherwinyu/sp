@@ -1,3 +1,4 @@
-# Sysys.ActController = Ember.ObjectController.extend()
-
-Sysys.ActsActiveActController = Ember.ObjectController.extend()
+Sysys.ActController = Ember.ObjectController.extend
+  actions:
+    save: ->
+      @get('content').save()
