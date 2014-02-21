@@ -49,7 +49,7 @@ module Util
         when Date
           arg
         else
-          raise "Expected arg to be a string or a Time"
+          raise "Expected arg to be a string or a Date, instead got #{arg}: #{arg.class}"
         end
       return date
     end
