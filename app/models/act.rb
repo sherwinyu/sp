@@ -13,6 +13,7 @@ class Act
   validates_presence_of :day
 
   validate :ensure_day_in_range, if: :day?
+
   ##
   # For now, makes sure self.at.to_date  == self.day.date
   def ensure_day_in_range

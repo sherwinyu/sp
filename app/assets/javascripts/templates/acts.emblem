@@ -1,4 +1,4 @@
-button.btn.new-data-point{action newAct} New Act
+button.btn.new-act{action newAct} New Act
 .list-group
   =each act in content
     .list-group-item
