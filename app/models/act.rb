@@ -16,8 +16,8 @@ class Act
   ##
   # For now, makes sure self.at.to_date  == self.day.date
   def ensure_day_in_range
-    return if at.to_date == self.day.date
-    errors[:at] << "(started_at) must belong to day's date"
+    return if Util::DateTime.time_to_experienced_date(at) == self.day.date
+    errors[:at] << "(started_at) must belong to day's date (#{self.day.date})"
   end
 
 

@@ -5,8 +5,14 @@ class ActsController < ApplicationController
   end
 
   def create
-    @act = Act.create params[:act]
-    respond_with @act, status: :created
+    @act = Act.new params[:act]
+    @act.ended_at ||= @act.at + 1.hour
+    @act.day ||= Day.on Util::DateTime.time_to_experienced_date @act.at
+    if @act.save
+      respond_with @act, status: :created
+    else
+      respond_with @act, status: 422
+    end
   end
 
   def index

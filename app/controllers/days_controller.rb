@@ -1,7 +1,6 @@
 class DaysController < ApplicationController
   before_filter :authenticate_user!
-
-  respond_to :html, :json
+  respond_to :json
 
   def index
     @recent_days = Day.recent
