@@ -1,5 +1,55 @@
 require 'spec_helper'
 
+describe ActsController do
+  let(:valid_attributes) do
+    {
+      description: "hello world",
+      at: Date.new(2014, 2, 7) + 5.hours
+    }
+  end
+
+  let :user do
+    create :user
+  end
+
+  before :each do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in user
+  end
+
+  describe "api#create" do
+  end
+  describe "api#update" do
+  end
+
+  describe "api#show" do
+  end
+
+  describe "api#index" do
+    it "returns 200" do
+      get :index, format: :json
+      response.status.should eq 200
+    end
+  end
+
+  describe "must be authenticated" do
+    before :each { sign_out user }
+    it "requires authentication" do
+      get :index, format: :json
+      response.status.should eq 401
+
+      post :create, format: :json
+      response.status.should eq 401
+
+      get :show, format: :json, id: 1
+      response.status.should eq 401
+
+      put :update, format: :json, id: 1
+      response.status.should eq 401
+    end
+  end
+
+end
 =begin
  ActsController do
   let(:valid_attributes) do

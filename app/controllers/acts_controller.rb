@@ -1,8 +1,6 @@
 class ActsController < ApplicationController
+  before_filter :authenticate_user!
   respond_to :json
-
-  def new
-  end
 
   def create
     @act = Act.new params[:act]
