@@ -14,7 +14,7 @@ class ActsController < ApplicationController
   end
 
   def index
-    @acts = Act.all
+    @acts = Act.recent
     respond_with @acts
   end
 

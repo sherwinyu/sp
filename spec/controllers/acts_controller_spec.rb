@@ -30,10 +30,15 @@ describe ActsController do
       get :index, format: :json
       response.status.should eq 200
     end
+
+    it "fetches recent acts" do
+      Act.should_receive :recent
+      get :index, format: :json
+    end
   end
 
   describe "must be authenticated" do
-    before :each { sign_out user }
+    before(:each) { sign_out user }
     it "requires authentication" do
       get :index, format: :json
       response.status.should eq 401

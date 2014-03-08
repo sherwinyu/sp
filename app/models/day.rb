@@ -32,7 +32,7 @@ class Day
 
   def self.latest
     date = Util::DateTime.time_to_experienced_date Time.now
-    spd = Day.find_or_initialize_by date: date
+    day = Day.find_or_initialize_by date: date
   end
 
   def yesterday
