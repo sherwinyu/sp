@@ -5,6 +5,7 @@ Sysys.Day = DS.Model.extend
   summary: Sysys.attr('complex')
   goals: Sysys.attr()
 
+  # Make it a property, so that defaultDate can be dynamic
   typeMap: (->
     sleep:
       name: "sleep"

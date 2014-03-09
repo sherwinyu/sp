@@ -1,4 +1,5 @@
 Humon.Time = Humon.Date.extend(
+  # Defaults to using dayStartsAt as 4am
   precommitInputCoerce: (input) ->
     {matches, value} = Humon.Time._inferFromJson(input)
 
@@ -8,7 +9,7 @@ Humon.Time = Humon.Date.extend(
     mmt = moment value
 
     defaultDate = meta?.defaultDate || new Date()
-    dayStartsAt = meta?.dayStartsAt || 0
+    dayStartsAt = meta?.dayStartsAt || 4
 
     Humon.Time.setBiasedDateOnTime(mmt, defaultDate, dayStartsAt)
     value = mmt.toDate()
@@ -43,8 +44,6 @@ Humon.Time.reopenClass(
     finally
       if ret.value
         mmt = moment(ret.value)
-
-
         ret.matches = true
       return ret
 

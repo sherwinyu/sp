@@ -1,14 +1,16 @@
 Sysys.Act = DS.Model.extend
-  at: Sysys.attr('date')
+  at: Sysys.attr('date', defaultValue: -> new Date())
   endedAt: Sysys.attr('date')
-
+  date: null
   desc: Sysys.attr 'string'
 
-  typeMap:
+  typeMap: (->
     at:
       name: "time"
+      defaultDate: @get('date') || new Date()
     desc:
       name: "string"
+  ).property().volatile()
 
 ###
   start_time: DS.attr "humon"
