@@ -1,4 +1,4 @@
-Sysys.Act = DS.Model.extend
+Sysys.Act = DS.Model.extend Ember.Evented,
   at: Sysys.attr('date', defaultValue: -> new Date())
   endedAt: Sysys.attr('date')
   date: null
