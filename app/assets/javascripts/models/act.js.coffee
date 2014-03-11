@@ -1,6 +1,6 @@
 Sysys.Act = DS.Model.extend Ember.Evented,
-  at: Sysys.attr('date', defaultValue: -> new Date())
-  endedAt: Sysys.attr('date')
+  at: Sysys.attr 'date', defaultValue: -> moment().subtract(1, "hour").toDate()
+  endedAt: Sysys.attr 'date', defaultValue: -> moment().toDate()
   date: null
   desc: Sysys.attr 'string'
 
