@@ -42,7 +42,9 @@ Humon.NodeView = Ember.View.extend
   templateStrings: (->
     Ember.run.sync()
     node = @get('nodeContent')
-    unless node.get('notInitialized') or !@get('_templateStringsEnabled')
+
+
+    if node.get('initialized') && @get('_templateStringsEnabled')
       @_templateContext().materializeTemplateStrings(node)
   ).property('nodeContent.nodeVal', '_templateStringsEnabled')
   templateNameDidChange: (-> @set('_templateChanged', true)).observes('templateName')

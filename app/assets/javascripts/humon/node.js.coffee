@@ -9,7 +9,9 @@ Humon.Node = Ember.Object.extend
   nodeMeta: null
   invalid: false
   invalidReason: ""
-  notInitialized: false
+
+
+  initialized: true
   readOnlyBinding: 'nodeMeta.readOnly'
   nodeIdx: ((key, val)->
     @get('nodeParent.children')?.indexOf @
@@ -46,7 +48,7 @@ Humon.Node = Ember.Object.extend
       nv.enableTemplateStrings()
     else
       console.warn "#{@}#clearInvalidation: node view not found"
-    @set('notInitialized', false)
+    @set('initialized', true)
     @set('invalidReason', null)
     @set('invalid', false)
 

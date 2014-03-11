@@ -16,7 +16,7 @@ Humon.BaseHumonValue.reopenClass
   # @param context
   #
   # Result of this attempt can be:
-  #   1) a Humon.Value with its node.notInitialized set to true
+  #   1) a Humon.Value with its node.initialized set to false
   #   1) a Humon.Value that passes matchesJson
   tryJ2hnv: (json, context) ->
     console.warn "No context.node found" unless context?.node?
@@ -25,11 +25,11 @@ Humon.BaseHumonValue.reopenClass
 
   ##
   # @param json A JSON payload to be converted into a Humon.Value instance
-  # @return [JSON] that matchesJson
+  # @return [JSON] that passes `matchesJson`
   # properly normalized json that has defaults initialized,
   #   and passes @matchesJson
   #   3 cases:
-  #     1) the provided json MATCHES (via @matchesJson)
+  #     1) the provided `json` MATCHES (via @matchesJson)
   #       then we're already set
   #     2) the provided json doesn't match, but node is typelocked AND allows invalid
   #       then use the baseJson
@@ -43,7 +43,7 @@ Humon.BaseHumonValue.reopenClass
       return json
     if not matched and typeSpecified
       if context.allowInvalid
-        context.node.set('notInitialized', true)
+        context.node.set('initialized', false)
         return json = @_baseJson(json)
 
     throw new Error "JSON #{json} couldn't be coerced into #{@}"
@@ -80,7 +80,7 @@ Humon.BaseHumonValue.reopenClass
 
   ##
   # PRE CONDITION: matchesJson(json) is true
-  # returns a VALID _value
+  # returns a VALID _value (fed to the `_value` attribute of a HumonValue instance)
   # @return [?] a valid _value, such that a nodeVal created with this _value
   # should pass validateSelf
   valueFromJson: (json, context) -> Em.assert "must implement"

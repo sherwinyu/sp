@@ -14,6 +14,7 @@ $nodeDebugInlineCopyColor: $nodeDetailCopyColor;
 }
 
 .node-debug-panel {
+  z-index: 1000;
   position: relative;
   display: inline-block;
   position: fixed;
@@ -57,7 +58,7 @@ $nodeDebugInlineCopyColor: $nodeDetailCopyColor;
   content: "$Δ ";
 }
 
-.debug-glyphs i.not-initialized:after {
+.debug-glyphs i.uninitialized:after {
   content: "@i ";
 }
 .debug-glyphs i.type-locked:after {

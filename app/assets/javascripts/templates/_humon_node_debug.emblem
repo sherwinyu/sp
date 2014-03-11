@@ -22,13 +22,15 @@ span.node-debug-panel.debug-auto-hide
     dd = view.nodeContent.readOnly
     dt view.nodeContent.nodeMeta.defaultDate
     dd = view.nodeContent.nodeMeta.defaultDate
+    dt view.nodeContent.initialized
+    dd = view.nodeContent.initialized
   dl
     dt $!"
     dd view.templateStringsEnabled
     dt $Δ
     dd view.templateChanged
     dt @i
-    dd nodeContent.notInitialized
+    dd nodeContent.uninitialized
     dt @L
     dd type-locked
     dt @!
@@ -38,6 +40,6 @@ span.copy.debug-inline.debug-auto-hide
   span.debug-glyphs
     i{bind-attr class="view._templateStringsEnabled::template-strings-disabled"}
     i{bind-attr class="view._templateChanged:template-changed"}
-    i{bind-attr class="view.nodeContent.notInitialized:not-initialized"}
+    i{bind-attr class="view.nodeContent.initialized::uninitialized"}
     i{bind-attr class="view.nodeContent.nodeMeta:type-locked"}
     i{bind-attr  class="view.nodeContent.invalid:invalid"}
