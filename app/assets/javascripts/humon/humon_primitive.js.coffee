@@ -34,6 +34,9 @@ Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
   subFieldFocusLost: (e, payload)->
     @get('node').tryToCommit(payload)
 
+  ##
+  # @override
+  # @return [void]
   validateSelf: ->
     @ensure "Value matches json", @constructor.matchesJson(@_value)
 
