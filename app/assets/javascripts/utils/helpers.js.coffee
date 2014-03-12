@@ -167,6 +167,22 @@ window.utils.date =
     mmt.startOf('day')
     mmt.toDate()
 
+  ##
+  # @param datetime A moment or date representing a date + time (timezoned)
+  datetimeToExperiencedDate: (datetime, dayStartsAt=4) ->
+    mmt = moment datetime
+
+    if (mmt.hour() < dayStartsAt)
+      mmt.subtract 1, 'days'
+
+    # clean it
+    mmt.hour(0)
+    mmt.minute(0)
+    mmt.second(0)
+
+    return mmt
+
+
 utils.time =
   mmt: (arg) ->
     console.warn "Expected moment or date" if arg.constructor != Date
