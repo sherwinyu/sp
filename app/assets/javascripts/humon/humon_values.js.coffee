@@ -129,7 +129,9 @@ Humon.HumonValue = Ember.Mixin.create
   # this.precommitInputCoerce(json) should be true as well
   #
   # @param [JSON] jsonInput
-  # @return [boolean] whether the precommitInputCoerce was successful
+  # @return object:
+  #   - @param coerceSuccessful [boolean]
+  #   - @param coercedInput [anything]
   precommitInputCoerce: (jsonInput) ->
     false
 

@@ -7,7 +7,6 @@ Sysys.Act = DS.Model.extend Ember.Evented,
   typeMap: (->
     at:
       name: "time"
-      defaultDate: @get('date') || new Date()
     desc:
       name: "string"
   ).property().volatile()

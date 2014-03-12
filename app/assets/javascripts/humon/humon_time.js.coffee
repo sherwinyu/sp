@@ -1,18 +1,26 @@
 Humon.Time = Humon.Date.extend(
+  # Currently does not support modifying the date via
+  # the precommitInputCoerce by passing a dated- timestring.
+  # TODO(syu): support dated-timestrings.
+  #
   # Defaults to using dayStartsAt as 4am
   precommitInputCoerce: (input) ->
-    {matches, value} = Humon.Time._inferFromJson(input)
 
+    {matches, value: time} = Humon.Time._inferFromJson(input)
+
+    # FOR NOW, treat "value" as a TIME (not a datetime)
     meta = @get('node.nodeMeta')
 
-    # The moment to return
-    mmt = moment value
+    # If this node already has a value, then use that
+    # Otherwise, use the default date
+    if @get('node.initialized')
+      experiencedDate = utils.date.dateTimeToExperiencedDate @_value
+    else
+      experiencedDate = meta?.defaultDate || utils.date.todayAsExperiencedDate()
 
-    defaultDate = meta?.defaultDate || new Date()
-    dayStartsAt = meta?.dayStartsAt || 4
+    dtMmt =  utils.date.experiencedDateAndTimeToDateTime(experiencedDate, time)
 
-    Humon.Time.setBiasedDateOnTime(mmt, defaultDate, dayStartsAt)
-    value = mmt.toDate()
+    value = dtMmt.toDate()
 
     return ret =
       coerceSuccessful: matches
@@ -46,16 +54,4 @@ Humon.Time.reopenClass(
         mmt = moment(ret.value)
         ret.matches = true
       return ret
-
-  setBiasedDateOnTime: (mmt, defaultDate, dayStartsAt) ->
-    defaultMmt = moment defaultDate
-
-    mmt.year(defaultMmt.year())
-    mmt.month(defaultMmt.month())
-    mmt.date(defaultMmt.date())
-
-    if (mmt.hour() < dayStartsAt)
-      mmt.add 1, 'days'
-
-    return mmt
 )

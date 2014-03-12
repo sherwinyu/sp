@@ -168,17 +168,46 @@ window.utils.date =
     mmt.toDate()
 
   ##
-  # @param datetime A moment or date representing a date + time (timezoned)
-  datetimeToExperiencedDate: (datetime, dayStartsAt=4) ->
-    mmt = moment datetime
+  # @param experiencedDate [moment|date] - used as a date
+  # @param time [moment|date] - used as a time
+  # @return [moment] representing a DateTime that fits the
+  #
+  # experiencedDate and time
+  experiencedDateAndTimeToDateTime: (experiencedDate, time) ->
+    dateTimeMmt = moment experiencedDate
+    time = moment time
+
+    dateTimeMmt.hour time.hour()
+    dateTimeMmt.minute time.minute()
+    dateTimeMmt.second time.second()
+
+    if dateTimeMmt.hour() < 4
+      dateTimeMmt.add 1, 'days'
+    return dateTimeMmt
+
+  ##
+  # Returns the experienced date at the current time.
+  # @return [moment] as date, with HMS wiped
+  todayAsExperiencedDate: ->
+    mmt = moment()
+    return utils.date.dateTimeToExperiencedDate( moment() )
+
+  ##
+  # @param dateTime A moment or date representing a dateTime (timezoned)
+  # @param dayStartsAt optional integer hour
+  # @return [moment] with HMS zero'd
+  #
+  # Raises an error if dateTime is not a valid date or moment
+  dateTimeToExperiencedDate: (dateTime, dayStartsAt=4) ->
+    Ember.assert "dateTime must be specified", dateTime
+    mmt = moment dateTime
+    Ember.assert "dateTime is valid", mmt.isValid()
 
     if (mmt.hour() < dayStartsAt)
       mmt.subtract 1, 'days'
 
-    # clean it
-    mmt.hour(0)
-    mmt.minute(0)
-    mmt.second(0)
+    # Zero HMS; this is in-place
+    mmt.startOf('day')
 
     return mmt
 
