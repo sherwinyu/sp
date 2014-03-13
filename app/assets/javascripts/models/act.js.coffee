@@ -8,7 +8,7 @@ Sysys.Act = DS.Model.extend Ember.Evented,
     at:
       name: "time"
     desc:
-      name: "string"
+      name: "text"
   ).property().volatile()
 
 ###
