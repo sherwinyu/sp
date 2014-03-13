@@ -2,6 +2,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/poltergeist'
 # require 'rspec/autorun' -- removed because of http://stackoverflow.com/questions/3030308/why-are-my-rspec-specs-running-twice
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -45,3 +46,8 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
 end
+
+Capybara.register_driver :poltergeist_debug do |app|
+  Capybara::Poltergeist::Driver.new(app, inspector: true)
+end
+Capybara.javascript_driver = :poltergeist_debug
