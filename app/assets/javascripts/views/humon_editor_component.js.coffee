@@ -41,9 +41,10 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     #   - suppressNodeParentWarning: because this is the root node
     node = Humon.json2node initialJson,
              metatemplate: @get('metaTemplate')
-             allowInvalid: true, controller: @
+             allowInvalid: true
+             controller: @
              suppressNodeParentWarning: yes
-    node.set('nodeKey', @get('rootKey') || "(root key)")
+    node.set('nodeKey', @get('rootKey'))
     @set 'content', node
 
   _jsonUpdated: (->

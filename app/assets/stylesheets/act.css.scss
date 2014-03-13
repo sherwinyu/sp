@@ -1,0 +1,29 @@
+.act {
+  position: relative;
+
+  span.options {
+    position: relative;
+    display: none;
+    float: right;
+    right: 5px;
+    top: 5px;
+  }
+  &:hover span.options {
+    position: relative;
+    display: block;
+    z-index: 100;
+  }
+  &.active span.options {
+    position: relative;
+    display: block;
+    z-index: 100;
+  }
+}
+
+.acts {
+  button.new-act {
+    @include center-block();
+    @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+    margin-bottom: $padding-base-vertical;
+  }
+}

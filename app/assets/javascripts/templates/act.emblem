@@ -1,0 +1,11 @@
+span.options
+  / =link-to "Permalink" "data_point" this
+  =if isDirty
+    a{action "save"}: | Save *
+
+= humon-editor json=at rootKey="start" metaTemplate=typeMap.at downPressed="downPressed" upPressed="upPressed"
+= humon-editor json=endedAt rootKey="end" metaTemplate=typeMap.at downPressed="downPressed" upPressed="upPressed"
+/ = humon-editor json=endedAt rootKey="Ended at" metaTemplate=typeMap.endedAt downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
+= humon-editor json=desc metaTemplate=typeMap.desc rootKey="desc" downPressed="downPressed" upPressed="upPressed"
+
+/ = humon-editor json=view.details rootKey="SleepComplex" metaTemplate=view.metaTemplate downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"

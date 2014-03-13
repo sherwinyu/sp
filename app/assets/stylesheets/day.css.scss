@@ -32,7 +32,11 @@
 .day.clean .save-button {
   display: none;
 }
-.day.dirty .save-button {
+.dirty {
+  border-top: orange 2px solid;
+}
+.clean {
+  border-top: transparent 2px solid;
 }
 
 

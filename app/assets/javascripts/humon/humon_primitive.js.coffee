@@ -34,6 +34,9 @@ Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
   subFieldFocusLost: (e, payload)->
     @get('node').tryToCommit(payload)
 
+  ##
+  # @override
+  # @return [void]
   validateSelf: ->
     @ensure "Value matches json", @constructor.matchesJson(@_value)
 
@@ -49,10 +52,11 @@ Humon.Primitive.reopenClass
   #   - metatemplate
   #   - allowInvalid [boolean] if true, allows this node to be invalid
   _j2hnv: (json, context) ->
-    if context.node.get('notInitialized')
-      value = json
-    else
+    if context.node.get('initialized')
       value = @valueFromJson(json, context)
+    else
+      # If the node isn't initialized yet, then pass through the value
+      value = json
     @create(_value: value, node: context.node)
 
   valueFromJson:(json)  ->

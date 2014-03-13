@@ -1,5 +1,17 @@
-Sysys.Act = DS.Model.extend
-  description: DS.attr "humon"
+Sysys.Act = DS.Model.extend Ember.Evented,
+  at: Sysys.attr 'date', defaultValue: -> moment().subtract(1, "hour").toDate()
+  endedAt: Sysys.attr 'date', defaultValue: -> moment().toDate()
+  date: null
+  desc: Sysys.attr 'string'
+
+  typeMap: (->
+    at:
+      name: "time"
+    desc:
+      name: "text"
+  ).property().volatile()
+
+###
   start_time: DS.attr "humon"
   end_time: DS.attr "humon"
   detail: DS.attr "humon"
@@ -42,24 +54,4 @@ Sysys.Act = DS.Model.extend
     @set 'start_time', new Date()  unless @get('start_time')?
     @set 'duration', 30*60 unless @get('end_time')?
     @set 'description', "new action" unless @get('description')?
-
-
-  becameError: ->
-    console.log('an error occured!')
-    # Sysys.router.get('notificationsController').add('Oops', 'There was an error!', 'ERROR')
-  didUpdate: ->
-    console.log("updated!");
-    # Sysys.router.get('notificationsController').addInfo('', 'Successfully updated.')
-  didLoad: ->
-    console.log 'loaded!'
-  didCreate: ->
-    console.log 'created!'
-    # Sysys.router.get('notificationsController').addInfo('', 'Successfully created.')
-  didCommit: ->
-    console.log 'commited!'
-  becameInvalid: (act) ->
-    for k, v of act.errors
-      console.log 'error!'
-      # Sysys.router.get('notificationsController').addError(k, v)
-
-Sysys.Act.reopenClass
+###

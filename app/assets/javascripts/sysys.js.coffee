@@ -2,7 +2,6 @@
 #= require ./store
 #= require_tree ./utils
 #= require ./humon/humon
-#= require_tree ./humon_sysys
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views

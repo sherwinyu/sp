@@ -1,17 +1,12 @@
 Sysys.ActsController = Ember.ArrayController.extend
-  content: null
-  sortProperties: ['start_time']
-  sortAscending: false
-  commit: ->
-    # Sysys.store.commit()
+  actions:
+    newAct: ->
+      newAct = @get('store').createRecord "act"
+      @get('content').insertAt(0, newAct, 0)
 
-  newAct: ->
-    @tx = @get('store').transaction()
-    a = @tx.createRecord Sysys.Act
-    a.setProperties
-      start_time: Sysys.j2hn new Date()
-      end_time: Sysys.j2hn new Date()
-      description: Sysys.j2hn "empty description"
-      detail: Sysys.j2hn(sleep: 'record your sleep' )
-  commitAct: ->
-    console.log 'zug'
+      # We need later + later:
+      #   first loop, view acquires a controller, so that the observer is attached
+      #   second loop, view is bound
+      #   third loop, triggerLater fires
+      Ember.run.later =>
+        newAct.triggerLater 'focusNewAct'

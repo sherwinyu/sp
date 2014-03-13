@@ -54,3 +54,21 @@ describe "Util: time_to_experienced_date" do
   end
 
 end
+
+describe "Util: to_date" do
+  it "converts a valid string to a date" do
+    arg = "2013-1-7"
+    expect(Util::DateTime.to_date arg).to eq Date.new 2013, 1, 7
+  end
+
+  it "doesn't change an existing date" do
+    arg = Date.new 2013, 1, 7
+    expect(Util::DateTime.to_date arg).to eq arg
+  end
+
+  it "raises an error on a Time" do
+    arg = Time.now
+    expect{Util::DateTime.to_date arg}.to raise_error
+  end
+
+end

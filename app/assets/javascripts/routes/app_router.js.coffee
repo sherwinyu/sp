@@ -77,11 +77,13 @@ Sysys.DashboardRoute = Ember.Route.extend
 
     rtdpsController = @controllerFor('rescue_time_dps')
     rtdpsController.set 'start', moment().subtract(24, 'hours')
-
     rtdps = @store.filter 'rescue_time_dp', {nargle: true}, (rtdp) ->
       rtdpsController.rtdpWithinTimeRange(rtdp)
-
     rtdpsController.set('model', rtdps)
+
+    acts = @store.findAll 'act'
+    actsController = @controllerFor 'acts'
+    actsController.set 'model', acts
 
   renderTemplate: ->
     @_super()
@@ -93,6 +95,10 @@ Sysys.DashboardRoute = Ember.Route.extend
       into: 'dashboard'
       outlet: 'rescue_time_dps'
       controller: @controllerFor('rescue_time_dps')
+    @render 'acts',
+      into: 'dashboard'
+      outlet: 'acts'
+      controller: @controllerFor('acts')
 
 Sysys.DaysRoute = Ember.Route.extend
   model: (params) ->

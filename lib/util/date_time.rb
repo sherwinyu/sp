@@ -37,5 +37,22 @@ module Util
 
     end
 
+    ##
+    # @param arg [String | Date]
+    # @return [Date]
+    # Note that we don't support times, because of timezone issues!
+    def self.to_date arg
+      date = case arg
+        when String
+          raise "Expected #{arg} to match YYYY-MM-DD foramt" unless arg =~ /\d\d\d\d-\d\d?-\d\d?/
+          Date.parse arg
+        when Date
+          arg
+        else
+          raise "Expected arg to be a string or a Date, instead got #{arg}: #{arg.class}"
+        end
+      return date
+    end
+
   end
 end

@@ -19,7 +19,6 @@ describe Day do
     it "defaults to Date.today" do
       day.date.should eq Date.today
     end
-
   end
 
   pending "latest" do

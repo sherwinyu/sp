@@ -1,0 +1,5 @@
+button.btn.new-act{action newAct} New Act
+.list-group
+  =each act in content
+    .list-group-item
+      =render 'act' act
