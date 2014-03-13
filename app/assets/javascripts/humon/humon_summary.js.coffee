@@ -6,12 +6,14 @@ Humon.Summary.reopenClass
       name: "text"
     worst:
       name: "text"
+    happiness:
+      name: "number"
     funny:
       name: "text"
     insight:
       name: "text"
 
-  requiredAttributes: ["best", "worst"]
+  requiredAttributes: ["best", "worst", "happiness"]
   optionalAttributes: ["funny", "insight"]
 
 Humon.Summary._generateAccessors()
