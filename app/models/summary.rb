@@ -5,7 +5,7 @@ class Summary
 
   field :best, type: String
   field :worst, type: String
-  field :happiness, type: String
+  field :happiness, type: Integer
   field :funny, type: String
   field :insight, type: String
 

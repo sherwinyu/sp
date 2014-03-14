@@ -2,6 +2,7 @@ class SummarySerializer < ActiveModel::Serializer
   attributes *%w[
     best
     worst
+    happiness
     funny
     insight
   ]
