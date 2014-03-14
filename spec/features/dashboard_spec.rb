@@ -1,14 +1,35 @@
 require "spec_helper"
-feature "Dashboard" do
+require "support/features/dashboard_helpers"
+
+feature "Dashboard", feature: "dashboard" do
+  include Features::DashboardHelpers
   before(:each) do
     login
   end
   scenario "You can save the day", js: true do
     visit '#'
-
     expect(page).to have_text "Dashboard"
+
+    fill_in_sleep
+    fill_in_summary
+    add_goals
+    save_day
+
+    binding.pry
+    day = Day.latest
+
+
+    expect(day.sleep.awake_at).to eq Time.parse("8:30").to_datetime
+
+    expect(day.summary.worst).to eq "back pain"
+
+    expect(day.summary.best).to eq "Enjoying dinner with family"
+    expect(day.summary.worst).to eq "back pain"
+
+
   end
 end
+
 =begin
 describe "Referrals" do
   let(:host) {"test-newliving.weaveenergy.com"}
