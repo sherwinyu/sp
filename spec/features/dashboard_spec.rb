@@ -15,18 +15,22 @@ feature "Dashboard", feature: "dashboard" do
     add_goals
     save_day
 
-    binding.pry
-    day = Day.latest
 
+    expd_date = Util::DateTime::today_as_experienced_date
+    awake_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:30")
+    up_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:35")
+    computer_off_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:00")
+    lights_out_at = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:25")
 
-    expect(day.sleep.awake_at).to eq Time.parse("8:30").to_datetime
-
-    expect(day.summary.worst).to eq "back pain"
-
-    expect(day.summary.best).to eq "Enjoying dinner with family"
-    expect(day.summary.worst).to eq "back pain"
-
-
+    eventually do
+      day = Day.latest
+      expect(day.sleep.awake_at).to eq awake_at_dt
+      expect(day.sleep.up_at).to eq up_at_dt
+      expect(day.sleep.computer_off_at).to eq computer_off_at_dt
+      expect(day.sleep.lights_out_at).to eq lights_out_at
+      expect(day.summary.best).to eq "Enjoying dinner with family"
+      expect(day.summary.worst).to eq "Back pain worsening"
+    end
   end
 end
 

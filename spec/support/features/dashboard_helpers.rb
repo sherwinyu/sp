@@ -38,8 +38,9 @@ module Features
     def fill_in_summary
       summary = find ".summary"
       best = node('best', summary)
-      val_field('best', summary).set "Enjoying dinner with family asdf asdf asdf"
-      val_field('worst', summary).set "back pain"
+      val_field('best', summary).set "Enjoying dinner with family"
+      val_field('worst', summary).click
+      val_field('worst', summary).set "Back pain worsening"
     end
 
     def add_goals

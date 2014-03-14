@@ -34,8 +34,41 @@ module Util
         experienced_date = experienced_date.yesterday if eastern_time
       end
       experienced_date
-
     end
+
+
+    # Necessary to convert dates to datetimes while perserving the offset
+    # WARNING: this MODIFIES the universaltime
+    def self.d2dt date
+      date.to_datetime.change offset: Time.zone.now.formatted_offset
+    end
+
+    def self.experienced_date_and_time_to_datetime experienced_date, time
+      dt = d2dt experienced_date
+
+      dt = dt.change(hour: time.hour, min: time.min, sec: time.sec)
+      if dt.hour < 4
+        dt = dt.in 1.day
+      end
+      dt
+    end
+
+    def self.today_as_experienced_date
+      datetime_to_experienced_date Time.now
+    end
+
+    def self.zoned time_or_datetime
+      time_or_datetime.in_time_zone
+    end
+
+    def self.datetime_to_experienced_date datetime, day_starts_at=4
+      dt = zoned datetime.to_datetime
+      if dt.hour <  day_starts_at
+        dt = dt.ago 1.day
+      end
+      dt.to_date
+    end
+
 
     ##
     # @param arg [String | Date]

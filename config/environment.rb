@@ -12,7 +12,7 @@ end
 def reload_env!
     sub_paths = [
       "/app/importers/*.rb",
-      "/app/utils/*.rb"
+      "/lib/util/*.rb"
     ]
     paths = sub_paths.map {|sub_path| "#{::Rails.root}#{sub_path}"}.map{|glob_path| Dir[glob_path]}.flatten
    # Dir["#{::Rails.root}/app/importers/*.rb"].each do |filename|
