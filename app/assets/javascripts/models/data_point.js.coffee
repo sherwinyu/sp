@@ -21,10 +21,13 @@ Sysys.DataPoint = DS.Model.extend
   typeMap: (->
     type:
       name: "string"
+      readOnly: @get('type') == 'LastFmDp'
     at:
       name: "time"
+      readOnly: @get('type') == 'LastFmDp'
     endedAt:
       name: "time"
+      readOnly: @get('type') == 'LastFmDp'
     details:
       readOnly: @get('type') == 'LastFmDp'
   ).property().volatile()
