@@ -65,6 +65,8 @@ group :production do
   gem 'unicorn'
 end
 
+gem 'twilio-ruby'
+
 gem "active_model_serializers", :github => "rails-api/active_model_serializers"
 gem "mongoid", "~> 3.1"
 gem "mongoid_auto_increment"
