@@ -30,6 +30,9 @@ class DataPoint
     end
   end
 
+  ##
+  # Over ridden find method that accepts an integer argument, returns
+  # the ith DataPoint
   def self.find args
     if args.to_i.to_s == args
       args = args.to_i
