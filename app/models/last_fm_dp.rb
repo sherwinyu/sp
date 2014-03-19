@@ -9,6 +9,7 @@ class LastFmDp < DataPoint
     DataPointSerializer.new(self).as_json['data_point']
   end
 
+  # Need to define this, as DataPointSerializer still uses it
   def details
     {
       artist: artist,
