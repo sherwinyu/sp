@@ -16,6 +16,8 @@ div.options
       ' Delete
       i.fa.fa-trash-o
 
+= humon-field json=timezone rootKey="timezone" metaTemplate=typeMap.timezone downPressed="downPressed" upPressed="upPressed"
+
 .day-time-span
   = timeSpan
 
