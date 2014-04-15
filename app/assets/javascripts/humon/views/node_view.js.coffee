@@ -4,7 +4,6 @@ Humon.NodeView = Ember.View.extend
 
   _templateChanged: false
   _id: null
-  templateName_: ''
   _templateStringsEnabled: true
   clearTemplateStrings: -> @set('_templateStringsEnabled', false)
   enableTemplateStrings: -> @set('_templateStringsEnabled', true)
@@ -37,7 +36,7 @@ Humon.NodeView = Ember.View.extend
   _templateContext: ->
     Humon.templateContextFor(@get 'nodeContent')
   autoTemplate: (->
-    @templateName_ || @_templateContext().get('templateName')
+     @_templateContext().get('templateName')
   ).property('nodeContent.nodeType')
   templateStrings: (->
     Ember.run.sync()
