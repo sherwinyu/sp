@@ -17,6 +17,15 @@ describe "Util: date time" do
   end
 end
 
+describe "Util: DateTime::timezone" do
+  specify "read and write" do
+    Option.current_timezone = "America/New_York"
+    # Util::DateTime.timezone =
+    expect(Util::DateTime.timezone).to eq "America/New_York"
+  end
+
+end
+
 describe "Util: time_to_experienced_date" do
   let (:sunday) { Date.new(2013, 10, 27) }
   let (:monday) { Date.new(2013, 10, 28) }

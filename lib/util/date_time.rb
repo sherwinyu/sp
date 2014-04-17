@@ -1,5 +1,9 @@
 module Util
   class DateTime
+    def self.timezone
+      Option.current_timezone
+    end
+
     def self.format_as_rt_date(time)
       time.strftime("%Y-%m-%dT%H:%M:%S")
     end
