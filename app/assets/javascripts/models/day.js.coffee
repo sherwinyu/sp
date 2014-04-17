@@ -4,6 +4,7 @@ Sysys.Day = DS.Model.extend
   sleep: Sysys.attr('complex')
   summary: Sysys.attr('complex')
   goals: Sysys.attr()
+  timezone: Sysys.attr('string', defaultValue: -> "US East")
 
   # Make it a property, so that defaultDate can be dynamic
   typeMap: (->
@@ -19,6 +20,8 @@ Sysys.Day = DS.Model.extend
     goals:
       name: "goals"
       defaultDate: @get('date')
+    timezone:
+      name: "number"
   ).property().volatile()
 
   yesterday: DS.belongsTo('day')
