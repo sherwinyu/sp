@@ -10,14 +10,14 @@ module Util
 
     # Precondition: time_string is of rt_date format
     # returns: a time in UTC.
-    def self.convert_to_absolute_time time_string
+    def self.rt_time_to_absolute_time time_string
       # Grab the time string
       time = Time.parse(time_string)
 
-      # Get the time zone
-      tz = TZInfo::Timezone.get('US/Eastern')
+      # current_timezone
+      tz = TZInfo::Timezone.get(timezone)
 
-      # tz.local_to_utc ignores timezones, instead; treates
+      # tz.local_to_utc ignores timezones, instead; treats
       # argument as if it were local time in tz
       tz.local_to_utc(time)
     end
@@ -26,6 +26,9 @@ module Util
     # @param [Time] an absolute time. (Regardless of timezone, seconds since epoch)
     # @return [Date] representing the "experienced day (in eastern time)" that time
     # coresponds to.
+    #
+    # Currently, this is only being used for current-time (e.g., we're not gonna look up historical
+    # data)
     #
     # E.g., 3am Tuesday in Eastern Time corresponds to Monday
     # Current cut off is 03:59:59 counts as previous day, 04:00:00 counts as current day

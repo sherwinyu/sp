@@ -52,7 +52,6 @@ class RescueTimeRaw
     Time.at(duration).utc.strftime "%Mm %Ss" rescue nil
   end
 
-
   def to_s
     "#{day} @ #{pretty_hour}, activity: #{activity}, duration: #{pretty_duration}"
   end

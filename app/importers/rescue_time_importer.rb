@@ -51,7 +51,7 @@ class RescueTimeImporter
 
         rtdp.update_attributes(
           activities: activities_hash_from_rtrs(rtrs),
-          time: Util::DateTime.convert_to_absolute_time(rtrs.first.rt_date)
+          time: Util::DateTime.rt_time_to_absolute_time(rtrs.first.rt_date)
         )
         rtdps << rtdp
       end

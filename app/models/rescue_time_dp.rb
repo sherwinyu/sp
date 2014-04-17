@@ -3,12 +3,14 @@ class RescueTimeDp
   include Mongoid::Timestamps
   scope :recent, where(:time.gte => 7.days.ago).desc(:time)
 
+  # uniquely indexed by rt_date
   field :rt_date, type: String
   attr_readonly :rt_date
 
   field :time, type: Time # stored as UTC, can be updated; zone is implicit from offset with `experienced_time`
   field :activities, type: HumonNode
 
+  # Returns an unzoned ("experienced") time, in UTC
   def experienced_time
     Time.parse(rt_date + "UTC") rescue nil
   end

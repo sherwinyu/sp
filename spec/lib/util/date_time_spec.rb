@@ -79,5 +79,26 @@ describe "Util: to_date" do
     arg = Time.now
     expect{Util::DateTime.to_date arg}.to raise_error
   end
+end
 
+describe "rt_time_to_absolute_time" do
+  # TODO(add more tests)
+  context "when in New York" do
+    it "returns the correct time" do
+      # We're expectin `2014-01-28T10:00:00` to give us the same time, but in the new york time zone
+      Option.stub(:current_timezone).and_return "America/New_York"
+      tzny = ActiveSupport::TimeZone.new("America/New_York")
+      expected_time = tzny.local_to_utc(DateTime.new(2014, 1, 28, 10, 0, 0))
+      expect(Util::DateTime.rt_time_to_absolute_time "2014-01-28T10:00:00").to eq expected_time
+    end
+  end
+  context "when in New York" do
+    it "returns the correct time" do
+      # We're expectin `2014-01-28T10:00:00` to give us the same time, but in the new york time zone
+      Option.stub(:current_timezone).and_return "Asia/Shanghai"
+      tzsh = ActiveSupport::TimeZone.new("Asia/Shanghai")
+      expected_time = tzsh.local_to_utc(DateTime.new(2014, 1, 28, 10, 0, 0))
+      expect(Util::DateTime.rt_time_to_absolute_time "2014-01-28T10:00:00").to eq expected_time
+    end
+  end
 end
