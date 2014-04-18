@@ -37,8 +37,9 @@ module Util
       eastern_time = time.in_time_zone(eastern_tz)
       experienced_date = eastern_time.to_date
 
-      if eastern_time < experienced_date + 4.hours
-        experienced_date = experienced_date.yesterday if eastern_time
+      if eastern_time.hour < 4
+      # if eastern_time < experienced_date + 4.hours
+        experienced_date = experienced_date.yesterday
       end
       experienced_date
     end
@@ -61,20 +62,13 @@ module Util
     end
 
     def self.today_as_experienced_date
-      datetime_to_experienced_date Time.now
+      time_to_experienced_date Time.now
     end
 
     def self.zoned time_or_datetime
       time_or_datetime.in_time_zone
     end
 
-    def self.datetime_to_experienced_date datetime, day_starts_at=4
-      dt = zoned datetime.to_datetime
-      if dt.hour <  day_starts_at
-        dt = dt.ago 1.day
-      end
-      dt.to_date
-    end
 
 
     ##
