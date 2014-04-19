@@ -44,6 +44,16 @@ module Util
       experienced_date
     end
 
+    def dt_to_expd_date datetime, timezone=nil, day_starts_at=nil
+      timezone ||= Option.timezone
+      day_starts_at ||= 4
+      tz = ActiveSupport::Timezone.new timezone
+      expd_date = datetime.to_date
+      if datetime.hour < day_starts_at
+        expd_date = expd_date.yesterday
+      end
+      expd_date
+    end
 
     # Necessary to convert dates to datetimes while perserving the offset
     # WARNING: this MODIFIES the universaltime
