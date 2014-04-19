@@ -45,7 +45,7 @@ module Util
     end
 
     def self.dt_to_expd_date datetime, timezone=nil, day_starts_at=nil
-      timezone ||= Option.timezone
+      timezone ||= Option.current_timezone
       day_starts_at ||= 4
       tz = ActiveSupport::TimeZone.new timezone
       datetime = datetime.in_time_zone tz

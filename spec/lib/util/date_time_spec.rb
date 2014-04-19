@@ -46,7 +46,7 @@ describe "Util: dt_to_expd_date" do
   let (:tz) { ActiveSupport::TimeZone.new(tz_string)}
 
   before :each do
-    Option.stub(:timezone).and_return(tz_string)
+    Option.stub(:current_timezone).and_return(tz_string)
   end
 
 
