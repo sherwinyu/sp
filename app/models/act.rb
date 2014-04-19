@@ -14,19 +14,7 @@ class Act
 
   validate :ensure_day_in_range, if: :day?
 
-  ##
-  # For now, makes sure self.at.to_date  == self.day.date
-  def ensure_day_in_range
-    return if Util::DateTime.time_to_experienced_date(at) == self.day.date
-    errors[:at] << "(started_at) must belong to day's date (#{self.day.date})"
-  end
-
   scope :recent, -> { desc(:at).limit(10) }
-
-  # Nvm, user must set day manually
-  # after_validation do |document|
-  #  document.day ||= Day.on Util::DateTime.time_to_experienced_date document.at
-  # end
 
 end
 
