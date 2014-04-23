@@ -94,8 +94,6 @@ module Util
       time_or_datetime.in_time_zone
     end
 
-
-
     ##
     # @param arg [String | Date]
     # @return [Date]

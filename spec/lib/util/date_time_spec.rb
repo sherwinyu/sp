@@ -49,7 +49,6 @@ describe "Util: dt_to_expd_date" do
     Option.stub(:current_timezone).and_return(tz_string)
   end
 
-
   context "when in shanghai" do
     let (:tz_string) { 'Asia/Shanghai'}
 

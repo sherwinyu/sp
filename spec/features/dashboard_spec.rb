@@ -4,6 +4,8 @@ require "support/features/dashboard_helpers"
 feature "Dashboard", feature: "dashboard" do
   include Features::DashboardHelpers
   before(:each) do
+    Option.current_timezone = "Asia/Shanghai"
+
     login
   end
   scenario "You can save the day", js: true do

@@ -13,7 +13,7 @@ class Option
   #
   # @return [String]
   def self.current_timezone
-    opts.current_timezone or fail "none found"
+    opts.current_timezone || 4
   end
 
   def self.current_timezone=(arg)
