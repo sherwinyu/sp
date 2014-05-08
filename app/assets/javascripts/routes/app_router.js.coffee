@@ -1,5 +1,4 @@
-window.delay_param = 250
-
+#= require ./routine_routes
 responseToString = (response) ->
   errorMsg = ""
   errorMsg += response.statusText + " "
@@ -7,26 +6,6 @@ responseToString = (response) ->
   errorMsg += "#{response.responseText}"
   errorMsg += "[#{response.toString()}]"
   return errorMsg
-
-slowPromise = ->
-
-  new Ember.RSVP.Promise((resolve) ->
-    setTimeout (->
-      resolve [
-        title: "a"
-      ,
-        title: "b"
-      ,
-        title: "c"
-      ]
-    ), 2500
-  )
-
-delayed = (ftn) ->
-  Ember.RSVP.Promise (resolve) ->
-    setTimeout (->
-      resolve ftn.call(null)
-    ), window.delay_param
 
 Sysys.Router.map ->
   @resource "sexy_articles"
@@ -44,13 +23,11 @@ Sysys.Router.map ->
 
   @resource "day", path: "/days/:day_id", ->
 
+  @resource "routines", path: "/routines"
+
   @route "dashboard"
   @route "login"
   @route "logout"
-
-
-Sysys.SexyArticlesRoute = Ember.Route.extend
-  model: slowPromise
 
 Sysys.LoginRoute = Ember.Route.extend
   beforeModel: (transition) ->

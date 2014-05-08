@@ -8,6 +8,7 @@ Sysys::Application.routes.draw do
   resources :rescue_time_dps
 
   resources :acts
+  resources :routines, only: [:index, :show, :create]
   root to: 'pages#home'
 
   # The priority is based upon order of creation:
