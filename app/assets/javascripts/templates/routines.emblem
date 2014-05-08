@@ -1,0 +1,15 @@
+.panel.panel-default
+  .panel-heading
+    | All routines
+
+  .panel-body
+    =each routine in content
+      = routine.id
+      = routine.name
+
+    /
+      button.btn.new-data-point{action newDataPoint} New Data Point
+      .list-group
+        =each data_point in content
+          .list-group-item
+            =render 'data_point' data_point

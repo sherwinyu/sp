@@ -23,7 +23,8 @@ Sysys.Router.map ->
 
   @resource "day", path: "/days/:day_id", ->
 
-  @resource "routines", path: "/routines"
+  @resource "routines", path: "/routines", ->
+    @route "new"
 
   @route "dashboard"
   @route "login"

@@ -1,3 +1,4 @@
 Sysys.RoutinesRoute = Ember.Route.extend
   model: (params)->
-    $.getJSON('/routines')
+    x = $.getJSON('/routines').then (root)->
+      root.routines
