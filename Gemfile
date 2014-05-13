@@ -69,7 +69,8 @@ end
 gem 'twilio-ruby'
 
 gem "active_model_serializers", :github => "rails-api/active_model_serializers"
-gem "mongoid"
+gem "mongoid", git: 'https://github.com/mongoid/mongoid.git'
+
 gem "mongoid_auto_increment"
 gem 'rest-client', '1.6.7'
 gem "mixpanel"
