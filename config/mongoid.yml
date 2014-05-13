@@ -13,7 +13,6 @@ development:
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
-        safe: true
 
         # Change the default consistency model to :eventual or :strong.
         # :eventual will send reads to secondaries, :strong sends everything
@@ -73,7 +72,6 @@ test:
       hosts:
         - localhost:27017
       options:
-        consistency: :strong
         # In the test environment we lower the retries and retry interval to
         # low amounts for fast failures.
         max_retries: 1
@@ -86,7 +84,6 @@ production:
     default:
       uri: <%= ENV['MONGOLAB_URI'] %>
       options:
-        safe: true
         skip_version_check: true
   options:
     raise_not_found_error: false
@@ -95,7 +92,6 @@ staging:
     default:
       uri: <%= ENV['MONGOLAB_URI'] %>
       options:
-        safe: true
         skip_version_check: true
 
   options:
