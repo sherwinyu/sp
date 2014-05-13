@@ -78,3 +78,6 @@ gem 'hashie'
 gem 'awesome_print'
 gem 'rack-mini-profiler'
 gem 'devise'
+
+gem 'bson'
+gem 'moped'
