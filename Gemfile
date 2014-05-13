@@ -47,7 +47,7 @@ group :development, :test do
   gem 'guard-zeus'
   gem 'guard-rspec', '3.0.0'
   gem 'guard-jasmine', '1.15.1'
-  gem "jasminerice", '0.0.10'
+  # gem "jasminerice", '0.0.10'
   gem 'jasmine-sinon-rails', '1.3.4'
   gem 'sinon-rails', '1.4.2.1'
 end
