@@ -11,7 +11,7 @@ class DataPoint
   # e.g., "DataPoint", "LastFmDp"
   #
   def type
-    _type
+    _type rescue nil
   end
 
 

@@ -33,8 +33,6 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     - we assume that it's a static (or already resolved) value
     - set content; and the norma view life cycle will render it for us.
   ###
-  initClassNames: (->)
-
   initContentFromJson: ->
     initialJson = @get('json')
     # Options:
@@ -48,11 +46,6 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
              suppressNodeParentWarning: yes
     node.set('nodeKey', @get('rootKey'))
     @set 'content', node
-
-  _jsonUpdated: (->
-    x = @get('json')
-    console.log(x)
-  ).observes('json')
 
   init: ->
     @_super()

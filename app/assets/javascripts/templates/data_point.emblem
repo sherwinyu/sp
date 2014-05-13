@@ -4,5 +4,10 @@ span.options
     a{action "save"}: | Save
 
 = humon-editor json=type rootKey="type" metaTemplate=typeMap.type downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
+
+div.whatever
+  | At:
+  = at
+
 = humon-editor json=at rootKey="At" metaTemplate=typeMap.at downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"
 = humon-editor json=details metaTemplate=typeMap.details rootKey="Details" downPressed="downPressed" upPressed="upPressed" focusLost="deactivateDataPointView" focusGained="activateDataPointView"

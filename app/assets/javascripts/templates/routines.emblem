@@ -3,9 +3,13 @@
     | All routines
 
   .panel-body
+
     =each routine in content
+      = humon-editor json=routine rootkey="Routine"
+      br
       = routine.id
       = routine.name
+      = routine.routine_steps
 
     /
       button.btn.new-data-point{action newDataPoint} New Data Point
