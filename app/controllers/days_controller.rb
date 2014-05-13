@@ -46,10 +46,12 @@ class DaysController < ApplicationController
   def day
     Day.find_by(date: params[:id])
   end
+
+  # TODO(syu): test this!!
   def day_params
     params.require(:day).permit(:date,
                                 :note,
-                                :sleep => [:awake_at, :up_at, :awake_energy, :up_energy],
+                                :sleep => Sleep.fields.keys - ["_id"],
                                 :summary => [:best, :worst, :happiness, :funny, :insight],
                                 :goals => [:goal, :completed, :completed_at]
                                )
