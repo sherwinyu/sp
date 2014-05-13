@@ -15,8 +15,8 @@ class DataPoint
   end
 
 
-  scope :recent, desc(:at).limit(10)
-  default_scope desc(:at)
+  scope :recent, -> { desc(:at).limit(10) }
+  default_scope -> { desc(:at) }
 
   after_save :flush_cache
 
