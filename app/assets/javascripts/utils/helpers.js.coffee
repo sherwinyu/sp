@@ -112,7 +112,7 @@ window.utils =
 
   track: (eventName, eventOptions) ->
     $.extend(eventOptions, @_trackProperties)
-    mixpanel.track eventName, eventOptions
+    mixpanel?.track eventName, eventOptions
 
   _trackProperties: {}
 

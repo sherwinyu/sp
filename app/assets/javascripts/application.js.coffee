@@ -16,4 +16,4 @@
 # window.onbeforeunload = (event) ->
 # 'Be careful!'
 $(document).ready ->
-  mixpanel.track('pageload')
+  mixpanel?.track('pageload')
