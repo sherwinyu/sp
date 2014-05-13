@@ -11,7 +11,5 @@ class User
   validates_presence_of :encrypted_password
 
   field :remember_created_at, type: Time
-
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
  end
 
