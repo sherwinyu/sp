@@ -55,17 +55,14 @@ feature "Dashboard", feature: "dashboard" do
     computer_off_at_dt = normalize Time.parse("2:00").to_datetime
     lights_out_at_dt = normalize Time.parse("2:25").to_datetime
 
-    sleep(2)
-
-    day = Day.latest
-    expect(day.sleep.awake_at).to eq awake_at_dt
-    expect(day.sleep.up_at).to eq up_at_dt
-    expect(day.sleep.computer_off_at).to eq computer_off_at_dt
-    expect(day.sleep.lights_out_at).to eq lights_out_at
-    expect(day.summary.best).to eq "Enjoying dinner with family"
-    expect(day.summary.worst).to eq "Back pain worsening"
-    # TODO(syu): figure out `eventually`
     eventually do
+      day = Day.latest
+      expect(day.sleep.awake_at).to eq awake_at_dt
+      expect(day.sleep.up_at).to eq up_at_dt
+      expect(day.sleep.computer_off_at).to eq computer_off_at_dt
+      expect(day.sleep.lights_out_at).to eq lights_out_at_dt
+      expect(day.summary.best).to eq "Enjoying dinner with family"
+      expect(day.summary.worst).to eq "Back pain worsening"
     end
   end
 end

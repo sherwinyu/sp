@@ -1,8 +1,8 @@
 # From: https://gist.github.com/mattwynne/1228927
 #
 # usage:
-# it "should return a result of 5" do
-#   eventually { long_running_thing.result.should eq(5) }
+# it "returns a result of 5" do
+#   eventually { expect(long_running_thing.result).to eq(5) }
 # end
 module AsyncHelper
   def eventually(options = {})
