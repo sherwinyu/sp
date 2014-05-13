@@ -15,27 +15,30 @@ feature "Dashboard", feature: "dashboard" do
     add_goals
     save_day
 
-
-    expd_date = Util::DateTime::today_as_experienced_date
-
-
+    ### Another way of dong it..
+    #
     # "+08:00"
     # Note that this is actually system offset, but in this request spec, the browser offset will be
     # the system offset
-    browser_offset = DateTime.now.zone
-
-
-    ### ideally
+    # browser_offset = DateTime.now.zone
+    #
     # browser_tz = ...
     # browser_tz.parse("8:30")
+    #
+    # expd_date = Util::DateTime::today_as_experienced_date
+    #
+    # awake_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:30 #{browser_offset}")
+    # up_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:35 #{browser_offset}")
+    # computer_off_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:00 #{browser_offset}")
+    # lights_out_at = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:25 #{browser_offset}")
     ###
 
-    awake_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:30 #{browser_offset}")
-    up_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:35 #{browser_offset}")
-    computer_off_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:00 #{browser_offset}")
-    lights_out_at = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:25 #{browser_offset}")
-
+    # TODO(syu): get rid of this... or move it into its own helper method
     def normalize(datetime)
+      # it's tuesday 2am and we parse tuesday 2:30am -> yes, tuesday 2am
+      # it's tuesday 2am and we parse tuesday 8:30am -> no, monday 8am
+      # it's tuesday 8am and we parse tuesday 8am -> yes, tuesday 8am
+      # it's tuesday 8am and we parse tuesday 2am -> no, wednesday 2am
       now = Time.now
       delta = if datetime.hour > 4 && now.hour < 4
                 -1
@@ -52,13 +55,7 @@ feature "Dashboard", feature: "dashboard" do
     computer_off_at_dt = normalize Time.parse("2:00").to_datetime
     lights_out_at_dt = normalize Time.parse("2:25").to_datetime
 
-    render_page
     sleep(2)
-
-    # it's tuesday 2am and we parse tuesday 2:30am -> yes, tuesday 2am
-    # it's tuesday 2am and we parse tuesday 8:30am -> no, monday 8am
-    # it's tuesday 8am and we parse tuesday 8am -> yes, tuesday 8am
-    # it's tuesday 8am and we parse tuesday 2am -> no, wednesday 2am
 
     day = Day.latest
     expect(day.sleep.awake_at).to eq awake_at_dt
@@ -67,6 +64,7 @@ feature "Dashboard", feature: "dashboard" do
     expect(day.sleep.lights_out_at).to eq lights_out_at
     expect(day.summary.best).to eq "Enjoying dinner with family"
     expect(day.summary.worst).to eq "Back pain worsening"
+    # TODO(syu): figure out `eventually`
     eventually do
     end
   end
