@@ -56,5 +56,4 @@ class DaysController < ApplicationController
                                 :goals => [:goal, :completed, :completed_at]
                                )
   end
-
 end
