@@ -12,6 +12,8 @@
   <!-- mixpanel will be inserted here by the gem -->
 </head>
 
-<body <%=raw "id='ember-app'" if @ember%> ></body>
+<body <%=raw "id='ember-app'" if @ember%> >
+Env:  <%= Rails.env %> <%= yield %>
+</body>
 
 </html>
