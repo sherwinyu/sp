@@ -1,3 +1,4 @@
+###
 Humon.Goals = Humon.List.extend
   insertNewChildAt: (idx) ->
     blank = Humon.json2node undefined, metatemplate: {name: "goal"}, allowInvalid: true, nodeParent: @node
@@ -65,3 +66,4 @@ Humon.NodeGoalDescriptionView = Humon.NodeView.extend
   actions:
     deletePressed: ->
       @get('nodeContent.nodeParent.nodeView').send 'deletePressed'
+###

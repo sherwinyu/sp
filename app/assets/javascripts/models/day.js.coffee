@@ -18,7 +18,7 @@ Sysys.Day = DS.Model.extend
       name: "summary"
       defaultDate: @get('date')
     goals:
-      name: "goals"
+      name: "hash"
       defaultDate: @get('date')
     timezone:
       name: "number"
