@@ -51,6 +51,14 @@ module Util
       date.to_datetime.change offset: Time.zone.now.formatted_offset
     end
 
+    ##
+    # @param experienced_date -- the day to bias toward
+    # @time A time. The date information is completely ignored. Timezone is respected
+    #   the normalization (rolling back a day) decision is based on time.zone
+    #
+    # @return A datetime biased toward experienced_date, with the same timezone as time
+    #
+    # ed_and_time2dt
     def self.experienced_date_and_time_to_datetime experienced_date, time
       dt = d2dt experienced_date
 
