@@ -1,3 +1,5 @@
 | goals
 Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
+= each nodeChild in view.content.nodeVal.children
+  = nodeChild
 | yeahhh
