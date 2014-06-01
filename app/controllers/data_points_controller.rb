@@ -44,8 +44,8 @@ class DataPointsController < ApplicationController
   # POST /data_points
   # POST /data_points.json
   def create
-    @data_point = DataPoint.new(params[:data_point])
-    @data_point[:_type] = params[:data_point][:type]
+    @data_point = DataPoint.new data_point_params
+    @data_point[:_type] = data_point_params[:type]
 
     if @data_point.save
       render json: @data_point, status: :created, location: @data_point
@@ -60,7 +60,7 @@ class DataPointsController < ApplicationController
     @data_point = DataPoint.find(params[:id])
 
     respond_to do |format|
-      if @data_point.update_attributes(params[:data_point])
+      if @data_point.update_attributes data_point_params
         format.html { redirect_to @data_point, notice: 'Data point was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,5 +80,9 @@ class DataPointsController < ApplicationController
       format.html { redirect_to data_points_url }
       format.json { head :no_content }
     end
+  end
+
+  def data_point_params
+    params.require(:data_point).permit!
   end
 end

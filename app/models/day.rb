@@ -9,8 +9,7 @@ class Day
   embeds_many :goals
   has_many :acts
 
-  scope :recent, where(:date.gte => 7.days.ago).desc(:date)
-
+  scope :recent, -> { where(:date.gte => 7.days.ago).desc(:date) }
   def_delegators :sleep, *%w[
     awake_at
     up_at
@@ -24,7 +23,7 @@ class Day
   validates_uniqueness_of :date
   validates_presence_of :date
 
-  default_scope asc(:date)
+  default_scope -> { asc(:date) }
 
   def weekday
     date.strftime("%A")

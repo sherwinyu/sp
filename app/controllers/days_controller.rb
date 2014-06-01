@@ -30,7 +30,7 @@ class DaysController < ApplicationController
 
   def update
     @day = day
-    if @day.update_attributes params[:day]
+    if @day.update_attributes day_params
       render json: nil, status: :no_content
     else
       render json: @day.errors, status: :unprocessable_entity
@@ -47,4 +47,13 @@ class DaysController < ApplicationController
     Day.find_by(date: params[:id])
   end
 
+  # TODO(syu): test this!!
+  def day_params
+    params.require(:day).permit(:date,
+                                :note,
+                                :sleep => Sleep.fields.keys - ["_id"],
+                                :summary => [:best, :worst, :happiness, :funny, :insight],
+                                :goals => [:goal, :completed, :completed_at]
+                               )
+  end
 end

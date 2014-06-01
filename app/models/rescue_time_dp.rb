@@ -1,7 +1,9 @@
 class RescueTimeDp
   include Mongoid::Document
   include Mongoid::Timestamps
-  scope :recent, where(:time.gte => 7.days.ago).desc(:time)
+
+  scope :recent, -> (x=7) { where(:time.gte => (x).days.ago).desc(:time) }
+  scope :most_recent, -> { desc(:time).limit(36) }
 
   # uniquely indexed by rt_date
   field :rt_date, type: String

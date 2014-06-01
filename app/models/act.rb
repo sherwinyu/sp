@@ -21,7 +21,7 @@ class Act
     errors[:at] << "(started_at) must belong to day's date (#{self.day.date})"
   end
 
-  scope :recent, desc(:at).limit(10)
+  scope :recent, -> { desc(:at).limit(10) }
 
   # Nvm, user must set day manually
   # after_validation do |document|

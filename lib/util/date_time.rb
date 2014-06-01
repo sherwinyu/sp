@@ -69,6 +69,12 @@ module Util
       dt
     end
 
+    def day_normalize_time(time_or_datetime)
+      if dt.hour < 4
+        dt = dt.in 1.day
+      end
+    end
+
     def self.today_as_experienced_date
       time_to_experienced_date Time.now
     end

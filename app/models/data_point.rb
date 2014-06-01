@@ -5,18 +5,19 @@ class DataPoint
   field :at, type: Time
   field :ended_at, type: Time
   field :details
+  field :type
 
   ##
   # Returns the underlying type (a string)
   # e.g., "DataPoint", "LastFmDp"
   #
   def type
-    _type
+    _type rescue nil
   end
 
 
-  scope :recent, desc(:at).limit(10)
-  default_scope desc(:at)
+  scope :recent, -> { desc(:at).limit(10) }
+  default_scope -> { desc(:at) }
 
   after_save :flush_cache
 
