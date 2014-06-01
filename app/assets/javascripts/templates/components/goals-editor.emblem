@@ -2,4 +2,14 @@
 Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
 = each nodeChild in view.content.nodeVal.children
   = nodeChild
+
+/ OR if "view.content" is just plain old json...
+  = each goalJson in view.content
+    Humon.Field contentBinding= goalJson.description [...options...]
+      o-type="string"
+      o-minlength="5"
+      o-maxlength="255"
+      o-
+
+
 | yeahhh
