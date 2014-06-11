@@ -8,7 +8,7 @@ class Summary
   field :happiness, type: Integer
   field :funny, type: String
   field :insight, type: String
-  field :meditation, type: String
+  field :meditation, type: Hash
 
   def as_json
     Util::Log.warn "Summary#as_json called (via default serializer)"

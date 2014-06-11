@@ -13,7 +13,7 @@ Humon.Summary.reopenClass
     insight:
       name: "text"
     meditation:
-      name: "string"
+      name: "hash"
 
   requiredAttributes: ["best", "worst", "happiness", "meditation"]
   optionalAttributes: ["funny", "insight"]
