@@ -52,7 +52,7 @@ class DaysController < ApplicationController
     params.require(:day).permit(:date,
                                 :note,
                                 :sleep => Sleep.fields.keys - ["_id"],
-                                :summary => [:best, :worst, :happiness, :funny, :insight],
+                                :summary => [:best, :worst, :happiness, :meditation, :funny, :insight],
                                 :goals => [:goal, :completed, :completed_at]
                                )
   end

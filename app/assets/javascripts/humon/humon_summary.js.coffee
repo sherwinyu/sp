@@ -12,8 +12,10 @@ Humon.Summary.reopenClass
       name: "text"
     insight:
       name: "text"
+    meditation:
+      name: "string"
 
-  requiredAttributes: ["best", "worst", "happiness"]
+  requiredAttributes: ["best", "worst", "happiness", "meditation"]
   optionalAttributes: ["funny", "insight"]
 
 Humon.Summary._generateAccessors()
