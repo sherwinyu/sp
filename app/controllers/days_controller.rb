@@ -49,14 +49,12 @@ class DaysController < ApplicationController
 
   # TODO(syu): test this!!
   def day_params
-    p =  params.require(:day).permit(:date,
+    p = params.require(:day).permit(:date,
                                 :note,
                                 :sleep => Sleep.fields.keys - ["_id"],
                                 :goals => [:goal, :completed, :completed_at]
-                               )
-    y = p.tap do |whitelisted|
-      whitelisted[:summary] = params[:day][:summary].to_h
-    end
-    y
+                             )
+    p[:summary] = params[:day][:summary].to_h
+    p
   end
 end

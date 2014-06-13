@@ -5,17 +5,24 @@ module Features
       node.native.send_key :Enter
     end
 
+    ##
+    # @return a .key-field
+    # @param key
     def node(key, context=self)
       key_field = context.find('.key-field', text: key)
       node_el = key_field.find(:xpath, "..")
       return node_el
     end
 
+    ##
+    # @return the val_field div with the given key
     def val_field(key, context=self)
       node(key, context).find('.val-field')
     end
 
-    def key_field(key)
+    ##
+    # @return the key_field div with the given key
+    def key_field(key, context=self)
       node(key, context).find('.key-field')
     end
 
