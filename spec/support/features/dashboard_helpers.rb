@@ -50,6 +50,17 @@ module Features
       val_field('worst', summary).set "Back pain worsening"
     end
 
+    def fill_in_meditation
+      key_field('meditation', summary).click
+      meditation = node('meditation')
+      meditation.native.send_keys :Enter
+      nodes = sleep.all('.node-literal')
+      firstkf = nodes.first.find('.key-field')
+      # fill_in_node
+      # keyfields = node('meditation').all('.node-literal .key-field')
+      #  fill_in_node keyfields.first, "warg"
+    end
+
     def add_goals
     end
 
