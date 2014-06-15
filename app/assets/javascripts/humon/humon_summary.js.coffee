@@ -23,8 +23,9 @@ Humon.Summary._generateAccessors()
 Humon.Meditation = Humon.Complex.extend()
 Humon.Meditation.reopenClass
   childMetatemplates:
-    a:
+    activities:
       name: "string"
-    b:
-      name: "string"
-    requiredAttributes: ["a", "b"]
+    satisfaction:
+      name: "number"
+  requiredAttributes: ["activities", "satisfaction"]
+
