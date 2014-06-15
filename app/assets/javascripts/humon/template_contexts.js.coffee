@@ -96,7 +96,6 @@ Humon.TemplateContexts.Complex = Humon.TemplateContexts.Hash.extend(
   templateName: "humon_node_complex"
 )
 Humon.TemplateContexts.Sleep = Humon.TemplateContexts.Complex.extend(
-  # templateName: "humon_node_sleep"
 )
 
 Humon.TemplateContexts.Goals = Humon.TemplateContexts.List.extend(
@@ -108,8 +107,13 @@ Humon.TemplateContexts.Goal = Humon.TemplateContexts.Complex.extend(
   templateStrings: (node) ->
     asString: node.get('nodeVal.goal')
 )
+
+Humon.TemplateContexts.Meditation = Humon.TemplateContexts.Complex.extend(
+)
+
 Humon.TemplateContexts.Summary = Humon.TemplateContexts.Complex.extend(
 )
+
 Humon.TemplateContexts.Text = Humon.TemplateContexts.String.extend(
   templateName: "humon_node_text"
 )
