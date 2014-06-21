@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.4'
+gem 'rails', '4.1.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -40,7 +40,6 @@ gem 'emblem-rails', github: "alexspeller/emblem-rails"
 gem 'momentjs-rails', '2.0.0.2'
 
 gem 'pry', '0.9.11'
-gem 'spring', require: false
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
@@ -51,11 +50,18 @@ group :development, :test do
 
   gem 'factory_girl_rails', '4.2.1'
   gem 'guard-zeus'
-  gem 'guard-rspec', '3.0.0'
   gem 'guard-jasmine', '1.15.1'
   # gem "jasminerice", '0.0.10'
   gem 'jasmine-sinon-rails', '1.3.4'
   gem 'sinon-rails', '1.4.2.1'
+  gem 'guard-rspec', require: false
+end
+
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'guard-livereload'
 end
 
 group :test do
