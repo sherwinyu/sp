@@ -39,23 +39,26 @@ gem 'emblem-rails', github: "alexspeller/emblem-rails"
 
 gem 'momentjs-rails', '2.0.0.2'
 
-gem 'pry', '0.9.11'
+gem 'pry'
+gem 'pry-debugger'
+
+gem 'spring', '0.9.0'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
-  gem 'pry-debugger', '0.2.2'
+  gem 'rspec-rails', '2.14'
   gem 'annotate', "2.5.0"
 
   gem 'rb-inotify', require: false
 
   gem 'factory_girl_rails', '4.2.1'
-  gem 'guard-zeus'
   gem 'guard-jasmine', '1.15.1'
   # gem "jasminerice", '0.0.10'
   gem 'jasmine-sinon-rails', '1.3.4'
   gem 'sinon-rails', '1.4.2.1'
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec', '~> 4.0'
 end
+
+gem "spring-commands-rspec", group: :development
 
 
 group :development do
@@ -68,10 +71,8 @@ group :test do
   gem 'database_cleaner', '0.9.1'
   gem 'capybara', '2.1.0'
   gem 'poltergeist', '~> 1.5.0'
-  gem 'rspec-spies'
   gem 'shoulda-matchers', '1.5.6'
   gem 'bourne', '1.4.0'
-  gem 'zeus'
 end
 
 gem 'twilio-ruby'
