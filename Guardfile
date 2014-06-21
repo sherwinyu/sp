@@ -16,7 +16,7 @@ def watchers
 end
 
 def rspec_params opts={}
-  cmd = "spring rspec -f doc #{opts.delete :cmd}"
+  cmd = "bundle exec spring rspec -f doc #{opts.delete :cmd}"
   {
     cmd: cmd,
     all_on_start: false,
