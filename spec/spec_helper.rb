@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/poltergeist'
+Figaro.load
 # require 'rspec/autorun' -- removed because of http://stackoverflow.com/questions/3030308/why-are-my-rspec-specs-running-twice
 
 # Requires supporting ruby files with custom matchers and macros, etc,

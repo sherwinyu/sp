@@ -10,7 +10,7 @@ gem 'pg'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'figaro', '0.6.3'
+gem 'figaro', github: 'laserlemon/figaro'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -58,7 +58,7 @@ group :development, :test do
   gem 'guard-rspec', '~> 4.0'
 end
 
-gem "spring-commands-rspec", group: :development
+gem "spring-commands-rspec", group: :development, require: false
 
 
 group :development do
