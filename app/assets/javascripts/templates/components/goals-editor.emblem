@@ -1,7 +1,13 @@
 | goals
 Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
+
+hr
+
 = each nodeChild in view.content.nodeVal.children
-  = nodeChild
+  Sysys.HumonNodeView nodeContent=nodeChild
+    = partial 'humon_key_index_field'
+    Sysys.ValEditableField rawValue=view.templateStrings.asString
+hr
 
 / OR if "view.content" is just plain old json...
   = each goalJson in view.content

@@ -26,5 +26,5 @@ div.options
 
 = humon-editor json=sleep rootKey="Sleep" metaTemplate=typeMap.sleep downPressed="downPressed" upPressed="upPressed"
 = humon-editor json=summary rootKey="Summary" metaTemplate=typeMap.summary downPressed="downPressed" upPressed="upPressed"
-= goals-editor rootKey="sup"
+= goals-editor json=goals rootKey="sup"
 / humon-editor json=goals rootKey="Goals" metaTemplate=typeMap.goals downPressed="downPressed" upPressed="upPressed"
