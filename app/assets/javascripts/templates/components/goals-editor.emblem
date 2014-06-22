@@ -16,6 +16,22 @@ hr
       o-minlength="5"
       o-maxlength="255"
       o-
-
-
+  orrrrr
+    Humon.LabelledField label="Goal" content=goalJson.description
+    Common usecases
+      1 -- displaying labelled information
+      2 -- allowing editable information
+      3 -- free editable information (includes type changes)
+      4 -- variable types
+  orr
+  Humon.Label label="Goal"
+  Humon.Field content=goalJson.description
+  Humon.ImmutableField
+  Humon.Field can probably be drastically simplified -- all it needs is to be extensible
+    but limited to the domain of literals.
+    so can support formatting, validations, field-specific-hotkeys, etc.
+    Which of these
+  Eventually, Humon.NodeView template can utilize Humon.Field as well
+    instead of such tight coupling with the underlying ContentFields
+    So this also implies the interface is almost definitely going to be json only
 | yeahhh
