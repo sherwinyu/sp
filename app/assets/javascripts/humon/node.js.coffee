@@ -98,7 +98,7 @@ Humon.Node = Ember.Object.extend
 
     # Bubbles up the NODE hierarchy
     if @validate()
-      @get('controller').didCommit
+      @get('controller').send 'didCommit',
         node: @
         rootJson: @get('controller.content').val()
         payload: json

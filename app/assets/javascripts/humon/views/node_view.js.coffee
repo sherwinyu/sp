@@ -132,7 +132,7 @@ Humon.NodeView = Ember.View.extend
   focusIn: (e) ->
     e.stopPropagation()
     # hook for HEC to sendAction focusGained
-    @get('controller').handleFocusIn()
+    @get('controller').send 'handleFocusIn'
     return if @get 'isActive'
     @activateBoundNode()
 
@@ -147,7 +147,7 @@ Humon.NodeView = Ember.View.extend
     e.stopPropagation()
     # Even though controllerMixin doesn't have a handleFocusOut method,
     # HumonEditorComponent implements it.
-    @get('controller').handleFocusOut()
+    @get('controller').send 'handleFocusOut'
     @activateBoundNode(no)
 
     payload = @uiPayload()

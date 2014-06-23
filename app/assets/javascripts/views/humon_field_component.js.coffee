@@ -18,6 +18,11 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
     node.set('nodeKey', @get('rootKey'))
     @set 'content', node
 
+  didCommit: (params) ->
+    # console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
+    @sendAction 'jsonChanged', params.rootJson
+    @set 'json', params.rootJson
+
   init: ->
     @_super()
     @initContentFromJson()
