@@ -2,3 +2,4 @@
 
 Sysys.GoalsEditorComponent = Sysys.HumonEditorComponent.extend
   classNames: ['humon-editor', 'goals-component']
+  justAVar: "asdf"

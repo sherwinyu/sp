@@ -94,6 +94,12 @@
 .node {
 }
 
+// ==
+// Humon field
+.humon-field {
+  border: 1px solid red;
+}
+
 @import "humon/debug";
 @import "humon/detail";
 @import "humon/content_field";

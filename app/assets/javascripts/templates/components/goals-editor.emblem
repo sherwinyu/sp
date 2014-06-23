@@ -8,6 +8,14 @@ hr
     = partial 'humon_key_index_field'
     Sysys.ValEditableField rawValue=view.templateStrings.asString
 hr
+div
+  h5 Attempt HumonField
+  | Just A Var:
+  = justAVar
+  = humon-field json=justAVar
+
+
+
 
 / OR if "view.content" is just plain old json...
   = each goalJson in view.content
