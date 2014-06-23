@@ -1,0 +1,85 @@
+# AS OF 6/23/2014, these files are not used. For not etaking purposes only.
+
+Humon.Goal = Humon.Complex.extend
+  _value: null
+
+Humon.Goal.reopenClass
+  childMetatemplates:
+    goal:
+      name: "text"
+    completed_at:
+      name: "time"
+
+  requiredAttributes: ["goal"]
+  optionalAttributes: ["completed", "completed_at"]
+
+###
+Humon.Goals = Humon.List.extend
+  insertNewChildAt: (idx) ->
+    blank = Humon.json2node undefined, metatemplate: {name: "goal"}, allowInvalid: true, nodeParent: @node
+    @insertAt(idx, blank)
+    return blank
+
+  validateSelf: ->
+    @_super()
+    @ensure "Must have at least 2 goals", @_value.length > 1
+
+Humon.Goals.reopenClass
+  requiredAttributes: ["goal", "completed"]
+  childMetatemplates:
+    $each:
+      name: "goal"
+
+Humon.Goal = Humon.Complex.extend
+  _value: null
+  validateSelf: ->
+    @_super()
+    @ensure "Can't be empty", @get('goal').length > 0
+
+  completedTimestamp: (->
+    t = @get('completed_at')
+    if t instanceof Date
+      utils.time.humanized(t)
+    else
+      "invalid"
+  ).property('completed_at')
+
+  done: ( (key, value) ->
+    !!@get('completed_at')
+  ).property('completed_at')
+
+  enterPressed: ->
+    if @get('done')
+      @set('completed_at', undefined)
+    else
+      @set('completed_at', new Date())
+    false
+
+  unknownProperty: null
+
+Humon.Goal.reopenClass
+  childMetatemplates:
+    goal:
+      name: "text"
+    completed_at:
+      name: "time"
+
+  requiredAttributes: ["goal"]
+  optionalAttributes: ["completed", "completed_at"]
+
+Humon.Goal._generateAccessors()
+
+Humon.NodeGoalView = Humon.NodeView.extend(
+  smartFocus: ->
+    @get('nodeContent.nodeVal._goal.node.nodeView').smartFocus()
+)
+
+Humon.NodeGoalDescriptionView = Humon.NodeView.extend
+  activateBoundNode: (activate = true) ->
+    arg = if activate then @get('nodeContent.nodeParent') else null
+    @get('controller').send('activateNode', arg)
+
+  actions:
+    deletePressed: ->
+      @get('nodeContent.nodeParent.nodeView').send 'deletePressed'
+###
