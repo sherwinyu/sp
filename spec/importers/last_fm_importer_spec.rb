@@ -9,12 +9,12 @@ describe LastFmImporter do
     end
     it "returns 1-hour-ago when no LastFmDps exist" do
       LastFmDp.stub(:latest).and_return nil
-      LastFmImporter.time_start.should be_within(2).of Time.now - 1.hour
+      LastFmImporter.time_start.should be_within(2).of Time.current - 1.hour
     end
   end
   describe ".time_end" do
-    it "returns Time.now" do
-      LastFmImporter.time_end.should be_within(2).of Time.now
+    it "returns Time.current" do
+      LastFmImporter.time_end.should be_within(2).of Time.current
     end
   end
 end

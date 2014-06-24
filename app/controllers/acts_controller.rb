@@ -3,9 +3,9 @@ class ActsController < ApplicationController
   respond_to :json
 
   def create
-    @act = Act.new params[:act]
+    @act = Act.new act_params
     @act.ended_at ||= @act.at + 1.hour
-    @act.day ||= Day.on Util::DateTime.time_to_experienced_date @act.at
+    @act.day ||= Day.on Util::DateTime.dt_to_expd_date @act.at
     if @act.save
       respond_with @act, status: :created
     else
@@ -19,17 +19,21 @@ class ActsController < ApplicationController
   end
 
   def show
-    id = params[:id]
+    @act = Act.find params[:id]
     respond_with @act
   end
 
   def update
     @act = Act.find params[:id]
-    if @act.update_attributes params[:act]
+    if @act.update_attributes act_params
       respond_with @act, status: :ok
     else
       respond_with @act, status: 422
     end
   end
 
+  private
+    def act_params
+      params.require(:act).permit(:at, :ended_at, :desc)
+    end
 end

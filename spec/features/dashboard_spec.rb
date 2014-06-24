@@ -4,6 +4,8 @@ require "support/features/dashboard_helpers"
 feature "Dashboard", feature: "dashboard" do
   include Features::DashboardHelpers
   before(:each) do
+    Option.current_timezone = "Asia/Shanghai"
+
     login
   end
   scenario "You can save the day", js: true do
@@ -25,8 +27,6 @@ feature "Dashboard", feature: "dashboard" do
     # browser_tz = ...
     # browser_tz.parse("8:30")
     #
-    # expd_date = Util::DateTime::today_as_experienced_date
-    #
     # awake_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:30 #{browser_offset}")
     # up_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:35 #{browser_offset}")
     # computer_off_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:00 #{browser_offset}")
@@ -34,15 +34,17 @@ feature "Dashboard", feature: "dashboard" do
     ###
 
     # TODO(syu): get rid of this... or move it into its own helper method
+    # This method mirrors the CLIENT-SIDE time parsing and adjustment
+    # That's why we use Time.now (to mimic the browser time == system time)
     def normalize(datetime)
       # it's tuesday 2am and we parse tuesday 2:30am -> yes, tuesday 2am
       # it's tuesday 2am and we parse tuesday 8:30am -> no, monday 8am
       # it's tuesday 8am and we parse tuesday 8am -> yes, tuesday 8am
       # it's tuesday 8am and we parse tuesday 2am -> no, wednesday 2am
-      now = Time.now
-      delta = if datetime.hour > 4 && now.hour < 4
+      browser_time = Time.now
+      delta = if datetime.hour > 4 && browser_time.hour < 4
                 -1
-              elsif datetime.hour < 4 && now.hour > 4
+              elsif datetime.hour < 4 && browser_time.hour > 4
                 1
               else
                 0

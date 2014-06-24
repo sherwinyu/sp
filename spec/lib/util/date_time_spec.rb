@@ -26,40 +26,69 @@ describe "Util: DateTime::timezone" do
 
 end
 
-describe "Util: time_to_experienced_date" do
+describe "Util: dt_to_expd_date" do
   let (:sunday) { Date.new(2013, 10, 27) }
   let (:monday) { Date.new(2013, 10, 28) }
   let (:tuesday) { Date.new(2013, 10, 29) }
-  let (:eastern_tz) { TZInfo::Timezone.get('US/Eastern') }
 
-  let (:sunday_dawn)    { eastern_tz.local_to_utc(sunday.to_time) + 3.hours + 59.minutes + 59.seconds }
-  let (:sunday_morning) { eastern_tz.local_to_utc(sunday.to_time) + 9.hours }
-  let (:sunday_evening) { eastern_tz.local_to_utc(sunday.to_time) + 18.hours }
+  let (:sunday_dawn)    { tz.local_to_utc(sunday.to_time) + 3.hours + 59.minutes + 59.seconds }
+  let (:sunday_morning) { tz.local_to_utc(sunday.to_time) + 9.hours }
+  let (:sunday_evening) { tz.local_to_utc(sunday.to_time) + 18.hours }
 
-  let (:monday_dawn)    { eastern_tz.local_to_utc(monday.to_time) + 3.hours + 59.minutes + 59.seconds }
-  let (:monday_morning) { eastern_tz.local_to_utc(monday.to_time) + 9.hours }
-  let (:monday_evening) { eastern_tz.local_to_utc(monday.to_time) + 18.hours }
+  let (:monday_dawn)    { tz.local_to_utc(monday.to_time) + 3.hours + 59.minutes + 59.seconds }
+  let (:monday_morning) { tz.local_to_utc(monday.to_time) + 9.hours }
+  let (:monday_evening) { tz.local_to_utc(monday.to_time) + 18.hours }
 
-  let (:tuesday_dawn)    { eastern_tz.local_to_utc(tuesday.to_time) + 3.hours + 59.minutes + 59.seconds }
-  let (:tuesday_morning) { eastern_tz.local_to_utc(tuesday.to_time) + 9.hours }
-  let (:tuesday_evening) { eastern_tz.local_to_utc(tuesday.to_time) + 18.hours }
+  let (:tuesday_dawn)    { tz.local_to_utc(tuesday.to_time) + 3.hours + 59.minutes + 59.seconds }
+  let (:tuesday_morning) { tz.local_to_utc(tuesday.to_time) + 9.hours }
+  let (:tuesday_evening) { tz.local_to_utc(tuesday.to_time) + 18.hours }
 
+  let (:tz) { ActiveSupport::TimeZone.new(tz_string)}
 
-  it "converts 3am to previous day" do
-    Util::DateTime.time_to_experienced_date(monday_dawn).should eq sunday
-    Util::DateTime.time_to_experienced_date(tuesday_dawn).should eq monday
+  before :each do
+    Option.stub(:current_timezone).and_return(tz_string)
   end
 
-  it "converts 9am to current day" do
-    Util::DateTime.time_to_experienced_date(sunday_morning).should eq sunday
-    Util::DateTime.time_to_experienced_date(monday_morning).should eq monday
-    Util::DateTime.time_to_experienced_date(tuesday_morning).should eq tuesday
+  context "when in shanghai" do
+    let (:tz_string) { 'Asia/Shanghai'}
+
+    it "converts 3am to previous day" do
+      Util::DateTime.dt_to_expd_date(monday_dawn).should eq sunday
+      Util::DateTime.dt_to_expd_date(tuesday_dawn).should eq monday
+    end
+
+    it "converts 9am to current day" do
+      Util::DateTime.dt_to_expd_date(sunday_morning).should eq sunday
+      Util::DateTime.dt_to_expd_date(monday_morning).should eq monday
+      Util::DateTime.dt_to_expd_date(tuesday_morning).should eq tuesday
+    end
+
+    it "converts 9pm to current day" do
+      Util::DateTime.dt_to_expd_date(sunday_evening).should eq sunday
+      Util::DateTime.dt_to_expd_date(monday_evening).should eq monday
+      Util::DateTime.dt_to_expd_date(tuesday_evening).should eq tuesday
+    end
   end
 
-  it "converts 9pm to current day" do
-    Util::DateTime.time_to_experienced_date(sunday_evening).should eq sunday
-    Util::DateTime.time_to_experienced_date(monday_evening).should eq monday
-    Util::DateTime.time_to_experienced_date(tuesday_evening).should eq tuesday
+  context "when in New York" do
+    let (:tz_string) { 'America/New_York'}
+
+    it "converts 3am to previous day" do
+      Util::DateTime.dt_to_expd_date(monday_dawn).should eq sunday
+      Util::DateTime.dt_to_expd_date(tuesday_dawn).should eq monday
+    end
+
+    it "converts 9am to current day" do
+      Util::DateTime.dt_to_expd_date(sunday_morning).should eq sunday
+      Util::DateTime.dt_to_expd_date(monday_morning).should eq monday
+      Util::DateTime.dt_to_expd_date(tuesday_morning).should eq tuesday
+    end
+
+    it "converts 9pm to current day" do
+      Util::DateTime.dt_to_expd_date(sunday_evening).should eq sunday
+      Util::DateTime.dt_to_expd_date(monday_evening).should eq monday
+      Util::DateTime.dt_to_expd_date(tuesday_evening).should eq tuesday
+    end
   end
 
 end

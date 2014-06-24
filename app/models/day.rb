@@ -29,10 +29,13 @@ class Day
     date.strftime("%A")
   end
 
+  ##
+  # Computes the latest date based on the default timezone.
   def self.latest
-    date = Util::DateTime.time_to_experienced_date Time.now
+    date = Util::DateTime.dt_to_expd_date Time.now
     day = Day.find_or_create_by date: date
   end
+
 
   def yesterday
     Day.find_by date: date.yesterday

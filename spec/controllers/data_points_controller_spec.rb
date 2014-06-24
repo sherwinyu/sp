@@ -13,8 +13,8 @@ describe DataPointsController do
       sign_in u
     end
     it "includes the `type` field" do
-      lfmdp = LastFmDp.create at: Time.now - 10.seconds, name: "track1"
-      dp = DataPoint.create at: Time.now, details: {hello: "world"}
+      lfmdp = LastFmDp.create at: Time.current - 10.seconds, name: "track1"
+      dp = DataPoint.create at: Time.current, details: {hello: "world"}
       get :index, format: :json
       json = JSON.parse response.body
       expect(json["data_points"][0]["type"]).to eq "DataPoint"
@@ -23,16 +23,16 @@ describe DataPointsController do
     context "when LastFmDps are included in recent" do
 
       it "assigns the @data_points" do
-        lfmdp = LastFmDp.create at: Time.now, name: "track1"
-        dp = DataPoint.create at: Time.now, details: {hello: "world"}
+        lfmdp = LastFmDp.create at: Time.current, name: "track1"
+        dp = DataPoint.create at: Time.current, details: {hello: "world"}
         get :index, format: :json
         expect(assigns(:data_points)).to include lfmdp
         expect(assigns(:data_points)).to include dp
       end
 
       it "includes the lfm in the json response" do
-        lfmdp = LastFmDp.create at: Time.now, name: "track1"
-        dp = DataPoint.create at: Time.now, details: {hello: "world"}
+        lfmdp = LastFmDp.create at: Time.current, name: "track1"
+        dp = DataPoint.create at: Time.current, details: {hello: "world"}
         get :index, format: :json
         json = JSON.parse response.body
         expect(json["data_points"][0]).to have_key "details"
