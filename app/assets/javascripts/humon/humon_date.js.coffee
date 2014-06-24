@@ -26,6 +26,12 @@ Humon.Date.reopenClass
     else
       return undefined
 
+  _inferAsRailsDateString: (json, context) ->
+    if utils.datetime.isRailsDateString(json)
+      return moment(json).toDate()
+    else
+      return undefined
+
   _inferAsMomentFormat: (string) ->
     return false if string.constructor != String
     for format, transform of @_momentFormatTransforms

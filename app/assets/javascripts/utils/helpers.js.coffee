@@ -236,3 +236,7 @@ utils.time =
 utils.datetime =
   isIsoDateString: (string) ->
     return moment(string, "YYYY-MM-DDTHH:mm:ssZ", true).isValid()
+
+  isRailsDateString: (string) ->
+    return moment(string, "YYYY-MM-DDTHH:mm:ss.SSSZ", true).isValid()
+
