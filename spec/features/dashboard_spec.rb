@@ -27,8 +27,6 @@ feature "Dashboard", feature: "dashboard" do
     # browser_tz = ...
     # browser_tz.parse("8:30")
     #
-    # expd_date = Util::DateTime::today_as_experienced_date
-    #
     # awake_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:30 #{browser_offset}")
     # up_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("8:35 #{browser_offset}")
     # computer_off_at_dt = Util::DateTime.experienced_date_and_time_to_datetime expd_date, Time.zone.parse("2:00 #{browser_offset}")

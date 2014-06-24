@@ -86,10 +86,6 @@ module Util
       end
     end
 
-    def self.today_as_experienced_date
-      time_to_experienced_date Time.now
-    end
-
     def self.zoned time_or_datetime
       time_or_datetime.in_time_zone
     end
