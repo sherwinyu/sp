@@ -10,8 +10,8 @@ class RescueTimeImporter
     data[:version] = '0'
 
     # by default, query for one day
-    end_string = Time.now.strftime "%Y-%m-%d"
-    start_string = 1.day.ago.strftime "%Y-%m-%d"
+    end_string = Day.current.tomorrow.strftime
+    start_string = Day.current.yesterday.strftime
     data.merge!( {
       perspective: "interval",
       resolution_time: "hour",
@@ -25,10 +25,8 @@ class RescueTimeImporter
   end
 
   def self.import(rel_time_range=nil)
-    # range = opts[:range] || (Time.now - 1.day)..(Time.now)
-
-    end_string = Time.now.strftime "%Y-%m-%d"
-    start_string = 1.day.ago.strftime "%Y-%m-%d"
+    end_string = Day.current.tomorrow.strftime
+    start_string = Day.current.yesterday.strftime
     rescue_time_json = rescue_time_api_query(restrict_begin: start_string, restrict_end: end_string)
 
     report = {}
@@ -96,7 +94,7 @@ class RescueTimeImporter
     # implicitly saves rtr
     rtr.update_attributes(
       #[Date Time Spent (seconds)   Number of People  Activity   Category   Productivity ]
-      synced_at: Time.now,
+      synced_at: Time.current,
       rt_time_spent: row[1],
       rt_number_of_people: row[2],
       rt_category: row[4],

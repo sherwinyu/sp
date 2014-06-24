@@ -6,7 +6,7 @@ def mp_track name, opts
 end
 
 def ping_url url
-  start = Time.now
+  start = Time.current
   puts "Pinging server at #{url}"
   uri = URI(url)
 
@@ -15,7 +15,7 @@ def ping_url url
   begin
     h = Net::HTTP.get_response(uri)
     report.http_result = h.code
-    delta = Time.now - start
+    delta = Time.current - start
     report.delta = delta
   rescue Exception => e
     report.error = e.to_s

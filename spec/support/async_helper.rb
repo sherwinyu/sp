@@ -8,14 +8,14 @@ module AsyncHelper
   def eventually(options = {})
     timeout = options[:timeout] || 2
     interval = options[:interval] || 0.05
-    time_limit = Time.now + timeout
+    time_limit = Time.current + timeout
     loop do
       begin
         yield
       rescue => error
       end
       return if error.nil?
-      raise error if Time.now >= time_limit
+      raise error if Time.current >= time_limit
       sleep interval
     end
   end

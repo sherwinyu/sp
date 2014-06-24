@@ -4,11 +4,11 @@ class LastFmImporter
   end
 
   def self.time_start
-    LastFmDp.latest.try(:at) || Time.now - 1.hour
+    LastFmDp.latest.try(:at) || Time.current - 1.hour
   end
 
   def self.time_end
-    Time.now
+    Time.current
   end
 
   def self.api_params
