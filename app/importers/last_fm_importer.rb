@@ -14,8 +14,8 @@ class LastFmImporter
   def self.api_params
     data = Hash.new
     data[:method] = "user.getrecenttracks"
-    data[:user] = "xhuwin"
-    data[:api_key] = "ea1576ad4d340a32e801c4f94c43c5f8"
+    data[:user] = Figaro.env.LASTFM_USERNAME
+    data[:api_key] = Figaro.env.LASTFM_API_KEY
     data[:format] = "json"
 
     #  Both `from` and `to` need to be specified to work
