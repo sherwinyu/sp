@@ -22,32 +22,21 @@ module Util
       tz.local_to_utc(time)
     end
 
-    ##
-    # @param [Time] an absolute time. (Regardless of timezone, seconds since epoch)
-    # @return [Date] representing the "experienced day (in eastern time)" that time
-    # coresponds to.
+    # Timezone aware translation of a datetime to an experienced date
+    # Re-expresses the given `datetime` in `timezone`, then looks at the
+    # hour and compares it with day_starts_at.
     #
-    # Currently, this is only being used for current-time (e.g., we're not gonna look up historical
-    # data)
+    # @param [DateTime or Time] representing a physical time. Its timezone is ignored
+    # @param [String] timezone  a timezone that can be passed to `TimeZone.new`
+    #   - defaults to Option.current_timezone
+    # @param [Integer] day_starts_at  the hour threshold for counting when the new day starts
+    # @return [Date] the experienced date corresponding to `datetime`
     #
-    # E.g., 3am Tuesday in Eastern Time corresponds to Monday
-    # Current cut off is 03:59:59 counts as previous day, 04:00:00 counts as current day
-    def self.time_to_experienced_date time
-      eastern_tz = TZInfo::Timezone.get('US/Eastern')
-      eastern_time = time.in_time_zone(eastern_tz)
-      experienced_date = eastern_time.to_date
-
-      if eastern_time.hour < 4
-      # if eastern_time < experienced_date + 4.hours
-        experienced_date = experienced_date.yesterday
-      end
-      experienced_date
-    end
-
-    def self.dt_to_expd_date datetime, timezone=nil, day_starts_at=nil
+    # So dt_to_expd_date(Tuesday, 2AM) will give the experienced date of Monday
+    def self.dt_to_expd_date datetime, timezone=nil, day_starts_at=4
       timezone ||= Option.current_timezone
-      day_starts_at ||= 4
       tz = ActiveSupport::TimeZone.new timezone
+
       datetime = datetime.in_time_zone tz
       expd_date = datetime.to_date
       if datetime.hour < day_starts_at
