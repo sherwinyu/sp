@@ -58,7 +58,6 @@ describe "Util: dt_to_expd_date" do
     end
 
     it "converts 9am to current day" do
-      binding.pry
       Util::DateTime.dt_to_expd_date(sunday_morning).should eq sunday
       Util::DateTime.dt_to_expd_date(monday_morning).should eq monday
       Util::DateTime.dt_to_expd_date(tuesday_morning).should eq tuesday
