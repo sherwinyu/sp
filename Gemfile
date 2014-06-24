@@ -40,7 +40,6 @@ gem 'emblem-rails', github: "alexspeller/emblem-rails"
 gem 'momentjs-rails', '2.0.0.2'
 
 gem 'pry'
-gem 'pry-debugger'
 
 gem 'spring', '0.9.0'
 
@@ -62,6 +61,7 @@ gem "spring-commands-rspec", group: :development, require: false
 
 
 group :development do
+  gem 'pry-debugger'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'guard-livereload'
