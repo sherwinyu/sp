@@ -5,7 +5,7 @@ describe Day do
     let (:day) { Day.new note: "first" }
     let (:day2) { Day.new note: "first" }
 
-    it "only allows one day with a given id", focus: true do
+    it "only allows one day with a given id" do
       day.save
       day2.save.should eq false
     end

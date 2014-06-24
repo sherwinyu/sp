@@ -12,8 +12,6 @@ class Act
   validates_presence_of :desc
   validates_presence_of :day
 
-  validate :ensure_day_in_range, if: :day?
-
   scope :recent, -> { desc(:at).limit(10) }
 
 end
