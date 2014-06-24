@@ -36,15 +36,17 @@ feature "Dashboard", feature: "dashboard" do
     ###
 
     # TODO(syu): get rid of this... or move it into its own helper method
+    # This method mirrors the CLIENT-SIDE time parsing and adjustment
+    # That's why we use Time.now (to mimic the browser time == system time)
     def normalize(datetime)
       # it's tuesday 2am and we parse tuesday 2:30am -> yes, tuesday 2am
       # it's tuesday 2am and we parse tuesday 8:30am -> no, monday 8am
       # it's tuesday 8am and we parse tuesday 8am -> yes, tuesday 8am
       # it's tuesday 8am and we parse tuesday 2am -> no, wednesday 2am
-      now = Time.now
-      delta = if datetime.hour > 4 && now.hour < 4
+      browser_time = Time.now
+      delta = if datetime.hour > 4 && browser_time.hour < 4
                 -1
-              elsif datetime.hour < 4 && now.hour > 4
+              elsif datetime.hour < 4 && browser_time.hour > 4
                 1
               else
                 0
