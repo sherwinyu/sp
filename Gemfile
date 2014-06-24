@@ -11,6 +11,7 @@ gem 'pg'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'figaro', github: 'laserlemon/figaro'
+gem 'rollbar'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -40,7 +41,6 @@ gem 'emblem-rails', github: "alexspeller/emblem-rails"
 gem 'momentjs-rails', '2.0.0.2'
 
 gem 'pry'
-
 gem 'spring', '0.9.0'
 
 group :development, :test do
