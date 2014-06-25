@@ -51,7 +51,6 @@ group :development, :test do
 
   gem 'factory_girl_rails', '4.2.1'
   gem 'guard-jasmine', '1.15.1'
-  # gem "jasminerice", '0.0.10'
   gem 'jasmine-sinon-rails', '1.3.4'
   gem 'sinon-rails', '1.4.2.1'
   gem 'guard-rspec', '~> 4.0'
@@ -71,7 +70,7 @@ group :test do
   gem 'database_cleaner', '0.9.1'
   gem 'capybara', '2.1.0'
   gem 'poltergeist', '~> 1.5.0'
-  gem 'shoulda-matchers', '1.5.6'
+  gem 'shoulda-matchers'
   gem 'bourne', '1.4.0'
 end
 
