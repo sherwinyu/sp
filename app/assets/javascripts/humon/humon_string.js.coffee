@@ -18,6 +18,7 @@ Humon.CatchallString.reopenClass
     else
       # If the node isn't initialized yet, then pass through the value
       value = json
+    context.node.get('nodeMeta').catchAll = true
     Humon.String.create(_value: value, node: context.node)
 
   valueFromJson: (json)->

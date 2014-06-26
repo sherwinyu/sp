@@ -10,6 +10,9 @@ _app_.vf = _app_.u.viewFromNumber
 _app_.lu = (str) ->
   _app_.__container__.lookup str
 
+window.nfv = (id) ->
+  _app_.u.viewFromNumber(id).get('nodeContent')
+
 window.lu = _app_.lu
 window.vf = _app_.vf
 window.cp = _app_.u.currentPath
