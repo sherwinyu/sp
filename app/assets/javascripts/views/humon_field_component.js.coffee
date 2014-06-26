@@ -1,6 +1,6 @@
 # Binds against json
 Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.extend
-  classNames: ['humon-field', 'humon-editor']
+  classNames: ['humon-field', 'humon-editor', 'humon-editor-inline']
   json: null
   content: null
 

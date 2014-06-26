@@ -1,15 +1,29 @@
-| goals
+h3 with humon node view
 Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
+hr
+h3 with input_json
+= input_json.0.goal
+= input_json.0.completed_at
+ol = each goal in input_json
+  li
+    ul
+      li
+        | goal
+        = humon-field json=goal.goal
+      li
+        | completed at
+        = humon-field json=goal.completed_at
 
 hr
-
+h3 with nodeChild views
 = each nodeChild in view.content.nodeVal.children
   Sysys.HumonNodeView nodeContent=nodeChild
     = partial 'humon_key_index_field'
     Sysys.ValEditableField rawValue=view.templateStrings.asString
 hr
+
 div
-  h5 Attempt HumonField
+  h3 Attempt HumonField
   | Just A Var:
   = justAVar
   = humon-field json=justAVar
