@@ -22,8 +22,6 @@ span.node-debug-panel.debug-auto-hide
     dd = view.nodeContent.nodeMeta.defaultDate
     dt view.nodeContent.initialized
     dd = view.nodeContent.initialized
-    dt view.nodeContent.nodeMeta.catchAll
-    dd = view.nodeContent.nodeMeta.catchAll
   dl
     dt $!"
     dd view.templateStringsEnabled

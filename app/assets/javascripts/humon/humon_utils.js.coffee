@@ -40,16 +40,19 @@ window.HumonUtils =
 
   ##
   # @param [JSON] json json representation to test
-  # @param [Array<String>] excluded types
+  # @param [JSON] metatemplate, only uses metatemplate.literalOnly
   # @return [Humon.HumonValue subclass] a class representing a subclass of `HumonValue`
   # Called by json2node when no context is available
-  _resolveTypeClassFromJson: (json, excludedTypes=[]) ->
-
-    for type in Humon._types
-      continue if type in excludedTypes
+  _resolveTypeClassFromJson: (json, metatemplate={}) ->
+    types = if metatemplate.literalOnly then Humon._literals else Humon._types
+    for type in types
       typeClass = Humon.contextualize(type)
       if typeClass.matchesJson(json)
         return typeClass
+
+    # Uses Humon.String as the catchall, if we're in literal-only mode.
+    # Otherwise, it's an error!
+    return Humon.String if metatemplate.literalOnly
     throw new Error "Unresolved type for payload #{JSON.stringify json}!"
 
   ##
@@ -120,7 +123,11 @@ window.HumonUtils =
       else if context.metatemplate?.name
         HumonUtils._typeClassFromMeta(context.metatemplate)
       else # Don't pass in context because this occurs when context isn't provided!
-        HumonUtils._resolveTypeClassFromJson json, context.metatemplate?.excludedTypes
+        HumonUtils._resolveTypeClassFromJson json, context.metatemplate
+
+    # hacky
+    if context.metatemplate?.literalOnly && typeClass == Humon.String
+      json = "#{json}"
 
     # Create a new context, with the node set to the to-be-returned Humon.Node,
     # and merge in the current context.

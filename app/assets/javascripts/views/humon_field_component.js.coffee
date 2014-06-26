@@ -5,7 +5,7 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
   content: null
 
   computeMeta: ->
-    excludedTypes: ["List", "Hash"]
+    literalOnly: true
 
 
   initContentFromJson: ->
