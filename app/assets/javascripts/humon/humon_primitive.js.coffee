@@ -20,7 +20,6 @@ Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
   flatten: ->
     [@node]
   enterPressed: (e, payload) ->
-    return if e._handled?
     @get('node').tryToCommit( payload )
     nodeView = @get('node.nodeView')
     Ember.run.scheduleOnce "afterRender", nodeView, ->

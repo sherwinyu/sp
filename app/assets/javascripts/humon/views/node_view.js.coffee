@@ -67,10 +67,6 @@ Humon.NodeView = Ember.View.extend
     enterPressed: (e) ->
       uiPayload = @uiPayload()
       @get('nodeContent.nodeVal').enterPressed(e, uiPayload)
-      e._handled ?=
-        node: @get('nodeContent')
-        view: @
-      @get('nodeContent.nodeParent.nodeView')?.send 'enterPressed', e
 
     moveLeft: ->
       # You can't focus left on a list!
