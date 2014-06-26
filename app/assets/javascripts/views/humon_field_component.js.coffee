@@ -4,6 +4,10 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
   json: null
   content: null
 
+  computeMeta: ->
+    excludedTypes: ["List", "Hash"]
+
+
   initContentFromJson: ->
     initialJson = @get('json')
     # Options:
@@ -11,7 +15,7 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
     #   - controller: set the controller to this humon editor component (instance of HumonControllerMixin)
     #   - suppressNodeParentWarning: because this is the root node
     node = Humon.json2node initialJson,
-             metatemplate: @get('metaTemplate')
+             metatemplate: @computeMeta()
              allowInvalid: true
              controller: @
              suppressNodeParentWarning: yes

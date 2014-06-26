@@ -40,10 +40,13 @@ window.HumonUtils =
 
   ##
   # @param [JSON] json json representation to test
+  # @param [Array<String>] excluded types
   # @return [Humon.HumonValue subclass] a class representing a subclass of `HumonValue`
   # Called by json2node when no context is available
-  _resolveTypeClassFromJson: (json) ->
+  _resolveTypeClassFromJson: (json, excludedTypes=[]) ->
+
     for type in Humon._types
+      continue if type in excludedTypes
       typeClass = Humon.contextualize(type)
       if typeClass.matchesJson(json)
         return typeClass
@@ -117,7 +120,7 @@ window.HumonUtils =
       else if context.metatemplate?.name
         HumonUtils._typeClassFromMeta(context.metatemplate)
       else # Don't pass in context because this occurs when context isn't provided!
-        HumonUtils._resolveTypeClassFromJson json
+        HumonUtils._resolveTypeClassFromJson json, context.metatemplate?.excludedTypes
 
     # Create a new context, with the node set to the to-be-returned Humon.Node,
     # and merge in the current context.
