@@ -16,8 +16,7 @@ window.HumonUtils =
   # @return [instance of Humon.HumonValue]
   # If metatemplate.typeName is specified, then look it up.
   _typeClassFromMeta: (metatemplate) ->
-    # If metatemplate has an explicitly defined type class, just use that
-    # Actually, no don't just use it. Throw an error for now.
+    # We shouldn't be using the 'type' field right now
     if metatemplate.type?
       throw new Error("Metatemplate should not contain `type` field")
       return metatemplate.type
