@@ -1,4 +1,5 @@
 Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
+  tagName: "humon-editor"
   rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'humon-editor-inline']
   hooks: null
