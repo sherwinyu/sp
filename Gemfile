@@ -63,7 +63,7 @@ group :development do
   gem 'pry-debugger'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'guard-livereload', '~> 2.1.2'
+  gem 'guard-livereload', '2.1.2'
 end
 
 group :test do
