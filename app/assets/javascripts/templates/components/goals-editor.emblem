@@ -1,11 +1,7 @@
-h2 Humon Goals (with input json)
-h4 bindings:
-= myJson.0.goal
-= myJson.0.completed_at
+h3 Goals
 
 a.btn.btn-default{action "addGoal"}: | Add a goal
 
-h4 editor:
 = each goal in myJson
   div.goal
     = humon-field json=goal.goal jsonChanged="didCommit"
@@ -14,13 +10,6 @@ h4 editor:
       = humon-field json=goal.completed_at
     = else
       | Incomplete
-
-hr
-div
-  h4 Attempt HumonField
-  | Just A Var:
-  = justAVar
-  = humon-field json=justAVar
 
 
 / OR if "view.content" is just plain old json...
@@ -48,4 +37,3 @@ div
   Eventually, Humon.NodeView template can utilize Humon.Field as well
     instead of such tight coupling with the underlying ContentFields
     So this also implies the interface is almost definitely going to be json only
-| yeahhh
