@@ -1,9 +1,9 @@
 #= require ./humon_editor_component
 
-Sysys.GoalsEditorComponent = Sysys.HumonEditorComponent.extend
+Sysys.GoalsEditorComponent = Ember.Component.extend
   tagName: "goals"
   rootLayout_: "layouts/hec_title"
-  classNames: ['humon-editor', 'goals-component']
+  classNames: ['humon-editor', 'humon-editor-inline', 'goals-component']
   justAVar: "wargstabul"
 
   json: null
@@ -11,17 +11,16 @@ Sysys.GoalsEditorComponent = Sysys.HumonEditorComponent.extend
 
 
   init: ->
-    myJson = @get('json').slice(0)
-    @set("myJson", myJson)
+    # store a copy of the public json as myJson
+    @set "myJson", @get('json').slice(0)
     @_super()
 
   actions:
-
     addGoal: ->
       @get('myJson').pushObject {goal: "new goal", completed_at: null}
+      @send 'didCommit'
 
-    didCommit: (params)->
-      # @sendAction 'jsonChanged', params.rootJson
+    didCommit: ->
       @set 'json', @myJson.slice(0)
 
 

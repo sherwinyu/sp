@@ -24,7 +24,6 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
 
   actions:
     didCommit: (params) ->
-      # console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
       @sendAction 'jsonChanged', params
       @set 'json', params.rootJson
 
