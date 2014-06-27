@@ -19,7 +19,7 @@ Humon.NodeView = Ember.View.extend
     arg = if activate then @get('nodeContent') else null
     @get('controller').send('activateNode', arg)
 
-  layoutName: "layouts/node_key"
+  layoutName: "layouts/node_editable_key"
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.nodeType',
@@ -73,7 +73,7 @@ Humon.NodeView = Ember.View.extend
       # You can't focus left on a list!
       if @get('nodeContent.nodeParent.nodeType') is 'list'
         return
-      if @get('layoutName') isnt 'layouts/node_key'
+      if @get('layoutName') isnt 'layouts/node_editable_key'
         return
       @focusField
         field: 'label'

@@ -1,2 +1,3 @@
 = yield
+= partial "humon_node_header"
 = partial 'humon_node_debug'

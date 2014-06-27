@@ -1,3 +1,6 @@
 Sysys.KeyFixedField rawValueBinding="view.nodeContent.nodeKey"
 span.copy.node-detail.required-caution *
 span.copy :
+
+= partial 'humon_node_debug'
+= yield
