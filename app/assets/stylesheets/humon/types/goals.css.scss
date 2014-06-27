@@ -1,10 +1,12 @@
+
+//
 .node.goals {
   @include node_large_mx();
 }
 
-.node.goal {
+.goal {
   @include node_large_mx();
-  &.active {
+  .active {
     .content-field {
       color: $nodeActiveCopyColor;
     }

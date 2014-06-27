@@ -6,14 +6,14 @@ h4 bindings:
 a.btn.btn-default{action "addGoal"}: | Add a goal
 
 h4 editor:
-ol = each goal in myJson
-  li
+= each goal in myJson
+  div.goal
     = humon-field json=goal.goal jsonChanged="didCommit"
-  = if goal.completed_at
-    ' Done! Completed at
-    = humon-field json=goal.completed_at
-  = else
-    | Incomplete
+    = if goal.completed_at
+      ' Done! Completed at
+      = humon-field json=goal.completed_at
+    = else
+      | Incomplete
 
 hr
 div
