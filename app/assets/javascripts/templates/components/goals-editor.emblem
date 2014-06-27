@@ -15,22 +15,7 @@ ol = each goal in myJson
   = else
     | Incomplete
 
-
 hr
-
-h4 with humon node view
-/ Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
-
-
-hr
-
-h4 with nodeChild views
-/ = each nodeChild in view.content.nodeVal.children
-  Sysys.HumonNodeView nodeContent=nodeChild
-    = partial 'humon_key_index_field'
-    Sysys.ValEditableField rawValue=view.templateStrings.asString
-hr
-
 div
   h4 Attempt HumonField
   | Just A Var:
