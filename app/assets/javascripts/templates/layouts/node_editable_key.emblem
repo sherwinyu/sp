@@ -4,6 +4,6 @@
   Sysys.KeyEditableField rawValueBinding="view.nodeContent.nodeKey" readOnly=view.nodeContent.readOnly
   span.copy :
 
-= yield
 = partial "humon_node_header"
+= yield
 = partial 'humon_node_debug'

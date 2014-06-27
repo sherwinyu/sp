@@ -23,8 +23,6 @@ div
   = humon-field json=justAVar
 
 
-
-
 / OR if "view.content" is just plain old json...
   = each goalJson in view.content
     Humon.Field contentBinding= goalJson.description [...options...]

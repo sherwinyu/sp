@@ -1,1 +1,2 @@
 = view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString" readOnly=view.nodeContent.readOnly
+= partial "humon_node_header"

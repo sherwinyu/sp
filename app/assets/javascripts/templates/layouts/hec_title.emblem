@@ -1,4 +1,3 @@
 Sysys.TitleField rawValueBinding="view.nodeContent.nodeKey"
-= partial "humon_node_header"
 = partial 'humon_node_debug'
 = yield
