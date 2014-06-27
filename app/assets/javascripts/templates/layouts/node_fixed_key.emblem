@@ -4,3 +4,4 @@ span.copy :
 
 = partial 'humon_node_debug'
 = yield
+= partial "humon_node_header"

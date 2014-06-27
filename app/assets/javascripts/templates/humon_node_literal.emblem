@@ -1,2 +1,1 @@
-/ humon_node_literal.hbs
 = view "Sysys.ValEditableField" rawValueBinding="view.templateStrings.asString" readOnly=view.nodeContent.readOnly
