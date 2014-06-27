@@ -4,7 +4,7 @@
 #= require ./title_field
 
 Sysys.ContentEditableField = Ember.View.extend
-  tagName: "span"
+  tagName: "node-field"
   rawValueBinding: null
   classNames: ['content-field']
   readOnlyBinding: null
