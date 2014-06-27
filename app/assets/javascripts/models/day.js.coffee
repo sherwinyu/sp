@@ -3,7 +3,8 @@ Sysys.Day = DS.Model.extend
   note: Sysys.attr('string', defaultValue: -> "warg")
   sleep: Sysys.attr('complex')
   summary: Sysys.attr('complex')
-  goals: Sysys.attr()
+  # goals: Sysys.attr()
+  goals: DS.attr()
   timezone: Sysys.attr('string', defaultValue: -> "US East")
 
   # Make it a property, so that defaultDate can be dynamic

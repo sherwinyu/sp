@@ -1,15 +1,28 @@
 #= require ./humon_editor_component
 
 Sysys.GoalsEditorComponent = Sysys.HumonEditorComponent.extend
+  tagName: "goals"
+  rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'goals-component']
   justAVar: "wargstabul"
-  input_json: null
+
+  json: null
+  myJson: null
+
 
   init: ->
-    # @set("input_json", [{goal: "what'sup", completed_at: null}])
+    myJson = @get('json').slice(0)
+    @set("myJson", myJson)
     @_super()
+
   actions:
+
     addGoal: ->
-      @get('input_json').pushObject {goal: "new goal", completed_at: null}
+      @get('myJson').pushObject {goal: "new goal", completed_at: null}
+
+    didCommit: (params)->
+      # @sendAction 'jsonChanged', params.rootJson
+      @set 'json', @myJson.slice(0)
+
 
 

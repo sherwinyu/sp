@@ -1,14 +1,14 @@
 h2 Humon Goals (with input json)
 h4 bindings:
-= input_json.0.goal
-= input_json.0.completed_at
+= myJson.0.goal
+= myJson.0.completed_at
 
 a.btn.btn-default{action "addGoal"}: | Add a goal
 
 h4 editor:
-ol = each goal in input_json
+ol = each goal in myJson
   li
-    = humon-field json=goal.goal
+    = humon-field json=goal.goal jsonChanged="didCommit"
   = if goal.completed_at
     ' Done! Completed at
     = humon-field json=goal.completed_at
@@ -19,13 +19,13 @@ ol = each goal in input_json
 hr
 
 h4 with humon node view
-Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
+/ Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
 
 
 hr
 
 h4 with nodeChild views
-= each nodeChild in view.content.nodeVal.children
+/ = each nodeChild in view.content.nodeVal.children
   Sysys.HumonNodeView nodeContent=nodeChild
     = partial 'humon_key_index_field'
     Sysys.ValEditableField rawValue=view.templateStrings.asString
