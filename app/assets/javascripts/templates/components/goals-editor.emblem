@@ -1,21 +1,30 @@
-h3 with humon node view
-Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
-hr
-h3 with input_json
+h2 Humon Goals (with input json)
+h4 bindings:
 = input_json.0.goal
 = input_json.0.completed_at
+
+a.btn.btn-default{action "addGoal"}: | Add a goal
+
+h4 editor:
 ol = each goal in input_json
   li
-    ul
-      li
-        | goal
-        = humon-field json=goal.goal
-      li
-        | completed at
-        = humon-field json=goal.completed_at
+    = humon-field json=goal.goal
+  = if goal.completed_at
+    ' Done! Completed at
+    = humon-field json=goal.completed_at
+  = else
+    | Incomplete
+
 
 hr
-h3 with nodeChild views
+
+h4 with humon node view
+Sysys.HumonNodeView nodeContentBinding="view.content" layoutName=rootLayout_
+
+
+hr
+
+h4 with nodeChild views
 = each nodeChild in view.content.nodeVal.children
   Sysys.HumonNodeView nodeContent=nodeChild
     = partial 'humon_key_index_field'
@@ -23,7 +32,7 @@ h3 with nodeChild views
 hr
 
 div
-  h3 Attempt HumonField
+  h4 Attempt HumonField
   | Just A Var:
   = justAVar
   = humon-field json=justAVar
