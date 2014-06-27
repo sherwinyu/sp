@@ -1,4 +1,4 @@
 /!  humon_node_hash.hbs
-= partial "humon_node_header"
+/= partial "humon_node_header"
 = each nodeChild in view.nodeContent.nodeVal.children
   = view Sysys.HumonNodeView nodeContentBinding="nodeChild"
