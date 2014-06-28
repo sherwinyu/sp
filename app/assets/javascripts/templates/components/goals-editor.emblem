@@ -4,10 +4,10 @@ a.btn.btn-default{action "addGoal"}: | Add a goal
 
 = each goal in myJson
   div.goal
-    = humon-field json=goal.goal jsonChanged="didCommit"
+    = humon-field json=goal.goal jsonChanged="didCommit" metatype="text"
     = if goal.completed_at
       ' Done! Completed at
-      = humon-field json=goal.completed_at
+      = humon-field json=goal.completed_at metatype="time"
     = else
       | Incomplete
 

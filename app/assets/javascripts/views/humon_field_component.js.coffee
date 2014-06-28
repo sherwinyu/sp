@@ -3,10 +3,11 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
   classNames: ['humon-field', 'humon-editor', 'humon-editor-inline']
   json: null
   content: null
+  metatype: null
 
   computeMeta: ->
-    literalOnly: true
-
+    meta = name: @get('metatype')
+    $.extend(meta, literalOnly: true)
 
   initContentFromJson: ->
     initialJson = @get('json')
