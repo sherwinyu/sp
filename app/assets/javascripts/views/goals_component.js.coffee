@@ -28,6 +28,11 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
 
     @bindKey 'up', =>
       console.log 'goals-editor-up', arguments
+      @sendAction 'upPressed', arguments[0]
+
+    @bindKey 'down', =>
+      console.log 'goals-editor-up', arguments
+      @sendAction 'downPressed', arguments[0]
   ).on 'didInsertElement'
 
   teardown: ->
@@ -46,5 +51,3 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
 
     didCommit: ->
       @set 'json', @myJson.slice(0)
-
-

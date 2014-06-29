@@ -191,25 +191,31 @@ Sysys.ApplicationRoute = Ember.Route.extend
     #   then convert each of those elements to the nearest humon node element
     #   then fire smartFocus on the corresponding humon node view
     downPressed: (e)->
-      elements = $('.node')
-      # elements = $('[tabIndex]').closest('.node')
-      idx = elements.index($(e.target).closest('.node'))
+      elements = $('.line-item-selectable')
+      idx = elements.index($(e.target).closest('.line-item-selectable'))
       return if idx == -1
-      idx = (idx + elements.length + 1) % elements.length
 
+      idx = (idx + elements.length + 1) % elements.length
       el = elements[idx]
-      Sysys.vfi($(el).attr('id')).smartFocus()
+      view = Sysys.vfi($(el).attr('id'))
+      if view
+        view.smartFocus()
+      else
+        el.focus()
 
     upPressed: (e)->
-      elements = $('.node')
-      # elements = $('[tabIndex]').closest('.node')
-      idx = elements.index($(e.target).closest('.node'))
+      console.log 'uppressed'
+      elements = $('.line-item-selectable')
+      idx = elements.index($(e.target).closest('.line-item-selectable'))
       return if idx == -1
+
       idx = (idx + elements.length - 1) % elements.length
-
       el = elements[idx]
-      Sysys.vfi($(el).attr('id')).smartFocus()
-
+      view = Sysys.vfi($(el).attr('id'))
+      if view
+        view.smartFocus()
+      else
+        el.focus()
     loading: (transition)->
       resource = transition.targetName.split(".")[0]
       dest = Em.String.classify(resource)
