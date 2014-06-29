@@ -6,14 +6,32 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
   classNames: ['humon-editor', 'humon-editor-inline', 'goals-component']
   justAVar: "wargstabul"
 
+  bindKey: (shortcut, action) ->
+    controller = @get('controller')
+    window.key(shortcut, ->
+      controller.send action
+
+  unbindKey: (shorcut) ->
+    window.key.unbind shortcut
+
+
   json: null
   myJson: null
 
+  setup: (->
+    key 'shift+a', (args)->
+      console.log "mousetrap!"
+      console.log args
+  ).on 'didInsertElement'
+
+  teardown: ->
+    key.unbind 'shift+a'
 
   init: ->
     # store a copy of the public json as myJson
     @set "myJson", @get('json').slice(0)
     @_super()
+
 
   actions:
     addGoal: ->
@@ -22,6 +40,5 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
 
     didCommit: ->
       @set 'json', @myJson.slice(0)
-
 
 
