@@ -191,7 +191,8 @@ Sysys.ApplicationRoute = Ember.Route.extend
     #   then convert each of those elements to the nearest humon node element
     #   then fire smartFocus on the corresponding humon node view
     downPressed: (e)->
-      elements = $('[tabIndex]').closest('.node')
+      elements = $('.node')
+      # elements = $('[tabIndex]').closest('.node')
       idx = elements.index($(e.target).closest('.node'))
       return if idx == -1
       idx = (idx + elements.length + 1) % elements.length
@@ -200,7 +201,8 @@ Sysys.ApplicationRoute = Ember.Route.extend
       Sysys.vfi($(el).attr('id')).smartFocus()
 
     upPressed: (e)->
-      elements = $('[tabIndex]').closest('.node')
+      elements = $('.node')
+      # elements = $('[tabIndex]').closest('.node')
       idx = elements.index($(e.target).closest('.node'))
       return if idx == -1
       idx = (idx + elements.length - 1) % elements.length

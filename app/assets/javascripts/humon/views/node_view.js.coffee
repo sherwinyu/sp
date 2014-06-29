@@ -26,7 +26,7 @@ Humon.NodeView = Ember.View.extend
     'isActive:active',
     'nodeContent.invalid:invalid',
     'parentActive:activeChild']
-  classNames: ['node']
+  classNames: ['node', 'line-item-selectable']
 
 #########################
 ## Dynamic templates
@@ -85,28 +85,31 @@ Humon.NodeView = Ember.View.extend
         pos: 'left'
 
     up:  (e)->
-      elements = $('[tabIndex]').closest('.node')
-      idx = elements.index($(e.target).closest('.node'))
+      console.log 'uppressed'
+      elements = $('.line-item-selectable')
+      idx = elements.index($(e.target).closest('.line-item-selectable'))
       return if idx == -1
-
-      # self = elements.index(@$())
-      # idx -= 1 if idx == self
 
       idx = (idx + elements.length - 1) % elements.length
       el = elements[idx]
-      Sysys.vfi($(el).attr('id')).smartFocus()
+      view = Sysys.vfi($(el).attr('id'))
+      if view
+        view.smartFocus()
+      else
+        el.focus()
 
     down: (e)->
-      elements = $('[tabIndex]').closest('.node')
-      idx = elements.index($(e.target).closest('.node'))
+      elements = $('.line-item-selectable')
+      idx = elements.index($(e.target).closest('.line-item-selectable'))
       return if idx == -1
-
-      # self = elements.index(@$())
-      # idx += 1 if idx == self
 
       idx = (idx + elements.length + 1) % elements.length
       el = elements[idx]
-      Sysys.vfi($(el).attr('id')).smartFocus()
+      view = Sysys.vfi($(el).attr('id'))
+      if view
+        view.smartFocus()
+      else
+        el.focus()
 
 #########################################
 ## Focus management

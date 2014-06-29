@@ -25,6 +25,9 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
   setup: (->
     @bindKey 'shift+a', (args) =>
       @send 'addGoal'
+
+    @bindKey 'up', =>
+      console.log 'goals-editor-up', arguments
   ).on 'didInsertElement'
 
   teardown: ->
