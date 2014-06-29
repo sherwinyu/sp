@@ -8,8 +8,12 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
 
   bindKey: (shortcut, action) ->
     controller = @get('controller')
-    window.key(shortcut, ->
-      controller.send action
+    window.key(shortcut, (e, obj) =>
+      unless $(e.target).parents("#" + @get('elementId')).length
+        return
+      action.call(@, e, obj)
+    )
+    # controller.send action
 
   unbindKey: (shorcut) ->
     window.key.unbind shortcut
@@ -19,13 +23,12 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
   myJson: null
 
   setup: (->
-    key 'shift+a', (args)->
-      console.log "mousetrap!"
-      console.log args
+    @bindKey 'shift+a', (args) =>
+      @send 'addGoal'
   ).on 'didInsertElement'
 
   teardown: ->
-    key.unbind 'shift+a'
+    @unbindKey 'shift+a'
 
   init: ->
     # store a copy of the public json as myJson
