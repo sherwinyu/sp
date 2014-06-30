@@ -29,8 +29,16 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
     @_super()
 
   actions:
+    # Currently called only by deleteGoal and addGoal. Just focuses on the last
+    # item by default.
     refocus: ->
       Ember.View.smartFocus(@$('.line-item-selectable').last())
+
+    # Called by humon-field(bound to humon-field#jsonChanged)
+    # Simply do a `set` on the our `json` field, giving it a clone of our json
+    # We must clone it otherwise comparison by reference says it's the same array
+    didCommit: ->
+      @set 'json', @myJson.slice(0)
 
     # TODO think about how to make this "index-sensitive"
     # It's not hard here, but how do do it with just json objects?
@@ -39,17 +47,17 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
       @send 'didCommit'
       Ember.run.later => @send 'refocus'
 
-    didCommit: ->
-      @set 'json', @myJson.slice(0)
 
+    # Removes the first goal that has the given goalText
     deleteGoal: (e, goalText) ->
       goals = @get('myJson')
       goal = goals.find( (goal) -> goal.goal == goalText)
       goals.removeObject goal
       @send 'didCommit'
-      Ember.run =>
-        @send 'refocus'
+      Ember.run => @send 'refocus'
 
+    # Toggles the completedAt attribute of a goal
+    # This finds the first goal with the given goal text and then toggles it
     toggleCompletedAt: (e, goalText) ->
       goals = @get('myJson')
       goal = goals.find( (goal) -> goal.goal == goalText)

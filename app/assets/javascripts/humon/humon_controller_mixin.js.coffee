@@ -1,34 +1,13 @@
 Humon.HumonControllerMixin = Ember.Mixin.create
-# content:  the root HumonNode
-
   activeHumonNode: null
-  init: ->
-    @_super()
-    hooks = @get('hooks') || {}
-    if typeof hooks.didCommit is 'function'
-      @didCommit = hooks.didCommit
-    if typeof hooks.didUp is 'function'
-      @didUp = hooks.didUp
-    if typeof hooks.didDown is 'function'
-      @didDown = hooks.didDown
+
+  withinScope: (testNode) ->
+    return false unless testNode instanceof Humon.Node
+    !!@get('content').pathToNode testNode
 
   ###################
   # HOOKS
   ##################
-
-  # params:
-  #   - controller: the instance of the controller
-  #   - node: the committed node
-  #   - rootJson: json representation of the root node
-  #   - key: a string if the key was committed; null otherwise
-  didCommit: (params)->
-    # console.log 'didCommit', JSON.stringify rootJson
-
-  didUp: (e)->
-    # console.log 'didUp'
-  didDown: (e)->
-    # console.log 'didDown'
-
   actions:
     ###
     action activateNode
@@ -42,11 +21,6 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     activateNode: (node) ->
       @set 'activeHumonNode', node
 
-
-
-  withinScope: (testNode) ->
-    return false unless testNode instanceof Humon.Node
-    !!@get('content').pathToNode testNode
 
 ##################################
 ## Manipulating humon node tree
