@@ -85,31 +85,10 @@ Humon.NodeView = Ember.View.extend
         pos: 'left'
 
     up:  (e)->
-      console.log 'uppressed'
-      elements = $('.line-item-selectable')
-      idx = elements.index($(e.target).closest('.line-item-selectable'))
-      return if idx == -1
-
-      idx = (idx + elements.length - 1) % elements.length
-      el = elements[idx]
-      view = Sysys.vfi($(el).attr('id'))
-      if view
-        view.smartFocus()
-      else
-        el.focus()
+      @get('controller').send 'upPressed', e
 
     down: (e)->
-      elements = $('.line-item-selectable')
-      idx = elements.index($(e.target).closest('.line-item-selectable'))
-      return if idx == -1
-
-      idx = (idx + elements.length + 1) % elements.length
-      el = elements[idx]
-      view = Sysys.vfi($(el).attr('id'))
-      if view
-        view.smartFocus()
-      else
-        el.focus()
+      @get('controller').send 'downPressed', e
 
 #########################################
 ## Focus management

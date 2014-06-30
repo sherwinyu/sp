@@ -71,3 +71,9 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
 
     didDown: (e)->
       @sendAction 'downPressed', e
+
+  actions:
+    upPressed: (e)->
+      @sendAction 'upPressed', e
+    downPressed: (e)->
+      @sendAction 'downPressed', e
