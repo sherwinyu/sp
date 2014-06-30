@@ -31,7 +31,7 @@ window.getCursor = (node) ->
 
   # if it's a div .. or a SPAN TODO
   # then use the divGetCursor routine
-  if node.tagName is "DIV" || node.tagName is "SPAN"
+  if node.tagName is "DIV" || node.tagName is "SPAN" || node.tagName is "node-field"
     return divGetCursor(node)
   $(node).prop('selectionStart')
 
