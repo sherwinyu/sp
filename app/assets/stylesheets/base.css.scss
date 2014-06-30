@@ -41,6 +41,7 @@ $cautionActiveYellow: rgba(195, 195, 20, 1);
 $lineheight: 20px;
 $nodeCopyFontSize: 16px;
 
+$content_field_padding_width: 4px;
 $contentFieldMinWidth: 10px;
 $contentFieldMaxWidth: 500px;
 
@@ -60,14 +61,15 @@ $borderUnderline: 1px solid $grayLight;
 $borderLightUnderline: 1px dotted $grayLightest;
 $borderLightest1Underline: 1px dotted $grayLightest1;
 
-$nodeBorderLeftWidth: 4px;
-$nodeBorderLeft: $nodeBorderLeftWidth transparent solid;
-// $nodeActiveBorderLeft: $nodeLeftBorder $activeColorLight solid;
-$nodeActiveBorderLeft: $nodeBorderLeftWidth lighten($grayLightest1, 6%) solid;
+$node_border_left_width: 4px;
+$node_white_indent_width: 15px;
+
+$nodeBorderLeft: $node_border_left_width transparent solid;
+$nodeActiveBorderLeft: $node_border_left_width lighten($grayLightest1, 6%) solid;
 
 $borderTransparent: 1px solid transparent;
+$f_total_node_text_offset_width: $content_field_padding_width + $node_border_left_width + $node_white_indent_width;
 
-$nodeWhiteIndent: 15px;
 $childNodeGlyphWidth: 8px;
 $childNodeGlyphLeftOffset: $nodeWhiteIndent - $childNodeGlyphWidth - 2px;
 $childNodeGlyphColor: $grayLightest1;

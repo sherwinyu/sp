@@ -2,7 +2,7 @@
 
 .goals h3.line-item-selectable {
   border-left: $nodeBorderLeft;
-  padding-left: $nodeBorderLeftWidth;
+  padding-left: 5px;
   box-shadow: none !important;
   outline: none !important;
   &:focus {
@@ -38,7 +38,9 @@
       color: $nodeActiveDetailCopyColor;
     }
   }
+
   .completed-at {
+    margin-left: $f_total_node_text_offset_width;
     @include node_text_inline_mx(1.0);
     .content-field, .copy, {
       @include node_text_inline_mx(1.0);

@@ -33,8 +33,7 @@ aside.node-debug-panel.debug-auto-hide
     dd type-locked
     dt @!
     dd invalid
-/ span.copy.debug-inline.debug-node-type.debug-auto-hide: = view.nodeContent.nodeType
-small.copy.debug-inline.debug-auto-hide
+/ small.copy.debug-inline.debug-auto-hide
   small.debug-glyphs
     i{bind-attr class="view._templateStringsEnabled::template-strings-disabled"}
     i{bind-attr class="view._templateChanged:template-changed"}
