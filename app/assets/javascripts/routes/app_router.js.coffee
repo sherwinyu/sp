@@ -185,11 +185,11 @@ Sysys.ApplicationRoute = Ember.Route.extend
   actions:
     jsonChanged: (json)->
 
-
-    # algorithm:
-    #   find all elements with [tabIndex] set
-    #   then convert each of those elements to the nearest humon node element
-    #   then fire smartFocus on the corresponding humon node view
+    # algorithm (for downPressed and upPressed):
+    #   Find all elements with .line-item-selectable
+    #   Find our elements position in that list
+    #   Then get the next .line-item-selectable item
+    #   And View.smartFocus it
     downPressed: (e)->
       elements = $('.line-item-selectable')
       idx = elements.index($(e.target).closest('.line-item-selectable'))
@@ -200,7 +200,6 @@ Sysys.ApplicationRoute = Ember.Route.extend
       Ember.View.smartFocus el
 
     upPressed: (e)->
-      console.log 'uppressed'
       elements = $('.line-item-selectable')
       idx = elements.index($(e.target).closest('.line-item-selectable'))
       return if idx == -1

@@ -39,10 +39,12 @@ window.HumonUtils =
     throw new Error "not implemented yet"
 
   ##
+  # Called by json2node when no definite metatemplate.name is given
+  # If metatemplate.literalOnly is true, then we limit the resolvable types to literals
+  #
   # @param [JSON] json json representation to test
   # @param [JSON] metatemplate, only uses metatemplate.literalOnly
   # @return [Humon.HumonValue subclass] a class representing a subclass of `HumonValue`
-  # Called by json2node when no context is available
   _resolveTypeClassFromJson: (json, metatemplate={}) ->
     types = if metatemplate.literalOnly then Humon._literals else Humon._types
     for type in types
@@ -125,7 +127,14 @@ window.HumonUtils =
       else # Don't pass in context because this occurs when context isn't provided!
         HumonUtils._resolveTypeClassFromJson json, context.metatemplate
 
-    # hacky
+    # If we're in literal-only mode and we resolvd the type as a Humon.String,
+    # (regardless whether it's a catch-all string or a valid string)
+    # then we coerce the json to a string.
+    #
+    #   This is because a non-literal json payload in literal-only mode
+    #   will resolve as a Humon.String, but then Humon.String.tryJ2hnv will faill
+    #   (because matchesJson fails).
+    # TODO #HACKY
     if context.metatemplate?.literalOnly && typeClass == Humon.String
       json = "#{json}"
 
