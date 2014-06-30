@@ -1,6 +1,6 @@
 _app_ = Sysys
 _app_.u =
-  viewFromId: (id) -> Ember.get("Ember.View.views.#{id}")
+  viewFromId: (id) -> if id then Ember.get("Ember.View.views.#{id}") else null
   viewFromElement: (ele) -> _app_.u.viewFromId($(ele).first().attr('id'))
   viewFromNumber: (num) -> _app_.u.viewFromId("ember#{num}")
   currentPath: -> _app_.__container__.lookup('controller:application').currentPath

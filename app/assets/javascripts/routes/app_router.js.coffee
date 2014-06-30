@@ -197,11 +197,7 @@ Sysys.ApplicationRoute = Ember.Route.extend
 
       idx = (idx + elements.length + 1) % elements.length
       el = elements[idx]
-      view = Sysys.vfi($(el).attr('id'))
-      if view
-        view.smartFocus()
-      else
-        el.focus()
+      Ember.View.smartFocus el
 
     upPressed: (e)->
       console.log 'uppressed'
@@ -211,11 +207,8 @@ Sysys.ApplicationRoute = Ember.Route.extend
 
       idx = (idx + elements.length - 1) % elements.length
       el = elements[idx]
-      view = Sysys.vfi($(el).attr('id'))
-      if view
-        view.smartFocus()
-      else
-        el.focus()
+      Ember.View.smartFocus el
+
     loading: (transition)->
       resource = transition.targetName.split(".")[0]
       dest = Em.String.classify(resource)
@@ -259,3 +252,11 @@ Sysys.LoadingRoute = Ember.Route.extend
 Sysys.LoadingController = Ember.ObjectController.extend
   destination: ""
   needs: "application"
+
+# @param el [Element]
+Ember.View.smartFocus = (el) ->
+  $el = $(el)
+  if view = Sysys.vfi($el.attr('id'))
+    view.smartFocus()
+  else
+    $el.focus()

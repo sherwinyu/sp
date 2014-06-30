@@ -44,6 +44,9 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
 
 
   actions:
+    refocus: ->
+      Ember.View.smartFocus(@$('.line-item-selectable').last())
+
     addGoal: ->
       @get('myJson').pushObject {goal: "new goal", completed_at: null}
       @send 'didCommit'
