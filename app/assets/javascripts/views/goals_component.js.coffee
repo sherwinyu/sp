@@ -1,21 +1,7 @@
-#= require ./humon_editor_component
-
 Sysys.GoalsEditorComponent = Ember.Component.extend
   tagName: "goals"
   rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'humon-editor-inline', 'goals']
-
-  bindKey: (shortcut, action) ->
-    controller = @get('controller')
-    window.key(shortcut, (e, obj) =>
-      unless $(e.target).parents("#" + @get('elementId')).length
-        return
-      action.call(@, e, obj)
-    )
-
-  unbindKey: (shorcut) ->
-    window.key.unbind shortcut
-
   json: null
   myJson: null
 
@@ -25,23 +11,22 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
       @send 'addGoal'
       return false
 
-    @bindKey 'up', =>
-      console.log 'goals-editor-up', arguments
-      @sendAction 'upPressed', arguments[0]
+    @bindKey 'up', (e) =>
+      @sendAction 'upPressed', e
 
-    @bindKey 'down', =>
-      console.log 'goals-editor-up', arguments
-      @sendAction 'downPressed', arguments[0]
+    @bindKey 'down', (e) =>
+      @sendAction 'downPressed', e
   ).on 'didInsertElement'
 
   teardown: ->
     @unbindKey 'shift+a'
+    @unbindKey 'up'
+    @unbindKey 'down'
 
   init: ->
     # store a copy of the public json as myJson
     @set "myJson", @get('json').slice(0)
     @_super()
-
 
   actions:
     refocus: ->

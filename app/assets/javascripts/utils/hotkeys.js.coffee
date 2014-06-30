@@ -17,3 +17,15 @@ Ember.View.smartFocus = (el) ->
     view.smartFocus()
   else
     $el.focus()
+
+Ember.View.reopen
+  bindKey: (shortcut, action) ->
+    controller = @get('controller')
+    window.key(shortcut, (e, obj) =>
+      unless $(e.target).parents("#" + @get('elementId')).length
+        return
+      action.call(@, e, obj)
+    )
+
+  unbindKey: (shorcut) ->
+    window.key.unbind shortcut
