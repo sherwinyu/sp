@@ -29,8 +29,9 @@ window.getCursor = (node) ->
   if node instanceof jQuery
     node = node[0]
 
-  # if it's a div .. or a SPAN TODO
+  # if it's a div or a span or a node-field
   # then use the divGetCursor routine
+  # WARNING this is not robust
   if node.tagName is "DIV" || node.tagName is "SPAN" || node.tagName is "node-field"
     return divGetCursor(node)
   $(node).prop('selectionStart')
