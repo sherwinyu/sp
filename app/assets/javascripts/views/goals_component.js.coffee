@@ -1,11 +1,16 @@
+# TODO #DEFER abstract out logic between this, humon-field, and humon-editor
 Sysys.GoalsEditorComponent = Ember.Component.extend
   tagName: "goals"
   rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'humon-editor-inline', 'goals']
+
+  # The external binding to passed-in json
   json: null
+
+  # The private copy of json (analagous to HEC#content)
   myJson: null
 
-  setup: (->
+  setupHotkeys: (->
     @bindKey 'shift+a', (e) =>
       return if key.isTyping(e)
       @send 'addGoal'
@@ -18,10 +23,11 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
       @sendAction 'downPressed', e
   ).on 'didInsertElement'
 
-  teardown: ->
+  teardown: (->
     @unbindKey 'shift+a'
     @unbindKey 'up'
     @unbindKey 'down'
+  ).on 'willDestroyElement'
 
   init: ->
     # store a copy of the public json as myJson
@@ -31,6 +37,7 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
   actions:
     # Currently called only by deleteGoal and addGoal. Just focuses on the last
     # item by default.
+    # TODO #DEFER #BUG: focus last will grab the date time field
     refocus: ->
       Ember.View.smartFocus(@$('.line-item-selectable').last())
 
@@ -40,13 +47,12 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
     didCommit: ->
       @set 'json', @myJson.slice(0)
 
-    # TODO think about how to make this "index-sensitive"
+    # TODO #DEFER think about how to make this "index-sensitive"
     # It's not hard here, but how do do it with just json objects?
     addGoal: ->
       @get('myJson').pushObject {goal: "new goal", completed_at: null}
       @send 'didCommit'
       Ember.run.later => @send 'refocus'
-
 
     # Removes the first goal that has the given goalText
     deleteGoal: (e, goalText) ->
