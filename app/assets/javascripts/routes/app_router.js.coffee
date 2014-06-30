@@ -252,11 +252,3 @@ Sysys.LoadingRoute = Ember.Route.extend
 Sysys.LoadingController = Ember.ObjectController.extend
   destination: ""
   needs: "application"
-
-# @param el [Element]
-Ember.View.smartFocus = (el) ->
-  $el = $(el)
-  if view = Sysys.vfi($el.attr('id'))
-    view.smartFocus()
-  else
-    $el.focus()

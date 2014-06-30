@@ -22,8 +22,10 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
   myJson: null
 
   setup: (->
-    @bindKey 'shift+a', (args) =>
+    @bindKey 'shift+a', (e) =>
+      return if key.isTyping(e)
       @send 'addGoal'
+      return false
 
     @bindKey 'up', =>
       console.log 'goals-editor-up', arguments
@@ -47,9 +49,12 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
     refocus: ->
       Ember.View.smartFocus(@$('.line-item-selectable').last())
 
+    # TODO think about how to make this "index-sensitive"
+    # It's not hard here, but how do do it with just json objects?
     addGoal: ->
       @get('myJson').pushObject {goal: "new goal", completed_at: null}
       @send 'didCommit'
+      Ember.run => @send 'refocus'
 
     didCommit: ->
       @set 'json', @myJson.slice(0)
