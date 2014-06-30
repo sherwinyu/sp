@@ -61,8 +61,13 @@ Sysys.HumonFieldComponent = Ember.Component.extend
     downPressed: (e)->
       @sendAction 'downPressed', e
 
+    # Call the bound enterPressed handler, giving it the json representation
+    # @param node [Humon.Node] node whose UI originated the enterPressed
+    # @param uiPayload [json] the key and val field text, received from NodeView#enterPressed
     enterPressed: (e, node, uiPayload)->
       @sendAction 'enterPressed', e, node.toJson()
 
+    # Call the bound deletePressed handler, giving it the json representation
+    # @param node [Humon.Node] node whose UI originated the deletePressed
     deletePressed: (e, node)->
       @sendAction 'deletePressed', e, node.toJson()

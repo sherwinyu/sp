@@ -61,5 +61,8 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     downPressed: (e)->
       @sendAction 'downPressed', e
 
+    # For HEC, just delegate enterPressed to the node.nodeVal
+    # @param node [Humon.Node] node whose UI originated the enterpresed
+    # @param uiPayload [json] the key and val field text, received from NodeView#enterPressed
     enterPressed: (e, node, uiPayload) ->
       node.get('nodeVal').enterPressed(e, uiPayload)
