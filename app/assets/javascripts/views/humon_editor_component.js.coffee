@@ -2,9 +2,15 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
   tagName: "humon-editor"
   rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'humon-editor-inline']
-  hooks: null
+
+  # The external binding to passed-in json
   json: null
-  metatemplate: null
+
+  # The Humon.Node representation
+  content: null
+
+  # The passed-in metatemplate TODO #DEFER downcase me
+  metaTemplate: null
 
   ###
   # Available public API component actions
@@ -15,6 +21,7 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     * downPressed
   ###
 
+  # TODO #DEFER move into actions hash, normalize names to focusLost, focusGained
   handleFocusOut: (e)->
     @sendAction 'focusLost'
   handleFocusIn: (e)->
@@ -37,7 +44,6 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
   init: ->
     @_super()
     @initContentFromJson()
-
 
   actions:
     # params:

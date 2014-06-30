@@ -1,15 +1,24 @@
-# Binds against json
-Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.extend
+# TODO #DEFER create a components directory
+Sysys.HumonFieldComponent = Ember.Component.extend
   tagName: "humon-field"
   classNames: ['humon-field', 'humon-editor', 'humon-editor-inline']
   classNameBindings: ['readOnly', 'inline']
+
+  # Externally bound json
   json: null
+
+  # The Humon.Node representation
   content: null
+
+  # [String] that will be used as the 'name' property in computeMeta.
   metatype: null
+
   inline: null
   readOnly: null
 
-
+  # Sets Creates a metatemplate only specifying name (from `metatype`) and setting
+  # `literalOnly` to true
+  # @return [metatemplate]
   computeMeta: ->
     meta = name: @get('metatype')
     $.extend(meta, literalOnly: true)
@@ -28,8 +37,16 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
     node.set('nodeKey', @get('rootKey'))
     @set 'content', node
 
-  actions:
+  init: ->
+    @_super()
+    @initContentFromJson()
 
+  actions:
+    # @param params:
+    #   - controller: the instance of the controller
+    #   - node: the committed node
+    #   - rootJson: json representation of the root node
+    #   - key: a string if the key was committed; null otherwise
     # @ref HumonControllerMixin#actions#didCommit
     didCommit: (params) ->
       @sendAction 'jsonChanged', params
@@ -49,11 +66,3 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
 
     deletePressed: (e, node)->
       @sendAction 'deletePressed', e, node.toJson()
-
-
-  init: ->
-    @_super()
-    @initContentFromJson()
-
-Sysys.DisplayFieldComponent = Sysys.HumonFieldComponent.extend
-  tagName: 'display-field'

@@ -16,7 +16,7 @@ Humon.HumonControllerMixin = Ember.Mixin.create
     all this does is SETS THE NODE TO ACTIVE
     does NOT focus
     does NOT commit
-    does NOT check if node is null TODO(syu): split into a deactivateNode action
+    does NOT check if node is null
     ###
     activateNode: (node) ->
       @set 'activeHumonNode', node
