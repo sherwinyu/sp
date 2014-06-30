@@ -4,7 +4,6 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
   tagName: "goals"
   rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor', 'humon-editor-inline', 'goals']
-  justAVar: "wargstabul"
 
   bindKey: (shortcut, action) ->
     controller = @get('controller')
@@ -13,7 +12,6 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
         return
       action.call(@, e, obj)
     )
-    # controller.send action
 
   unbindKey: (shorcut) ->
     window.key.unbind shortcut
@@ -66,3 +64,12 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
       @send 'didCommit'
       Ember.run =>
         @send 'refocus'
+
+    toggleCompletedAt: (e, goalText) ->
+      goals = @get('myJson')
+      goal = goals.find( (goal) -> goal.goal == goalText)
+      if goal.completed_at
+        Ember.set goal, 'completed_at', null
+      else
+        Ember.set goal, 'completed_at', new Date()
+      @send 'didCommit'

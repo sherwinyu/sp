@@ -75,5 +75,9 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
   actions:
     upPressed: (e)->
       @sendAction 'upPressed', e
+
     downPressed: (e)->
       @sendAction 'downPressed', e
+
+    enterPressed: (e, node, uiPayload) ->
+      node.get('nodeVal').enterPressed(e, uiPayload)

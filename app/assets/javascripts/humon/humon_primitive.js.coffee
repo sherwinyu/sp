@@ -19,6 +19,7 @@ Humon.Primitive = Humon.BaseHumonValue.extend Humon.HumonValue,
 
   flatten: ->
     [@node]
+
   enterPressed: (e, payload) ->
     @get('node').tryToCommit( payload )
     nodeView = @get('node.nodeView')

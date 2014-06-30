@@ -65,10 +65,9 @@ Humon.NodeView = Ember.View.extend
       if nodeView = nextNode?.get('nodeView')
         nodeView.smartFocus()
 
-    # Default: validate and commit
     enterPressed: (e) ->
       uiPayload = @uiPayload()
-      @get('nodeContent.nodeVal').enterPressed(e, uiPayload)
+      @get('controller').send('enterPressed', e,  @get('nodeContent'), uiPayload)
 
     moveLeft: ->
       # You can't focus left on a list!

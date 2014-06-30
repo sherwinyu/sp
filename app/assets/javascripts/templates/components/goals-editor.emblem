@@ -4,7 +4,7 @@ h3.line-item-selectable tabindex="0"
 
 = each goal in myJson
   div.goal
-    = humon-field json=goal.goal jsonChanged="didCommit" metatype="text" deletePressed="deleteGoal"
+    = humon-field json=goal.goal jsonChanged="didCommit" metatype="text" deletePressed="deleteGoal" enterPressed="toggleCompletedAt"
     = if goal.completed_at
       ' Done! Completed at
       = humon-field json=goal.completed_at metatype="time"

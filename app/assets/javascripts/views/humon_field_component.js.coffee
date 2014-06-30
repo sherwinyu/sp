@@ -37,6 +37,9 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
     downPressed: (e)->
       @sendAction 'downPressed', e
 
+    enterPressed: (e, node, uiPayload)->
+      @sendAction 'enterPressed', e, node.toJson()
+
     deletePressed: (e, node)->
       @sendAction 'deletePressed', e, node.toJson()
 
