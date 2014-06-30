@@ -4,7 +4,7 @@ a.btn.btn-default.line-item-selectable{action "addGoal"} tabindex="0": | Add a g
 
 = each goal in myJson
   div.goal
-    = humon-field json=goal.goal jsonChanged="didCommit" metatype="text"
+    = humon-field json=goal.goal jsonChanged="didCommit" metatype="text" deletePressed="deleteGoal"
     = if goal.completed_at
       ' Done! Completed at
       = humon-field json=goal.completed_at metatype="time"

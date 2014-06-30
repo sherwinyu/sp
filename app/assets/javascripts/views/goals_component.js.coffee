@@ -18,7 +18,6 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
   unbindKey: (shorcut) ->
     window.key.unbind shortcut
 
-
   json: null
   myJson: null
 
@@ -51,3 +50,11 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
 
     didCommit: ->
       @set 'json', @myJson.slice(0)
+
+    deleteGoal: (e, goalText) ->
+      goals = @get('myJson')
+      goal = goals.find( (goal) -> goal.goal == goalText)
+      goals.removeObject goal
+      @send 'didCommit'
+      Ember.run =>
+        @send 'refocus'

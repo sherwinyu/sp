@@ -58,10 +58,11 @@ Humon.NodeView = Ember.View.extend
 #########################
   actions:
     deletePressed: (e) ->
+      @get('controller').send('deletePressed', e, @get('nodeContent'))
       nextNode = @get('nodeContent').prevNode()
       Ember.run =>
-        @get('nodeContent.nodeVal').deletePressed()
-      if nodeView = nextNode.get('nodeView')
+        @get('nodeContent.nodeParent')?.deleteChild(@get('nodeContent'))
+      if nodeView = nextNode?.get('nodeView')
         nodeView.smartFocus()
 
     # Default: validate and commit
