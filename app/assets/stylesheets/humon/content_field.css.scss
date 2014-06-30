@@ -3,15 +3,12 @@
 @import "val_field";
 @import "key_field";
 
-/*
- * Content Fields
- */
+// Content Fields
 
 .node .content-field {
   @include node_text_inline_mx();
   padding-left: $content_field_padding_width;
   padding-right: $content_field_padding_width;
-
   border-bottom: $borderLightUnderline;
   border-left: $borderTransparent;
   color: $nodeCopyColor;

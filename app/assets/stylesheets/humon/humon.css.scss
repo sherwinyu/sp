@@ -15,7 +15,8 @@
   transition: all 300ms ease;
 }
 
-// HUMON-INLINE
+// HUMON-INLINE (when `inline` is set to true)
+//    - used by DisplayField
 .node.inline {
   display: inline-block;
   padding-left: 0;
@@ -52,24 +53,6 @@
   transition: all 300ms ease;
 }
 
-// ===
-// Active node indicator
-.node.active:before {
-  // @include node_text_inline_mx(1);
-  // transition: all 300ms ease;
-  // content: "\00BB"; //»
-  // position: absolute;
-  // left: 0;
-  // font-weight: 700;
-  // font-size: 22px;
-  // height: 22px;
-  // need to shift up because font-size is nonstandard;
-}
-
-.node.active > .node {
-  // border-left: $nodeActiveBorderLeft;
-  // transition: all 300ms ease;
-}
 /*
  * Active child styling
  */
@@ -106,14 +89,6 @@
   padding-left: $nodeWhiteIndent;
 }
 
-.node {
-}
-
-// ==
-// Humon field
-.humon-field {
-  border: 1px solid red;
-}
 
 @import "humon/debug";
 @import "humon/detail";

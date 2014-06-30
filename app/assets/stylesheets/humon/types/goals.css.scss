@@ -10,8 +10,8 @@
     transition: all 300ms ease;
   }
   transition: all 300ms ease;
-
 }
+
 .goals h3 .goal-button {
   visibility: hidden;
   margin-left: 3px;
@@ -49,27 +49,17 @@
   }
 
   // Text child
-  .node.text {
+  .text {
     &.active:before {
       display: none;
     }
     .val-text-field {
-      max-width: auto;
+      max-width: 750px;
     }
   }
 
-
-
-  .content-field {
-  }
-  .val-field {
-  }
   padding-left: 0px;
   padding-top: 8px;
   padding-bottom: 8px;
   border-bottom: $borderLightest1Underline;
-
-  .n-goal-push-right {
-    display: inline-block;
-  }
 }

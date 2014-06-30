@@ -123,22 +123,7 @@ $hecTitleFontSize: $nodeCopyFontSize * 1.3;
   display: inline-block;
 }
 
-$activeIndicatorFontSize: 22.0 * $nodeCopyFontSize / 16.0;
-$activeIndicatorHeight: $activeIndicatorFontSize;
-
-@mixin node_active_indicator_mx($factor: 1, $top: 0px) {
-  @include node_text_inline_mx($factor);
-  font-size: $activeIndicatorFontSize * $factor;
-  height: $activeIndicatorHeight * $factor;
-}
-
-
 @mixin node_large_mx {
-
-  // TODO(syu): NO LONGER NECESSARY
-  &.active:before {
-    @include node_active_indicator_mx(1.5);
-  }
   .content-field {
     @include node_text_inline_mx(1.5);
   }
