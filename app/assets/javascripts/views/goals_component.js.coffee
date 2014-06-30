@@ -1,4 +1,5 @@
 # TODO #DEFER abstract out logic between this, humon-field, and humon-editor
+# TODO #DEFER normalize the name for this. GoalsEditor? GoalsComponent? Goals?
 Sysys.GoalsEditorComponent = Ember.Component.extend
   tagName: "goals"
   rootLayout_: "layouts/hec_title"
