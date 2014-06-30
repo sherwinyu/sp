@@ -3,7 +3,7 @@
 Sysys.GoalsEditorComponent = Ember.Component.extend
   tagName: "goals"
   rootLayout_: "layouts/hec_title"
-  classNames: ['humon-editor', 'humon-editor-inline', 'goals-component']
+  classNames: ['humon-editor', 'humon-editor-inline', 'goals']
   justAVar: "wargstabul"
 
   bindKey: (shortcut, action) ->

@@ -1,6 +1,6 @@
-h3.line-item-selectable tabindex="0" Goals
-
-a.btn.btn-default.line-item-selectable{action "addGoal"} tabindex="0": | Add a goal
+h3.line-item-selectable tabindex="0"
+  | Goals
+  a.goal-button.btn.btn-default{action "addGoal"}: | ⇧ A
 
 = each goal in myJson
   div.goal

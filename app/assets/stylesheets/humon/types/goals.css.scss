@@ -1,5 +1,27 @@
 
-//
+.goals h3.line-item-selectable {
+  border-left: $nodeBorderLeft;
+  padding-left: $nodeBorderLeftWidth;
+  box-shadow: none !important;
+  outline: none !important;
+  &:focus {
+    border-left: $nodeActiveBorderLeft;
+    transition: all 300ms ease;
+  }
+  transition: all 300ms ease;
+
+}
+.goals h3 .goal-button {
+  visibility: hidden;
+  margin-left: 3px;
+  font-size: 12px;
+  padding: 3px 6px;
+}
+
+.goals h3:focus .goal-button, .goals h3:hover .goal-button {
+  visibility: visible;
+}
+
 .node.goals {
   @include node_large_mx();
 }
