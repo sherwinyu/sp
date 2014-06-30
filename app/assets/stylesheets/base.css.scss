@@ -132,6 +132,8 @@ $activeIndicatorHeight: $activeIndicatorFontSize;
 
 
 @mixin node_large_mx {
+
+  // TODO(syu): NO LONGER NECESSARY
   &.active:before {
     @include node_active_indicator_mx(1.5);
   }

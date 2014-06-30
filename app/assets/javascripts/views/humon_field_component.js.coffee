@@ -1,9 +1,14 @@
 # Binds against json
 Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.extend
+  tagName: "humon-field"
   classNames: ['humon-field', 'humon-editor', 'humon-editor-inline']
+  classNameBindings: ['readOnly', 'inline']
   json: null
   content: null
   metatype: null
+  inline: null
+  readOnly: null
+
 
   computeMeta: ->
     meta = name: @get('metatype')
@@ -47,3 +52,6 @@ Sysys.HumonFieldComponent = Ember.Component.extend # Sysys.HumonEditorComponent.
   init: ->
     @_super()
     @initContentFromJson()
+
+Sysys.DisplayFieldComponent = Sysys.HumonFieldComponent.extend
+  tagName: 'display-field'

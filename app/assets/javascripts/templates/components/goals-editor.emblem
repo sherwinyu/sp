@@ -5,11 +5,12 @@ h3.line-item-selectable tabindex="0"
 = each goal in myJson
   div.goal
     = humon-field json=goal.goal jsonChanged="didCommit" metatype="text" deletePressed="deleteGoal" enterPressed="toggleCompletedAt"
-    = if goal.completed_at
-      ' Done! Completed at
-      = humon-field json=goal.completed_at metatype="time"
-    = else
-      | Incomplete
+    div.completed-at
+      = if goal.completed_at
+        ' Done! Completed at
+        = display-field inline=true readOnly=true json=goal.completed_at metatype="time"
+      = else
+        | Incomplete
 
 
 / OR if "view.content" is just plain old json...

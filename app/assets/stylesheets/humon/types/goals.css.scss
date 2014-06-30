@@ -1,3 +1,4 @@
+@import "base";
 
 .goals h3.line-item-selectable {
   border-left: $nodeBorderLeft;
@@ -36,6 +37,13 @@
     .copy  {
       color: $nodeActiveDetailCopyColor;
     }
+  }
+  .completed-at {
+    @include node_text_inline_mx(1.0);
+    .content-field, .copy, {
+      @include node_text_inline_mx(1.0);
+    }
+
   }
 
   // Text child

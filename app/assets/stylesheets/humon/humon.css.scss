@@ -14,6 +14,9 @@
   border-left: $nodeBorderLeft;
   transition: all 300ms ease;
 }
+.node.inline {
+  display: inline-block;
+}
 
 // ==
 // Suppress gap

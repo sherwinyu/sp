@@ -25,7 +25,9 @@ Humon.NodeView = Ember.View.extend
     'nodeContent.nodeType',
     'isActive:active',
     'nodeContent.invalid:invalid',
-    'parentActive:activeChild']
+    'parentActive:activeChild',
+    'inline'
+  ]
   classNames: ['node', 'line-item-selectable']
 
 #########################
