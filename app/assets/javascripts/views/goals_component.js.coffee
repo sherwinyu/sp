@@ -54,7 +54,7 @@ Sysys.GoalsEditorComponent = Ember.Component.extend
     addGoal: ->
       @get('myJson').pushObject {goal: "new goal", completed_at: null}
       @send 'didCommit'
-      Ember.run => @send 'refocus'
+      Ember.run.later => @send 'refocus'
 
     didCommit: ->
       @set 'json', @myJson.slice(0)
