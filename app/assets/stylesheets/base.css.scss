@@ -116,6 +116,12 @@ $hecTitleFontSize: $nodeCopyFontSize * 1.3;
   height: $lineheight * $factor;
   line-height: $lineheight * $factor;
   vertical-align: top;
+  .content-field, .copy  {
+    @include node_font_mx($factor);
+    height: $lineheight * $factor;
+    line-height: $lineheight * $factor;
+    vertical-align: top;
+  }
 }
 
 @mixin node_text_inline_mx($factor: 1) {

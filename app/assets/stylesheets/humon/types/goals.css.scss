@@ -1,6 +1,6 @@
 @import "base";
 
-.goals h3.line-item-selectable {
+.goals .header {
   border-left: $nodeBorderLeft;
   padding-left: 5px;
   box-shadow: none !important;
@@ -12,13 +12,13 @@
   transition: all 300ms ease;
 }
 
-.goals h3 .goal-button {
+.goals.header .goal-button {
   visibility: hidden;
   margin-left: 3px;
   font-size: 12px;
   padding: 3px 6px;
 }
-
+// By default, hide the goal-button
 .goals h3:focus .goal-button, .goals h3:hover .goal-button {
   visibility: visible;
 }
@@ -42,13 +42,8 @@
   .completed-at {
     margin-left: $f_total_node_text_offset_width;
     @include node_text_inline_mx(1.0);
-    .content-field, .copy, {
-      @include node_text_inline_mx(1.0);
-    }
-
   }
 
-  // Text child
   .text {
     &.active:before {
       display: none;
@@ -57,7 +52,6 @@
       max-width: 750px;
     }
   }
-
   padding-left: 0px;
   padding-top: 8px;
   padding-bottom: 8px;

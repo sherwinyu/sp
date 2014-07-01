@@ -1,4 +1,4 @@
-h3.line-item-selectable tabindex="0"
+h3.header.line-item-selectable tabindex="0"
   | Goals
   a.goal-button.btn.btn-default{action "addGoal"}: | ⇧ A: add goal
 

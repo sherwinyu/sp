@@ -39,6 +39,7 @@
   font-weight: 200;
   transition: all 300ms ease;
 }
+
 .node.node-collection.suppress-gap {
   padding-bottom: 0px;// transparent solid;
   margin-bottom: 0px;// transparent solid;
@@ -85,10 +86,10 @@
   padding-left: 3px;
   padding-right: 3px;
 }
+
 .node-indent {
   padding-left: $nodeWhiteIndent;
 }
-
 
 @import "humon/debug";
 @import "humon/detail";
