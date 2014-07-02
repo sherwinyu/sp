@@ -14,9 +14,14 @@ Sysys.HumonFieldComponent = Ember.Component.extend
   metatype: null
 
   # Determines whether the underlying HumonNodeView will have inlineNode set
-  # This in turn determines whether the entire view is a display: block or in-text display
-  inlineField: null
+  # This in turn controls whether it's a block field or an inline field.
+  inlineField: false
+
+  # Currently unused
   readOnly: null
+
+  # Determines whether the field element will have before and after spaces, or whether
+  # it's flush with text
   embeddedInText: true
 
   # Sets Creates a metatemplate only specifying name (from `metatype`) and setting

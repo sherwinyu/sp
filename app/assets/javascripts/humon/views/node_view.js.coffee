@@ -20,13 +20,17 @@ Humon.NodeView = Ember.View.extend
     @get('controller').send('activateNode', arg)
 
   layoutName: "layouts/node_editable_key"
+
+  # By default, this entire node should render as a block
+  inlineNode: false
+
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.nodeType',
     'isActive:active',
     'nodeContent.invalid:invalid',
     'parentActive:activeChild',
-    'inlineNode'
+    'inlineNode:inline-node:block-node'
   ]
   classNames: ['node', 'line-item-selectable']
 

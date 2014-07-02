@@ -12,6 +12,13 @@
   color: $nodeCopyColor;
   transition: all 300ms ease;
 }
+// `standalone` vs `embedded-in-text`
+//    - standalone means there's no padding before and after
+//    the content-field.
+//    - embedded-in-text is for when we actually want the content
+//    field to exist in line with other normal copy
+//    This is the case in [KEYFIELD]: [VALFIELD] situations
+//    as well as in the "Done! Completed at [TIMEFIELD]"
 .content-field.standalone {
   padding-left: 0px;
   padding-right: 0px;
