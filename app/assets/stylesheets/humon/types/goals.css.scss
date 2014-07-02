@@ -28,16 +28,14 @@
   visibility: visible;
 }
 
-.node.goals {
-  @include node_large_mx();
-}
-
 .goal {
-  @include node_large_mx();
+  @include node_structure(1.5);
 
   .completed-at {
     margin-left: $f_total_node_text_offset_width;
-    @include node_text_inline_mx(1.0);
+    @include node_text(0.8);
+    // Override the inline-block display from node_text
+    display: block;
   }
 
   .text {

@@ -107,9 +107,8 @@ $hecTitleFontSize: $nodeCopyFontSize * 1.3;
   font-size: $nodeCopyFontSize * $factor;
 }
 
-@mixin node_text_structure_mx($factor: 1) {
+@mixin node_structure($factor: 1) {
   @include node_font_mx($factor);
-  height: $lineheight * $factor;
   line-height: $lineheight * $factor;
   vertical-align: top;
   .content-field, .copy  {
@@ -120,25 +119,8 @@ $hecTitleFontSize: $nodeCopyFontSize * 1.3;
   }
 }
 
-@mixin node_text_inline_mx($factor: 1) {
-  @include node_text_structure_mx($factor);
+@mixin node_text($factor: 1) {
+  @include node_structure($factor);
+  height: $lineheight * $factor;
   display: inline-block;
 }
-
-@mixin node_large_mx {
-  .content-field {
-    @include node_text_inline_mx(1.5);
-  }
-  .content-field.text-field {
-
-  }
-  .copy {
-    @include node_text_inline_mx(1.5);
-  }
-  .debug-inline {
-    @include node_text_inline_mx(1.0);
-  }
-}
-
-// ==
-// To be included under whatever element is right above the node_header

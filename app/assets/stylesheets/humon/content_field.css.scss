@@ -6,7 +6,8 @@
 // Content Fields
 
 .content-field {
-  @include node_text_inline_mx();
+  @include node_text();
+  display: inline-block;
   border-bottom: $borderLightUnderline;
   border-left: $borderTransparent;
   color: $nodeCopyColor;
