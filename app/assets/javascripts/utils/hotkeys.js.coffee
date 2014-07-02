@@ -19,5 +19,5 @@ Ember.View.reopen
       action.call(@, e, obj)
     )
 
-  unbindKey: (shorcut) ->
-    window.key.unbind shortcut[0]
+  unbindKey: (shortcut) ->
+    window.key.unbind shortcut
