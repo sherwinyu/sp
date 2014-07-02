@@ -2,7 +2,7 @@
 Sysys.HumonFieldComponent = Ember.Component.extend
   tagName: "humon-field"
   classNames: ['humon-field', 'humon-editor']
-  classNameBindings: ['readOnly', 'inline']
+  classNameBindings: ['readOnly', 'inlineField']
 
   # Externally bound json
   json: null
@@ -13,7 +13,9 @@ Sysys.HumonFieldComponent = Ember.Component.extend
   # [String] that will be used as the 'name' property in computeMeta.
   metatype: null
 
-  inline: null
+  # Determines whether the underlying HumonNodeView will have inlineNode set
+  # This in turn determines whether the entire view is a display: block or in-text display
+  inlineField: null
   readOnly: null
 
   # Sets Creates a metatemplate only specifying name (from `metatype`) and setting
