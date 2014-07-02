@@ -16,6 +16,7 @@ Sysys.ContentEditableField = Ember.View.extend
   ).property('readOnly')
 
   # By default, this content field will have leading and trailing spaces
+  # Right now, this is ALWAYS true
   embeddedInText: true
 
   tabindex: '0'

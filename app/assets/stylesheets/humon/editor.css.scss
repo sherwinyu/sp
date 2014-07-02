@@ -3,9 +3,15 @@
   padding: 0px;
 }
 
-.humon-field {
+// humon-field component doesn't set properties on the underlying content-field.
+// Instead, we override the padding style by listening for the style on the wrapping humon-field
+// instead of on the content-field
+.humon-field.embedded-in-text {
+  .content-field {
+    padding-left: $content_field_padding_width;
+    padding-right: $content_field_padding_width;
+  }
 }
-
 .humon-field.standalone {
   .content-field {
     padding: 0px;
