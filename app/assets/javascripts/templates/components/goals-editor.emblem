@@ -8,6 +8,6 @@ h3.header.line-item-selectable tabindex="0"
     div.completed-at
       = if goal.completed_at
         | Done! Completed at
-        = display-field  readOnly=false json=goal.completed_at metatype="time" inlineField=true
+        = humon-field  readOnly=false json=goal.completed_at metatype="time" inlineField=true
       = else
         | Incomplete
