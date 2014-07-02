@@ -3,7 +3,7 @@
 Sysys.GoalsEditorComponent = Ember.Component.extend
   tagName: "goals"
   rootLayout_: "layouts/hec_title"
-  classNames: ['humon-editor', 'humon-editor-inline', 'goals']
+  classNames: ['humon-editor',  'goals']
 
   # The external binding to passed-in json
   json: null

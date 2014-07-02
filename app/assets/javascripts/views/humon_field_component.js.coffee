@@ -1,7 +1,7 @@
 # TODO #DEFER create a components directory
 Sysys.HumonFieldComponent = Ember.Component.extend
   tagName: "humon-field"
-  classNames: ['humon-field', 'humon-editor', 'humon-editor-inline']
+  classNames: ['humon-field', 'humon-editor']
   classNameBindings: ['readOnly', 'inline']
 
   # Externally bound json
