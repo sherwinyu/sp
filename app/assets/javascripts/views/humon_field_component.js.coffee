@@ -2,7 +2,7 @@
 Sysys.HumonFieldComponent = Ember.Component.extend
   tagName: "humon-field"
   classNames: ['humon-field', 'humon-editor']
-  classNameBindings: ['readOnly', 'inlineField']
+  classNameBindings: ['readOnly', 'inlineField', 'embeddedInText:embedded-in-text:standalone']
 
   # Externally bound json
   json: null
@@ -17,6 +17,7 @@ Sysys.HumonFieldComponent = Ember.Component.extend
   # This in turn determines whether the entire view is a display: block or in-text display
   inlineField: null
   readOnly: null
+  embeddedInText: true
 
   # Sets Creates a metatemplate only specifying name (from `metatype`) and setting
   # `literalOnly` to true

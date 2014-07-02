@@ -4,5 +4,10 @@
 }
 
 .humon-field {
-  display: inline;
+}
+
+.humon-field.standalone {
+  .content-field {
+    padding: 0px;
+  }
 }

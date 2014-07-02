@@ -14,8 +14,12 @@ Sysys.ContentEditableField = Ember.View.extend
     else
       'true'
   ).property('readOnly')
+
+  embeddedInText: true
+
   tabindex: '0'
   attributeBindings: ["contenteditable:contenteditable",  'tabindex:tabindex']
+  classNameBindings: ['embeddedInText:embedded-in-text:standalone']
 
   # Shim for editing or setting the field, jQuery style.
   # Basically just wraps $.text() and $.text(textArg)
