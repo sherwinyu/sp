@@ -29,15 +29,6 @@
 
 .goal {
   @include node_large_mx();
-  .active {
-    .content-field {
-      color: $nodeActiveCopyColor;
-    }
-
-    .copy  {
-      color: $nodeActiveDetailCopyColor;
-    }
-  }
 
   .completed-at {
     margin-left: $f_total_node_text_offset_width;
@@ -45,9 +36,6 @@
   }
 
   .text {
-    &.active:before {
-      display: none;
-    }
     .val-text-field {
       max-width: 750px;
     }

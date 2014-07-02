@@ -5,7 +5,7 @@
 
 // Content Fields
 
-.node .content-field {
+.content-field {
   @include node_text_inline_mx();
   padding-left: $content_field_padding_width;
   padding-right: $content_field_padding_width;
@@ -15,7 +15,7 @@
   transition: all 300ms ease;
 }
 
-.node.active > .content-field {
+.active > .content-field {
   border-bottom: $borderUnderline;
   color: $nodeActiveCopyColor;
 }
@@ -25,6 +25,6 @@
   content: "\0020"; // interpunct
 }
 
-.node.active > .content-field:empty:before {
+.active > .content-field:empty:before {
   display: none;
 }

@@ -12,6 +12,10 @@
     vertical-align: top;
   }
 
+  // We need this because we want the text-area field to be a BLOCK
+  // but also want it to be flush (upwards and to the left) after the
+  // key-field. So we keep the text-field as display: block, but wrap it in a
+  // inline-block.
   .n-text-push-right {
     display: inline-block;
   }

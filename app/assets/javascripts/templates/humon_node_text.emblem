@@ -1,4 +1,4 @@
 / humon_node_text.hbs
-span.n-text-push-right
+span.n-text-push-right class={view.isActive:active}
   = view "Sysys.ValEditableTextField" rawValueBinding="view.templateStrings.asString"
 = partial "humon_node_header"
