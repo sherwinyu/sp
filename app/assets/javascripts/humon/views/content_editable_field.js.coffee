@@ -4,7 +4,7 @@
 #= require ./title_field
 
 Sysys.ContentEditableField = Ember.View.extend
-  tagName: "span"
+  tagName: "node-field"
   rawValueBinding: null
   classNames: ['content-field']
   readOnlyBinding: null
@@ -14,8 +14,14 @@ Sysys.ContentEditableField = Ember.View.extend
     else
       'true'
   ).property('readOnly')
+
+  # By default, this content field will have leading and trailing spaces
+  # Right now, this is ALWAYS true
+  embeddedInText: true
+
   tabindex: '0'
   attributeBindings: ["contenteditable:contenteditable",  'tabindex:tabindex']
+  classNameBindings: ['embeddedInText:embedded-in-text:standalone']
 
   # Shim for editing or setting the field, jQuery style.
   # Basically just wraps $.text() and $.text(textArg)

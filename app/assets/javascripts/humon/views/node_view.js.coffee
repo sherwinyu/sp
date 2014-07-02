@@ -1,4 +1,5 @@
 Humon.NodeView = Ember.View.extend
+  tagName: "node"
   # readOnly: passed to KeyField and ValFields (inside node_type.emblem templates)
   # readOnlyBinding: "nodeContent.readOnly"
 
@@ -18,14 +19,20 @@ Humon.NodeView = Ember.View.extend
     arg = if activate then @get('nodeContent') else null
     @get('controller').send('activateNode', arg)
 
-  layoutName: "layouts/node_key"
+  layoutName: "layouts/node_editable_key"
+
+  # By default, this entire node should render as a block
+  inlineNode: false
+
   classNameBindings: [
     'nodeContent.isLiteral:node-literal:node-collection',
     'nodeContent.nodeType',
     'isActive:active',
     'nodeContent.invalid:invalid',
-    'parentActive:activeChild']
-  classNames: ['node']
+    'parentActive:activeChild',
+    'inlineNode:inline-node:block-node'
+  ]
+  classNames: ['node', 'line-item-selectable']
 
 #########################
 ## Dynamic templates
@@ -57,26 +64,22 @@ Humon.NodeView = Ember.View.extend
 #########################
   actions:
     deletePressed: (e) ->
+      @get('controller').send('deletePressed', e, @get('nodeContent'))
       nextNode = @get('nodeContent').prevNode()
       Ember.run =>
-        @get('nodeContent.nodeVal').deletePressed()
-      if nodeView = nextNode.get('nodeView')
+        @get('nodeContent.nodeParent')?.deleteChild(@get('nodeContent'))
+      if nodeView = nextNode?.get('nodeView')
         nodeView.smartFocus()
 
-    # Default: validate and commit
     enterPressed: (e) ->
       uiPayload = @uiPayload()
-      @get('nodeContent.nodeVal').enterPressed(e, uiPayload)
-      e._handled ?=
-        node: @get('nodeContent')
-        view: @
-      @get('nodeContent.nodeParent.nodeView')?.send 'enterPressed', e
+      @get('controller').send('enterPressed', e,  @get('nodeContent'), uiPayload)
 
     moveLeft: ->
       # You can't focus left on a list!
       if @get('nodeContent.nodeParent.nodeType') is 'list'
         return
-      if @get('layoutName') isnt 'layouts/node_key'
+      if @get('layoutName') isnt 'layouts/node_editable_key'
         return
       @focusField
         field: 'label'
@@ -88,28 +91,10 @@ Humon.NodeView = Ember.View.extend
         pos: 'left'
 
     up:  (e)->
-      elements = $('[tabIndex]').closest('.node')
-      idx = elements.index($(e.target).closest('.node'))
-      return if idx == -1
-
-      # self = elements.index(@$())
-      # idx -= 1 if idx == self
-
-      idx = (idx + elements.length - 1) % elements.length
-      el = elements[idx]
-      Sysys.vfi($(el).attr('id')).smartFocus()
+      @get('controller').send 'upPressed', e
 
     down: (e)->
-      elements = $('[tabIndex]').closest('.node')
-      idx = elements.index($(e.target).closest('.node'))
-      return if idx == -1
-
-      # self = elements.index(@$())
-      # idx += 1 if idx == self
-
-      idx = (idx + elements.length + 1) % elements.length
-      el = elements[idx]
-      Sysys.vfi($(el).attr('id')).smartFocus()
+      @get('controller').send 'downPressed', e
 
 #########################################
 ## Focus management
@@ -132,7 +117,7 @@ Humon.NodeView = Ember.View.extend
   focusIn: (e) ->
     e.stopPropagation()
     # hook for HEC to sendAction focusGained
-    @get('controller').handleFocusIn()
+    @get('controller').send 'handleFocusIn'
     return if @get 'isActive'
     @activateBoundNode()
 
@@ -147,7 +132,7 @@ Humon.NodeView = Ember.View.extend
     e.stopPropagation()
     # Even though controllerMixin doesn't have a handleFocusOut method,
     # HumonEditorComponent implements it.
-    @get('controller').handleFocusOut()
+    @get('controller').send 'handleFocusOut'
     @activateBoundNode(no)
 
     payload = @uiPayload()

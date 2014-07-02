@@ -2,7 +2,7 @@
 
 .node {
 
-  span.key-field {
+  .key-field {
     min-width: $keyFieldMinWidth;
     max-width: $keyFieldMaxWidth;
 
@@ -10,17 +10,17 @@
     overflow: hidden;
     white-space: nowrap;
   }
-  span.key-field:focus {
+  .key-field:focus {
     max-width: 1000px;
     transition: all 300ms ease;
   }
-  span.key-field.key-field-fixed {
+  .key-field.key-field-fixed {
     border-bottom: $borderTransparent;
   }
 
 }
 
-.node.active > span.key-field.key-field-fixed {
+.node.active > .key-field.key-field-fixed {
   border-bottom: $borderTransparent;
 }
 

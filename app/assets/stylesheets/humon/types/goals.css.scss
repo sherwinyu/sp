@@ -1,41 +1,50 @@
-.node.goals {
-  @include node_large_mx();
+@import "base";
+
+.goals .header {
+  border-left: $nodeBorderLeft;
+  padding-left: $node_white_indent_width;
+  box-shadow: none !important;
+  outline: none !important;
+  &:focus {
+    border-left: $nodeActiveBorderLeft;
+    transition: all 300ms ease;
+    color: $nodeActiveCopyColor;
+  }
+  transition: all 300ms ease;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-.node.goal {
-  @include node_large_mx();
-  &.active {
-    .content-field {
-      color: $nodeActiveCopyColor;
-    }
+.goals .header .goal-button {
+  visibility: hidden;
+  margin-left: 3px;
+  font-size: 12px;
+  padding: 3px 6px;
+}
+// By default, hide the goal-button
+.goals h3:focus .goal-button, .goals h3:hover .goal-button {
+  visibility: visible;
+}
 
-    .copy  {
-      color: $nodeActiveDetailCopyColor;
-    }
+.goal {
+  @include node_structure(1.5);
+
+  .completed-at {
+    margin-left: $f_total_node_text_offset_width;
+    @include node_structure(0.8);
+    // Override the inline-block display from node_text
+    display: block;
   }
 
-  // Text child
-  .node.text {
-    &.active:before {
-      display: none;
-    }
+  .text {
     .val-text-field {
-      max-width: auto;
+      max-width: 750px;
     }
   }
-
-
-
-  .content-field {
-  }
-  .val-field {
-  }
-  padding-left: 0px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-left: $f_total_node_text_offset_width - 4px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   border-bottom: $borderLightest1Underline;
-
-  .n-goal-push-right {
-    display: inline-block;
-  }
 }

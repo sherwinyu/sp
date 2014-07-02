@@ -1,1 +1,2 @@
-Sysys.HumonNodeView nodeContentBinding="view.content" layoutName="humon_node_keyless_layout"
+Sysys.HumonNodeView nodeContentBinding="view.content" layoutName="layouts/node_keyless" inlineNode=inlineField embeddedInText=embeddedInText
+= partial 'humon_node_debug'

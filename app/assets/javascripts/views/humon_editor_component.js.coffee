@@ -1,9 +1,16 @@
 Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
+  tagName: "humon-editor"
   rootLayout_: "layouts/hec_title"
-  classNames: ['humon-editor', 'humon-editor-inline']
-  hooks: null
+  classNames: ['humon-editor']
+
+  # The external binding to passed-in json
   json: null
-  metatemplate: null
+
+  # The Humon.Node representation
+  content: null
+
+  # The passed-in metatemplate TODO #DEFER downcase me
+  metaTemplate: null
 
   ###
   # Available public API component actions
@@ -14,26 +21,11 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     * downPressed
   ###
 
+  # TODO #DEFER move into actions hash, normalize names to focusLost, focusGained
   handleFocusOut: (e)->
     @sendAction 'focusLost'
   handleFocusIn: (e)->
     @sendAction 'focusGained'
-
-  ###
-  initialJsonDidChange
-  This is to allow this component to bind against deferred value.
-
-  When a HEC is created, the passed-in value for `initialJson` can either be existent
-  or undefined.
-  If `initialJson` is initialy undefined:
-    - we assume that it is a deferred value (actually, an undefined value
-      that will become defined when a promise is resolved in the future)
-    - we set content and rerender when this observer fires
-  If `initialJson` is initially defined:
-    - we assume that it's a static (or already resolved) value
-    - set content; and the norma view life cycle will render it for us.
-  ###
-  initClassNames: (->)
 
   initContentFromJson: ->
     initialJson = @get('json')
@@ -49,24 +41,28 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     node.set('nodeKey', @get('rootKey'))
     @set 'content', node
 
-  _jsonUpdated: (->
-    x = @get('json')
-    console.log(x)
-  ).observes('json')
-
   init: ->
     @_super()
     @initContentFromJson()
 
-  # TODO(syu): is this safe? if this object never gets cloned?
-  hooks:
+  actions:
+    # params:
+    #   - controller: the instance of the controller
+    #   - node: the committed node
+    #   - rootJson: json representation of the root node
+    #   - key: a string if the key was committed; null otherwise
     didCommit: (params) ->
-      # console.log "didCommit:", params, params.payload.key, params.payload.val, JSON.stringify(params.rootJson)
       @sendAction 'jsonChanged', params.rootJson
       @set 'json', params.rootJson
 
-    didUp: (e) ->
+    upPressed: (e)->
       @sendAction 'upPressed', e
 
-    didDown: (e)->
+    downPressed: (e)->
       @sendAction 'downPressed', e
+
+    # For HEC, just delegate enterPressed to the node.nodeVal
+    # @param node [Humon.Node] node whose UI originated the enterpresed
+    # @param uiPayload [json] the key and val field text, received from NodeView#enterPressed
+    enterPressed: (e, node, uiPayload) ->
+      node.get('nodeVal').enterPressed(e, uiPayload)

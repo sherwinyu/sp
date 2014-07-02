@@ -1,12 +1,8 @@
 .node.text {
-  span.key-field{
-    // min-width: $keyFieldMaxWidth / 2;
-  }
-
   /*
    * VAL TEXT FIELD
    */
-  div.val-text-field {
+  .val-text-field {
     display: block;
     min-height: $lineheight;
     max-width: $valTextFieldMaxWidth;
@@ -16,6 +12,10 @@
     vertical-align: top;
   }
 
+  // We need this because we want the text-area field to be a BLOCK
+  // but also want it to be flush (upwards and to the left) after the
+  // key-field. So we keep the text-field as display: block, but wrap it in a
+  // inline-block.
   .n-text-push-right {
     display: inline-block;
   }

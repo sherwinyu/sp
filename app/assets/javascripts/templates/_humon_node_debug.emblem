@@ -1,6 +1,6 @@
 / {{!  _humon_node_debug.hbs }}
 
-span.node-debug-panel.debug-auto-hide
+aside.node-debug-panel.debug-auto-hide
   dl
     dt parentView.parentView.id
     dd = view.parentView.parentView._id
@@ -33,9 +33,8 @@ span.node-debug-panel.debug-auto-hide
     dd type-locked
     dt @!
     dd invalid
-/ span.copy.debug-inline.debug-node-type.debug-auto-hide: = view.nodeContent.nodeType
-span.copy.debug-inline.debug-auto-hide
-  span.debug-glyphs
+/ small.copy.debug-inline.debug-auto-hide
+  small.debug-glyphs
     i{bind-attr class="view._templateStringsEnabled::template-strings-disabled"}
     i{bind-attr class="view._templateChanged:template-changed"}
     i{bind-attr class="view.nodeContent.initialized::uninitialized"}

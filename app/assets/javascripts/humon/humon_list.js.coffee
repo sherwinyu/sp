@@ -33,7 +33,6 @@ Humon.List = Humon.BaseHumonValue.extend Humon.HumonValue, Ember.Array,
   # @override
   # @manipulatesUI
   enterPressed: (e, payload)->
-    return if e._handled?
     newChildNode = null
     Ember.run => newChildNode = @insertNewChildAt(0)
     if newChildNode?

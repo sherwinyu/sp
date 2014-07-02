@@ -3,22 +3,33 @@
 @import "val_field";
 @import "key_field";
 
-/*
- * Content Fields
- */
+// Content Fields
 
-.node .content-field {
-  @include node_text_inline_mx();
-  padding-left: 4px;
-  padding-right: 4px;
-
+.content-field {
+  @include node_contentfield_typography(); //$factor);
+  display: inline-block;
   border-bottom: $borderLightUnderline;
   border-left: $borderTransparent;
   color: $nodeCopyColor;
   transition: all 300ms ease;
 }
+// `standalone` vs `embedded-in-text`
+//    - standalone means there's no padding before and after
+//    the content-field.
+//    - embedded-in-text is for when we actually want the content
+//    field to exist in line with other normal copy
+//    This is the case in [KEYFIELD]: [VALFIELD] situations
+//    as well as in the "Done! Completed at [TIMEFIELD]"
+.content-field.standalone {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.content-field.embedded-in-text {
+  padding-left: $content_field_padding_width;
+  padding-right: $content_field_padding_width;
+}
 
-.node.active > .content-field {
+.active > .content-field {
   border-bottom: $borderUnderline;
   color: $nodeActiveCopyColor;
 }
@@ -28,6 +39,6 @@
   content: "\0020"; // interpunct
 }
 
-.node.active > .content-field:empty:before {
+.active > .content-field:empty:before {
   display: none;
 }

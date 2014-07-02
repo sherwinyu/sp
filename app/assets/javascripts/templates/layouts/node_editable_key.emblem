@@ -2,4 +2,7 @@
   Sysys.IdxEditableField valueBinding="view.nodeContent.nodeIdx" rawValueBinding="view.nodeContent.nodeIdx" readOnly=view.nodeContent.readOnly
 = else
   Sysys.KeyEditableField rawValueBinding="view.nodeContent.nodeKey" readOnly=view.nodeContent.readOnly
-  span.copy :
+  small.copy :
+
+= yield
+= partial 'humon_node_debug'

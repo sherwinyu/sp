@@ -16,8 +16,6 @@ div.options
       ' Delete
       i.fa.fa-trash-o
 
-= humon-field json=timezone rootKey="timezone" metaTemplate=typeMap.timezone downPressed="downPressed" upPressed="upPressed"
-
 .day-time-span
   = timeSpan
 
@@ -26,4 +24,4 @@ div.options
 
 = humon-editor json=sleep rootKey="Sleep" metaTemplate=typeMap.sleep downPressed="downPressed" upPressed="upPressed"
 = humon-editor json=summary rootKey="Summary" metaTemplate=typeMap.summary downPressed="downPressed" upPressed="upPressed"
-= humon-editor json=goals rootKey="Daily Goals" metaTemplate=typeMap.goals downPressed="downPressed" upPressed="upPressed"
+= goals-editor json=goals rootKey="sup" downPressed="downPressed" upPressed="upPressed"

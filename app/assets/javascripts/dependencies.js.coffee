@@ -6,6 +6,7 @@
 #= require vendor/moment.min
 # require moment ------- not using bundled moment for now because it's stuck on 2.0
 #
+#= require vendor/mousetrap
 #= require vendor/jquery.hotkeys
 #= require vendor/humon
 @ENV =

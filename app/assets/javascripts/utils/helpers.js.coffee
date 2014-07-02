@@ -1,6 +1,6 @@
 _app_ = Sysys
 _app_.u =
-  viewFromId: (id) -> Ember.get("Ember.View.views.#{id}")
+  viewFromId: (id) -> if id then Ember.get("Ember.View.views.#{id}") else null
   viewFromElement: (ele) -> _app_.u.viewFromId($(ele).first().attr('id'))
   viewFromNumber: (num) -> _app_.u.viewFromId("ember#{num}")
   currentPath: -> _app_.__container__.lookup('controller:application').currentPath
@@ -9,6 +9,9 @@ _app_.vfe = _app_.u.viewFromElement
 _app_.vf = _app_.u.viewFromNumber
 _app_.lu = (str) ->
   _app_.__container__.lookup str
+
+window.nfv = (id) ->
+  _app_.u.viewFromNumber(id).get('nodeContent')
 
 window.lu = _app_.lu
 window.vf = _app_.vf
@@ -26,9 +29,10 @@ window.getCursor = (node) ->
   if node instanceof jQuery
     node = node[0]
 
-  # if it's a div .. or a SPAN TODO
+  # if it's a div or a span or a node-field
   # then use the divGetCursor routine
-  if node.tagName is "DIV" || node.tagName is "SPAN"
+  # WARNING this is not robust
+  if node.tagName is "DIV" || node.tagName is "SPAN" || node.tagName is "NODE-FIELD"
     return divGetCursor(node)
   $(node).prop('selectionStart')
 
@@ -39,7 +43,7 @@ window.setCursor = (node, pos) ->
            node
   unless node
     return false
-  if node.tagName is "DIV" || node.tagName is "SPAN"
+  if node.tagName is "DIV" || node.tagName is "SPAN" || node.tagName is "NODE-FIELD"
     return divSetCursor(node, pos, pos)
   if node.createTextRange
     textRange = node.createTextRange()

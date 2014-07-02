@@ -2,11 +2,11 @@
 
 // by default, hide details
 .node:hover, .node.active {
-  > span.node-detail {
+  > .node-detail {
     visibility: visible;
   }
 }
-span.node-detail  {
+.node-detail  {
   visibility: hidden;
 }
 
@@ -33,7 +33,7 @@ span.node-detail  {
   }
 }
 
-span.node-detail.node-icon {
+.node-detail.node-icon {
   $nodeIconSize: 14px;
   margin: 0 3px;
   margin-left: 5px;

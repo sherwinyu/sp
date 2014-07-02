@@ -50,4 +50,3 @@ class Day
     self.find_or_initialize_by date: date
   end
 end
-

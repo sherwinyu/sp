@@ -1,0 +1,13 @@
+h3.header.line-item-selectable tabindex="0"
+  | Goals
+  a.goal-button.btn.btn-default{action "addGoal"}: | ⇧ A: add goal
+
+= each goal in myJson
+  div.goal
+    = humon-field json=goal.goal jsonChanged="didCommit" metatype="text" deletePressed="deleteGoal" enterPressed="toggleCompletedAt" embeddedInText=false
+    div.completed-at
+      = if goal.completed_at
+        | Done! Completed at
+        = humon-field  readOnly=false json=goal.completed_at metatype="time" inlineField=true
+      = else
+        | Incomplete
