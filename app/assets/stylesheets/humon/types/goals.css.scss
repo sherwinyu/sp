@@ -8,6 +8,7 @@
   &:focus {
     border-left: $nodeActiveBorderLeft;
     transition: all 300ms ease;
+    color: $nodeActiveCopyColor;
   }
   transition: all 300ms ease;
 }
