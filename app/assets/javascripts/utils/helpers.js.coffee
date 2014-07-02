@@ -32,7 +32,7 @@ window.getCursor = (node) ->
   # if it's a div or a span or a node-field
   # then use the divGetCursor routine
   # WARNING this is not robust
-  if node.tagName is "DIV" || node.tagName is "SPAN" || node.tagName is "node-field"
+  if node.tagName is "DIV" || node.tagName is "SPAN" || node.tagName is "NODE-FIELD"
     return divGetCursor(node)
   $(node).prop('selectionStart')
 
@@ -43,7 +43,7 @@ window.setCursor = (node, pos) ->
            node
   unless node
     return false
-  if node.tagName is "DIV" || node.tagName is "SPAN"
+  if node.tagName is "DIV" || node.tagName is "SPAN" || node.tagName is "NODE-FIELD"
     return divSetCursor(node, pos, pos)
   if node.createTextRange
     textRange = node.createTextRange()

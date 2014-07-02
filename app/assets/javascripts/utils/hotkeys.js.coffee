@@ -20,4 +20,4 @@ Ember.View.reopen
     )
 
   unbindKey: (shorcut) ->
-    window.key.unbind shortcut
+    window.key.unbind shortcut[0]
