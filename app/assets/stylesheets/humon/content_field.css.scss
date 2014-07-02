@@ -6,7 +6,7 @@
 // Content Fields
 
 .content-field {
-  @include node_text();
+  @include node_contentfield_typography(); //$factor);
   display: inline-block;
   border-bottom: $borderLightUnderline;
   border-left: $borderTransparent;

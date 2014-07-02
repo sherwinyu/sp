@@ -33,7 +33,7 @@
 
   .completed-at {
     margin-left: $f_total_node_text_offset_width;
-    @include node_text(0.8);
+    @include node_structure(0.8);
     // Override the inline-block display from node_text
     display: block;
   }

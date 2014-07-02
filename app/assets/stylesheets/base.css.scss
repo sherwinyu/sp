@@ -107,20 +107,24 @@ $hecTitleFontSize: $nodeCopyFontSize * 1.3;
   font-size: $nodeCopyFontSize * $factor;
 }
 
-@mixin node_structure($factor: 1) {
+// Difference between node_typography
+// and node content field typography
+//    - node content field typography locks in a height
+@mixin node_typography($factor: 1) {
   @include node_font_mx($factor);
   line-height: $lineheight * $factor;
   vertical-align: top;
-  .content-field, .copy  {
-    @include node_font_mx($factor);
-    height: $lineheight * $factor;
-    line-height: $lineheight * $factor;
-    vertical-align: top;
-  }
 }
 
-@mixin node_text($factor: 1) {
-  @include node_structure($factor);
+@mixin node_contentfield_typography($factor: 1) {
+  @include node_typography($factor);
   height: $lineheight * $factor;
-  display: inline-block;
+}
+
+// Makes an element behave "node like"
+@mixin node_structure($factor: 1) {
+  @include node_typography($factor);
+  .content-field, .copy  {
+    @include node_contentfield_typography($factor);
+  }
 }

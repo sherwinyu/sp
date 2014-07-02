@@ -72,7 +72,7 @@
 // ==
 // Generic helper class, should
 .node .copy {
-  @include node_text();
+  @include node_contentfield_typography();
   color: $nodeDetailCopyColor;
 }
 
