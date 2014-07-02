@@ -85,10 +85,6 @@
   padding-right: 3px;
 }
 
-.node-indent {
-  padding-left: $node_white_indent_width;
-}
-
 @import "humon/debug";
 @import "humon/detail";
 @import "humon/content_field";
