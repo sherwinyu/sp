@@ -19,9 +19,6 @@ $glyphcolor: darken($grayLightest, 5%);
 $glyphsize: 14px;
 $lineheight: 20px;
 
-$nodeWhiteIndent: 15px;
-$nodeLeftBorder: 4px;
-$fieldWhiteIndent: 15px;
 
 $errorActiveRed: rgba(210, 40, 40, 1);
 $errorRed: rgba(180, 80, 80, 1);
@@ -71,7 +68,7 @@ $borderTransparent: 1px solid transparent;
 $f_total_node_text_offset_width: $content_field_padding_width + $node_border_left_width + $node_white_indent_width;
 
 $childNodeGlyphWidth: 8px;
-$childNodeGlyphLeftOffset: $nodeWhiteIndent - $childNodeGlyphWidth - 2px;
+$childNodeGlyphLeftOffset: $node_white_indent_width - $childNodeGlyphWidth - 2px;
 $childNodeGlyphColor: $grayLightest1;
 
 $nodeCopyColor: $copygray;
