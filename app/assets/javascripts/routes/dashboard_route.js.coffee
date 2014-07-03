@@ -29,4 +29,3 @@ Sysys.DashboardRoute = Ember.Route.extend
       into: 'dashboard'
       outlet: 'acts'
       controller: @controllerFor('acts')
-
