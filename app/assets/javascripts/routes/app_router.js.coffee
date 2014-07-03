@@ -26,7 +26,7 @@ Sysys.Router.map ->
 
   @resource "day", path: "/days/:day_id", ->
 
-  @route "notes"
+  @route "note"
   @route "dashboard"
   @route "login"
   @route "logout"
@@ -76,7 +76,6 @@ Sysys.ApplicationRoute = Ember.Route.extend
 
     linkTo: (routeName, arg) ->
       @transitionTo routeName, arg
-
 
     error: (reason, transition) ->
       errorMsg = "Error:" # Params: #{JSON.stringify transition.params}"
