@@ -1,6 +1,5 @@
-h1 Documentr: Note#show
-.panel.panel-default
-  .panel-heading
-    h3 Add a document
-  .panel-body
-    = outlet warg
+.panel-heading
+  h3 I'm a note
+.panel-body
+  = note.body
+
