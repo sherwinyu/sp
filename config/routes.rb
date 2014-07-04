@@ -1,6 +1,7 @@
 Sysys::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'sessions'}
 
+  resources :notes
   resources :data_points
   resources :days do
     get 'latest', on: :collection
