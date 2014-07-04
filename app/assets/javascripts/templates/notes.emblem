@@ -1,0 +1,9 @@
+h1 Documentr (All Notes)
+.panel.panel-default
+  .panel-heading
+    h3 Add a document
+  .panel-body
+    | Num notes:
+    = controller.length
+    | First body
+    = content.content.0.body
