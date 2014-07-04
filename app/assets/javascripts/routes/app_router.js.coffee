@@ -26,7 +26,9 @@ Sysys.Router.map ->
 
   @resource "day", path: "/days/:day_id", ->
 
-  @route "note"
+  @resource "notes", path: "/notes"
+  @route "note", path: "/notes/:note_id"
+
   @route "dashboard"
   @route "login"
   @route "logout"
