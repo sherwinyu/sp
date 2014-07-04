@@ -32,4 +32,4 @@ end
 Sysys::Application.initialize!
 
 # Reload custom definitions
-reload_env!
+# reload_env!
