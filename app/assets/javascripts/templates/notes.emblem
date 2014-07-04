@@ -1,9 +1,10 @@
-h1 Documentr (All Notes)
+h3.header.line-item-selectable tabindex="0"
+  | Notes
+  a.btn.btn-default{action "addNote" 0}: | ⇧ A: Add a note
+
 .panel.panel-default
   .panel-heading
     h3 Add a document
   .panel-body
-    | Num notes:
-    = controller.length
-    | First body
-    = content.content.0.body
+    = each note in controller
+      = render 'note' note
