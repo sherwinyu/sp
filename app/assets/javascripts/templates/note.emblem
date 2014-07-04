@@ -1,5 +1,8 @@
 .panel-heading
-  h3 I'm a note
+h4 I'm a note
 .panel-body
   = note.body
-
+  ul = each item in note.noteItems
+    li
+      = item.body
+      = item.tags

@@ -1,5 +1,6 @@
 Sysys.Note = DS.Model.extend
   body: DS.attr('string')
+  noteItems: DS.attr()
 
 Sysys.NoteRoute = Ember.Route.extend
   model: (params)->
@@ -16,6 +17,8 @@ Sysys.NotesController = Ember.ArrayController.extend
   actions:
     addNote: (idx) ->
       newNote = @get('store').createRecord "note"
+      newNote.set 'body', '...'
+      newNote.set 'noteItems', []
       @get('content').insertAt(idx, newNote)
 
 Sysys.NotesView = Ember.View.extend

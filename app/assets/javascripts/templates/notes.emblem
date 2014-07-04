@@ -1,10 +1,9 @@
-h3.header.line-item-selectable tabindex="0"
-  | Notes
-  a.btn.btn-default{action "addNote" 0}: | ⇧ A: Add a note
 
 .panel.panel-default
   .panel-heading
-    h3 Add a document
+    h3.header.line-item-selectable tabindex="0"
+      | Notes
+      a.btn.btn-default{action "addNote" 0}: | ⇧ A: Add a note
   .panel-body
     = each note in controller
       = render 'note' note
