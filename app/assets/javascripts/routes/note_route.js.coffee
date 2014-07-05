@@ -1,6 +1,6 @@
 Sysys.Note = DS.Model.extend
   body: DS.attr('string')
-  noteItems: Sysys.attr()
+  noteItems: DS.attr()
 
 Sysys.NoteRoute = Ember.Route.extend
   model: (params)->

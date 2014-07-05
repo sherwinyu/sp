@@ -3,6 +3,9 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
   rootLayout_: "layouts/hec_title"
   classNames: ['humon-editor']
 
+  #
+  _origJson: null
+
   # The external binding to passed-in json
   json: null
 
@@ -29,6 +32,7 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
 
   initContentFromJson: ->
     initialJson = @get('json')
+    @_origJson = JSON.stringify(initialJson)
     # Options:
     #   - allowInvalid
     #   - controller: set the controller to this humon editor component (instance of HumonControllerMixin)
@@ -52,6 +56,7 @@ Sysys.HumonEditorComponent = Ember.Component.extend Humon.HumonControllerMixin,
     #   - rootJson: json representation of the root node
     #   - key: a string if the key was committed; null otherwise
     didCommit: (params) ->
+      return if JSON.stringify(params.rootJson) == @_origJson
       @sendAction 'jsonChanged', params.rootJson
       @set 'json', params.rootJson
 
