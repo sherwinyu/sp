@@ -21,7 +21,13 @@ Sysys.NotesController = Ember.ArrayController.extend
       newNote.set 'noteItems', []
       @get('content').insertAt(idx, newNote)
 
+Sysys.NoteView = Ember.View.extend
+  classNames: ['note']
+  classNameBindings: ['controller.isDirty:dirty:clean']
+
 Sysys.NotesView = Ember.View.extend
+  classNames: ['notes']
+
   setupHotkeys: (->
     @bindKey 'shift+a', (e) =>
       return if key.isTyping(e)
