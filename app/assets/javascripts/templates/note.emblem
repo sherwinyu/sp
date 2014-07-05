@@ -2,7 +2,9 @@
 h4 I'm a note
 .panel-body
   = note.body
-  ul = each item in note.noteItems
+  = humon-editor json=note.noteItems rootKey="sub" downPressed="downPressed" upPressed="upPressed"
+
+  / ul = each item in note.noteItems
     li
       = item.body
       = item.tags
