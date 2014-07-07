@@ -21,6 +21,14 @@ Sysys.NotesController = Ember.ArrayController.extend
       newNote.set 'noteItems', []
       @get('content').insertAt(idx, newNote)
 
+Sysys.NoteController = Ember.ObjectController.extend
+  actions:
+    addNoteItem: (noteItem) ->
+      idx = @get('noteItems').indexOf noteItem
+      @get('noteItems').insertAt (idx + 1), {body: ""}
+    jsonChanged: () ->
+      debugger
+
 Sysys.NoteView = Ember.View.extend
   classNames: ['note']
   classNameBindings: ['controller.isDirty:dirty:clean']
