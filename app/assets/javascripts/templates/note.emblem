@@ -1,6 +1,8 @@
 .note-body
   = note.body
-= humon-editor json=note.noteItems rootKey=" " downPressed="downPressed" upPressed="upPressed"
+= each noteItem in note.noteItems
+  = note-item json=noteItem
+
 
   / ul = each item in note.noteItems
     li

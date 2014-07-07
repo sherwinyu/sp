@@ -7,3 +7,7 @@
   padding-left: $f_total_node_text_offset_width;
   font-size: 20px;
 }
+.note-item {
+  display: block;
+  border-left: 1px dashed blue;
+}
