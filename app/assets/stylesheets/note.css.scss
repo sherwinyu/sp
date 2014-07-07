@@ -1,0 +1,9 @@
+@import "base";
+
+.note {
+  border: 1px solid black;
+}
+.note-body {
+  padding-left: $f_total_node_text_offset_width;
+  font-size: 20px;
+}

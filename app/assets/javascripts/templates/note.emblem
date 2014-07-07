@@ -1,8 +1,6 @@
-.panel-heading
-h4 I'm a note
-.panel-body
+.note-body
   = note.body
-  = humon-editor json=note.noteItems rootKey="sub" downPressed="downPressed" upPressed="upPressed"
+= humon-editor json=note.noteItems rootKey=" " downPressed="downPressed" upPressed="upPressed"
 
   / ul = each item in note.noteItems
     li
