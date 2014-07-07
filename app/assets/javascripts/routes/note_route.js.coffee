@@ -26,8 +26,10 @@ Sysys.NoteController = Ember.ObjectController.extend
     addNoteItem: (noteItem) ->
       idx = @get('noteItems').indexOf noteItem
       @get('noteItems').insertAt (idx + 1), {body: ""}
+
     jsonChanged: () ->
-      debugger
+      console.log 'json changed in note controller:', arguments
+
 
 Sysys.NoteView = Ember.View.extend
   classNames: ['note']
