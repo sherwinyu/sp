@@ -1,0 +1,7 @@
+= humon-field json=myJson.body jsonChanged="didCommit" metatype="text" deletePressed="deleteGoal" enterPressed="toggleCompletedAt" enterPressed="enterPressed" embeddedInText=false
+    / div.completed-at
+      = if goal.completed_at
+        | Done! Completed at
+        = humon-field  readOnly=false json=goal.completed_at metatype="time" inlineField=true
+      = else
+        | Incomplete
