@@ -8,12 +8,11 @@ Sysys.NoteItemComponent = Ember.Component.extend
   myJson: null
 
   init: ->
-    @set "myJson", $.extend( {}, @get('json'))
     @_super()
 
   actions:
     didCommit: (params) ->
-      @set 'json', $.extend({}, @get('myJson'))
+      # @set 'json', $.extend({}, @get('myJson'))
 
     enterPressed: (e)->
       @sendAction("enterPressed", @get('json'))
