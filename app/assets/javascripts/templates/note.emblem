@@ -1,4 +1,4 @@
 .note-body
   = note.body
-/ = each noteItem in note.noteItems
-= note-item json=noteItems enterPressed="addNoteItem" jsonChanged="jsonChanged"
+= each noteItem in note.noteItems
+  = note-item json=noteItem enterPressed="addNoteItem" jsonChanged="jsonChanged"
