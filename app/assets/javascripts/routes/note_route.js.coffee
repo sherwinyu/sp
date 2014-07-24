@@ -2,6 +2,8 @@ Sysys.Note = DS.Model.extend
   body: DS.attr('string')
   noteItems: DS.attr()
 
+  fakeDirty: DS.attr('boolean')
+
 Sysys.NoteRoute = Ember.Route.extend
   model: (params)->
     notePromise = @get('store').find 'note', params.note_id
@@ -29,6 +31,7 @@ Sysys.NoteController = Ember.ObjectController.extend
 
     jsonChanged: () ->
       console.log 'json changed in note controller:', arguments
+      @set('fakeDirty', true)
 
 
 Sysys.NoteView = Ember.View.extend
