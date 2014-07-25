@@ -4,7 +4,6 @@ Sysys.NoteItemComponent = Ember.Component.extend
   rootLayout_: "layouts/hec_title" #TODO necessary?
 
   json: null
-
   myJson: null
 
   init: ->
@@ -16,3 +15,19 @@ Sysys.NoteItemComponent = Ember.Component.extend
 
     enterPressed: (e)->
       @sendAction("enterPressed", @get('json'))
+
+Sysys.NoteItemsComponent = Ember.Component.extend
+  tagName: "note-items"
+  classNames: ["note-items"]
+
+  init: ->
+    @_super()
+    @set('json', @get('json').slice 0)
+
+  actions:
+    addNoteItem: (noteItem) ->
+      idx = @get('json').indexOf noteItem
+      @get('json').insertAt (idx + 1), {body: ""}
+
+    jsonChanged: ->
+      @sendAction 'jsonChanged', @get('json')

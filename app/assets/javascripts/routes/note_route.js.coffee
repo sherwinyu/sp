@@ -1,8 +1,12 @@
 Sysys.Note = DS.Model.extend
   body: DS.attr('string')
-  noteItems: DS.attr()
+  noteItems: Sysys.attr()
 
-  fakeDirty: DS.attr('boolean')
+  # fakeDirty: DS.attr('boolean')
+
+  dirtyCheck: (newNoteItemsJson) ->
+    @set 'noteItems', newNoteItemsJson
+    console.log @_data, @_attributes, @get('noteItems')
 
 Sysys.NoteRoute = Ember.Route.extend
   model: (params)->
@@ -25,13 +29,9 @@ Sysys.NotesController = Ember.ArrayController.extend
 
 Sysys.NoteController = Ember.ObjectController.extend
   actions:
-    addNoteItem: (noteItem) ->
-      idx = @get('noteItems').indexOf noteItem
-      @get('noteItems').insertAt (idx + 1), {body: ""}
-
-    jsonChanged: () ->
+    jsonChanged: (newJson) ->
       console.log 'json changed in note controller:', arguments
-      @set('fakeDirty', true)
+      @get('content').dirtyCheck newJson
 
 
 Sysys.NoteView = Ember.View.extend
