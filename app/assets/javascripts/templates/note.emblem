@@ -1,10 +1,10 @@
+.note-body
+  = this.body
 div.options
   .btn-group.btn-group-sm
     a.btn.btn-default.permalink{action "linkTo" "note" this}
       ' Permalink
       i.fa.fa-link
-.note-body
-  = note.body
 / = each noteItem in note.noteItems
   = note-item json=noteItem enterPressed="addNoteItem" jsonChanged="jsonChanged"
   noteItem.body
