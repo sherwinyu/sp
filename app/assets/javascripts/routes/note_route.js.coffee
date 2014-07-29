@@ -9,9 +9,6 @@ Sysys.Note = DS.Model.extend
 Sysys.NoteRoute = Ember.Route.extend
   model: (params)->
     notePromise = @get('store').find 'note', params.note_id
-    notePromise.then (note) ->
-      note
-    notePromise
 
 Sysys.NotesRoute = Ember.Route.extend
   model: (params)->

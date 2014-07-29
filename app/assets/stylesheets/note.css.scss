@@ -1,6 +1,25 @@
 @import "base";
 
 .note {
+  position: relative;
+
+  .options {
+    @include text-center;
+    @include block-center;
+    visibility: hidden;
+  }
+
+  &:not(:hover) .options {
+     -webkit-animation: fadeOut 0.2s linear;
+  }
+  &:hover .options {
+    visibility: visible;
+    z-index: 100;
+    -webkit-animation: fadeIn 0.2s linear;
+
+  }
+}
+.note {
   border: 1px solid black;
 }
 .note-body {
