@@ -22,17 +22,31 @@ Note(Goal): finish front end for Note
     = Body: Clean up CSS
     = Tags: (objective)
 
+Note Model
+  maybe note model should just have a lot of optional params
+    like is_pomodoro?
+  Pomodoro start
+
+  Where do we declare goals and estimates?
+
+  NoteItem: Pomodoro start
+
+
 Note(): Cleaning up CSS reference
   = references NoteItem(objective){body: Clean up CSS}
   NoteItem(reference
 
 
+TextIndex on NoteItem.body
+TextIndex on Note.note_items.body
 
 
-
+KILLER FEATURES
+  Error (log an error)
+  Problem (log an higher level issue)
+  Attempts (log attempts at the problem)
 
 =end
-SearchIndex on NoteItem.body
 
 
 
