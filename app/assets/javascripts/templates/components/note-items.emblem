@@ -1,3 +1,2 @@
 = each noteItem in json
   = note-item json=noteItem enterPressed="addNoteItem" jsonChanged="jsonChanged"
-  noteItem.body
