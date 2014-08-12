@@ -12,10 +12,10 @@ Humon.Summary.reopenClass
       name: "text"
     insight:
       name: "text"
-    meditation:
-      name: "meditation"
+    work:
+      name: "work"
 
-  requiredAttributes: ["best", "worst", "happiness", "meditation"]
+  requiredAttributes: ["best", "worst", "happiness", "meditation", 'work']
   optionalAttributes: ["funny", "insight"]
 
 Humon.Summary._generateAccessors()
@@ -28,4 +28,14 @@ Humon.Meditation.reopenClass
     satisfaction:
       name: "number"
   requiredAttributes: ["activities", "satisfaction"]
+
+
+Humon.Work = Humon.Complex.extend()
+Humon.Work.reopenClass
+  childMetatemplates:
+    arrive_at:
+      name: "time"
+    left_at:
+      name: "time"
+  requiredAttributes: ['arrived_at', 'left_at']
 

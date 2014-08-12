@@ -8,6 +8,7 @@ class Summary
   field :funny, type: String
   field :insight, type: String
   field :meditation, type: Hash
+  field :work, type: Hash
 
   def as_json
     Util::Log.warn "Summary#as_json called (via default serializer)"
