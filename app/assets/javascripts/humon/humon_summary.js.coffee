@@ -12,6 +12,8 @@ Humon.Summary.reopenClass
       name: "text"
     insight:
       name: "text"
+    meditation:
+      name: "meditation"
     work:
       name: "work"
 
@@ -29,13 +31,11 @@ Humon.Meditation.reopenClass
       name: "number"
   requiredAttributes: ["activities", "satisfaction"]
 
-
 Humon.Work = Humon.Complex.extend()
 Humon.Work.reopenClass
   childMetatemplates:
-    arrive_at:
+    arrived_at:
       name: "time"
     left_at:
       name: "time"
   requiredAttributes: ['arrived_at', 'left_at']
-
