@@ -7,6 +7,7 @@ describe DataPointsController do
       expect(response.status).to eq 401
     end
   end
+
   describe "#index (integration)" do
     before :each do
       u = User.create email: "hello@example.com", password: 'password'
@@ -39,6 +40,19 @@ describe DataPointsController do
         expect(json["data_points"][1]).to have_key "details"
         expect(json["data_points"][1]["details"]["name"]). to eq "track1"
       end
+    end
+  end
+  describe '#create (integration)' do
+    before :each do
+      u = User.create email: "hello@example.com", password: 'password'
+      sign_in u
+    end
+    let (:params) do
+      { data_point: {details: { hello: 5 } } }
+    end
+    it 'accepts data points whith no _type in params' do
+      post :create, params
+      expect(DataPoint.last.details).to eq 'hello' => '5'
     end
   end
 end
