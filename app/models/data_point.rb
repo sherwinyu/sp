@@ -46,4 +46,10 @@ class DataPoint
   def self.latest
     desc(:at).first
   end
+
+  def to_msg
+    details.to_yaml.gsub(/\n/, "; ")
+  rescue
+    "(none)"
+  end
 end

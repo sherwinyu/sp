@@ -7,12 +7,19 @@ class TwilioController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
+  def parse_sms body
+    args = body.split.map &:to_i
+    details = {energy: args[0], focus: args[1], happiness: args[2]}
+    DataPoint.create at: Time.now, details: details
+  end
+
   def sms
     msg = TwilioMessage.new body: params[:Body], to: params[:To], from: params[:To], status: params[:Status]
     msg.raw = params.except(:action, :controller)
     msg.save
+    dp = parse_sms msg.body
     response = Twilio::TwiML::Response.new do |r|
-      r.Message "Confirmed! #{msg.id} -- #{msg.body}"
+      r.Message "Confirmed! #{dp.to_msg}"
     end
     render_twiml response
   end
