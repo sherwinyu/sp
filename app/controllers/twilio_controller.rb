@@ -23,7 +23,7 @@ class TwilioController < ApplicationController
     dp = parse_sms msg.body
     response = Twilio::TwiML::Response.new do |r|
       if dp
-        r.Message "Confirmed! #{dp.to_msg}"
+        r.Message "Confirmed(#{Rails.env})! #{dp.to_msg} "
       else
         r.Message "energy / focus / happiness"
       end
