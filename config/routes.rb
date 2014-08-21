@@ -14,6 +14,7 @@ Sysys::Application.routes.draw do
 
   post 'twilio/voice' => 'twilio#voice'
   post 'twilio/sms' => 'twilio#sms'
+  get 'twilio/sms' => 'twilio#sms'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
