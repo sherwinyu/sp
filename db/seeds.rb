@@ -6,6 +6,5 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
-Act.create description: 'first description'
-Act.create description: 'second description'
-
+User.first_or_create(email: 'syu').update_attribute :password, 'dev'
+Option.current_timezone = raise error

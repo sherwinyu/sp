@@ -19,5 +19,10 @@ class Option
   def self.current_timezone=(arg)
     opts.update_attribute :current_timezone, arg
   end
+
+  def self.list_available_timezones
+    ActiveSupport::TimeZone::MAPPING.values
+  end
+
 end
 

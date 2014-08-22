@@ -1,7 +1,9 @@
 Sysys::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'sessions'}
 
-  resources :data_points
+  match 'data_points/ping', to: 'data_points#ping', via: [:get, :post]
+  resources :data_points do
+  end
   resources :days do
     get 'latest', on: :collection
   end
@@ -9,6 +11,10 @@ Sysys::Application.routes.draw do
 
   resources :acts
   root to: 'pages#home'
+
+  post 'twilio/voice' => 'twilio#voice'
+  post 'twilio/sms' => 'twilio#sms'
+  get 'twilio/sms' => 'twilio#sms'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -6,6 +6,7 @@ class SummarySerializer < ActiveModel::Serializer
     funny
     insight
     meditation
+    work
   ]
   def attributes
     hash = super
