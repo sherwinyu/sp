@@ -55,9 +55,11 @@ describe DataPointsController do
       expect(DataPoint.last.details).to eq 'hello' => '5'
     end
     it 'accepts data points _type set' do
-      params.merge!  :type => "LastFmDp"
-      post :create, params
-      expect(DataPoint.last.details.type).to eq "LastFmDp"
+      p = params
+      p[:data_point].merge! type: "LastFmDp"
+      post :create, p
+      expect(DataPoint.last.type).to eq "LastFmDp"
+      expect(LastFmDp.last.id).to eq DataPoint.last.id
     end
   end
 end
