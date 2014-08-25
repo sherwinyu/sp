@@ -1,29 +1,10 @@
-SYSON
-====
-a key is a string:
-  la di da di da: what the wumple
-  ladidadida: what the thrumple
-  lumpdidooda: [ ]
+Next steps
+  - canary extension for generic web activity tracking
+  - dahsboard showing productivity
+  - pusher / pinger in chrome extension
+  - refactor datapoints to not suck
 
-
-STRING INFERENCE
-LIST INFERENCE
-HASH INFERENCE
-
-
-VALUE: string || list || hash || number || bool
-Transform to a canonical format for inferred strings z
-
-what exactly is the nesting relationship between Acts?
-  Act (day)
-    Act (hourly -- automatic) -- generated from RescueTime
-
-  four hour segment
-    individual activties (Acts)
-    and details
-  NEED: ability to extract a detail into a new activity
-
-
+==================================================================
 
 Actual use cases:
   Previously had PLANNED something, now want to track how I'm doing
@@ -170,34 +151,3 @@ On select
   update current node
 
 if
-
-
-
-
-Inactive
-Active
-  Editing
-    enter
-      call currentNodeView.enterEdit
-    exit
-      call currentNodeView.exitEdit
-
-    commit
-    cancel
-      transitionTo active
-
-====
-styling based on isActive
-
-{{is currentNode}}
-{{if isEditing}}
-  show input
-{{else normal}}
-====
-
-Basically have everything be a details object?? allow hooking up a details view up with ANYTHING zugzug
-
-
-entergy
-cirro energy
-
