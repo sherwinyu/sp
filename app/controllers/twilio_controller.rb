@@ -6,9 +6,12 @@ class TwilioController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def parse_sms body
+    body, _, comment = body.partition '-'
     return nil unless body =~/\d+\s+\d+\s+\d+/
-    args = body.split.map &:to_i
+    comment.strip!
+    args = body.split.map(&:strip).map &:to_i
     details = {energy: args[0], focus: args[1], happiness: args[2]}
+    details[:comment] = comment if comment.present?
     DataPoint.create at: Time.now, details: details
   rescue
     nil
