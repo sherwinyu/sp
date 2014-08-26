@@ -14,10 +14,12 @@ class TwilioController < ApplicationController
     msg = TwilioMessage.new body: params[:Body], to: params[:To], from: params[:To], status: params[:Status]
     msg.raw = params.except(:action, :controller)
     msg.save
-    dp = parse_sms msg.body
+    dp = TwilioMessage.from_sms(msg.body)
     response = Twilio::TwiML::Response.new do |r|
-      if dp
+      if dp and dp.save
         r.Message "Confirmed(#{Rails.env})! #{dp.to_msg} "
+      elsif dp
+        r.Message dp.errors.to_a.to_s
       else
         r.Message "energy / focus / happiness"
       end

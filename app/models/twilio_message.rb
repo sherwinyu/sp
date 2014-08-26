@@ -21,5 +21,7 @@ class TwilioMessage
     details[:happiness] = happiness if happiness.present?
     details[:comment] = comment if comment.present?
     DataPoint.new at: Time.now, details: details
+  rescue
+    nil
   end
 end
