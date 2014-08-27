@@ -18,9 +18,10 @@ class DataPointsController < ApplicationController
     Time.now
     if Util::DateTime.currently_awake
       r = rand(200)
+      puts "Random r: #{r} >?< 198"
       if r > 198
+        puts "Sending message!"
         Util::Twilio.send_message "Energy / status / happyiness? #{Time.zone.now}"
-        puts r
       end
     end
     render json: Time.zone.now, status: 200
