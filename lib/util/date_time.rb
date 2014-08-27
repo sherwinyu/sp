@@ -96,5 +96,12 @@ module Util
       return date
     end
 
+    def self.currently_awake
+      tz = ActiveSupport::TimeZone.new timezone
+      t = tz.utc_to_local(Time.now.utc)
+      (9..22).include? t.hour
+    end
+
   end
+
 end

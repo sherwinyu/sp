@@ -15,7 +15,12 @@ class DataPointsController < ApplicationController
 
   # GET /data_points/ping
   def ping
-    # Util::Twilio.send_message params[:message_body]
+    Time.now
+    if Util::DateTime.currently_awake
+      if rand(200) > 198
+        Util::Twilio.send_message "Energy / status / happyiness? #{Time.zone.now}"
+      end
+    end
     render json: Time.zone.now, status: 200
   end
 

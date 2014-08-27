@@ -32,4 +32,4 @@ class PingTimer
     pingFtn = ->
       console.log 'pinging', new Date()
       $.get(url).then(handler)
-    setInterval( pingFtn, 1000)
+    setInterval( pingFtn, 5000)
