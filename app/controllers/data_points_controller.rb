@@ -15,8 +15,8 @@ class DataPointsController < ApplicationController
 
   # GET /data_points/ping
   def ping
-    Util::Twilio.send_message params[:message_body]
-    render json: nil, status: 200
+    # Util::Twilio.send_message params[:message_body]
+    render json: Time.zone.now, status: 200
   end
 
   # GET /data_points/1

@@ -1,6 +1,5 @@
 =partial 'nav'
 
-
 .container
   .row
     .col-xs-9.col-center
