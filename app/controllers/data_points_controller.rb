@@ -17,8 +17,8 @@ class DataPointsController < ApplicationController
   def ping
     Time.now
     if Util::DateTime.currently_awake
-      r = rand(200)
-      puts "Random r: #{r} >?< 198"
+      r = rand(400)
+      puts "Random r: #{r} >?< 398"
       if r > 198
         puts "Sending message!"
         Util::Twilio.send_message "Energy / status / happyiness? #{Time.zone.now}"
