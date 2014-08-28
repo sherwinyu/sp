@@ -36,7 +36,6 @@ class Day
     day = Day.find_or_create_by date: date
   end
 
-
   def yesterday
     Day.find_by date: date.yesterday
   end

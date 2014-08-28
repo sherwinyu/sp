@@ -20,6 +20,11 @@ class DataPoint
   default_scope -> { desc(:at) }
 
   after_save :flush_cache
+  before_save :set_at
+
+  def set_at
+    self.at = Time.zone.now unless self.at
+  end
 
   def flush_cache
     Rails.cache.delete([self.class.name, "recent"])
