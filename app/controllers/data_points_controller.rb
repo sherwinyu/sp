@@ -13,19 +13,6 @@ class DataPointsController < ApplicationController
     end
   end
 
-  # GET /data_points/ping
-  def ping
-    Time.now
-    if Util::DateTime.currently_awake
-      r = rand(400)
-      puts "Random r: #{r} >?< 398"
-      if r > 398
-        puts "Sending message!"
-        Util::Twilio.send_message "Energy / status / happyiness? #{Time.zone.now}"
-      end
-    end
-    render json: Time.zone.now, status: 200
-  end
 
   # GET /data_points/1
   # GET /data_points/1.json

@@ -1,7 +1,8 @@
 Sysys::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'sessions'}
 
-  match 'data_points/ping', to: 'data_points#ping', via: [:get, :post]
+  get '/ping', to: 'application#ping', as: :ping
+
   resources :data_points do
   end
   resources :days do

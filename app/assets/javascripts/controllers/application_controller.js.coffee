@@ -28,7 +28,7 @@ Sysys.ApplicationController = Ember.Controller.extend
 
 class PingTimer
   ping: (handler)->
-    url = "/data_points/ping"
+    url = "/ping"
     pingFtn = ->
       console.log 'pinging', new Date()
       $.get(url).then(handler)
