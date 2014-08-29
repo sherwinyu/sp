@@ -13,8 +13,7 @@ Sysys.ApplicationController = Ember.Controller.extend
     @set 'git', window?._sp_vars?.git
     pingTimer = new PingTimer
     pingTimer.ping (response) =>
-      console.log response
-      @set 'lastPing', response
+      @set 'lastPing', response.time
 
   actions:
     toggleDbg: ->

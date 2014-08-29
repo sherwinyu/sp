@@ -22,6 +22,13 @@ class ApplicationController < ActionController::Base
     })
   end
 
+  def heartbeat
+    {
+      latest_day_id: Day.latest.date.to_s,
+      time: Time.zone.now
+    }
+  end
+
   def ping
     Time.now
     if Util::DateTime.currently_awake
@@ -32,7 +39,7 @@ class ApplicationController < ActionController::Base
         Util::Twilio.send_message "Energy / status / happyiness? #{Time.zone.now}"
       end
     end
-    render json: Time.zone.now, status: 200
+    render json: heartbeat, status: 200
   end
 
 end
