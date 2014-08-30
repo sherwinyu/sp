@@ -5,7 +5,7 @@ feature "Dashboard", feature: "dashboard" do
   include Features::DashboardHelpers
 
   before(:each) do
-    Option.current_timezone = "Asia/Shanghai"
+    Option.current_timezone = "America/Los_Angeles"
     login
   end
 
