@@ -49,7 +49,7 @@ nav.navbar.navbar-default role="navigation"
       li: =link-to 'DataPoint Flow' 'data_points.index'
 
     ul.nav.navbar-right.navbar-nav
-      li: a = lastPing
+      li: a = heartbeat.time
       li.active: a href="#" Development
       li: a href="#" Production
       li: a href="#" Staging

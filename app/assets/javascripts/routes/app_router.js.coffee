@@ -46,7 +46,9 @@ Sysys.LogoutRoute = Ember.Route.extend
 
 Sysys.DashboardRoute = Ember.Route.extend
   model: ->
-    dayPromise = @get('store').find 'day', 'latest'
+    @controllerFor('application').get('heartbeat').then (heartbeat) =>
+      dayPromise = @get('store').find 'day', heartbeat.latest_day_id
+      return dayPromise
 
   setupController: (controller, model) ->
     @controllerFor('day').set('model', model)

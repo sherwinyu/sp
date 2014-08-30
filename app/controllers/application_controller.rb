@@ -18,7 +18,8 @@ class ApplicationController < ActionController::Base
         MIXPANEL_TOKEN: Figaro.env.MIXPANEL_TOKEN
       },
       git: Util::Git.git,
-      currentUser: current_user.as_json
+      currentUser: current_user.as_json,
+      heartbeat: heartbeat
     })
   end
 
