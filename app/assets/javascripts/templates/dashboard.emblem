@@ -1,7 +1,7 @@
 = if newDayAvailable
   .alert.alert-info
     | It's a new day!
-    = newDayId
+    a{action "reloadDashboard"}: newDayId
 
 
 h1 Dashboard

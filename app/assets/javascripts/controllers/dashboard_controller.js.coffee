@@ -58,3 +58,8 @@ Sysys.DashboardController = Ember.ObjectController.extend
     refreshProductivity: ->
       @get('store').filter 'rescue_time_dp', {refresh: true}, (rtdp) ->
         true
+
+    reloadDashboard: ->
+      dayPromise = @get('store').find 'day', @get('newDayId')
+      dayPromise.then (day) =>
+        @controllerFor('day').set('model', day)

@@ -50,6 +50,7 @@ nav.navbar.navbar-default role="navigation"
 
     ul.nav.navbar-right.navbar-nav
       li: a = heartbeat.time
+      li: a = heartbeat.latest_day_id
       li.active: a href="#" Development
       li: a href="#" Production
       li: a href="#" Staging
