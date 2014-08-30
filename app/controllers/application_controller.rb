@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
 
   def heartbeat
     {
-
       latest_day_id: Day.latest.date.to_s,
       time: Time.zone.now
     }

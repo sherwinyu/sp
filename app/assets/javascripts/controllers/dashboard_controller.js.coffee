@@ -7,7 +7,7 @@ Sysys.DashboardController = Ember.ObjectController.extend
   newDayAvailable: (->
     newDay = @get('newDay')
     newDay and newDay.id isnt @get('controllers.day.id')
-  ).property('newDay')
+  ).property('newDay', 'controllers.day.model')
 
   # dayStartedBinding: 'controllers.day.startedAt'
 
