@@ -1,3 +1,10 @@
+Next Steps for Ping mode:
+  - set up a dedicated controller method for responding to pings
+  - have ping respond with information regarding everything
+      - latest day
+      - whether there are new anythings
+  - abstract it out so that we can swap it for Pusher later
+
 Next steps
   - canary extension for generic web activity tracking
   - dahsboard showing productivity

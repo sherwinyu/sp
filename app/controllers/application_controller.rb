@@ -26,8 +26,7 @@ class ApplicationController < ActionController::Base
   def heartbeat
     {
 
-      # latest_day_id: Day.latest.date.to_s,
-      latest_day_id: Day.skip(rand Day.count).first.date.to_s,
+      latest_day_id: Day.latest.date.to_s,
       time: Time.zone.now
     }
   end
