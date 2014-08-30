@@ -12,10 +12,9 @@ Sysys.ApplicationController = Ember.Controller.extend
   init: ->
     @_super()
 
-    @set 'heartbeat', new Ember.RSVP.Promise (resolve) ->
-      resolve window._sp_vars.heartbeat
-
+    @set 'heartbeat', window._sp_vars.heartbeat
     @set 'git', window?._sp_vars?.git
+
     pingTimer = new PingTimer @
 
   actions:
