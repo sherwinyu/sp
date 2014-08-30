@@ -2,8 +2,12 @@ Sysys.DashboardController = Ember.ObjectController.extend
 
   needs: [ 'rescue_time_dps', 'day' ]
 
-  newDayAvailable: false
-  newDayId: ''
+  newDay: null
+
+  newDayAvailable: (->
+    newDay = @get('newDay')
+    newDay and newDay.id isnt @get('controllers.day.id')
+  ).property('newDay')
 
   # dayStartedBinding: 'controllers.day.startedAt'
 
@@ -60,6 +64,4 @@ Sysys.DashboardController = Ember.ObjectController.extend
         true
 
     reloadDashboard: ->
-      dayPromise = @get('store').find 'day', @get('newDayId')
-      dayPromise.then (day) =>
-        @controllerFor('day').set('model', day)
+      @controllerFor('day').set('model', @get 'newDay')

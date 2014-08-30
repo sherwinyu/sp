@@ -31,11 +31,9 @@ Sysys.ApplicationController = Ember.Controller.extend
 class PingTimer
 
   heartbeatHandler: (heartbeat) ->
-    if heartbeat.latest_day_id isnt @appCtrl.get('heartbeat').latest_day_id
-      c = @appCtrl.get('controllers.dashboard')
-      c.set('newDayAvailable', true)
-      c.set('newDayId', heartbeat.latest_day_id)
-
+    dayPromise = @appCtrl.get('store').find('day', heartbeat.latest_day_id)
+    dayPromise.then (day) ->
+      ctrl('dashboard').set 'newDay', day
     @appCtrl.set('heartbeat', heartbeat)
     console.log heartbeat
 
