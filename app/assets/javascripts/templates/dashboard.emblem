@@ -1,5 +1,12 @@
+= if newDayAvailable
+  .alert.alert-info
+    | It's a new day!
+    = newDayId
+
+
 h1 Dashboard
 .panel.panel-default.dashboard
+
   .panel-heading
     h3 Today
   .panel-body

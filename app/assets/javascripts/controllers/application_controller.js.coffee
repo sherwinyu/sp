@@ -1,4 +1,5 @@
 Sysys.ApplicationController = Ember.Controller.extend
+  needs: ['dashboard']
 
   updateCurrentPath: (->
     Sysys.currentPath =  @get('currentPath')
@@ -30,6 +31,11 @@ Sysys.ApplicationController = Ember.Controller.extend
 class PingTimer
 
   heartbeatHandler: (heartbeat) ->
+    if heartbeat.latest_day_id isnt @appCtrl.get('heartbeat').latest_day_id
+      c = @appCtrl.get('controllers.dashboard')
+      c.set('newDayAvailable', true)
+      c.set('newDayId', heartbeat.latest_day_id)
+
     @appCtrl.set('heartbeat', heartbeat)
     console.log heartbeat
 
@@ -42,7 +48,7 @@ class PingTimer
       console.log 'pinging', new Date()
       get = $.get(url)
       get.then (heartbeat) => @heartbeatHandler heartbeat
-    setInterval(pingFtn, 5000)
+    setInterval(pingFtn, 2000)
 
 # source https://gist.github.com/stefanpenner/587e5f047d2f412fe463
 Ember.RSVP.on 'error', (error) ->

@@ -1,5 +1,10 @@
 Sysys.DashboardController = Ember.ObjectController.extend
+
   needs: [ 'rescue_time_dps', 'day' ]
+
+  newDayAvailable: false
+  newDayId: ''
+
   # dayStartedBinding: 'controllers.day.startedAt'
 
   # TODO(syu): make dependent on now
