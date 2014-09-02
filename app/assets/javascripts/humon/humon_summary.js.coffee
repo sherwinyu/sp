@@ -14,11 +14,13 @@ Humon.Summary.reopenClass
       name: "text"
     meditation:
       name: "meditation"
+    coded:
+      name: "boolean"
     work:
       name: "work"
 
-  requiredAttributes: ["best", "worst", "happiness", "meditation", 'work']
-  optionalAttributes: ["funny", "insight"]
+  requiredAttributes: ['best', 'worst', 'happiness', 'meditation', 'work', 'coded']
+  optionalAttributes: ['funny', 'insight']
 
 Humon.Summary._generateAccessors()
 

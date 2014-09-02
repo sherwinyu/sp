@@ -8,6 +8,9 @@ class Summary
   field :funny, type: String
   field :insight, type: String
   field :meditation, type: Hash
+
+  field :coded, type: Boolean
+
   field :work, type: Hash
 
   def as_json
