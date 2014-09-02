@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe DataPointsController do
+  before :each do
+    setup
+  end
+
   describe "when not logged in" do
     it "index returns a 401 error" do
       get :index, format: :json

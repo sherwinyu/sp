@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe DaysController do
+  before :each do
+    setup
+  end
+
   let :user do
     create :user
   end

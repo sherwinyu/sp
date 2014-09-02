@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe ActsController do
+  before :each do
+    setup
+  end
+
   let(:valid_attributes) do
     {
       description: "hello world",
