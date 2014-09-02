@@ -2,6 +2,7 @@
 class Option
   include Mongoid::Document
   field :current_timezone
+  field :next_ping_time
 
   def self.opts
     self.first_or_create
@@ -22,6 +23,15 @@ class Option
 
   def self.list_available_timezones
     ActiveSupport::TimeZone::MAPPING.values
+  end
+
+  def self.next_ping_time
+    opts.next_ping_time or 1.year.ago
+  end
+
+  # TODO(syu) add test
+  def self.next_ping_time=(time)
+    opts.update_attribute :next_ping_time, time
   end
 
 end

@@ -23,6 +23,24 @@ class ApplicationController < ActionController::Base
     })
   end
 
+  # /ping
+  def ping
+    if Time.zone.now > Option.next_ping_time
+      send_twilio_msg
+      delta = 35.minutes + rand(30).minutes
+      Option.next_ping_time = Time.zone.now + delta
+    end
+    render json: heartbeat, status: 200
+  end
+
+  private
+
+  def send_twilio_msg
+    return unless Util::DateTime.currently_awake
+    puts "Sending message!"
+    Util::Twilio.send_message "Energy / status / happyiness? #{Time.zone.now}"
+  end
+
   def heartbeat
     {
       latest_day_id: Day.latest.date.to_s,
@@ -30,17 +48,5 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def ping
-    Time.now
-    if Util::DateTime.currently_awake
-      r = rand(400)
-      puts "Random r: #{r} >?< 398"
-      if r > 398
-        puts "Sending message!"
-        Util::Twilio.send_message "Energy / status / happyiness? #{Time.zone.now}"
-      end
-    end
-    render json: heartbeat, status: 200
-  end
 
 end
