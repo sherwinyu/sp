@@ -7,10 +7,10 @@ class Summary
   field :happiness, type: Integer
   field :funny, type: String
   field :insight, type: String
-  field :meditation, type: Hash
-
   field :coded, type: Boolean
 
+  field :meditation, type: Hash
+  field :anki, type: Hash
   field :work, type: Hash
 
   def as_json

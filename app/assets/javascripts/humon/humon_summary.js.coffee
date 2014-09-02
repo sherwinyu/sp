@@ -16,10 +16,12 @@ Humon.Summary.reopenClass
       name: "meditation"
     coded:
       name: "boolean"
+    anki:
+      name: "anki"
     work:
       name: "work"
 
-  requiredAttributes: ['best', 'worst', 'happiness', 'meditation', 'work', 'coded']
+  requiredAttributes: ['best', 'worst', 'happiness', 'meditation', 'work', 'coded', 'anki']
   optionalAttributes: ['funny', 'insight']
 
 Humon.Summary._generateAccessors()
@@ -41,3 +43,14 @@ Humon.Work.reopenClass
     left_at:
       name: "time"
   requiredAttributes: ['arrived_at', 'left_at']
+
+Humon.Anki = Humon.Complex.extend()
+Humon.Anki.reopenClass
+  childMetatemplates:
+    new_cards:
+      name: 'list'
+    time_spent:
+      name: 'number'
+
+
+  requiredAttributes: ['new_cards', 'time_spent']

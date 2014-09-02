@@ -7,6 +7,8 @@ class SummarySerializer < ActiveModel::Serializer
     insight
     meditation
     work
+    coded
+    anki
   ]
   def attributes
     hash = super
