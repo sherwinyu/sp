@@ -2,7 +2,8 @@
 
 module SetupHelper
   def setup
-    Option.current_timezone = "America/Los_Angeles"
+    Option.stub(:next_ping_time).and_return 1.hour.from_now
+    Option.stub(:current_timezone).and_return "America/Los_Angeles"
   end
 end
 
