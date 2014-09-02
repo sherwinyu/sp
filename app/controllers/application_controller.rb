@@ -44,7 +44,8 @@ class ApplicationController < ActionController::Base
   def heartbeat
     {
       latest_day_id: Day.latest.date.to_s,
-      time: Time.zone.now
+      time: Time.zone.now,
+      next_ping_time: Option.next_ping_time
     }
   end
 
