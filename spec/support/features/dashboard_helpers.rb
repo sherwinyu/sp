@@ -56,10 +56,12 @@ module Features
       meditation.native.send_keys :Enter
       nodes = sleep.all('.node-literal')
       firstkf = nodes.first.find('.key-field')
-      # fill_in_node
-      # keyfields = node('meditation').all('.node-literal .key-field')
-      #  fill_in_node keyfields.first, "warg"
     end
+
+    # def fill_in_work
+      # key_field('meditation
+#
+    # end
 
     def add_goals
     end

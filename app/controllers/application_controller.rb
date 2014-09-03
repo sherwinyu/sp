@@ -15,11 +15,13 @@ class ApplicationController < ActionController::Base
   def inject_vars
     @server_side_vars = Hashie::Mash.new({
       env: {
-        MIXPANEL_TOKEN: Figaro.env.MIXPANEL_TOKEN
+        MIXPANEL_TOKEN: Figaro.env.MIXPANEL_TOKEN,
+        RAILS_ENV: Rails.env
       },
       git: Util::Git.git,
       currentUser: current_user.as_json,
-      heartbeat: heartbeat
+      heartbeat: heartbeat,
+      isTest: Rails.env.test?
     })
   end
 
