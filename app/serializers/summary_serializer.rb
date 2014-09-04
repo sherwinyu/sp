@@ -8,6 +8,7 @@ class SummarySerializer < ActiveModel::Serializer
     meditation
     work
     coded
+    uploaded_photos
     anki
   ]
   def attributes

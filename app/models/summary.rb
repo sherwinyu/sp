@@ -8,6 +8,7 @@ class Summary
   field :funny, type: String
   field :insight, type: String
   field :coded, type: Boolean
+  field :uploaded_photos, type: Boolean
 
   field :meditation, type: Hash
   field :anki, type: Hash

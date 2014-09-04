@@ -117,7 +117,6 @@ Humon.TemplateContexts.Work = Humon.TemplateContexts.Complex.extend(
 Humon.TemplateContexts.Anki = Humon.TemplateContexts.Complex.extend(
 )
 
-
 Humon.TemplateContexts.Summary = Humon.TemplateContexts.Complex.extend(
 )
 

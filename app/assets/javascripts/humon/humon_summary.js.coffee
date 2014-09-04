@@ -3,25 +3,27 @@ Humon.Summary = Humon.Complex.extend()
 Humon.Summary.reopenClass
   childMetatemplates:
     best:
-      name: "text"
+      name: 'text'
     worst:
-      name: "text"
+      name: 'text'
     happiness:
-      name: "number"
+      name: 'number'
     funny:
-      name: "text"
+      name: 'text'
     insight:
-      name: "text"
+      name: 'text'
     meditation:
-      name: "meditation"
+      name: 'meditation'
     coded:
-      name: "boolean"
+      name: 'boolean'
+    uploaded_photos:
+      name: 'boolean'
     anki:
       name: "anki"
     work:
       name: "work"
 
-  requiredAttributes: ['best', 'worst', 'happiness', 'meditation', 'work', 'coded', 'anki']
+  requiredAttributes: ['best', 'worst', 'happiness', 'meditation', 'work', 'coded', 'uploaded_photos', 'anki']
   optionalAttributes: ['funny', 'insight']
 
 Humon.Summary._generateAccessors()
