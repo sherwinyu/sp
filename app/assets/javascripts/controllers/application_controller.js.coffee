@@ -47,7 +47,7 @@ class PingTimer
       get = $.get(url)
       get.then (heartbeat) => @heartbeatHandler heartbeat
     if not window?._sp_vars?.isTest
-      setInterval(pingFtn, 2000)
+      setInterval(pingFtn, 30000)
 
 # source https://gist.github.com/stefanpenner/587e5f047d2f412fe463
 Ember.RSVP.on 'error', (error) ->

@@ -54,5 +54,4 @@ Humon.Anki.reopenClass
     time_spent:
       name: 'number'
 
-
   requiredAttributes: ['new_cards', 'time_spent']
