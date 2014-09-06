@@ -2,6 +2,6 @@
 
 .container
   .row
-    .col-xs-9.col-center
+    .col-xs-12.col-center
       =render 'notifications'
       =outlet

@@ -3,10 +3,51 @@
     | It's a new day!
     a{action "reloadDashboard"}: newDay.id
 
+.row
+  .col-xs-8
+    .panel.panel-default.dashboard
+      .panel-heading
+        h3 Today
+      .panel-body
+        =outlet day
+  .col-xs-4
+    .panel.panel-default.dashboard
+      .panel-heading
+        h3 Realtime summary
+      .panel-body
+        dl
+          dt
+            | Last 3 hours: hours logged (
+            = s_last3hourTimeRange
+            | )
+          dd = productivityPulse.last3hours.length
+          dt Last 3 hours: score
+          dd = productivityPulse.last3hours.score
+          dt
+            | Today: hours logged (
+            = s_sinceDayStart
+            | )
+          dd = productivityPulse.daily.length
+          dt Today: score
+          dd = productivityPulse.daily.score
+.row
+  .col-xs-12.col-center
+    .panel.panel-default.dashboard
+      .panel-heading
+        h3 Acts
+      .panel-body
+        = outlet acts
+      .panel-heading
+        h3 Recent Activity DPs
+        a.btn.btn-default.refresh-button{action refreshProductivity}
+          ' Refresh
+          i.fa.fa-refresh
+      .panel-body
+        = outlet rescue_time_dps
 
-h1 Dashboard
-.panel.panel-default.dashboard
 
+/ h1 Dashboard
+/ .panel.panel-default.dashboard
   .panel-heading
     h3 Today
   .panel-body
@@ -30,17 +71,3 @@ h1 Dashboard
       dt Today: score
       dd = productivityPulse.daily.score
 
-  .panel-heading
-    h3 Acts
-  .panel-body
-    = outlet acts
-
-
-  .panel-heading
-    h3 Recent Activity DPs
-    a.btn.btn-default.refresh-button{action refreshProductivity}
-      ' Refresh
-      i.fa.fa-refresh
-
-  .panel-body
-    = outlet rescue_time_dps
