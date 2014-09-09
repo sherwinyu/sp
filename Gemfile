@@ -89,3 +89,5 @@ gem 'devise'
 
 gem 'bson'
 gem 'moped'
+
+gem 'mongoid_rails_migrations'
