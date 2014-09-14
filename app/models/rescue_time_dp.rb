@@ -12,6 +12,8 @@ class RescueTimeDp
   field :time, type: Time # stored as UTC, can be updated; zone is implicit from offset with `experienced_time`
   field :activities, type: HumonNode
 
+  field :acts, type: Array
+
   # belongs_to
 
   # Returns an unzoned ("experienced") time, in UTC
