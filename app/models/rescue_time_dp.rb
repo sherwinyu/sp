@@ -69,4 +69,13 @@ class RescueTimeDp
     # self.update_attribute :time, <convert rt_date to absolute time>
   end
 
+  # read only activities hash
+  def get_activities
+    ret = {}
+    self.acts.each do |a|
+      activity = Activity.find a['a']
+      ret[activity.name] = Activity.to_json
+    end
+  end
+
 end
