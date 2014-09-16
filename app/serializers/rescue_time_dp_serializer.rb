@@ -4,6 +4,15 @@ class RescueTimeDpSerializer < ActiveModel::Serializer
   def id
     object.id.to_s
   end
+
+  def activities
+    pairs = object.acts.map do |act|
+      activity = Activity.find act[:a]
+      [activity.name, {duration: act[:duration]}]
+    end
+    Hash[pairs]
+  end
+
   # def activities
     # object.activities.map { |name, activity| [name, {duration: activity.duration, }
   # end
