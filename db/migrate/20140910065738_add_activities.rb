@@ -10,6 +10,7 @@ class AddActivities < Mongoid::Migration
 
   def self.up
     # get all activities
+    puts "rtdps.length: #{rtdps.length}"
     rtdps.each do |rtdp|
       acts = []
       rtdp.activities.each do |name, activity|
@@ -18,11 +19,10 @@ class AddActivities < Mongoid::Migration
                            category: activity.category,
                            productivity: activity.productivity)
         a.save
-        acts << {a: a.id, activity.duration}
+        acts << {a: a.id, duration: activity.duration }
       end
       rtdp.acts = acts
       rtdp.save
-      rtdps
     end
   end
 
