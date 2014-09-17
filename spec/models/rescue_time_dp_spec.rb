@@ -18,7 +18,8 @@ describe RescueTimeDp do
         {a: act1.id, duration: 300},
         {a: act2.id, duration: 150},
       ]
-      rtdp
+      rtdp.save
+      rtdp.reload
     }
 
     it 'converts activities properly' do
@@ -27,7 +28,9 @@ describe RescueTimeDp do
       expect(json).to have_key :activities
       expect(json[:activities]).to be_a Hash
       expect(json[:activities]['gmail_com'][:duration]).to eq 300
+      expect(json[:activities]['gmail_com'][:productivity]).to eq 0
       expect(json[:activities]['anki'][:duration]).to eq 150
+      expect(json[:activities]['anki'][:productivity]).to eq 2
     end
 
   end
