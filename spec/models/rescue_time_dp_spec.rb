@@ -3,11 +3,11 @@ require 'spec_helper'
 describe RescueTimeDp do
   describe 'serializer' do
     let (:act1) {
-      a = Activity.create names: ['gmail_com'], productivity: 0
+      Activity.create names: ['gmail_com'], productivity: 0
     }
 
     let (:act2) {
-      a = Activity.create names: ['anki'], productivity: 2
+      Activity.create names: ['anki'], productivity: 2
     }
 
     let (:rtdp) {
