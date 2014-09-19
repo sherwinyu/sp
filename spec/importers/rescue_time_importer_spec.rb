@@ -59,6 +59,7 @@ describe RescueTimeImporter do
     it "calls instantiate_row for each row from the rescue time response"
     it "calls RescueTimeDp."
   end
+
   describe "group_rtrs_by_date_and_hour" do
     mon5p = "2013-10-07T17:00:00"
     mon6p = "2013-10-07T18:00:00"
@@ -120,9 +121,10 @@ describe RescueTimeImporter do
       sanitized = RescueTimeImporter.sanitize_rt_activity_string "ruby-doc.org"
       sanitized.should eq "ruby_doc_org"
     end
-
   end
-
-
-
+  describe "activities_from_rtrs" do
+    it "returns an array of {a: id, duration: time} objects"
+    it 'creates Activities for activities that don\'t exist yet'
+    it 'does not create duplicate Activities for preexistiing activities'
+  end
 end
