@@ -2,6 +2,7 @@ class RescueTimeImporter
 
   # Makes a request to the RescueTime analysis API
   # Returns the raw data (wrapped in a Hashie)
+  #
   def self.rescue_time_api_query(opts={})
     data = Hash.new
     data[:key] = Figaro.env.RESCUETIME_TOKEN
