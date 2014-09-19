@@ -60,24 +60,25 @@ describe RescueTimeImporter do
     it "calls RescueTimeDp."
   end
 
+  mon5p = "2013-10-07T17:00:00"
+  mon6p = "2013-10-07T18:00:00"
+  mon7p = "2013-10-07T19:00:00"
+  tues6p = "2013-10-08T18:00:00"
+
+  let(:rtrs) {
+    [mon5p_video, mon5p_coding, mon6p_coding, mon7p_coding, tues6p_coding, tues6p_video]
+  }
+  let(:mon5p_video) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "video", rt_time_spent: 60}
+  let(:mon5p_coding) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "coding", rt_time_spent: 60}
+
+  let (:mon6p_coding) {create :rescue_time_raw, rt_date: mon6p, rt_activity: "coding", rt_time_spent: 60}
+  let (:mon7p_coding) {create :rescue_time_raw, rt_date: mon7p, rt_activity: "lumping", rt_time_spent: 60}
+
+  let (:tues6p_coding) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "coding", rt_time_spent: 60 }
+  let (:tues6p_video) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "video", rt_time_spent: 60}
+
   describe "group_rtrs_by_date_and_hour" do
-    mon5p = "2013-10-07T17:00:00"
-    mon6p = "2013-10-07T18:00:00"
-    mon7p = "2013-10-07T19:00:00"
-    tues5p = "2013-10-08T17:00:00"
-    tues6p = "2013-10-08T18:00:00"
-    let(:mon5p_video) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "video"}
-    let(:mon5p_coding) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "coding"}
 
-    let (:mon6p_coding) {create :rescue_time_raw, rt_date: mon6p, rt_activity: "coding" }
-    let (:mon7p_coding) {create :rescue_time_raw, rt_date: mon7p, rt_activity: "lumping"}
-
-    let (:tues6p_coding) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "coding" }
-    let (:tues6p_video) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "video"}
-
-    let(:rtrs) {
-      [mon5p_video, mon5p_coding, mon6p_coding, mon7p_coding, tues6p_coding, tues6p_video]
-    }
     let (:grouped) {RescueTimeImporter.group_rtrs_by_date_and_hour rtrs}
     it "combines by date and hour" do
       mon = Date.new(2013, 10, 7)
@@ -122,8 +123,21 @@ describe RescueTimeImporter do
       sanitized.should eq "ruby_doc_org"
     end
   end
+
   describe "activities_from_rtrs" do
-    it "returns an array of {a: id, duration: time} objects"
+    let (:rtrs) { [mon5p_video, mon5p_coding] }
+    it "returns an array of {a: id, duration: time} objects" do
+      activities = RescueTimeImporter.activities_list_from_rtrs rtrs
+
+      activity1 = Activity.where(name: mon5p_video.rt_activity).first
+      # activity2 = Activity.where(name: mon5p_video.rt_activity).first
+
+      expect(activities).to be_an Array
+      expect(activities).to have(2).elements
+      expect(activities[0]).to eq( {a: activity1.id, duration: mon5p_video.rt_date} )
+
+
+    end
     it 'creates Activities for activities that don\'t exist yet'
     it 'does not create duplicate Activities for preexistiing activities'
   end
