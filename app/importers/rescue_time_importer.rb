@@ -59,6 +59,8 @@ class RescueTimeImporter
   end
 
   # precondition: rtrs all belong to the same day and hour
+  # ### --- new -> this method should
+  #   create activity methods
   def self.activities_hash_from_rtrs rtrs
     activities = {}
     rtrs.each do |rtr|
