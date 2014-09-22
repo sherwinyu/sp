@@ -130,13 +130,15 @@ describe RescueTimeImporter do
       activities = RescueTimeImporter.activities_list_from_rtrs rtrs
 
       activity1 = Activity.where(name: mon5p_video.rt_activity).first
-      # activity2 = Activity.where(name: mon5p_video.rt_activity).first
+      activity2 = Activity.where(name: mon5p_coding.rt_activity).first
+
+      expect(activity1).to_not be_nil
+      expect(activity2).to_not be_nil
 
       expect(activities).to be_an Array
       expect(activities).to have(2).elements
-      expect(activities[0]).to eq( {a: activity1.id, duration: mon5p_video.rt_date} )
-
-
+      expect(activities[0]).to eq( {a: activity1.id, duration: mon5p_video.duration} )
+      expect(activities[1]).to eq( {a: activity2.id, duration: mon5p_coding.duration} )
     end
     it 'creates Activities for activities that don\'t exist yet'
     it 'does not create duplicate Activities for preexistiing activities'

@@ -74,6 +74,16 @@ class RescueTimeImporter
     activities
   end
 
+  def self.activities_list_from_rtrs rtrs
+    rtrs.map do |rtr|
+      a = Activity.where(name: rtr.rt_activity).first_or_initialize
+      a.productivity = rtr.productivity
+      a.category = rtr.category
+      a.save
+      {a: a.id, duration: rtr.duration}
+    end
+  end
+
   def self.sanitize_rt_activity_string rt_activity
     rt_activity.downcase.gsub /[. -\/]/, '_'
   end
