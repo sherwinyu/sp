@@ -124,7 +124,7 @@ describe RescueTimeImporter do
     end
   end
 
-  describe "activities_from_rtrs" do
+  describe "activities_list_from_rtrs" do
     let (:rtrs) { [mon5p_video, mon5p_coding] }
     it "returns an array of {a: id, duration: time} objects" do
       activities = RescueTimeImporter.activities_list_from_rtrs rtrs

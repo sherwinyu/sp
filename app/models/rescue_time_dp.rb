@@ -14,6 +14,10 @@ class RescueTimeDp
 
   field :acts, type: Array
 
+  def rtrs
+    RescueTimeRaw.where(rt_date: self.rt_date)
+  end
+
   # belongs_to
 
   # Returns an unzoned ("experienced") time, in UTC

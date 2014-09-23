@@ -48,10 +48,9 @@ class RescueTimeImporter
           (report[:existing_rtdps] ||= []) << rtdp if rtdp.persisted?
         end
 
-        rtdp.update_attributes(
-          activities: activities_hash_from_rtrs(rtrs),
-          time: Util::DateTime.rt_time_to_absolute_time(rtrs.first.rt_date)
-        )
+        rtdp.time ||= Util::DateTime.rt_time_to_absolute_time(rtrs.first.rt_date)
+        rtdp.update_attributes activities: activities_hash_from_rtrs(rtrs)
+        rtdp.save
         rtdps << rtdp
       end
     end
@@ -85,7 +84,7 @@ class RescueTimeImporter
   end
 
   def self.sanitize_rt_activity_string rt_activity
-    rt_activity.downcase.gsub /[. -\/]/, '_'
+    rt_activity.downcase.gsub(/[. -\/]/, '_')
   end
 
   def self.group_rtrs_by_date_and_hour rtrs
@@ -94,6 +93,7 @@ class RescueTimeImporter
         [day, rtrs.group_by(&:hour)]
       end
     ]
+    return grouped
   end
 
   # upserts a row
