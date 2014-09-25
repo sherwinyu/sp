@@ -13,6 +13,7 @@ class RescueTimeDp
   field :activities, type: HumonNode
 
   field :acts, type: Array
+  field :acts2, type: Array
 
   def rtrs
     RescueTimeRaw.where(rt_date: self.rt_date)

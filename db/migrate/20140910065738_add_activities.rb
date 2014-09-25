@@ -5,7 +5,7 @@ class AddActivities < Mongoid::Migration
   end
 
   def self.rtdps
-    RescueTimeDp.where(:time.gte => cutoff, :acts.exists => false)
+    RescueTimeDp.where(:time.gte => cutoff, :acts2.exists => false)
   end
 
   def self.up
@@ -15,7 +15,7 @@ class AddActivities < Mongoid::Migration
 
       activities_list = RescueTimeImporter.activities_list_from_rtrs rtdp.rtrs
 
-      rtdp.acts = activities_list
+      rtdp.acts2 = activities_list
       rtdp.save
 
       # acts = []
@@ -27,8 +27,8 @@ class AddActivities < Mongoid::Migration
       # a.save
       # acts << {a: a.id, duration: activity.duration }
       # end
-      rtdp.acts = acts
-      rtdp.save
+      # rtdp.acts2 = acts
+      # rtdp.save
     end
   end
 

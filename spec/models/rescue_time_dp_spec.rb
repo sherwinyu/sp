@@ -34,4 +34,14 @@ describe RescueTimeDp do
     end
 
   end
+  describe 'migration' do
+    it 'works' do
+      binding.pry
+      cutoff = DateTime.new(2014, 9, 1)
+      rtdps =  RescueTimeDp.where(:time.gte => cutoff, :acts2.exists => false)
+      rtdps.map do |rtdp|
+        expect(rtdps.acts2).to eq rtdp.acts
+      end
+    end
+  end
 end
