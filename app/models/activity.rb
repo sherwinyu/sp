@@ -8,16 +8,6 @@ class Activity
   field :category
   field :productivity
 
-  # def name
-    # self.names.first
-  # end
-
-  def self.upsert_activities_from_rtrs rtrs
-    rtrs.map do |rtr|
-      Activity.upsert_activity_from_rtr rtr
-    end
-  end
-
   def self.upsert_activity_from_rtr rtr
     activity = Activity.where(name: rtr.rt_activity).first_or_initialize
     unless activity.persisted?
