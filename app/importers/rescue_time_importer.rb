@@ -73,12 +73,15 @@ class RescueTimeImporter
     activities
   end
 
+  # if the activity already exists, this method DOES NOTHING
   def self.activities_list_from_rtrs rtrs
     rtrs.map do |rtr|
       a = Activity.where(name: rtr.rt_activity).first_or_initialize
-      a.productivity = rtr.productivity
-      a.category = rtr.category
-      a.save
+      unless a.persisted?
+        a.productivity = rtr.productivity
+        a.category = rtr.category
+        a.save
+      end
       {a: a.id, duration: rtr.duration}
     end
   end
