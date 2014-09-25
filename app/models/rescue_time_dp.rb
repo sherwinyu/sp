@@ -63,10 +63,8 @@ class RescueTimeDp
     self.where(:date_time => date1..date2)
   end
 
-  def resync_against_raw!(report=nil)
-    rtdps = RescueTimeImporter.instantiate_rtdps_from_rtrs RescueTimeRaw.where(rt_date: rt_date), report
-    reload
-    rtdps
+  def sync_against_raw
+    self.acts = RescueTimeImporter.activities_list_from_rtrs self.rtrs
   end
 
   def resync_time!

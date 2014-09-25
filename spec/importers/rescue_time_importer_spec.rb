@@ -141,33 +141,5 @@ describe RescueTimeImporter do
       expect(activities[1]).to eq( {a: activity2.id, duration: mon5p_coding.duration} )
     end
 
-    it 'creates Activities for activities that don\'t exist yet' do
-      activity1 = Activity.where(name: mon5p_video.rt_activity).first
-      expect(activity1).to be_nil
-      activities = RescueTimeImporter.activities_list_from_rtrs rtrs
-      activity1 = Activity.where(name: mon5p_video.rt_activity).first
-      expect(activity1).to be_persisted
-    end
-
-    it 'does not create duplicate Activities for preexistiing activities' do
-      activity1 = Activity.create name: mon5p_video.rt_activity, productivity: 1000
-      activities = nil
-      expect{
-        activities = RescueTimeImporter.activities_list_from_rtrs rtrs
-      }.to change{Activity.count}.by 1
-      expect(Activity.where(name: mon5p_video.rt_activity).count).to be 1
-      expect(activities).to have(2).activities
-    end
-
-    it 'does not not overwrite existing data on existing activites' do
-      activity1 = Activity.create name: mon5p_video.rt_activity, productivity: 1000, category: 'cat1'
-      activity2 = Activity.create name: mon5p_video.rt_activity, productivity: 2000, category: 'cat2'
-      RescueTimeImporter.activities_list_from_rtrs rtrs
-      expect(activity1.reload.productivity).to eq 1000
-      expect(activity1.reload.category).to eq 'cat1'
-
-      expect(activity2.reload.productivity).to eq 2000
-      expect(activity2.reload.category).to eq 'cat2'
-    end
   end
 end

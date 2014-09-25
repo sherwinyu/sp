@@ -1,6 +1,23 @@
 require 'spec_helper'
 
 describe RescueTimeDp do
+  mon5p = "2013-10-07T17:00:00"
+  mon6p = "2013-10-07T18:00:00"
+  mon7p = "2013-10-07T19:00:00"
+  tues6p = "2013-10-08T18:00:00"
+
+  let(:rtrs) {
+    [mon5p_video, mon5p_coding, mon6p_coding, mon7p_coding, tues6p_coding, tues6p_video]
+  }
+  let(:mon5p_video) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "video", rt_time_spent: 60}
+  let(:mon5p_coding) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "coding", rt_time_spent: 60}
+
+  let (:mon6p_coding) {create :rescue_time_raw, rt_date: mon6p, rt_activity: "coding", rt_time_spent: 60}
+  let (:mon7p_coding) {create :rescue_time_raw, rt_date: mon7p, rt_activity: "lumping", rt_time_spent: 60}
+
+  let (:tues6p_coding) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "coding", rt_time_spent: 60 }
+  let (:tues6p_video) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "video", rt_time_spent: 60}
+
   describe 'serializer' do
     let (:act1) {
       Activity.create names: ['gmail_com'], productivity: 0
@@ -32,15 +49,25 @@ describe RescueTimeDp do
       expect(json[:activities]['anki'][:duration]).to eq 150
       expect(json[:activities]['anki'][:productivity]).to eq 2
     end
-
   end
-  describe 'migration' do
-    it 'works' do
-      cutoff = DateTime.new(2014, 9, 1)
-      rtdps =  RescueTimeDp.where(:time.gte => cutoff, :acts2.exists => false)
-      rtdps.map do |rtdp|
-        expect(rtdps.acts2).to eq rtdp.acts
-      end
+
+  describe 'sync_against_raw' do
+    it 'sets the acts properly #INTEGRATION' do
+      activity1 = Activity.create name: mon5p_video.rt_activity, productivity: 1000, category: 'cat1'
+      mon5p_video
+      mon5p_coding
+
+      # activity2 = Activity.create name: mon5p_coding.rt_activity, productivity: 2000, category: 'cat2'
+      rtdp = RescueTimeDp.new rt_date: mon5p
+
+      expect do
+        rtdp.sync_against_raw
+      end.to change{Activity.count}.by 1
+      expect(Activity.count).to eq 2
+      activity1 = Activity.where(name: mon5p_video.rt_activity).first
+      activity2 = Activity.where(name: mon5p_coding.rt_activity).first
+      expect(rtdp.acts.first).to eq( {a: activity1.id, duration: 60} )
+      expect(rtdp.acts.second).to eq( {a: activity2.id, duration: 60} )
     end
   end
 end
