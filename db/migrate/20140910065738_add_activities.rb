@@ -5,16 +5,16 @@ class AddActivities < Mongoid::Migration
   end
 
   def self.rtdps
-    RescueTimeDp.where(:time.gte => cutoff)
+    RescueTimeDp.where(:time.gte => cutoff, :acts.exists => false)
   end
 
   def self.up
 
     puts "rtdps.length: #{rtdps.length}"
     rtdps.each do |rtdp|
-
       rtdp.sync_against_raw
       rtdp.save
+      puts rtdp.time
     end
   end
 
