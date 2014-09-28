@@ -2,11 +2,8 @@ class Activity
   include Mongoid::Document
 
   field :name, type: String
-  field :names, type: Array
-  has_many :rescue_time_dps
-
-  field :category
-  field :productivity
+  field :category, type: String
+  field :productivity, type: Integer
 
   def self.upsert_activity_from_rtr rtr
     activity = Activity.where(name: rtr.rt_activity).first_or_initialize

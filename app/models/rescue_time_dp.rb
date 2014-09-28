@@ -73,11 +73,11 @@ class RescueTimeDp
 
   # read only activities hash
   def get_activities
-    ret = {}
-    self.acts.each do |a|
-      activity = Activity.find a['a']
-      ret[activity.name] = Activity.to_json
+    pairs = self.acts.map do |act|
+      activity = Activity.find act['a']
+      [activity.name, {duration: act['duration'], productivity: activity.productivity}]
     end
+    Hash[pairs]
   end
 
 end

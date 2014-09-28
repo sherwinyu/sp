@@ -20,11 +20,11 @@ describe RescueTimeDp do
 
   describe 'serializer' do
     let (:act1) {
-      Activity.create names: ['gmail_com'], productivity: 0
+      Activity.create name: 'gmail.com', productivity: 0
     }
 
     let (:act2) {
-      Activity.create names: ['anki'], productivity: 2
+      Activity.create name: 'anki', productivity: 2
     }
 
     let (:rtdp) {
@@ -44,8 +44,8 @@ describe RescueTimeDp do
       json = serializer.as_json['rescue_time_dp']
       expect(json).to have_key :activities
       expect(json[:activities]).to be_a Hash
-      expect(json[:activities]['gmail_com'][:duration]).to eq 300
-      expect(json[:activities]['gmail_com'][:productivity]).to eq 0
+      expect(json[:activities]['gmail.com'][:duration]).to eq 300
+      expect(json[:activities]['gmail.com'][:productivity]).to eq 0
       expect(json[:activities]['anki'][:duration]).to eq 150
       expect(json[:activities]['anki'][:productivity]).to eq 2
     end

@@ -6,11 +6,7 @@ class RescueTimeDpSerializer < ActiveModel::Serializer
   end
 
   def activities
-    pairs = object.acts.map do |act|
-      activity = Activity.find act['a']
-      [activity.name || activity.names.first, {duration: act['duration'], productivity: activity.productivity}]
-    end
-    Hash[pairs]
+    object.get_activities
   end
 
   # def activities
