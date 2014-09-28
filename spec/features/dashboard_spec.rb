@@ -36,7 +36,6 @@ feature "Dashboard", feature: "dashboard" do
               end
       datetime + delta
     end
-    binding.pry
 
     awake_at_dt = normalize Time.parse("8:30").to_datetime
     up_at_dt = normalize Time.parse("8:35").to_datetime
