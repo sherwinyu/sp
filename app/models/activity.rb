@@ -14,4 +14,20 @@ class Activity
     end
     activity
   end
+
+  def rtdps
+    @rtdps ||= RescueTimeDp.where("acts.a" => self.id)
+  end
+
+  def acts
+    rtdps.map do |rtdp|
+      act = rtdp.acts.find { |a| a['a'] == self.id }
+      act
+    end
+  end
+
+  def duration
+    acts.sum { |act| act['duration'] }
+  end
+
 end
