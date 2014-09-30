@@ -5,6 +5,11 @@ class RescueTimeDp
   scope :recent, -> (x=7) { where(:time.gte => (x).days.ago).desc(:time) }
   scope :most_recent, -> { desc(:time).limit(36) }
 
+  index({time: 1}, {unique: true})
+  index({rt_date: 1}, {unique: true})
+
+  index({"acts.a" => 1})
+
   # uniquely indexed by rt_date
   field :rt_date, type: String
   attr_readonly :rt_date

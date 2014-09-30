@@ -4,6 +4,7 @@ class Activity
   field :name, type: String
   field :category, type: String
   field :productivity, type: Integer
+  index({ name: 1 }, {unique: true})
 
   def self.upsert_activity_from_rtr rtr
     activity = Activity.where(name: rtr.rt_activity).first_or_initialize
