@@ -2,7 +2,7 @@ class AddActivities < Mongoid::Migration
 
 
   def self.rtdps
-    RescueTimeDp.all
+    RescueTimeDp.where(:activities.exists => true, :acts.exists => false)
   end
 
   def self.up

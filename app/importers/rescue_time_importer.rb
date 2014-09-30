@@ -49,28 +49,12 @@ class RescueTimeImporter
         end
 
         rtdp.time ||= Util::DateTime.rt_time_to_absolute_time(rtrs.first.rt_date)
-        rtdp.update_attributes activities: activities_hash_from_rtrs(rtrs)
+        rtdp.sync_against_raw
         rtdp.save
         rtdps << rtdp
       end
     end
     rtdps
-  end
-
-  # precondition: rtrs all belong to the same day and hour
-  # ### --- new -> this method should
-  #   create activity methods
-  def self.activities_hash_from_rtrs rtrs
-    activities = {}
-    rtrs.each do |rtr|
-      activity = sanitize_rt_activity_string rtr.rt_activity
-      activities[activity] = {
-        duration: rtr.duration,
-        productivity: rtr.productivity,
-        category: rtr.category
-      }
-    end
-    activities
   end
 
   # if the activity already exists, this method DOES NOTHING
