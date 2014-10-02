@@ -23,8 +23,6 @@ class RescueTimeDp
     RescueTimeRaw.where(rt_date: self.rt_date)
   end
 
-  # belongs_to
-
   # Returns an unzoned ("experienced") time, in UTC
   def experienced_time
     Time.parse(rt_date + "UTC") rescue nil
@@ -82,7 +80,7 @@ class RescueTimeDp
       activity = Activity.find act['a']
       [activity.name, {duration: act['duration'], productivity: activity.productivity}]
     end
-    Hash[pairs]
+    Hash[pairs].freeze
   end
 
 end

@@ -65,10 +65,6 @@ class RescueTimeImporter
     end
   end
 
-  def self.sanitize_rt_activity_string rt_activity
-    rt_activity.downcase.gsub(/[. -\/]/, '_')
-  end
-
   def self.group_rtrs_by_date_and_hour rtrs
     grouped = Hash[
       rtrs.group_by(&:day).map do |day, rtrs|

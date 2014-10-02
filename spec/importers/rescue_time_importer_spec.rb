@@ -100,29 +100,6 @@ describe RescueTimeImporter do
     end
 
   end
-  describe ".sanitize_rt_activity_string" do
-
-    it "replaces spaces with underscores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "system idle process"
-      sanitized.should eq "system_idle_process"
-    end
-    it "replaces dots with underscores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "emberjs.com"
-      sanitized.should eq "emberjs_com"
-    end
-    it "replaces slashes with under scores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "google.com/voice"
-      sanitized.should eq "google_com_voice"
-    end
-    it "downcases everything" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "Preview"
-      sanitized.should eq "preview"
-    end
-    it "replaces dashes with underscores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "ruby-doc.org"
-      sanitized.should eq "ruby_doc_org"
-    end
-  end
 
   describe "activities_list_from_rtrs" do
     let (:rtrs) { [mon5p_video, mon5p_coding] }

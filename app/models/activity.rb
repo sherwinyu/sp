@@ -8,6 +8,7 @@ class Activity
 
   def self.upsert_activity_from_rtr rtr
     activity = Activity.where(name: rtr.rt_activity).first_or_initialize
+    # Don't modify the activity if it already exists
     unless activity.persisted?
       activity.productivity = rtr.productivity
       activity.category = rtr.category
