@@ -2,6 +2,7 @@ class RescueTimeImporter
 
   # Makes a request to the RescueTime analysis API
   # Returns the raw data (wrapped in a Hashie)
+  #
   def self.rescue_time_api_query(opts={})
     data = Hash.new
     data[:key] = Figaro.env.RESCUETIME_TOKEN
@@ -47,32 +48,21 @@ class RescueTimeImporter
           (report[:existing_rtdps] ||= []) << rtdp if rtdp.persisted?
         end
 
-        rtdp.update_attributes(
-          activities: activities_hash_from_rtrs(rtrs),
-          time: Util::DateTime.rt_time_to_absolute_time(rtrs.first.rt_date)
-        )
+        rtdp.time ||= Util::DateTime.rt_time_to_absolute_time(rtrs.first.rt_date)
+        rtdp.sync_against_raw
+        rtdp.save
         rtdps << rtdp
       end
     end
     rtdps
   end
 
-  # precondition: rtrs all belong to the same day and hour
-  def self.activities_hash_from_rtrs rtrs
-    activities = {}
-    rtrs.each do |rtr|
-      activity = sanitize_rt_activity_string rtr.rt_activity
-      activities[activity] = {
-        duration: rtr.duration,
-        productivity: rtr.productivity,
-        category: rtr.category
-      }
+  # if the activity already exists, this method DOES NOTHING
+  def self.activities_list_from_rtrs rtrs
+    rtrs.map do |rtr|
+      a = Activity.upsert_activity_from_rtr rtr
+      {a: a.id, duration: rtr.duration}
     end
-    activities
-  end
-
-  def self.sanitize_rt_activity_string rt_activity
-    rt_activity.downcase.gsub /[. -\/]/, '_'
   end
 
   def self.group_rtrs_by_date_and_hour rtrs
@@ -81,6 +71,7 @@ class RescueTimeImporter
         [day, rtrs.group_by(&:hour)]
       end
     ]
+    return grouped
   end
 
   # upserts a row

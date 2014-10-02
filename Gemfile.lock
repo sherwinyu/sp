@@ -216,6 +216,11 @@ GEM
     mongoid_auto_increment (0.1.0)
       mongoid
       mongoid_auto_increment
+    mongoid_rails_migrations (1.0.1)
+      activesupport (>= 3.2.0)
+      bundler (>= 1.0.0)
+      rails (>= 3.2.0)
+      railties (>= 3.2.0)
     moped (2.0.0.rc1)
       bson (~> 2.2)
       connection_pool (~> 2.0)
@@ -374,6 +379,7 @@ DEPENDENCIES
   momentjs-rails (= 2.0.0.2)
   mongoid!
   mongoid_auto_increment
+  mongoid_rails_migrations
   moped
   pg
   poltergeist (~> 1.5.0)

@@ -59,24 +59,26 @@ describe RescueTimeImporter do
     it "calls instantiate_row for each row from the rescue time response"
     it "calls RescueTimeDp."
   end
+
+  mon5p = "2013-10-07T17:00:00"
+  mon6p = "2013-10-07T18:00:00"
+  mon7p = "2013-10-07T19:00:00"
+  tues6p = "2013-10-08T18:00:00"
+
+  let(:rtrs) {
+    [mon5p_video, mon5p_coding, mon6p_coding, mon7p_coding, tues6p_coding, tues6p_video]
+  }
+  let(:mon5p_video) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "video", rt_time_spent: 60}
+  let(:mon5p_coding) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "coding", rt_time_spent: 60}
+
+  let (:mon6p_coding) {create :rescue_time_raw, rt_date: mon6p, rt_activity: "coding", rt_time_spent: 60}
+  let (:mon7p_coding) {create :rescue_time_raw, rt_date: mon7p, rt_activity: "lumping", rt_time_spent: 60}
+
+  let (:tues6p_coding) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "coding", rt_time_spent: 60 }
+  let (:tues6p_video) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "video", rt_time_spent: 60}
+
   describe "group_rtrs_by_date_and_hour" do
-    mon5p = "2013-10-07T17:00:00"
-    mon6p = "2013-10-07T18:00:00"
-    mon7p = "2013-10-07T19:00:00"
-    tues5p = "2013-10-08T17:00:00"
-    tues6p = "2013-10-08T18:00:00"
-    let(:mon5p_video) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "video"}
-    let(:mon5p_coding) {create :rescue_time_raw, rt_date: mon5p, rt_activity: "coding"}
 
-    let (:mon6p_coding) {create :rescue_time_raw, rt_date: mon6p, rt_activity: "coding" }
-    let (:mon7p_coding) {create :rescue_time_raw, rt_date: mon7p, rt_activity: "lumping"}
-
-    let (:tues6p_coding) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "coding" }
-    let (:tues6p_video) {create :rescue_time_raw, rt_date: tues6p, rt_activity: "video"}
-
-    let(:rtrs) {
-      [mon5p_video, mon5p_coding, mon6p_coding, mon7p_coding, tues6p_coding, tues6p_video]
-    }
     let (:grouped) {RescueTimeImporter.group_rtrs_by_date_and_hour rtrs}
     it "combines by date and hour" do
       mon = Date.new(2013, 10, 7)
@@ -98,31 +100,23 @@ describe RescueTimeImporter do
     end
 
   end
-  describe ".sanitize_rt_activity_string" do
 
-    it "replaces spaces with underscores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "system idle process"
-      sanitized.should eq "system_idle_process"
-    end
-    it "replaces dots with underscores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "emberjs.com"
-      sanitized.should eq "emberjs_com"
-    end
-    it "replaces slashes with under scores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "google.com/voice"
-      sanitized.should eq "google_com_voice"
-    end
-    it "downcases everything" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "Preview"
-      sanitized.should eq "preview"
-    end
-    it "replaces dashes with underscores" do
-      sanitized = RescueTimeImporter.sanitize_rt_activity_string "ruby-doc.org"
-      sanitized.should eq "ruby_doc_org"
+  describe "activities_list_from_rtrs" do
+    let (:rtrs) { [mon5p_video, mon5p_coding] }
+    it "returns an array of {a: id, duration: time} objects" do
+      activities = RescueTimeImporter.activities_list_from_rtrs rtrs
+
+      activity1 = Activity.where(name: mon5p_video.rt_activity).first
+      activity2 = Activity.where(name: mon5p_coding.rt_activity).first
+
+      expect(activity1).to_not be_nil
+      expect(activity2).to_not be_nil
+
+      expect(activities).to be_an Array
+      expect(activities).to have(2).elements
+      expect(activities[0]).to eq( {a: activity1.id, duration: mon5p_video.duration} )
+      expect(activities[1]).to eq( {a: activity2.id, duration: mon5p_coding.duration} )
     end
 
   end
-
-
-
 end
