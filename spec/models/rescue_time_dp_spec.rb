@@ -39,7 +39,7 @@ describe RescueTimeDp do
       rtdp.reload
     }
 
-    it 'converts activities properly' do
+    it 'converts the acts array to the expected hash of hashes' do
       serializer = RescueTimeDpSerializer.new rtdp
       json = serializer.as_json['rescue_time_dp']
       expect(json).to have_key :activities
@@ -52,22 +52,27 @@ describe RescueTimeDp do
   end
 
   describe 'sync_against_raw' do
-    it 'sets the acts properly #INTEGRATION' do
+    it 'correctly sets the `acts` field of the rtdp #INTEGRATION' do
       activity1 = Activity.create name: mon5p_video.rt_activity, productivity: 1000, category: 'cat1'
+
+      # Load these rtrs into memory
       mon5p_video
       mon5p_coding
 
-      # activity2 = Activity.create name: mon5p_coding.rt_activity, productivity: 2000, category: 'cat2'
       rtdp = RescueTimeDp.new rt_date: mon5p
 
-      expect do
-        rtdp.sync_against_raw
-      end.to change{Activity.count}.by 1
+      # Sync against raw
+      expect { rtdp.sync_against_raw }.to change{ Activity.count }.by 1
+
+      # It only creates one new Activity
       expect(Activity.count).to eq 2
+
+      # It sets rtdp.acts to an array of {a, duration based on the RTRs}
+      expect(rtdp.acts).to be_an Array
       activity1 = Activity.where(name: mon5p_video.rt_activity).first
       activity2 = Activity.where(name: mon5p_coding.rt_activity).first
-      expect(rtdp.acts.first).to eq( {a: activity1.id, duration: 60} )
-      expect(rtdp.acts.second).to eq( {a: activity2.id, duration: 60} )
+      expect(rtdp.acts.first).to eq a: activity1.id, duration: 60
+      expect(rtdp.acts.second).to eq a: activity2.id, duration: 60
     end
   end
 end
