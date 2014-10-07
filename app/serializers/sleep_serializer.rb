@@ -2,6 +2,7 @@ class SleepSerializer < ActiveModel::Serializer
   attributes *%w[
     awake_at
     up_at
+    sleep_routine_started_at
     melatonin_at
     computer_off_at
     lights_out_at

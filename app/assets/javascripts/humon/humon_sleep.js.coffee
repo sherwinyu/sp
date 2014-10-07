@@ -17,6 +17,8 @@ Humon.Sleep.reopenClass
       name: "time"
     up_at:
       name: "time"
+    sleep_routine_started_at:
+      name: "time"
     melatonin_at:
       name: "time"
       dayStartsAt: 4
@@ -36,7 +38,7 @@ Humon.Sleep.reopenClass
     lights_out_energy:
       name: "time"
 
-  requiredAttributes: ["awake_at", "up_at", "computer_off_at", "melatonin_at", "lights_out_at"]
+  requiredAttributes: ["awake_at", "up_at", "sleep_routine_started_at", "computer_off_at", "melatonin_at", "lights_out_at"]
   optionalAttributes: ["awake_energy", "up_energy", "computer_off_energy", "lights_out_energy"]
 
 Humon.Sleep._generateAccessors()
