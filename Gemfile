@@ -37,6 +37,7 @@ gem 'ember-data-source'
 gem 'ember-bootstrap-rails'
 gem 'ember-rails'
 gem 'emblem-rails', github: "alexspeller/emblem-rails"
+gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 
 gem 'momentjs-rails', '2.0.0.2'
 
