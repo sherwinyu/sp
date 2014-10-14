@@ -1,0 +1,42 @@
+PRODUCT: NOTES
+
+Free form text editor that lets you track what you're doing.
+
+
+Absolute must haves:
+  formatting
+
+Killer features
+  - autolinking and preview snippets
+  - "rich" resources
+      - blog post
+      - stackoverflow
+      - commit (github)
+      - terminal command + output
+        - git action
+        - a terminal utility to audit commands
+            [sherwin-audit]
+      - code snippet
+      - Objetive
+      - text node
+      - "Bump" (problem I encounter)
+      - "Debugging"
+      - "Lesson"
+  - short term goals
+    - "actual amount of work" estimate == > how much i think it'll take if i just did everything
+      perfectly
+    - plan (amount of time expected)
+    - actual amount of times
+    - successful?
+  - Built in Forest / Pomodoro tracking
+  - Giant animated timer that applies pressure
+
+  - Anything can be tagged
+
+==========================
+
+Then macro level statistics
+  - completion percentage
+  - estimation percentage
+
+

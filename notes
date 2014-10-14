@@ -1,18 +1,5 @@
 A way to actually rate periods of time as actually high productiviyt or low productivity
 
-RescueTime refactor
-  Activity model
-    to be used both by RescueTimeRaw / RescueTimeDp / WebUsageDp
-    contains information about how to match a string to it
-      e.g. ["plus.google.com", 'Google +', 'Google _', 'Google Plus']
-      maybe even some dynamic segment matching
-
-  Tomorrow:
-    perform migration locally
-
-
-
-
 Next steps
   - canary extension for generic web activity tracking
   - dashboard showing productivity
