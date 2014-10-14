@@ -1,0 +1,15 @@
+PRODUCT: SPREADSHEET JSON FREEFORM EDITOR
+
+Spreadsheet-like editor for arbitrary json tables
+  - By default, treats everything at top level
+  - Can "expand" nested fields
+  - e.g.:
+      Suppose there is a "meditation" column, with a "note" and "duration" subfield
+      By default, it'll display "meditaiton: [obj]"
+      But can expand, to show "meditation.note" and "meditaiton.duration"
+
+Use case:
+  - editing lots of objects efficiently
+  - "show all Activities tagged Workout", and let me edit it as efficiently as
+    I currently edit google docs.
+
