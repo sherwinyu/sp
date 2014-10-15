@@ -32,4 +32,8 @@ class Activity
     acts.sum { |act| act['duration'] }
   end
 
+  def as_j
+    ActivitySerializer.new(self).as_json
+  end
+
 end

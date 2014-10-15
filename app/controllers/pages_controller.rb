@@ -8,6 +8,7 @@ class PagesController < ApplicationController
 
   def activities_component
     @react = true
+    @react_props = Activity.first.as_j
     render layout: "with_react_js", template: 'pages/home'
   end
 
