@@ -26,11 +26,6 @@ sp.ActivityComponent = React.createClass
             @props.activity.productivity
 
 $(document).ready ->
-  props =
-    activity:
-      name: "vim"
-      category: "Software Development"
-      productivity: 2
   props = window._sp_vars.props
 
   React.renderComponent sp.ActivityComponent(props), $('body')[0]
