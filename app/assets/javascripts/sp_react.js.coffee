@@ -15,6 +15,37 @@ Dashboard = React.createClass
   render: ->
     rd.h4 null, 'Dashboard'
 
+sp.Activities = React.createClass
+  render: ->
+    console.log @props.activeRouteHandler
+    rd.div null,
+      rd.h1 null, 'ACTIVITIES DASH'
+      @props.activeRouteHandler
+
+sp.Activity = React.createClass
+  render: ->
+    rd.h1 null, "activity... #{@props.params.activityId}"
+
+sp.ActivitiesIndex = React.createClass
+
+  propTypes:
+    mostUsedActivities: React.PropTypes.array.isRequired
+
+  render: ->
+    rd.div className: 'well',
+
+      for activity in @props.mostUsedActivities
+        rd.div className: 'activity-summary',
+          rd.span null,
+            activity.name
+          rd.span null,
+            activity.duration
+
+
+
+
+
+
 sp.App = React.createClass
   render: ->
     rd.div null,
@@ -29,11 +60,29 @@ sp.App = React.createClass
         'logged in as sdf'
       @props.activeRouteHandler
 
+mostUsedActivities = [
+  {
+    name: 'warg'
+    duration: 114
+  }
+  {
+    name: 'dinosaur'
+    duration: 33
+  }
+
+]
 routes = Routes location: 'history',
-    Route name: 'app', path: '/activities', handler: sp.App,
-      Route name: 'inbox', handler: Inbox
-      Route name: 'calendar', handler: Calendar
-      DefaultRoute handler: Dashboard
+    Route
+      name: 'activities',
+      path: '/activities',
+      handler: sp.ActivitiesIndex,
+      mostUsedActivities: mostUsedActivities
+    ,
+      Route
+        name: 'activity'
+        path: '/:activityId'
+        handler: sp.Activity
+      DefaultRoute handler: sp.ActivitiesIndex
 
 
 
