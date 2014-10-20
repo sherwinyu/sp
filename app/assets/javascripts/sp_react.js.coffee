@@ -1,7 +1,7 @@
 console.log 'REACT JS YEAA'
 window.sp = {}
 rd = React.DOM
-{Route, Routes, DefaultRoute} = ReactRouter
+{Link, Route, Routes, DefaultRoute} = ReactRouter
 
 Inbox = React.createClass
   render: ->
@@ -37,14 +37,13 @@ sp.ActivitiesIndex = React.createClass
       for activity in @props.mostUsedActivities
         rd.div className: 'activity-summary',
           rd.span null,
-            activity.name
+            Link  to: 'activity', params: {activityId: activity.id},
+              activity.name
           rd.span null,
             activity.duration
-
-
-
-
-
+      'wassup4'
+      @props.activeRouteHandler()
+      'wassup'
 
 sp.App = React.createClass
   render: ->
@@ -60,12 +59,14 @@ sp.App = React.createClass
         'logged in as sdf'
       @props.activeRouteHandler
 
-mostUsedActivities = [
+window.mostUsedActivities = [
   {
+    id: 0
     name: 'warg'
     duration: 114
   }
   {
+    id: 1
     name: 'dinosaur'
     duration: 33
   }
@@ -80,7 +81,7 @@ routes = Routes location: 'history',
     ,
       Route
         name: 'activity'
-        path: '/:activityId'
+        path: ':activityId'
         handler: sp.Activity
       DefaultRoute handler: sp.ActivitiesIndex
 

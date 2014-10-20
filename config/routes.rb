@@ -14,6 +14,7 @@ Sysys::Application.routes.draw do
 
   root to: 'pages#home'
   get '/activities' => 'pages#activities_component'
+  get '/activities/:activity_id' => 'pages#activities_component'
 
   post 'twilio/voice' => 'twilio#voice'
   post 'twilio/sms' => 'twilio#sms'
