@@ -23,8 +23,12 @@ sp.Activities = React.createClass
       @props.activeRouteHandler
 
 sp.Activity = React.createClass
+  componentDidMount: ->
+    $.ajax "/activities/#{@props.params.activityId}.json"
+
   render: ->
     rd.h1 null, "activity... #{@props.params.activityId}"
+
 
 sp.ActivitiesIndex = React.createClass
 
