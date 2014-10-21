@@ -7,4 +7,10 @@ class ActivitiesController < ApplicationController
     respond_with @activities
   end
 
+  def show
+    @activity = Activity.find params[:activity_id]
+    binding.pry
+    render json: @activity
+  end
+
 end

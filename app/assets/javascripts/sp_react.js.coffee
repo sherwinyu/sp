@@ -1,4 +1,4 @@
-console.log 'REACT JS YEAA'
+
 window.sp = {}
 rd = React.DOM
 {Link, Route, Routes, DefaultRoute} = ReactRouter
@@ -55,11 +55,11 @@ sp.App = React.createClass
       rd.header null,
         rd.ul null,
           rd.li null,
-            "hi"
+            'hi'
           rd.li null,
-            "hi"
+            'hi'
           rd.li null,
-            "hi"
+            'hi'
         'logged in as sdf'
       @props.activeRouteHandler
 
@@ -107,18 +107,18 @@ sp.ActivityComponent = React.createClass
       rd.div className: 'col-md-8',
         rd.ol null,
           rd.li null,
-            "name: "
+            'name: '
             @props.activity.name
           rd.li null,
-            "category: "
+            'category: '
             @props.activity.category
           rd.li null,
-            "productivity: "
+            'productivity: '
             @props.activity.productivity
 
 $(document).ready ->
   props = window._sp_vars.props
-  React.renderComponent(routes, document.body)
+  React.renderComponent(routes, $('.react-mount')[0])
 
   # React.renderComponent sp.ActivityComponent(props), $('body')[0]
 
