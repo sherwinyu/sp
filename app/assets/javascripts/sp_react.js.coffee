@@ -36,8 +36,8 @@ sp.ActivitiesIndex = React.createClass
     mostUsedActivities: React.PropTypes.array.isRequired
 
   render: ->
+    console.log @props.mostUsedActivities
     rd.div className: 'well',
-
       for activity in @props.mostUsedActivities
         rd.div className: 'activity-summary',
           rd.span null,
@@ -74,7 +74,6 @@ window.mostUsedActivities = [
     name: 'dinosaur'
     duration: 33
   }
-
 ]
 routes = Routes location: 'history',
     Route
@@ -87,7 +86,6 @@ routes = Routes location: 'history',
         name: 'activity'
         path: ':activityId'
         handler: sp.Activity
-      DefaultRoute handler: sp.ActivitiesIndex
 
 
 
