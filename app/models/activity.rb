@@ -41,4 +41,8 @@ class Activity
     ActivitySerializer.new(self).as_json
   end
 
+  def as_json
+    as_j
+  end
+
 end

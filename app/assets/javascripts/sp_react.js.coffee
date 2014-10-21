@@ -80,7 +80,7 @@ routes = Routes location: 'history',
       name: 'activities',
       path: '/activities',
       handler: sp.ActivitiesIndex,
-      mostUsedActivities: mostUsedActivities
+      mostUsedActivities: window._sp_vars.props.activities
     ,
       Route
         name: 'activity'
