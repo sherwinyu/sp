@@ -49,32 +49,6 @@ sp.ActivitiesIndex = React.createClass
       @props.activeRouteHandler()
       'wassup'
 
-sp.App = React.createClass
-  render: ->
-    rd.div null,
-      rd.header null,
-        rd.ul null,
-          rd.li null,
-            'hi'
-          rd.li null,
-            'hi'
-          rd.li null,
-            'hi'
-        'logged in as sdf'
-      @props.activeRouteHandler
-
-window.mostUsedActivities = [
-  {
-    id: 0
-    name: 'warg'
-    duration: 114
-  }
-  {
-    id: 1
-    name: 'dinosaur'
-    duration: 33
-  }
-]
 routes = Routes location: 'history',
     Route
       name: 'activities',
@@ -86,11 +60,6 @@ routes = Routes location: 'history',
         name: 'activity'
         path: ':activityId'
         handler: sp.Activity
-
-
-
-
-
 
 
 sp.ActivitiesComponent = React.createClass
