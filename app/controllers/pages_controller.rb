@@ -6,13 +6,4 @@ class PagesController < ApplicationController
     render layout: 'with_js'
   end
 
-  def activities_component
-    @react = true
-    @react_props = Activity.first.as_j
-    @react_props = {
-        activities: ActiveModel::ArraySerializer.new(Activity.recent).as_json
-    }
-    render layout: "with_react_js", template: 'pages/home'
-  end
-
 end
