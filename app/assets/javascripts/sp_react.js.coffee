@@ -1,19 +1,6 @@
-
 window.sp = {}
 rd = React.DOM
 {Link, Route, Routes, DefaultRoute} = ReactRouter
-
-Inbox = React.createClass
-  render: ->
-    rd.h4 null, 'Inbox'
-
-Calendar = React.createClass
-  render: ->
-    rd.h4 null, 'Calendar'
-
-Dashboard = React.createClass
-  render: ->
-    rd.h4 null, 'Dashboard'
 
 sp.Activities = React.createClass
   render: ->
@@ -61,34 +48,6 @@ routes = Routes location: 'history',
         path: ':activityId'
         handler: sp.Activity
 
-
-sp.ActivitiesComponent = React.createClass
-
-  render: ->
-    rd.h1 null, 'hello'
-
-sp.ActivityComponent = React.createClass
-  propTypes:
-    activity: React.PropTypes.object.isRequired
-
-  render: ->
-    rd.div className: 'row',
-      rd.div className: 'col-md-8',
-        rd.ol null,
-          rd.li null,
-            'name: '
-            @props.activity.name
-          rd.li null,
-            'category: '
-            @props.activity.category
-          rd.li null,
-            'productivity: '
-            @props.activity.productivity
-
 $(document).ready ->
   props = window._sp_vars.props
   React.renderComponent(routes, $('.react-mount')[0])
-
-  # React.renderComponent sp.ActivityComponent(props), $('body')[0]
-
-
