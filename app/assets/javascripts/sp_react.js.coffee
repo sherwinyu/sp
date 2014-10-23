@@ -1,20 +1,39 @@
+#= require utils/bs
+
 window.sp = {}
 rd = React.DOM
+
 {Link, Route, Routes, DefaultRoute} = ReactRouter
 
-sp.Activities = React.createClass
-  render: ->
-    console.log @props.activeRouteHandler
-    rd.div null,
-      rd.h1 null, 'ACTIVITIES DASH'
-      @props.activeRouteHandler
 
 sp.Activity = React.createClass
+
+  _getState: ->
+    req = $.get "/activities/#{@props.params.activityId}.json"
+    req.done (response) =>
+      @setState activity: response.activity
+
   componentDidMount: ->
-    $.ajax "/activities/#{@props.params.activityId}.json"
+    @_getState()
+
+  componentWillReceiveProps: (nextProps) ->
+    if @props.params.activityId isnt nextProps.params.activityId
+      @_getState()
+
+  getInitialState: ->
+    activity: null
 
   render: ->
-    rd.h1 null, "activity... #{@props.params.activityId}"
+    console.log @state.activity
+    if @state.activity
+      rd.div null,
+        rd.h2 null, @state.activity.name
+        rd.h6 null, "activity... #{@props.params.activityId}"
+    else
+      rd.h4 'loading...'
+
+
+
 
 
 sp.ActivitiesIndex = React.createClass
@@ -23,8 +42,18 @@ sp.ActivitiesIndex = React.createClass
     mostUsedActivities: React.PropTypes.array.isRequired
 
   render: ->
-    console.log @props.mostUsedActivities
-    rd.div className: 'well',
+    rd.div className: 'container',
+      rd.h1 null, 'SP Activities'
+      bs.Row null,
+        bs.Col sm: 6,
+          @renderActivities()
+        bs.Col sm: 6,
+          @props.activeRouteHandler()
+
+  renderActivities: ->
+    rd.div className: 'activities',
+      rd.h2 null,
+        'Most recent'
       for activity in @props.mostUsedActivities
         rd.div className: 'activity-summary',
           rd.span null,
@@ -32,9 +61,12 @@ sp.ActivitiesIndex = React.createClass
               activity.name
           rd.span null,
             activity.duration
-      'wassup4'
-      @props.activeRouteHandler()
-      'wassup'
+
+
+
+
+
+
 
 routes = Routes location: 'history',
     Route

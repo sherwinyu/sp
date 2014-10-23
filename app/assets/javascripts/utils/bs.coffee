@@ -76,3 +76,5 @@ FormGroup = React.createClass
       @props.children
 
     return @transferPropsTo formGroup
+
+window.bs = {Row, Col, FormInput, TextArea, Label, FieldError, FormGroup}
