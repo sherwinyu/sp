@@ -29,6 +29,18 @@ sp.Activity = React.createClass
       rd.div null,
         rd.h2 null, @state.activity.name
         rd.h6 null, "activity... #{@props.params.activityId}"
+        rd.form null,
+          bs.FormGroup null,
+            bs.Label null,
+              'Name'
+            bs.FormInput value: @state.activity.name
+
+          bs.FormGroup null,
+            bs.Label null,
+              'Productivity'
+            bs.FormInput value: @state.activity.productivity
+
+
     else
       rd.h4 'loading...'
 
@@ -61,9 +73,6 @@ sp.ActivitiesIndex = React.createClass
               activity.name
           rd.span null,
             activity.duration
-
-
-
 
 
 

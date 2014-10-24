@@ -34,7 +34,7 @@ class Activity
   end
 
   def self.recent
-    Activity.limit(10).to_a
+    Activity.limit(100).to_a
   end
 
   def as_j
