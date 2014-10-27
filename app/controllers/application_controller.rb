@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def render *args
     inject_vars
-    super *args
+    super
   end
 
   def inject_vars

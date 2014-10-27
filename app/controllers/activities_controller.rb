@@ -26,4 +26,22 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def update
+    @activity = Activity.find params[:id]
+    if @activity.update_attributes activity_params
+      render json: nil, status: :no_content
+    else
+      render json: @activity.errors, status: :unprocessable_entity
+    end
+  end
+
+  def activity_params
+    p = params.require(:activity).permit(
+      :name,
+      :category,
+      :productivity
+    )
+    p
+  end
+
 end

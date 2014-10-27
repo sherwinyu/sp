@@ -1,7 +1,26 @@
 #= require utils/bs
 
+$(document).ready ->
+  $.ajaxSetup
+    headers:
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+
+jQuery.extend
+  putJSON: (url, data, callback) ->
+    data = $.extend {"_method": 'put'}, data
+    $.ajax
+      type: 'post'
+      headers:
+        "X-Http-Method-Override": "put"
+      url: url
+      data: JSON.stringify data
+      success: callback
+      contentType: 'application/json'
+      dataType: 'json'
+
 window.sp = {}
 rd = React.DOM
+update = React.addons.update
 
 {Link, Route, Routes, DefaultRoute} = ReactRouter
 
@@ -20,25 +39,61 @@ sp.Activity = React.createClass
     if @props.params.activityId isnt nextProps.params.activityId
       @_getState()
 
-  getInitialState: ->
+  getInitialState: (e) ->
     activity: null
+
+  updateName: (e) ->
+    a = update @state.activity, $merge: {name: e.target.value}
+    @setState activity: a
+
+  updateProductivity: (e) ->
+    a = update @state.activity, $merge: {productivity: e.target.value}
+    @setState activity: a
+
+  updateCategory: (e) ->
+    a = update @state.activity, $merge: {name: e.target.value}
+    @setState activity: a
+
+  save: ->
+    req = $.putJSON "/activities/#{@props.params.activityId}.json",
+      activity: @state.activity
+    req.then (response) =>
+      console.log response
 
   render: ->
     console.log @state.activity
     if @state.activity
       rd.div null,
         rd.h2 null, @state.activity.name
-        rd.h6 null, "activity... #{@props.params.activityId}"
+        rd.h6 null,  "activity... #{@props.params.activityId}"
         rd.form null,
+
           bs.FormGroup null,
             bs.Label null,
               'Name'
-            bs.FormInput value: @state.activity.name
+            bs.FormInput
+              value: @state.activity.name
+              onChange: @updateName
 
           bs.FormGroup null,
             bs.Label null,
               'Productivity'
-            bs.FormInput value: @state.activity.productivity
+            bs.FormInput
+              value: @state.activity.productivity
+              onChange: @updateProductivity
+
+          bs.FormGroup null,
+            bs.Label null,
+              'Category'
+            bs.FormInput
+              value: @state.activity.category
+              onChange: @updateCategory
+
+          rd.a
+            className: 'btn btn-large btn-default'
+            onClick: @save
+          ,
+            'Save'
 
 
     else
