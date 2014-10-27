@@ -7,11 +7,11 @@ $(document).ready ->
 
 jQuery.extend
   putJSON: (url, data, callback) ->
-    data = $.extend {"_method": 'put'}, data
+    data = $.extend {'_method': 'put'}, data
     $.ajax
       type: 'post'
       headers:
-        "X-Http-Method-Override": "put"
+        'X-Http-Method-Override': 'put'
       url: url
       data: JSON.stringify data
       success: callback
@@ -57,7 +57,7 @@ sp.Activity = React.createClass
   save: ->
     req = $.putJSON "/activities/#{@props.params.activityId}.json",
       activity: @state.activity
-    req.then (response) =>
+    req.then (response) ->
       console.log response
 
   render: ->
