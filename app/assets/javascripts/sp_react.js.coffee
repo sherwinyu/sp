@@ -57,8 +57,10 @@ sp.Activity = React.createClass
   save: ->
     req = $.putJSON "/activities/#{@props.params.activityId}.json",
       activity: @state.activity
-    req.then (response) ->
-      console.log response
+    req.done (response) =>
+      @props.addNotification "Successfully updated activity #{@state.activiyt.name}"
+    .fail (error) =>
+      @props.addNotification "Something went wrong! #{@error}"
 
   render: ->
     console.log @state.activity
@@ -115,7 +117,8 @@ sp.ActivitiesIndex = React.createClass
         bs.Col sm: 6,
           @renderActivities()
         bs.Col sm: 6,
-          @props.activeRouteHandler()
+          @props.activeRouteHandler
+            addNotification: @props.addNotification
 
   renderActivities: ->
     rd.div className: 'activities',
@@ -129,20 +132,46 @@ sp.ActivitiesIndex = React.createClass
           rd.span null,
             activity.duration
 
+sp.ApplicationComponent = React.createClass
+
+  getInitialState: ->
+    notifications: @props.notifications || []
+
+  addNotification: (message) ->
+    notifications = @state.notifications.slice(0)
+    notifications.push message
+    @setState notifications: notifications
+
+  render: ->
+    rd.div className: 'container',
+      rd.div className: 'notifications',
+        for notification in @state.notifications
+          rd.div className: 'notification alert alert-success',
+            notification
+      @props.activeRouteHandler
+        addNotification: @addNotification
+
+
 
 
 
 routes = Routes location: 'history',
     Route
-      name: 'activities',
-      path: '/activities',
-      handler: sp.ActivitiesIndex,
-      mostUsedActivities: window._sp_vars.props.activities
+      name: 'application'
+      path: '/'
+      handler: sp.ApplicationComponent
+      notifications: []
     ,
       Route
-        name: 'activity'
-        path: ':activityId'
-        handler: sp.Activity
+        name: 'activities',
+        path: '/activities',
+        handler: sp.ActivitiesIndex,
+        mostUsedActivities: window._sp_vars.props.activities
+      ,
+        Route
+          name: 'activity'
+          path: ':activityId'
+          handler: sp.Activity
 
 $(document).ready ->
   props = window._sp_vars.props

@@ -1,3 +1,5 @@
+return unless React?
+
 joinClasses = (className) ->
   className ?= ''
   argLength = arguments.length
