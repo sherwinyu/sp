@@ -59,7 +59,7 @@ FieldError = React.createClass
   propTypes:
     message: React.PropTypes.arrayOf(React.PropTypes.string)
 
-  # If an error is actually present, display the (first) message. Otherwise, show an empty span.  # asdfasd fasdf
+  # If an error is actually present, display the (first) message. Otherwise, show an empty span.
   render: ->
     return rd.span className: 'field-error',
       @props.message?[0]
