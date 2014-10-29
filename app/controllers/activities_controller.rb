@@ -27,7 +27,9 @@ class ActivitiesController < ApplicationController
   end
 
   def update
+    binding.pry
     @activity = Activity.find params[:id]
+    binding.pry
     if @activity.update_attributes activity_params
       render json: nil, status: :no_content
     else

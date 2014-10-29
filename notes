@@ -1,7 +1,6 @@
-Current Task
-  - figuring out activities
-  - need a router
-===
+CURRENT TASK
+  - debug the delayed activity view swap (triggers the duplicate name error)
+====
 A way to actually rate periods of time as actually high productiviyt or low productivity
 
 Activity Management (rate high, low, manual overrides) and editing
