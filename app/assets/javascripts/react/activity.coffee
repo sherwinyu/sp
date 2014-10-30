@@ -6,8 +6,8 @@ update = React.addons.update
 
 sp.Activity = React.createClass
 
-  _getState: ->
-    req = $.get "/activities/#{@props.params.activityId}.json"
+  _getState: (activityId=@props.params.activityId)->
+    req = $.get "/activities/#{activityId}.json"
     req.done (response) =>
       @setState activity: response.activity
 
@@ -16,7 +16,7 @@ sp.Activity = React.createClass
 
   componentWillReceiveProps: (nextProps) ->
     if @props.params.activityId isnt nextProps.params.activityId
-      @_getState()
+      @_getState(nextProps.params.activityId)
 
   getInitialState: (e) ->
     activity: null
