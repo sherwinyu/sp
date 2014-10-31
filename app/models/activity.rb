@@ -4,6 +4,7 @@ class Activity
   field :name, type: String
   field :category, type: String
   field :productivity, type: Integer
+  field :duration, type: Integer
   index({ name: 1 }, {unique: true})
 
   def self.upsert_activity_from_rtr rtr
@@ -28,8 +29,8 @@ class Activity
     end
   end
 
-  def duration
-    acts.sum { |act| act['duration'] }
+  def compute_duration
+    self.update_attribute :duration, acts.sum { |act| act['duration'] }
   end
 
   def as_j
