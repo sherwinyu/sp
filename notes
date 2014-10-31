@@ -1,3 +1,17 @@
+=====
+NEXT STEPS
+
+  - deploy to staging (activity-view-edit branch)
+  - merge it in
+  - add duration to activity view (master)
+  - add activity lookup
+  - add activity override to RTDP?
+  - And then move on to greater things!
+
+    Live feed dashboard + some basic analytics would be cool.
+    Live feed for data points in particular
+
+=====
 A way to actually rate periods of time as actually high productiviyt or low productivity
 
 Activity Management (rate high, low, manual overrides) and editing
