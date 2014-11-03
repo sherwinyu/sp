@@ -21,6 +21,16 @@ GIT
       activemodel (>= 3.2)
 
 GIT
+  remote: git://github.com/reactjs/react-rails.git
+  revision: 9d9c41e07ac86a5e1324123af806842641b6e16e
+  specs:
+    react-rails (1.0.0.pre)
+      connection_pool
+      execjs
+      rails (>= 3.1)
+      react-source (= 0.11.1)
+
+GIT
   remote: https://github.com/mongoid/mongoid.git
   revision: aa2c82e804ef6a3ba44dfa4bd9b357017762a768
   specs:
@@ -124,6 +134,8 @@ GEM
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
       warden (~> 1.2.3)
+    did_you_mean (0.7.0)
+      binding_of_caller
     diff-lcs (1.2.5)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -275,6 +287,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    react-source (0.11.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rollbar (0.12.17)
@@ -360,6 +373,7 @@ DEPENDENCIES
   compass-rails
   database_cleaner (= 0.9.1)
   devise
+  did_you_mean
   ember-bootstrap-rails
   ember-data-source
   ember-rails
@@ -389,6 +403,7 @@ DEPENDENCIES
   rails (= 4.1.1)
   rails_12factor
   rb-inotify
+  react-rails (~> 1.0.0.pre)!
   rest-client (= 1.6.7)
   rollbar
   rspec-rails (= 2.14)

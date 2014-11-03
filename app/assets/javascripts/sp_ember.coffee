@@ -10,6 +10,7 @@
 #= require_tree ./routes
 
 
+@Test = false
 @Sysys = Ember.Application.create
   rootElement: "#ember-app"
   LOG_TRANSITIONS: true

@@ -9,6 +9,7 @@ class Sleep
   field :melatonin_at, type: DateTime
   field :computer_off_at, type: DateTime
   field :lights_out_at, type: DateTime
+  field :sleep_routine_started_at, type: DateTime
 
   field :awake_energy, type: Integer
   field :up_energy, type: Integer

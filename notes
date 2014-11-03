@@ -1,16 +1,14 @@
+CURRENT TASK
+  - debug the delayed activity view swap (triggers the duplicate name error)
+====
 A way to actually rate periods of time as actually high productiviyt or low productivity
 
-RescueTime refactor
-  Activity model
-    to be used both by RescueTimeRaw / RescueTimeDp / WebUsageDp
-    contains information about how to match a string to it
-      e.g. ["plus.google.com", 'Google +', 'Google _', 'Google Plus']
-      maybe even some dynamic segment matching
+Activity Management (rate high, low, manual overrides) and editing
+ChromeExtension for full tracking
+Weekly Goals
+Note Taker
 
-  Tomorrow:
-    perform migration locally
-
-
+Timeline view
 
 
 Next steps

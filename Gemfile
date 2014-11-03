@@ -37,6 +37,7 @@ gem 'ember-data-source'
 gem 'ember-bootstrap-rails'
 gem 'ember-rails'
 gem 'emblem-rails', github: "alexspeller/emblem-rails"
+gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 
 gem 'momentjs-rails', '2.0.0.2'
 
@@ -46,6 +47,7 @@ gem 'spring', '0.9.0'
 group :development, :test do
   gem 'rspec-rails', '2.14'
   gem 'annotate', "2.5.0"
+  gem 'did_you_mean'
 
   gem 'rb-inotify', require: false
 

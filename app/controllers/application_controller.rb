@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
     # Rack::MiniProfiler.authorize_request
   end
 
-  before_filter :inject_vars
+  def render *args
+    inject_vars
+    super
+  end
+
   def inject_vars
     @server_side_vars = Hashie::Mash.new({
       env: {
@@ -21,7 +25,8 @@ class ApplicationController < ActionController::Base
       git: Util::Git.git,
       currentUser: current_user.as_json,
       heartbeat: heartbeat,
-      isTest: Rails.env.test?
+      isTest: Rails.env.test?,
+      props: @react_props
     })
   end
 

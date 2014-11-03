@@ -29,17 +29,29 @@ module Features
     def fill_in_sleep
       sleep = find(".sleep")
       fields = sleep.all('.val-field')
+      # awake_at
       fields[0].click
       fill_in_node fields[0], "8:30"
 
+      # up_at
       fields[1].click
       fill_in_node fields[1], "8:35"
 
-      fields[3].click
-      fill_in_node fields[3], "2:00"
+      # sleep_routine_at
+      fields[2].click
+      fill_in_node fields[2], "00:35"
 
+      # melatonin_at
+      fields[3].click
+      fill_in_node fields[3], "00:30"
+
+      # computer_off_at
       fields[4].click
-      fill_in_node fields[4], "2:25"
+      fill_in_node fields[4], "2:00"
+
+      # lights_out_at
+      fields[5].click
+      fill_in_node fields[5], "2:25"
     end
 
     def fill_in_summary

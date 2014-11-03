@@ -9,9 +9,14 @@ Sysys::Application.routes.draw do
     get 'latest', on: :collection
   end
   resources :rescue_time_dps
-
   resources :acts
+
+
   root to: 'pages#home'
+
+  resources :activities
+  # get '/activities' => 'pages#activities_component'
+  # get '/activities/:activity_id' => 'activities#show'
 
   post 'twilio/voice' => 'twilio#voice'
   post 'twilio/sms' => 'twilio#sms'
@@ -19,6 +24,7 @@ Sysys::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
+  #
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

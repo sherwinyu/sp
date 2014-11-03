@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   def home
     @ember = true
-    render layout: 'with_js'
+    render layout: 'with_ember_js'
   end
 
 end

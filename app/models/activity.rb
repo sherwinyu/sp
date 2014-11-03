@@ -17,7 +17,8 @@ class Activity
     activity
   end
 
-  def rtdps
+
+ def rtdps
     @rtdps ||= RescueTimeDp.where("acts.a" => self.id)
   end
 
@@ -30,6 +31,18 @@ class Activity
 
   def duration
     acts.sum { |act| act['duration'] }
+  end
+
+  def self.recent
+    Activity.limit(100).to_a
+  end
+
+  def as_j
+    ActivitySerializer.new(self).as_json
+  end
+
+  def as_json
+    as_j
   end
 
 end

@@ -6,12 +6,21 @@
   <%= javascript_tag do %>
     window._sp_vars = <%=raw  @server_side_vars.to_json if @server_side_vars %>;
   <% end %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "react_deps" %>
+  <%= javascript_include_tag "sp_react" %>
   <%= csrf_meta_tags %>
 
   <!-- mixpanel will be inserted here by the gem -->
 </head>
 
-<body <%=raw "id='ember-app'" if @ember%> ></body>
+<body>
+  <div class=container>
+    <div class='row'>
+      <div class='col-sm-12 center-block'>
+        <div class='react-mount'/>
+      </div>
+    </div>
+  </div>
+</body>
 
 </html>
