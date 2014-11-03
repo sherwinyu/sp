@@ -39,6 +39,8 @@ feature "Dashboard", feature: "dashboard" do
 
     awake_at_dt = normalize Time.parse("8:30").to_datetime
     up_at_dt = normalize Time.parse("8:35").to_datetime
+    sleep_routine_at_dt = normalize Time.parse('00:35').to_datetime
+    melatonin_at_dt = normalize Time.parse('00:30').to_datetime
     computer_off_at_dt = normalize Time.parse("2:00").to_datetime
     lights_out_at_dt = normalize Time.parse("2:25").to_datetime
 
@@ -46,8 +48,11 @@ feature "Dashboard", feature: "dashboard" do
       day = Day.latest
       expect(day.sleep.awake_at).to eq awake_at_dt
       expect(day.sleep.up_at).to eq up_at_dt
+      expect(day.sleep.sleep_routine_started_at).to eq sleep_routine_at_dt
+      expect(day.sleep.melatonin_at).to eq melatonin_at_dt
       expect(day.sleep.computer_off_at).to eq computer_off_at_dt
       expect(day.sleep.lights_out_at).to eq lights_out_at_dt
+
       expect(day.summary.best).to eq "Enjoying dinner with family"
       expect(day.summary.worst).to eq "Back pain worsening"
     end

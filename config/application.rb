@@ -87,6 +87,8 @@ module Sysys
     # config.mixpanel.middleware.persist = false
     # config.mixpanel.middlware.insert_js_last = true
     # config.mixpanel.middleware.config = {:cookie_name => 'mixpanel_cookie' }
+
+    config.react.addons = true
     ##
   end
 end

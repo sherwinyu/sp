@@ -13,7 +13,10 @@ Sysys::Application.routes.draw do
 
 
   root to: 'pages#home'
-  get '/activities' => 'pages#activities_component'
+
+  resources :activities
+  # get '/activities' => 'pages#activities_component'
+  # get '/activities/:activity_id' => 'activities#show'
 
   post 'twilio/voice' => 'twilio#voice'
   post 'twilio/sms' => 'twilio#sms'
@@ -21,6 +24,7 @@ Sysys::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
+  #
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

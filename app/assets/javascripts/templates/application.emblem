@@ -5,3 +5,4 @@
     .col-xs-12.col-center
       =render 'notifications'
       =outlet
+

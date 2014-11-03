@@ -47,6 +47,7 @@ gem 'spring', '0.9.0'
 group :development, :test do
   gem 'rspec-rails', '2.14'
   gem 'annotate', "2.5.0"
+  gem 'did_you_mean'
 
   gem 'rb-inotify', require: false
 

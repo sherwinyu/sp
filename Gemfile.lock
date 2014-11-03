@@ -134,6 +134,8 @@ GEM
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
       warden (~> 1.2.3)
+    did_you_mean (0.7.0)
+      binding_of_caller
     diff-lcs (1.2.5)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -371,6 +373,7 @@ DEPENDENCIES
   compass-rails
   database_cleaner (= 0.9.1)
   devise
+  did_you_mean
   ember-bootstrap-rails
   ember-data-source
   ember-rails
