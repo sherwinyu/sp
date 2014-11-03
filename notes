@@ -1,7 +1,8 @@
-NEXT STEPS
+CURRENT TASK: fix importer
+----
 
-  - deploy to staging (activity-view-edit branch)
-  - merge it in
+NEXT STEPS (for activity view)
+
   - add duration to activity view (master)
   - add activity lookup
   - add activity override to RTDP?
