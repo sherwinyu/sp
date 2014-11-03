@@ -8,18 +8,19 @@ update = React.addons.update
 sp.ApplicationComponent = React.createClass
 
   getInitialState: ->
-    notifications: @props.notifications || []
+    notifications: []
 
   addNotification: (message) ->
-    notifications = @state.notifications.slice(0)
-    notifications.push message
+    notifications = update(@state.notifications, $push: [message])
     @setState notifications: notifications
 
+  renderNotifications: ->
+    rd.div className: 'notifications',
+      for notification in @state.notifications
+        rd.div className: 'notification alert alert-success',
+          notification
   render: ->
     rd.div className: 'container',
-      rd.div className: 'notifications',
-        for notification in @state.notifications
-          rd.div className: 'notification alert alert-success',
-            notification
+      @renderNotifications()
       @props.activeRouteHandler
         addNotification: @addNotification

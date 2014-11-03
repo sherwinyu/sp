@@ -6,7 +6,7 @@ update = React.addons.update
 
 sp.Activity = React.createClass
 
-  _getState: (activityId=@props.params.activityId)->
+  _getState: (activityId=@props.params.activityId) ->
     req = $.get "/activities/#{activityId}.json"
     req.done (response) =>
       @setState activity: response.activity
@@ -21,17 +21,10 @@ sp.Activity = React.createClass
   getInitialState: (e) ->
     activity: null
 
-  updateName: (e) ->
-    a = update @state.activity, $merge: {name: e.target.value}
-    @setState activity: a
-
-  updateProductivity: (e) ->
-    a = update @state.activity, $merge: {productivity: e.target.value}
-    @setState activity: a
-
-  updateCategory: (e) ->
-    a = update @state.activity, $merge: {name: e.target.value}
-    @setState activity: a
+  updateActivityProperty: (property, e) ->
+    merge = {}
+    merge[property] = e.target.value
+    @setState activity: update(@state.activity, $merge: merge)
 
   save: ->
     req = $.putJSON "/activities/#{@props.params.activityId}.json",
@@ -42,7 +35,6 @@ sp.Activity = React.createClass
       @props.addNotification "Something went wrong! #{@error}"
 
   render: ->
-    console.log @state.activity
     if @state.activity
       rd.div null,
         rd.h2 null, @state.activity.name
@@ -54,21 +46,21 @@ sp.Activity = React.createClass
               'Name'
             bs.FormInput
               value: @state.activity.name
-              onChange: @updateName
+              onChange: @updateActivityProperty.bind null, 'name'
 
           bs.FormGroup null,
             bs.Label null,
               'Productivity'
             bs.FormInput
               value: @state.activity.productivity
-              onChange: @updateProductivity
+              onChange: @updateActivityProperty.bind null, 'productivity'
 
           bs.FormGroup null,
             bs.Label null,
               'Category'
             bs.FormInput
               value: @state.activity.category
-              onChange: @updateCategory
+              onChange: @updateActivityProperty.bind null, 'category'
 
           rd.a
             className: 'btn btn-large btn-default'
@@ -99,7 +91,7 @@ sp.ActivitiesIndex = React.createClass
       rd.h2 null,
         'Most recent'
       for activity in @props.mostUsedActivities
-        rd.div className: 'activity-summary',
+        rd.div className: 'activity-summary', key: activity.id,
           rd.span null,
             Link  to: 'activity', params: {activityId: activity.id},
               activity.name

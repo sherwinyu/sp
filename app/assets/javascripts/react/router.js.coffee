@@ -33,7 +33,6 @@ $(document).ready ->
         name: 'application'
         path: '/'
         handler: sp.ApplicationComponent
-        notifications: []
       ,
         Route
           name: 'activities',
@@ -46,5 +45,4 @@ $(document).ready ->
             path: ':activityId'
             handler: sp.Activity
 
-  props = window._sp_vars.props
   React.renderComponent(routes, $('.react-mount')[0])
