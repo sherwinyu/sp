@@ -17,7 +17,8 @@ Sysys::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
-  # Don't fallback to assets pipeline if a precompiled asset is missed
+  # DO fallback to assets pipeline if a precompiled asset is missed
+  # From http://stackoverflow.com/questions/17622858/javascript-include-tag-rails-4-generating-javascripts-instead-of-assets-i
   config.assets.compile = false
 
   # Generate digests for assets URLs
