@@ -19,7 +19,8 @@ module Util
 
       # tz.local_to_utc ignores timezones, instead; treats
       # argument as if it were local time in tz
-      tz.local_to_utc(time)
+      # Second argument says dst = true
+      tz.local_to_utc(time, true)
     end
 
     # Timezone aware translation of a datetime to an experienced date
