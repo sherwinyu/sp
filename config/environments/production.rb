@@ -19,7 +19,7 @@ Sysys::Application.configure do
 
   # DO fallback to assets pipeline if a precompiled asset is missed
   # From http://stackoverflow.com/questions/17622858/javascript-include-tag-rails-4-generating-javascripts-instead-of-assets-i
-  config.assets.compile = false
+  config.assets.compile = production
 
   # Generate digests for assets URLs
   config.assets.digest = true
