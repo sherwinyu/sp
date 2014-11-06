@@ -19,7 +19,7 @@ class Activity
   end
 
 
- def rtdps
+  def rtdps
     @rtdps ||= RescueTimeDp.where("acts.a" => self.id)
   end
 
@@ -45,5 +45,35 @@ class Activity
   def as_json
     as_j
   end
+
+  def self.add_duration_to_activity1
+    pairs = Activity.all.map do |activity|
+      [activity.id, 0]
+    end
+
+    activities = Hash[pairs]
+    RescueTimeDp.all.each do |rtdp|
+      rtdp.acts.each do |act|
+        id = act['a']
+        duration = act['duration']
+        activities[id] += duration
+      end
+    end
+    activities
+  end
+
+  def self.add_duration_to_activity2
+    pairs = Activity.all.map do |activity|
+      [activity.id, 0]
+    end
+
+    activities = Hash[pairs]
+
+    Activity.all.each do |activity|
+      activities[activity.id] = activity.acts.sum {|act| act['duration']}
+    end
+    activities
+  end
+
 
 end
