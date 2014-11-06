@@ -1,7 +1,9 @@
 Current TASK
 ---
-  Look into RescueTimeDp initial load (on dashboard) queries / activity caching.
+  add duration to activity.
 ---
+OTHER TASKS
+  -- Look into RescueTimeDp initial load (on dashboard) queries / activity caching.
 
 NEXT STEPS (for activity view)
 
