@@ -29,8 +29,18 @@ class RescueTimeDp
   end
 
   after_save :flush_cache
+  after_save :update_activity_durations
+
   def flush_cache
     Rails.cache.delete([self.class.name, "recent"])
+  end
+
+  def update_activity_durations
+    self.acts.map do |act|
+      activity = Activity.find act['a']
+      ms = Benchmark.ms { activity.compute_duration}
+      puts "#{activity.name} - #{ms}"
+    end
   end
 
   def self.cached_recent
