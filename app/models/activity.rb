@@ -5,7 +5,9 @@ class Activity
   field :category, type: String
   field :productivity, type: Integer
   field :duration, type: Integer
+
   index({ name: 1 }, {unique: true})
+  index({ duration: 1 })
 
   def self.upsert_activity_from_rtr rtr
     activity = Activity.where(name: rtr.rt_activity).first_or_initialize
@@ -45,35 +47,4 @@ class Activity
   def as_json
     as_j
   end
-
-  def self.add_duration_to_activity1
-    pairs = Activity.all.map do |activity|
-      [activity.id, 0]
-    end
-
-    activities = Hash[pairs]
-    RescueTimeDp.all.each do |rtdp|
-      rtdp.acts.each do |act|
-        id = act['a']
-        duration = act['duration']
-        activities[id] += duration
-      end
-    end
-    activities
-  end
-
-  def self.add_duration_to_activity2
-    pairs = Activity.all.map do |activity|
-      [activity.id, 0]
-    end
-
-    activities = Hash[pairs]
-
-    Activity.all.each do |activity|
-      activities[activity.id] = activity.acts.sum {|act| act['duration']}
-    end
-    activities
-  end
-
-
 end
