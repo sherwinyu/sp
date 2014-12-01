@@ -6,7 +6,7 @@ update = React.addons.update
 
 sp.Activity = React.createClass
 
-  _getState: (activityId=@props.params.activityId) ->
+  _getState: (activityId = @props.params.activityId) ->
     req = $.get "/activities/#{activityId}.json"
     req.done (response) =>
       @setState activity: response.activity
@@ -57,6 +57,13 @@ sp.Activity = React.createClass
 
           bs.FormGroup null,
             bs.Label null,
+              "Duration (#{utils.sToDurationString @state.activity.duration})"
+            bs.FormInput
+              value: @state.activity.duration
+              onChange: @updateActivityProperty.bind null, 'duration'
+
+          bs.FormGroup null,
+            bs.Label null,
               'Category'
             bs.FormInput
               value: @state.activity.category
@@ -96,4 +103,4 @@ sp.ActivitiesIndex = React.createClass
             Link  to: 'activity', params: {activityId: activity.id},
               activity.name
           rd.span null,
-            activity.duration
+            utils.sToDurationString activity.duration
