@@ -32,8 +32,8 @@ describe RescueTimeDp do
       rtdp.rt_date = "2014-09-16"
       rtdp.time = DateTime.new(2014, 9, 16, 10)
       rtdp.acts = [
-        {a: act1.id, duration: 300},
-        {a: act2.id, duration: 150},
+        {'a' => act1.id, duration: 300},
+        {'a' => act2.id, duration: 150},
       ]
       rtdp.save
       rtdp.reload
