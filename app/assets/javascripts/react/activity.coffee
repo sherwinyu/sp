@@ -82,14 +82,27 @@ sp.ActivitiesIndex = React.createClass
 
   propTypes:
     mostUsedActivities: React.PropTypes.array.isRequired
+    # mostUsedActivities: React.PropTypes.array.isRequired
 
   render: ->
     rd.div className: 'container',
       rd.h1 null, 'SP Activities'
       bs.Row null,
-        bs.Col sm: 6,
+        rd.nav className: 'navbar navbar-default', role: 'navigation',
+          rd.div className: 'collapse navbar-collapse',
+            rd.form className: 'navbar-form navbar-left', role: 'search',
+              bs.FormGroup null,
+                bs.FormInput
+                  placeHolder: 'Search Activities'
+                  type: 'text'
+              rd.button type: 'submit', className: 'btn btn-default',
+                'Go'
+
+
+      bs.Row null,
+        bs.Col sm: 3,
           @renderActivities()
-        bs.Col sm: 6,
+        bs.Col sm: 9,
           @props.activeRouteHandler
             addNotification: @props.addNotification
 
