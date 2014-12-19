@@ -9,11 +9,13 @@ module Util
     end
 
     def self.send_message message
-      twilio_client.account.messages.create(
-        from: '+15716990058',
-        to: '5707987565',
-        body: message
-      )
+      if false
+        twilio_client.account.messages.create(
+          from: '+15716990058',
+          to: '5707987565',
+          body: message
+        )
+      end
     end
 
   end
