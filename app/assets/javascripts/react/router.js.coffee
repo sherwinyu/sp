@@ -1,6 +1,7 @@
 #= require utils/bs
 #= require react/application
 #= require react/activity
+#= require react/json_editor
 
 $(document).ready ->
   $.ajaxSetup
@@ -36,7 +37,7 @@ $(document).ready ->
       ,
         Route
           name: 'activities',
-          path: '/activities',
+          path: '/activities2',
           handler: sp.ActivitiesIndex,
           mostUsedActivities: window._sp_vars.props.activities
         ,
@@ -44,5 +45,11 @@ $(document).ready ->
             name: 'activity'
             path: ':activityId'
             handler: sp.Activity
+      Route
+        name: 'json_editor'
+        path: '/json_editor'
+        # initialValue: [1,2,3]
+        initialValue: [1,2,3]
+        handler: sp.JsonEditorRoot
 
   React.renderComponent(routes, $('.react-mount')[0])
