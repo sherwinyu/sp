@@ -26,12 +26,18 @@ sp.JsonEditor = React.createClass
     newValue = computeNewValue
     @props.updateHandler
 
-  _updateObject: (idx, newVal) -> null
+  _updateObjectValue: (updateAtIdx, key, newVal) ->
+    newObject = $.extend {}, @props.value
+    newObject[key] = newVal
+    @props.updateHandler newObject
+    # for key, idx in Object.keys @props.value
+    #   if idx == updateAtIdx
+    #     newObject[]
 
   _updateArrayElement: (idx, newVal) ->
     newArray = @props.value.slice 0
     newArray[idx] = newVal
-    @props.updateHandler 42 # newArray
+    @props.updateHandler newArray
 
 
   _updateLiteral: (e) ->
@@ -45,31 +51,38 @@ sp.JsonEditor = React.createClass
       onChange: @_updateLiteral
 
   renderArray: ->
-    for val, idx in @props.value
-      console.log val, idx
-      sp.JsonEditor
-        key: idx
-        value: val
-        updateHandler: @_updateArrayElement.bind null, idx
+    rd.ol null,
+      for val, idx in @props.value
+        rd.li null,
+          sp.JsonEditor
+            key: idx
+            value: val
+            updateHandler: @_updateArrayElement.bind null, idx
+
+  renameKey: (key) ->
+    # utils.react.renameObjectKey @props.value, key,
 
   renderObject: ->
-    for key, val of @props.value
-      sp.JsonEditor
-        value: key
-        updateHandler: @renameKey.bind null, key
-
-      sp.JsonEditor
-        value: val
-        updateHandler: @updateHandler.bind null, idx
-
+    rd.ul null,
+      for key, idx in Object.keys @props.value
+        val = @props.value[key]
+        rd.li null,
+          "key:"
+          sp.JsonEditor
+            key: "key#{idx}"
+            value: key
+            updateHandler: @renameKey.bind null, key
+          sp.JsonEditor
+            key: "val#{idx}"
+            value: val
+            updateHandler: @_updateObjectValue.bind null, idx, key
 
   render: ->
-    if typeof @props.value == 'object' and not @props.value instanceof Array
+    if typeof @props.value == 'object' and @props.value not instanceof Array
       x = @renderObject()
     else if typeof @props.value == 'object' and @props.value instanceof Array
       x = @renderArray()
     else
       x = @renderLiteral()
-    return rd.div className: 'group',
-      rd.h1 null, 'hi'
+    return rd.span className: 'group',
       x
