@@ -1,4 +1,5 @@
 #= require utils/bs
+#= require utils/react
 #= require react/application
 #= require react/activity
 #= require react/json_editor

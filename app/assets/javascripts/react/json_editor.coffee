@@ -1,3 +1,5 @@
+#= require utils/react
+#= require js-yaml
 window.sp ||= {}
 rd = React.DOM
 
@@ -26,26 +28,29 @@ sp.JsonEditor = React.createClass
     newValue = computeNewValue
     @props.updateHandler
 
+  _updateObjectKey: (updateAtIdx, oldKey, newKey) ->
+    newObject = utils.react.renameObjectKey @props.value, oldKey, newKey
+    @props.updateHandler newObject
+
   _updateObjectValue: (updateAtIdx, key, newVal) ->
     newObject = $.extend {}, @props.value
     newObject[key] = newVal
     @props.updateHandler newObject
-    # for key, idx in Object.keys @props.value
-    #   if idx == updateAtIdx
-    #     newObject[]
 
   _updateArrayElement: (idx, newVal) ->
     newArray = @props.value.slice 0
     newArray[idx] = newVal
     @props.updateHandler newArray
 
-
   _updateLiteral: (e) ->
-    newVal = e.target.value
+    newVal =
+      try
+        jsyaml.load e.target.value
+      catch error
+        e.target.value
     @props.updateHandler newVal
 
   renderLiteral: ->
-    console.log 'literal render: value=', @props.value
     rd.input
       value: @props.value
       onChange: @_updateLiteral
@@ -59,9 +64,6 @@ sp.JsonEditor = React.createClass
             value: val
             updateHandler: @_updateArrayElement.bind null, idx
 
-  renameKey: (key) ->
-    # utils.react.renameObjectKey @props.value, key,
-
   renderObject: ->
     rd.ul null,
       for key, idx in Object.keys @props.value
@@ -71,16 +73,16 @@ sp.JsonEditor = React.createClass
           sp.JsonEditor
             key: "key#{idx}"
             value: key
-            updateHandler: @renameKey.bind null, key
+            updateHandler: @_updateObjectKey.bind null, idx, key
           sp.JsonEditor
             key: "val#{idx}"
             value: val
             updateHandler: @_updateObjectValue.bind null, idx, key
 
   render: ->
-    if typeof @props.value == 'object' and @props.value not instanceof Array
+    if @props.value? and typeof @props.value == 'object' and @props.value not instanceof Array
       x = @renderObject()
-    else if typeof @props.value == 'object' and @props.value instanceof Array
+    else if @props.value? and typeof @props.value == 'object' and @props.value instanceof Array
       x = @renderArray()
     else
       x = @renderLiteral()
