@@ -20,13 +20,15 @@ sp.JsonEditor = React.createClass
 
   propTypes:
     updateHandler: React.PropTypes.func
+    keyboardShortcuts: React.PropTypes.func
+    role: React.PropTypes.string
+
     # idx: React.PropTypes.number
     # value: React.
     # v2: React.PropTypes.func
 
-  updateHandler: (idx, e) ->
-    newValue = computeNewValue
-    @props.updateHandler
+  keyboardShortcuts: (e) ->
+    console.log e.which
 
   _updateObjectKey: (updateAtIdx, oldKey, newKey) ->
     newObject = utils.react.renameObjectKey @props.value, oldKey, newKey
@@ -45,24 +47,45 @@ sp.JsonEditor = React.createClass
   _updateLiteral: (e) ->
     newVal =
       try
-        jsyaml.load e.target.value
+        # jsyaml.load e.target.value
+        JSON.parse e.target.value
       catch error
         e.target.value
     @props.updateHandler newVal
 
   renderLiteral: ->
     rd.input
+      className: "json-field #{@props.role}"
       value: @props.value
       onChange: @_updateLiteral
+      onKeyDown: @props.keyboardShortcuts
 
   renderArray: ->
     rd.ol null,
       for val, idx in @props.value
         rd.li null,
           sp.JsonEditor
+            role: 'value-field'
             key: idx
             value: val
             updateHandler: @_updateArrayElement.bind null, idx
+            keyboardShortcuts: @_objectValueShortcuts
+
+  _objectValueShortcuts: (e, idx) ->
+    elements = $('.json-field.value-field')
+    idx = elements.index $(e.target)
+
+    if e.key == 'ArrowUp'
+      idx = (idx + elements.length - 1) % elements.length
+
+    if e.key == 'ArrowDown'
+      idx = (idx + elements.length + 1) % elements.length
+    console.log el
+
+    el = elements[idx]
+    el.focus()
+
+
 
   renderObject: ->
     rd.ul null,
@@ -71,13 +94,16 @@ sp.JsonEditor = React.createClass
         rd.li null,
           "key:"
           sp.JsonEditor
+            role: 'key-field'
             key: "key#{idx}"
             value: key
             updateHandler: @_updateObjectKey.bind null, idx, key
           sp.JsonEditor
+            role: 'value-field'
             key: "val#{idx}"
             value: val
             updateHandler: @_updateObjectValue.bind null, idx, key
+            keyboardShortcuts: @_objectValueShortcuts
 
   render: ->
     if @props.value? and typeof @props.value == 'object' and @props.value not instanceof Array
