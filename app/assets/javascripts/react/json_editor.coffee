@@ -1,5 +1,7 @@
 #= require utils/react
 #= require js-yaml
+#= require react/json_literal_editor
+
 window.sp ||= {}
 rd = React.DOM
 
@@ -44,21 +46,6 @@ sp.JsonEditor = React.createClass
     newArray[idx] = newVal
     @props.updateHandler newArray
 
-  _updateLiteral: (e) ->
-    newVal =
-      try
-        # jsyaml.load e.target.value
-        JSON.parse e.target.value
-      catch error
-        e.target.value
-    @props.updateHandler newVal
-
-  renderLiteral: ->
-    rd.input
-      className: "json-field #{@props.role}"
-      value: @props.value
-      onChange: @_updateLiteral
-      onKeyDown: @props.keyboardShortcuts
 
   renderArray: ->
     rd.ol null,
@@ -85,8 +72,6 @@ sp.JsonEditor = React.createClass
     el = elements[idx]
     el.focus()
 
-
-
   renderObject: ->
     rd.ul null,
       for key, idx in Object.keys @props.value
@@ -111,6 +96,10 @@ sp.JsonEditor = React.createClass
     else if @props.value? and typeof @props.value == 'object' and @props.value instanceof Array
       x = @renderArray()
     else
-      x = @renderLiteral()
+      x = sp.JsonLiteralEditor
+        role: @props.role
+        value: @props.value
+        keyboardShortcuts: @props.keyboardShortcuts
+        updateHandler: @props.updateHandler
     return rd.span className: 'group',
       x
