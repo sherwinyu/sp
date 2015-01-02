@@ -6,7 +6,6 @@ sp.JsonLiteralEditor = React.createClass
     role: React.PropTypes.string
     updateHandler: React.PropTypes.func
     keyboardShortcuts: React.PropTypes.func
-    role: React.PropTypes.string
 
   _updateLiteral: (e) ->
     newVal =

@@ -1,6 +1,8 @@
 #= require utils/react
 #= require js-yaml
 #= require react/json_literal_editor
+#= require react/json_array_editor
+#= require react/mixins/json_editor_mixin
 
 window.sp ||= {}
 rd = React.DOM
@@ -28,6 +30,7 @@ sp.JsonEditor = React.createClass
     # idx: React.PropTypes.number
     # value: React.
     # v2: React.PropTypes.func
+  mixins: [sp.JsonEditorMixin]
 
   keyboardShortcuts: (e) ->
     console.log e.which
@@ -41,36 +44,6 @@ sp.JsonEditor = React.createClass
     newObject[key] = newVal
     @props.updateHandler newObject
 
-  _updateArrayElement: (idx, newVal) ->
-    newArray = @props.value.slice 0
-    newArray[idx] = newVal
-    @props.updateHandler newArray
-
-
-  renderArray: ->
-    rd.ol null,
-      for val, idx in @props.value
-        rd.li null,
-          sp.JsonEditor
-            role: 'value-field'
-            key: idx
-            value: val
-            updateHandler: @_updateArrayElement.bind null, idx
-            keyboardShortcuts: @_objectValueShortcuts
-
-  _objectValueShortcuts: (e, idx) ->
-    elements = $('.json-field.value-field')
-    idx = elements.index $(e.target)
-
-    if e.key == 'ArrowUp'
-      idx = (idx + elements.length - 1) % elements.length
-
-    if e.key == 'ArrowDown'
-      idx = (idx + elements.length + 1) % elements.length
-    console.log el
-
-    el = elements[idx]
-    el.focus()
 
   renderObject: ->
     rd.ul null,
@@ -94,7 +67,10 @@ sp.JsonEditor = React.createClass
     if @props.value? and typeof @props.value == 'object' and @props.value not instanceof Array
       x = @renderObject()
     else if @props.value? and typeof @props.value == 'object' and @props.value instanceof Array
-      x = @renderArray()
+      x = sp.JsonArrayEditor
+        value: @props.value
+        # keyboardShortcuts: @props.keyboardShortcuts
+        updateHandler: @props.updateHandler
     else
       x = sp.JsonLiteralEditor
         role: @props.role
