@@ -61,7 +61,7 @@ class RescueTimeImporter
   def self.activities_list_from_rtrs rtrs
     rtrs.map do |rtr|
       a = Activity.upsert_activity_from_rtr rtr
-      {a: a.id, duration: rtr.duration}
+      {'a' => a.id, 'duration' => rtr.duration}
     end
   end
 
