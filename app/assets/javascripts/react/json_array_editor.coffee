@@ -22,7 +22,17 @@ sp.JsonObjectEditor = React.createClass
     newObject[key] = newVal
     @props.updateHandler newObject
 
-  objectKeyboardShortcuts: ->
+  insertSiblingAtIdx: (idx) ->
+    newObject = utils.react.insertObjectKeyAt @props.value, idx
+    console.log newObject
+    @props.updateHandler newObject
+
+  objectKeyboardShortcuts: (idx, e)->
+    @_upDownShortcuts(idx, e)
+    if e.key is 'Enter'
+      @insertSiblingAtIdx(idx)
+
+
 
 
   render: ->
@@ -30,7 +40,7 @@ sp.JsonObjectEditor = React.createClass
       for key, idx in Object.keys @props.value
         val = @props.value[key]
         rd.li
-          warg: 5
+          onKeyDown: @objectKeyboardShortcuts.bind null, idx
         ,
           sp.JsonEditor
             role: 'key-field'
