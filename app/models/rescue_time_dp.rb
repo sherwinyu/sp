@@ -36,10 +36,9 @@ class RescueTimeDp
   end
 
   def update_activity_durations
-    self.acts.map do |act|
+    self.acts.each do |act|
       activity = Activity.find act['a']
-      ms = Benchmark.ms { activity.compute_duration}
-      puts "#{activity.name} - #{ms}"
+      activity.compute_duration
     end
   end
 

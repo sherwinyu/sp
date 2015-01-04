@@ -25,7 +25,7 @@ class Activity
     @rtdps ||= RescueTimeDp.where("acts.a" => self.id)
   end
 
-  # returns a list of {a: id, duration: integer} objects
+  # returns a list of {'a' => id, 'duration' => integer} objects
   def acts
     rtdps.map do |rtdp|
       act = rtdp.acts.find { |a| a['a'] == self.id }
@@ -40,10 +40,6 @@ class Activity
 
   def self.recent(limit=20)
     Activity.desc(:updated_at).limit limit
-  end
-
-  def self.most_duration(limit=20)
-    Activity.desc(:duration).limit limit
   end
 
   def as_j

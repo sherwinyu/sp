@@ -82,7 +82,6 @@ sp.ActivitiesIndex = React.createClass
 
   propTypes:
     mostUsedActivities: React.PropTypes.array.isRequired
-    # mostUsedActivities: React.PropTypes.array.isRequired
 
   render: ->
     rd.div className: 'container',

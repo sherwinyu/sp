@@ -71,8 +71,8 @@ describe RescueTimeDp do
       expect(rtdp.acts).to be_an Array
       activity1 = Activity.where(name: mon5p_video.rt_activity).first
       activity2 = Activity.where(name: mon5p_coding.rt_activity).first
-      expect(rtdp.acts.first).to eq a: activity1.id, duration: 60
-      expect(rtdp.acts.second).to eq a: activity2.id, duration: 60
+      expect(rtdp.acts.first).to eq 'a' => activity1.id, 'duration' => 60
+      expect(rtdp.acts.second).to eq 'a' => activity2.id, 'duration' => 60
     end
   end
 end
