@@ -114,8 +114,8 @@ describe RescueTimeImporter do
 
       expect(activities).to be_an Array
       expect(activities).to have(2).elements
-      expect(activities[0]).to eq( {a: activity1.id, duration: mon5p_video.duration} )
-      expect(activities[1]).to eq( {a: activity2.id, duration: mon5p_coding.duration} )
+      expect(activities[0]).to eq( {'a' => activity1.id, 'duration' => mon5p_video.duration} )
+      expect(activities[1]).to eq( {'a' => activity2.id, 'duration' => mon5p_coding.duration} )
     end
 
   end

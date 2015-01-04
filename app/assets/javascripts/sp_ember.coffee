@@ -1,6 +1,9 @@
 #= require_self
 #= require ./store
-#= require_tree ./utils
+#= require ./utils/ember_extensions
+#= require ./utils/helpers
+#= require ./utils/hotkeys
+#= require ./utils/set_cursor
 #= require ./humon/humon
 #= require_tree ./models
 #= require_tree ./controllers
@@ -12,7 +15,7 @@
 
 @Test = false
 @Sysys = Ember.Application.create
-  rootElement: "#ember-app"
+  rootElement: '#ember-app'
   LOG_TRANSITIONS: true
   LOG_TRANSITIONS_INTERNAL: true
   LOG_VIEW_LOOKUPS: true

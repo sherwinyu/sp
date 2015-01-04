@@ -22,6 +22,24 @@ describe Activity do
     mon5p_video
   end
 
+  describe 'serializer' do
+    let (:activity) {
+      Activity.create name: 'gmail.com', productivity: 0, category: 'email', duration: 4.5.hours
+    }
+    it 'includes the expected properties' do
+      serializer = ActivitySerializer.new activity
+      json = serializer.as_json['activity']
+      expect(json).to have_key :name
+      expect(json).to have_key :productivity
+      expect(json).to have_key :category
+      expect(json).to have_key :duration
+      expect(json[:productivity]).to eq 0
+      expect(json[:name]).to eq  'gmail.com'
+      expect(json[:category]).to eq 'email'
+      expect(json[:duration]).to eq 4.5 * 60 * 60
+    end
+  end
+
   describe '.upsert_activity_from_rtr' do
     it 'creates a new Activity for those that don\'t exist yet' do
       activity1 = Activity.where(name: mon5p_video.rt_activity).first

@@ -6,7 +6,7 @@ update = React.addons.update
 
 sp.Activity = React.createClass
 
-  _getState: (activityId=@props.params.activityId) ->
+  _getState: (activityId = @props.params.activityId) ->
     req = $.get "/activities/#{activityId}.json"
     req.done (response) =>
       @setState activity: response.activity
@@ -57,6 +57,13 @@ sp.Activity = React.createClass
 
           bs.FormGroup null,
             bs.Label null,
+              "Duration (#{utils.sToDurationString @state.activity.duration})"
+            bs.FormInput
+              value: @state.activity.duration
+              onChange: @updateActivityProperty.bind null, 'duration'
+
+          bs.FormGroup null,
+            bs.Label null,
               'Category'
             bs.FormInput
               value: @state.activity.category
@@ -80,9 +87,21 @@ sp.ActivitiesIndex = React.createClass
     rd.div className: 'container',
       rd.h1 null, 'SP Activities'
       bs.Row null,
-        bs.Col sm: 6,
+        rd.nav className: 'navbar navbar-default', role: 'navigation',
+          rd.div className: 'collapse navbar-collapse',
+            rd.form className: 'navbar-form navbar-left', role: 'search',
+              bs.FormGroup null,
+                bs.FormInput
+                  placeHolder: 'Search Activities'
+                  type: 'text'
+              rd.button type: 'submit', className: 'btn btn-default',
+                'Go'
+
+
+      bs.Row null,
+        bs.Col sm: 3,
           @renderActivities()
-        bs.Col sm: 6,
+        bs.Col sm: 9,
           @props.activeRouteHandler
             addNotification: @props.addNotification
 
@@ -96,4 +115,4 @@ sp.ActivitiesIndex = React.createClass
             Link  to: 'activity', params: {activityId: activity.id},
               activity.name
           rd.span null,
-            activity.duration
+            utils.sToDurationString activity.duration

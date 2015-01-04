@@ -32,8 +32,8 @@ describe RescueTimeDp do
       rtdp.rt_date = "2014-09-16"
       rtdp.time = DateTime.new(2014, 9, 16, 10)
       rtdp.acts = [
-        {a: act1.id, duration: 300},
-        {a: act2.id, duration: 150},
+        {'a' => act1.id, duration: 300},
+        {'a' => act2.id, duration: 150},
       ]
       rtdp.save
       rtdp.reload
@@ -71,8 +71,8 @@ describe RescueTimeDp do
       expect(rtdp.acts).to be_an Array
       activity1 = Activity.where(name: mon5p_video.rt_activity).first
       activity2 = Activity.where(name: mon5p_coding.rt_activity).first
-      expect(rtdp.acts.first).to eq a: activity1.id, duration: 60
-      expect(rtdp.acts.second).to eq a: activity2.id, duration: 60
+      expect(rtdp.acts.first).to eq 'a' => activity1.id, 'duration' => 60
+      expect(rtdp.acts.second).to eq 'a' => activity2.id, 'duration' => 60
     end
   end
 end
