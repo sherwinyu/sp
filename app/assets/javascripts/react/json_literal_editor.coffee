@@ -21,4 +21,4 @@ sp.JsonLiteralEditor = React.createClass
       className: "json-field #{@props.role}"
       value: @props.value
       onChange: @_updateLiteral
-      onKeyDown: @props.keyboardShortcuts
+      # onKeyDown: @props.keyboardShortcuts
