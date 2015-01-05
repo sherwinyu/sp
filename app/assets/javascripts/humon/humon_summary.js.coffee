@@ -14,16 +14,38 @@ Humon.Summary.reopenClass
       name: 'text'
     meditation:
       name: 'meditation'
-    coded:
-      name: 'boolean'
     uploaded_photos:
       name: 'boolean'
     anki:
-      name: "anki"
+      name: 'anki'
     work:
-      name: "work"
+      name: 'work'
 
-  requiredAttributes: ['best', 'worst', 'happiness', 'meditation', 'work', 'coded', 'uploaded_photos', 'anki']
+    coded:
+      name: 'boolean'
+    coded_in_am:
+      name: 'boolean'
+    mindfulness:
+      name: 'boolean'
+    in_bed_by_1130:
+      name: 'boolean'
+    chns_sentence:
+      name: 'boolean'
+
+  requiredAttributes: ['best'
+                       'worst'
+                       'happiness'
+                       'meditation'
+                       'work'
+                       'uploaded_photos'
+                       'anki'
+                       'coded'
+                       'coded_in_am'
+                       'mindfulness'
+                       'in_bed_by_1130'
+                       'chns_sentence'
+                      ]
+
   optionalAttributes: ['funny', 'insight']
 
 Humon.Summary._generateAccessors()

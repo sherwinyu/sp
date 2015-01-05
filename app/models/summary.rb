@@ -7,8 +7,13 @@ class Summary
   field :happiness, type: Integer
   field :funny, type: String
   field :insight, type: String
-  field :coded, type: Boolean
   field :uploaded_photos, type: Boolean
+
+  field :coded, type: Boolean
+  field :coded_in_am, type: Boolean
+  field :mindfulness, type: Boolean
+  field :in_bed_by_1130, type: Boolean
+  field :chns_sentence, type: Boolean
 
   field :meditation, type: Hash
   field :anki, type: Hash
