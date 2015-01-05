@@ -17,7 +17,7 @@ sp.JsonEditorMixin =
       idx = (idx + elements.length + 1) % elements.length
 
     el = elements[idx]
-    el.focus()
+    el?.focus()
 
 
   _objectValueShortcuts: (e, idx) ->

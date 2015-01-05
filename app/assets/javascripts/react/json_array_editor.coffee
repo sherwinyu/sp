@@ -31,6 +31,7 @@ sp.JsonObjectEditor = React.createClass
     @_upDownShortcuts(idx, e)
     if e.key is 'Enter'
       @insertSiblingAtIdx(idx)
+      e.stopPropagation()
 
 
 
@@ -79,6 +80,7 @@ sp.JsonArrayEditor = React.createClass
     @_upDownShortcuts(idx, e)
     if e.key is 'Enter'
       @insertSiblingAtIdx(idx)
+      e.stopPropagation()
 
   render: ->
     rd.ol null,

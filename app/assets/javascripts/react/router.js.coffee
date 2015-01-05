@@ -38,7 +38,7 @@ $(document).ready ->
       ,
         Route
           name: 'activities',
-          path: '/activities2',
+          path: '/activities',
           handler: sp.ActivitiesIndex,
           mostUsedActivities: window._sp_vars.props.activities
         ,
