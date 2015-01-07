@@ -1,6 +1,8 @@
 #= require utils/bs
+#= require utils/react
 #= require react/application
 #= require react/activity
+#= require react/json_editor
 
 $(document).ready ->
   $.ajaxSetup
@@ -44,5 +46,15 @@ $(document).ready ->
             name: 'activity'
             path: ':activityId'
             handler: sp.Activity
+      Route
+        name: 'json_editor'
+        path: '/json_editor'
+        # initialValue: [1,2,3]
+        initialValue:
+          a: 5
+          b: [1,2,3]
+          d:
+            f: 'asdf'
+        handler: sp.JsonEditorRoot
 
   React.renderComponent(routes, $('.react-mount')[0])
