@@ -2,6 +2,7 @@
 #= require utils/react
 #= require react/application
 #= require react/activity
+#= require react/resolutions/resolutions_index
 #= require react/json_editor
 
 $(document).ready ->
@@ -31,6 +32,8 @@ update = React.addons.update
 $(document).ready ->
 
   routes = Routes location: 'history',
+
+
       Route
         name: 'application'
         path: '/'
@@ -46,6 +49,8 @@ $(document).ready ->
             name: 'activity'
             path: ':activityId'
             handler: sp.Activity
+
+
       Route
         name: 'json_editor'
         path: '/json_editor'
@@ -56,5 +61,11 @@ $(document).ready ->
           d:
             f: 'asdf'
         handler: sp.JsonEditorRoot
+
+
+      Route
+        name: 'resolutions'
+        path: '/resolutions'
+        handler: sp.ResolutionsIndex
 
   React.renderComponent(routes, $('.react-mount')[0])
