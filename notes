@@ -23,6 +23,45 @@ Interfaace for Resolution Management:
     - add a completion to any of them
   - Shows a feed
 
+  == List of resolutions
+  I. Be more appreciative
+
+  II. Utilize Sherwin Points
+    * Commit by Friday 5pm [ track weekly ]
+    * Once either sunday or saturday [ track weekly ]
+    * Schedule
+        - 30m mindfulness meditation
+        - 30m express appreciation
+        - 120m Play/work session
+    * Treat this as higher priority over other things [ nothing to track ]
+
+  III. Learning
+    * 1500 Anki HSK6 notes [ count progress ]
+    * At least 200 Chinese sentence cards [ track daily ]
+    * At least 75 new Anki notes [ track daily, weekly ]
+    * 6 non fiction book [ count progress  ]
+    * 2 classes [ count progress ]
+    * One lecture per week [ track weekly ]
+    * Reclaim time while podcasting [ count progress; track daily ]
+
+  IV. Personal Projects
+    * Commit on personal projects once per day [ track daily, count progress ]
+      * At least 75 before 10AM [[ how to do this one?? ]]
+    *
+
+  UI thoughts
+    - show what things I haven't hit yet (per day, per week, per month)
+    - show progress, percentage, projection stats
+    - button for filling out a tracking on any given resolution
+
+TENETS
+  - actions shouldn't be tracked twice
+
+
+
+
+
+
 
 
 
