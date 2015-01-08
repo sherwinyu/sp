@@ -14,6 +14,9 @@ ResolutionCompletion
   - Resolution_id
   - duration
   - comment
+  - RoutineCompletion_id
+  - count [ optional ]
+
 ----------------------------------------------------------------
 Interfaace for Resolution Management:
   - goals and reslutions are the same?
@@ -53,6 +56,8 @@ Interfaace for Resolution Management:
     - show what things I haven't hit yet (per day, per week, per month)
     - show progress, percentage, projection stats
     - button for filling out a tracking on any given resolution
+
+
 
 TENETS
   - actions shouldn't be tracked twice
