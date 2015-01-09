@@ -33,24 +33,52 @@ sp.ResolutionsIndex = React.createClass
           # addNotification: @props.addNotification
 
   renderResolutionItem: (resolutionText, options) ->
-    {trackFrequency, routine, helpText} = options
+    {
+      trackFrequency, routine, helpText, count, goal, doneInInterval
+    } = options
 
     if helpText
       return rd.p null,
         rd.span className: 'label label-warning', '!'
-        'resolutionText'
+          resolutionText
 
     rd.li null,
-      rd.p null,
-        resolutionText
+      bs.Row null,
+        bs.Col sm: 8,
+          rd.p null,
+            resolutionText
 
-        if trackFrequency
-          rd.span className: 'label label-info', trackFrequency
+            if trackFrequency
+              rd.span className: 'label label-info', trackFrequency
 
-        if routine
-          rd.ol null,
-            for step in routine
-              rd.li null, step
+            if routine
+              rd.ol null,
+                for step in routine
+                  rd.li null, step
+
+        bs.Col sm: 3,
+          if count? and goal?
+            rd.div className: 'progress',
+              rd.div
+                className: 'progress-bar'
+                'aria-valuemin': 0
+                'aria-valuenow': count
+                'aria-valuemax': goal
+                style:
+                  width: "#{count / goal * 100}%"
+              ,
+                "#{count}/#{goal}"
+
+        bs.Col sm: 1,
+          rd.button
+            className: 'btn btn-primary btn-sm'
+            type: 'button'
+          ,
+            'Track now '
+            rd.span
+              className: 'badge'
+            ,
+              if doneInInterval then 'DONE' else 'NOT DONE YET'
 
   renderResolutionTitle: (title) ->
     rd.h4 null, title
@@ -63,7 +91,11 @@ sp.ResolutionsIndex = React.createClass
       rd.div className: 'resolution-theme',
         @renderResolutionTitle 'I. Be more appreciative'
         rd.ol null,
-          @renderResolutionItem 'Commit by Friday 5pm', trackFrequency: 'weekly'
+          @renderResolutionItem 'Commit by Friday 5pm',
+            trackFrequency: 'weekly'
+            count: 23
+            goal: 150
+            doneInInterval: true
           @renderResolutionItem 'Once either sunday or saturday', trackFrequency: 'weekly'
           @renderResolutionItem 'Scehdule',
             routine: ['30m mindfulness meditation', '30m express appreciation', '120m play/work session']
