@@ -4,6 +4,21 @@ rd = React.DOM
 sp.ResolutionsIndex = React.createClass
 
   propTypes:
+    # Resolution refers to a single trackable item, and they are grouped together
+    # ResolutionCompletion
+    #
+    # resolution: React.PropType.shape(
+    #   groupName: 'Utilize Sherwin Points'
+    #   name: React.PropTypes.string
+    #   frequency: React.PropTypes.string
+    #   recentCompletions: array
+
+
+
+
+
+
+    # ).isRequired
     resolutions: React.PropTypes.array.isRequired
 
   render: ->
@@ -24,13 +39,6 @@ sp.ResolutionsIndex = React.createClass
       bs.Row null,
         bs.Col sm: 8,
           @renderResolutions()
-
-        # bs.Col sm: 3,
-        #   @renderResolutions()
-        # bs.Col sm: 9,
-        #   'Deets'
-          # @props.activeRouteHandler
-          # addNotification: @props.addNotification
 
   renderResolutionItem: (resolutionText, options) ->
     {

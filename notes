@@ -25,6 +25,8 @@ Interfaace for Resolution Management:
   - Shows list of resolutions
     - add a completion to any of them
   - Shows a feed
+  - By default, should be "clean display mode"
+  - Only go into detail for tracking / progress check
 
   == List of resolutions
   I. Be more appreciative
