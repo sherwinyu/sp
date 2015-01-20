@@ -3,6 +3,7 @@
 @import "jquery.ui.slider";
 @import "font-awesome";
 
+@import "util";
 @import "base";
 @import "nav";
 
@@ -16,6 +17,7 @@
 @import "data_point";
 @import "rescue_time_dp";
 @import "day";
+@import "resolution";
 <% unless Rails.env.development? %>
   @import "prod_only";
 <% end %>
@@ -28,7 +30,7 @@
 }
 
 body {
-  font-family: "Source Sans Pro";
+  font-family: "Source Sans Pro", "Helvetica";
   color: $copygray;
 }
 

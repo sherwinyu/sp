@@ -39,24 +39,24 @@ sp.ResolutionsIndex = React.createClass
 
     if helpText
       return rd.p null,
-        rd.span className: 'label label-warning', '!'
+        rd.span className: 'label label-warning u-tiny-spacing-right', '!'
           resolutionText
 
     rd.li null,
       bs.Row null,
-        bs.Col sm: 8,
+        bs.Col sm: 7,
           rd.p null,
             resolutionText
 
             if trackFrequency
-              rd.span className: 'label label-info', trackFrequency
+              rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
 
             if routine
               rd.ol null,
                 for step in routine
                   rd.li null, step
 
-        bs.Col sm: 3,
+        bs.Col sm: 5,
           if count? and goal?
             rd.div className: 'progress',
               rd.div
@@ -69,16 +69,16 @@ sp.ResolutionsIndex = React.createClass
               ,
                 "#{count}/#{goal}"
 
-        bs.Col sm: 1,
           rd.button
             className: 'btn btn-primary btn-sm'
             type: 'button'
           ,
             'Track now '
+          if not doneInInterval
             rd.span
-              className: 'badge'
+              className: 'badge u-tiny-spacing-left'
             ,
-              if doneInInterval then 'DONE' else 'NOT DONE YET'
+              '!'
 
   renderResolutionTitle: (title) ->
     rd.h4 null, title
