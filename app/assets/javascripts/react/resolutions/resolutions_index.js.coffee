@@ -12,6 +12,9 @@ sp.ResolutionsIndex = React.createClass
     #   name: React.PropTypes.string
     #   frequency: React.PropTypes.string
     #   recentCompletions: array
+    #   isHeader
+    #   information
+    #   type: {info, header, goal}
 
 
 
