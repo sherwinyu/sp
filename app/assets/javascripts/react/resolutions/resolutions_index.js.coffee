@@ -43,21 +43,77 @@ sp.ResolutionsIndex = React.createClass
         bs.Col sm: 8,
           @renderResolutions()
 
-  renderResolutionItem: (resolutionText, options) ->
+  renderResolutionTitle: (title) ->
+    rd.h4 null, title
+
+  renderResolutionItem: (text, options) ->
+    sp.ResolutionItem
+      text: text
+      options: options
+
+  renderResolutions: ->
+    rd.div className: 'resolutions',
+      rd.h3 null,
+        'Reslutions'
+
+      rd.div className: 'panel panel-default resolution-theme',
+        rd.div className: 'panel-heading',
+          @renderResolutionTitle 'I. Be more appreciative'
+        rd.ul className: 'list-group',
+          @renderResolutionItem 'Commit by Friday 5pm',
+            trackFrequency: 'weekly'
+            count: 23
+            goal: 150
+            doneInInterval: true
+          @renderResolutionItem 'Once either sunday or saturday', trackFrequency: 'weekly'
+          @renderResolutionItem 'Scehdule',
+            routine: ['30m mindfulness meditation', '30m express appreciation', '120m play/work session']
+          @renderResolutionItem 'Treat this as higher priority over other things',
+            helpText: true
+
+
+      rd.div className: 'resolution',
+        @renderResolutionTitle 'II. Utilize Sherwin Points'
+
+      rd.div className: 'resolultion-theme',
+        @renderResolutionTitle 'III. Utilize Sherwin Points'
+
+      rd.div className: '',
+        @renderResolutionTitle 'IV. Personal projects'
+
+      rd.div className: '',
+        @renderResolutionTitle 'IV. Persoal projects'
+
+sp.ResolutionItem = React.createClass
+  propTypes:
+    text: React.PropTypes.string.isRequired
+    options: React.PropTypes.shape(
+      trackFrequency: React.PropTypes.string
+      routine: React.PropTypes.object
+      helpText: React.PropTypes.boolean
+      count: React.PropTypes.number
+      goal: React.PropTypes.number
+      doneInInterval: React.PropTypes.boolean
+    )
+
+  render: ->
+    text = @props.text
+
     {
       trackFrequency, routine, helpText, count, goal, doneInInterval
-    } = options
+    } = @props.options
 
     if helpText
       return rd.p null,
         rd.span className: 'label label-warning u-tiny-spacing-right', '!'
-          resolutionText
+          text
 
-    rd.li null,
+
+    rd.li className: 'list-group-item',
       bs.Row null,
         bs.Col sm: 7,
           rd.p null,
-            resolutionText
+            text
 
             if trackFrequency
               rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
@@ -90,47 +146,3 @@ sp.ResolutionsIndex = React.createClass
               className: 'badge u-tiny-spacing-left'
             ,
               '!'
-
-  renderResolutionTitle: (title) ->
-    rd.h4 null, title
-
-  renderResolutions: ->
-    rd.div className: 'resolutions',
-      rd.h3 null,
-        'Reslutions'
-
-      rd.div className: 'resolution-theme',
-        @renderResolutionTitle 'I. Be more appreciative'
-        rd.ol null,
-          @renderResolutionItem 'Commit by Friday 5pm',
-            trackFrequency: 'weekly'
-            count: 23
-            goal: 150
-            doneInInterval: true
-          @renderResolutionItem 'Once either sunday or saturday', trackFrequency: 'weekly'
-          @renderResolutionItem 'Scehdule',
-            routine: ['30m mindfulness meditation', '30m express appreciation', '120m play/work session']
-          @renderResolutionItem 'Treat this as higher priority over other things',
-            helpText: true
-
-
-      rd.div className: 'resolution',
-        @renderResolutionTitle 'II. Utilize Sherwin Points'
-
-      rd.div className: 'resolultion-theme',
-        @renderResolutionTitle 'III. Utilize Sherwin Points'
-
-      rd.div className: '',
-        @renderResolutionTitle 'IV. Personal projects'
-
-      rd.div className: '',
-        @renderResolutionTitle 'IV. Persoal projects'
-
-
-      # for activity in @props.mostUsedActivities
-      #   rd.div className: 'activity-summary', key: activity.id,
-      #     rd.span null,
-      #       Link  to: 'activity', params: {activityId: activity.id},
-      #         activity.name
-      #     rd.span null,
-      #       utils.sToDurationString activity.duration

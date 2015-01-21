@@ -1,5 +1,6 @@
 High priority: resolution management
-  -
+
+++ IMPLEMENT FLUX ++
 
 
 Resolution
@@ -27,6 +28,8 @@ Interfaace for Resolution Management:
   - Shows a feed
   - By default, should be "clean display mode"
   - Only go into detail for tracking / progress check
+  - Detail mode:
+      - allow editing name, is header, information only, etc
 
   == List of resolutions
   I. Be more appreciative
