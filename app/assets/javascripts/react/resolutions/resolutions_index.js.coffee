@@ -54,7 +54,7 @@ sp.ResolutionsIndex = React.createClass
   renderResolutions: ->
     rd.div className: 'resolutions',
       rd.h3 null,
-        'Reslutions'
+        'Resolutions'
 
       rd.div className: 'panel panel-default resolution-theme',
         rd.div className: 'panel-heading',
