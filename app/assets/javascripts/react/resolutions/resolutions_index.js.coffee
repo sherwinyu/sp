@@ -85,6 +85,7 @@ sp.ResolutionsIndex = React.createClass
         @renderResolutionTitle 'IV. Persoal projects'
 
 sp.ResolutionItem = React.createClass
+
   propTypes:
     text: React.PropTypes.string.isRequired
     options: React.PropTypes.shape(
@@ -96,53 +97,61 @@ sp.ResolutionItem = React.createClass
       doneInInterval: React.PropTypes.boolean
     )
 
+  getInitialState: ->
+    expanded: false
+
+  toggleExpanded: ->
+    @setState expanded: not @state.expanded
+
   render: ->
     text = @props.text
-
     {
       trackFrequency, routine, helpText, count, goal, doneInInterval
     } = @props.options
 
-    if helpText
-      return rd.p null,
-        rd.span className: 'label label-warning u-tiny-spacing-right', '!'
+    rd.li
+      className: 'list-group-item',
+      onClick: @toggleExpanded
+    ,
+      if not @state.expanded
+        rd.p null,
           text
 
+      if @state.expanded
+        bs.Row null,
+          bs.Col sm: 7,
+            rd.p null,
+              text
 
-    rd.li className: 'list-group-item',
-      bs.Row null,
-        bs.Col sm: 7,
-          rd.p null,
-            text
+              if trackFrequency
+                rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
 
-            if trackFrequency
-              rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
+              if routine
+                rd.ol null,
+                  for step in routine
+                    rd.li null, step
 
-            if routine
-              rd.ol null,
-                for step in routine
-                  rd.li null, step
+          bs.Col sm: 5,
+            if count? and goal?
+              rd.div className: 'progress',
+                rd.div
+                  className: 'progress-bar'
+                  'aria-valuemin': 0
+                  'aria-valuenow': count
+                  'aria-valuemax': goal
+                  style:
+                    width: "#{count / goal * 100}%"
+                ,
+                  "#{count}/#{goal}"
 
-        bs.Col sm: 5,
-          if count? and goal?
-            rd.div className: 'progress',
-              rd.div
-                className: 'progress-bar'
-                'aria-valuemin': 0
-                'aria-valuenow': count
-                'aria-valuemax': goal
-                style:
-                  width: "#{count / goal * 100}%"
+            if not helpText
+              rd.button
+                className: 'btn btn-primary btn-sm'
+                type: 'button'
               ,
-                "#{count}/#{goal}"
-
-          rd.button
-            className: 'btn btn-primary btn-sm'
-            type: 'button'
-          ,
-            'Track now '
-          if not doneInInterval
-            rd.span
-              className: 'badge u-tiny-spacing-left'
-            ,
-              '!'
+                'Track now '
+              if not doneInInterval
+                rd.span
+                  className: 'badge u-tiny-spacing-left'
+                ,
+                  '!'
