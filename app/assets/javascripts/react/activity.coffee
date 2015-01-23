@@ -1,10 +1,11 @@
-#= require utils/bs
-window.sp ||= {}
+React = require 'react'
+ReactRouter = require 'react-router'
+bs = require 'utils/bs'
 rd = React.DOM
 update = React.addons.update
-{Link, Route, Routes, DefaultRoute} = ReactRouter
+{Link} = ReactRouter
 
-sp.Activity = React.createClass
+Activity = React.createClass
 
   _getState: (activityId = @props.params.activityId) ->
     req = $.get "/activities/#{activityId}.json"
@@ -78,7 +79,7 @@ sp.Activity = React.createClass
     else
       rd.h4 'loading...'
 
-sp.ActivitiesIndex = React.createClass
+ActivitiesIndex = React.createClass
 
   propTypes:
     mostUsedActivities: React.PropTypes.array.isRequired
@@ -112,7 +113,12 @@ sp.ActivitiesIndex = React.createClass
       for activity in @props.mostUsedActivities
         rd.div className: 'activity-summary', key: activity.id,
           rd.span null,
-            Link  to: 'activity', params: {activityId: activity.id},
+            Link to: 'activity', params: {activityId: activity.id},
               activity.name
           rd.span null,
             utils.sToDurationString activity.duration
+
+module.exports = {
+  Activity
+  ActivitiesIndex
+}

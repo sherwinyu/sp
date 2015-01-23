@@ -1,7 +1,8 @@
-window.sp ||= {}
+React = require 'react'
+bs = require 'utils/bs'
 rd = React.DOM
 
-sp.ResolutionsIndex = React.createClass
+ResolutionsIndex = React.createClass
 
   propTypes:
     # Resolution refers to a single trackable item, and they are grouped together
@@ -47,7 +48,7 @@ sp.ResolutionsIndex = React.createClass
     rd.h4 null, title
 
   renderResolutionItem: (text, options) ->
-    sp.ResolutionItem
+    ResolutionItem
       text: text
       options: options
 
@@ -84,7 +85,7 @@ sp.ResolutionsIndex = React.createClass
       rd.div className: '',
         @renderResolutionTitle 'IV. Persoal projects'
 
-sp.ResolutionItem = React.createClass
+ResolutionItem = React.createClass
 
   propTypes:
     text: React.PropTypes.string.isRequired
@@ -155,3 +156,5 @@ sp.ResolutionItem = React.createClass
                   className: 'badge u-tiny-spacing-left'
                 ,
                   '!'
+
+module.exports = ResolutionsIndex

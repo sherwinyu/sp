@@ -1,4 +1,4 @@
-return unless React?
+React = require 'react'
 
 joinClasses = (className) ->
   className ?= ''
@@ -79,4 +79,12 @@ FormGroup = React.createClass
 
     return @transferPropsTo formGroup
 
-window.bs = {Row, Col, FormInput, TextArea, Label, FieldError, FormGroup}
+module.exports = {
+  Row
+  Col
+  FormInput
+  TextArea
+  Label
+  FieldError
+  FormGroup
+}

@@ -4,10 +4,12 @@
 #= require react/json_array_editor
 #= require react/mixins/json_editor_mixin
 
-window.sp ||= {}
+JsonEditorMixin = require 'react/mixins/json_editor_mixin'
+React = require 'react'
+bs = require 'utils/bs'
 rd = React.DOM
 
-sp.JsonEditorRoot = React.createClass
+JsonEditorRoot = React.createClass
 
   getInitialState: ->
     value: @props.initialValue
@@ -16,35 +18,37 @@ sp.JsonEditorRoot = React.createClass
     @setState value: value
 
   render: ->
-    sp.JsonEditor
+    JsonEditor
       onKeyDown: ->
         debugger
       value: @state.value
       updateHandler: @updateValue
 
-sp.JsonEditor = React.createClass
+JsonEditor = React.createClass
 
   propTypes:
     updateHandler: React.PropTypes.func
     keyboardShortcuts: React.PropTypes.func
     role: React.PropTypes.string
 
-  mixins: [sp.JsonEditorMixin]
+  mixins: [JsonEditorMixin]
 
   render: ->
     if @type() is 'object'
-      x = sp.JsonObjectEditor
+      x = JsonObjectEditor
         value: @props.value
         updateHandler: @props.updateHandler
 
     else if @type() is 'array'
-      x = sp.JsonArrayEditor
+      x = JsonArrayEditor
         value: @props.value
         updateHandler: @props.updateHandler
 
     else
-      x = sp.JsonLiteralEditor
+      x = JsonLiteralEditor
         role: @props.role
         value: @props.value
         keyboardShortcuts: @props.keyboardShortcuts
         updateHandler: @props.updateHandler
+
+module.exports = JsonEditorRoot

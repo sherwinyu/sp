@@ -1,4 +1,4 @@
-sp.JsonEditorMixin =
+JsonEditorMixin =
   type: ->
     if @props.value? and typeof @props.value == 'object' and @props.value not instanceof Array
       'object'
@@ -26,6 +26,4 @@ sp.JsonEditorMixin =
       console.log e, 'enter pressed'
       return true
 
-        # @insertSiblingAt(idx)
-
-
+module.exports = JsonEditorMixin

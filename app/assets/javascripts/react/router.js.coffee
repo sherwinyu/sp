@@ -5,6 +5,17 @@
 #= require react/resolutions/resolutions_index
 #= require react/json_editor
 
+React = require 'react'
+ReactRouter = require 'react-router'
+ApplicationComponent = require 'react/application'
+{Activity, ActivitiesIndex} = require 'react/activity'
+ResolutionsIndex = require 'react/resolutions/resolutions_index'
+JsonEditorRoot = require 'react/json_editor'
+
+rd = React.DOM
+update = React.addons.update
+{Link, Route, Routes, DefaultRoute} = ReactRouter
+
 $(document).ready ->
   $.ajaxSetup
     headers:
@@ -23,11 +34,6 @@ jQuery.extend
       contentType: 'application/json'
       dataType: 'json'
 
-window.sp ||= {}
-rd = React.DOM
-update = React.addons.update
-
-{Link, Route, Routes, DefaultRoute} = ReactRouter
 
 $(document).ready ->
 
@@ -37,18 +43,18 @@ $(document).ready ->
       Route
         name: 'application'
         path: '/'
-        handler: sp.ApplicationComponent
+        handler: ApplicationComponent
       ,
         Route
           name: 'activities',
           path: '/activities',
-          handler: sp.ActivitiesIndex,
+          handler: ActivitiesIndex,
           mostUsedActivities: window._sp_vars.props.activities
         ,
           Route
             name: 'activity'
             path: ':activityId'
-            handler: sp.Activity
+            handler: Activity
 
 
       Route
@@ -60,12 +66,12 @@ $(document).ready ->
           b: [1,2,3]
           d:
             f: 'asdf'
-        handler: sp.JsonEditorRoot
+        handler: JsonEditorRoot
 
 
       Route
         name: 'resolutions'
         path: '/resolutions'
-        handler: sp.ResolutionsIndex
+        handler: ResolutionsIndex
 
   React.renderComponent(routes, $('.react-mount')[0])
