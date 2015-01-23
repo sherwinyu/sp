@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "react-router": "~0.9.4",
-    "js-yaml": "~3.2.5"
+    "js-yaml": "~3.2.5",
+    "eventEmitter": "~4.2.11"
   }
 }
