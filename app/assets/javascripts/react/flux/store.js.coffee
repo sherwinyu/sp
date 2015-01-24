@@ -27,7 +27,8 @@ class Store
     }
 
   emitChange: (context) ->
-    @trigger(CHANGE_EVENT, context)
+    @emit CHANGE_EVENT, context
+    #@trigger(CHANGE_EVENT, context)
 
   addChangeListener: (callback) ->
     @on(CHANGE_EVENT, callback)

@@ -1,13 +1,18 @@
 Store = require 'react/flux/store'
 Dispatcher = require 'react/flux/dispatcher'
 
+EventConstants = {
+  RESOLUTIONS_LOADED
+}
+
 ResolutionsStore = $.extend {}, EventEmitter.prototype,
 
   getState: ->
-    return _resolutions
+    return @resolutions
 
   payloadHandler: (action) ->
     switch action.actionType
-      when EventConstants.
+      when EventConstants.RESOLUTIONS_LOADED
+        @resolutions = action.resolutions
 
 module.exports =  ResolutionsStore Dispatcher

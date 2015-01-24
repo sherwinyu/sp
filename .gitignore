@@ -19,5 +19,6 @@
 
 # Ignore swp files
 *.swp
+*.swo
 
 app/assets/javascripts/webpack-bundle.js

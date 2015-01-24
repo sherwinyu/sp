@@ -1,4 +1,6 @@
 React = require 'react'
+
+ResolutionsStore = require 'react/flux/resolutions_store'
 bs = require 'utils/bs'
 rd = React.DOM
 
@@ -16,14 +18,16 @@ ResolutionsIndex = React.createClass
     #   isHeader
     #   information
     #   type: {info, header, goal}
-
-
-
-
-
-
     # ).isRequired
     resolutions: React.PropTypes.array.isRequired
+
+  getInitialState: -> ResolutionsStore.getState()
+
+  _resolutionsUpdateHandler: -> @setState ResolutionsStore.getState()
+
+  componentDidMount: -> ResolutionsStore.addChangeListener @_resolutionsUpdateHandler
+
+  componentWillUnmountMount: -> ResolutionsStore.removeChangeListener @_resolutionsUpdateHandler
 
   render: ->
     rd.div className: 'container',
