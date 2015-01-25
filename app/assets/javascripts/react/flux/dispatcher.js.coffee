@@ -5,8 +5,8 @@ class Dispatcher
     @_promises = []
 
   register: (callback) ->
-    _callbacks.push callback
-    _callbacks.length - 1
+    @_callbacks.push callback
+    @_callbacks.length - 1
 
   dispatch: (payload) ->
     deferreds = ($.Deferred() for callback in @_callbacks)

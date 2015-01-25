@@ -19,7 +19,7 @@ ResolutionsIndex = React.createClass
     #   information
     #   type: {info, header, goal}
     # ).isRequired
-    resolutions: React.PropTypes.array.isRequired
+    resolutions: React.PropTypes.array
 
   getInitialState: -> ResolutionsStore.getState()
 

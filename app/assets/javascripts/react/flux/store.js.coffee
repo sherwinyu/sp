@@ -2,7 +2,7 @@ EventEmitter = require('events').EventEmitter
 
 CHANGE_EVENT = 'change'
 
-class Store
+class Store extends EventEmitter
   constructor: (dispatcher) ->
     @dispatchIndex = dispatcher.register (payload) => @payloadHandler(payload)
     @resetState()
@@ -38,7 +38,7 @@ class Store
       throw new Error('Attempted to removeChangeListener with null callback')
     @off(CHANGE_EVENT, callback)
 
-$.extend Store.prototype, EventEmitter
+# $.extend Store.prototype, EventEmitter
 
 module.exports = Store
 
