@@ -14,9 +14,11 @@ Sysys::Application.routes.draw do
 
   root to: 'pages#home'
 
-  get 'resolutions' => 'activities#resolutions'
+  # get 'resolutions' => 'resolutions#resolutions'
   get 'json_editor' => 'activities#json_editor'
+
   resources :activities
+  resources :resolutions
   # get '/activities' => 'pages#activities_component'
   # get '/activities/:activity_id' => 'activities#show'
 
