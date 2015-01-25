@@ -56,7 +56,6 @@ $(document).ready ->
             path: ':activityId'
             handler: Activity
 
-
       Route
         name: 'json_editor'
         path: '/json_editor'
