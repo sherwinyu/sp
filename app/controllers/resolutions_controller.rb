@@ -1,16 +1,22 @@
 class ResolutionsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :prepare_props
+  # before_filter :prepare_props
   respond_to :json
 
-  def prepare_props
-    @react_props = Activity.first.as_j
-    @react_props = {
-        activities: ActiveModel::ArraySerializer.new(Activity.recent).as_json
-    }
-  end
+  # def prepare_props
+  #   @react_props = Activity.first.as_j
+  #   @react_props = {
+  #       activities: ActiveModel::ArraySerializer.new(Activity.recent).as_json
+  #   }
+  # end
 
   def create
+    @resolution = Resolution.new resolution_params
+    if @resolution.save
+      render json: @resolution, status: :created
+    else
+      render json: @resolution.errors, status: :unprocessable_entity
+    end
   end
 
   def index
@@ -30,11 +36,12 @@ class ResolutionsController < ApplicationController
     end
   end
 
-  def activity_params
-    p = params.require(:activity).permit(
-      :name,
-      :category,
-      :productivity
+  def resolution_params
+    p = params.require(:resolution).permit(
+      :text,
+      :group,
+      :frequency,
+      :type
     )
     p
   end
