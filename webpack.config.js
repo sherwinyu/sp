@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   // 'context' sets the directory where webpack looks for module files you list in
@@ -51,7 +52,12 @@ module.exports = {
       path.join(__dirname, 'app', 'assets', 'javascripts')
     ],
     modulesDirectories: ['node_modules', 'bower_components', 'web_modules']
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+        '_': 'underscore'
+    })
+  ]
 
   // The 'module' and 'loaders' options tell webpack to use loaders.
   // @see http://webpack.github.io/docs/using-loaders.html
