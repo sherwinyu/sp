@@ -1,14 +1,14 @@
 class ResolutionsController < ApplicationController
   before_filter :authenticate_user!
-  # before_filter :prepare_props
+  before_filter :prepare_props
   respond_to :json
 
-  # def prepare_props
-  #   @react_props = Activity.first.as_j
-  #   @react_props = {
-  #       activities: ActiveModel::ArraySerializer.new(Activity.recent).as_json
-  #   }
-  # end
+  def prepare_props
+    @react_props = Activity.first.as_j
+    @react_props = {
+        activities: ActiveModel::ArraySerializer.new(Activity.recent).as_json
+    }
+  end
 
   def create
     @resolution = Resolution.new resolution_params

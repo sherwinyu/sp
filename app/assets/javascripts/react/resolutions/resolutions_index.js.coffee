@@ -61,10 +61,13 @@ ResolutionsIndex = React.createClass
       rd.h3 null,
         'Resolutions'
 
+
       rd.div className: 'panel panel-default resolution-theme',
         rd.div className: 'panel-heading',
           @renderResolutionTitle 'I. Be more appreciative'
         rd.ul className: 'list-group',
+          for resolution in @state.resolutions
+            @renderResolutionItem resolution.text, resolution
           @renderResolutionItem 'Commit by Friday 5pm',
             trackFrequency: 'weekly'
             count: 23
