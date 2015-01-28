@@ -66,7 +66,7 @@ module.exports = {
 var devBuild = (typeof process.env["BUILDPACK_URL"]) === "undefined";
 if (devBuild) {
   console.log("Webpack dev build for Rails");
-  module.exports.devtool = "eval-source-map";
+  module.exports.devtool = "eval";
 } else {
   console.log("Webpack production build for Rails");
 }
