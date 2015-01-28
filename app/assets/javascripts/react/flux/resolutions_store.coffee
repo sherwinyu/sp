@@ -33,9 +33,10 @@ class ResolutionsStore extends Store
 
   payloadHandler: (action) ->
     switch action.actionType
-      when EventConstants.RESOLUTIONS_LOADED
+      when EventConstants.RESOLUTIONS_LOAD_DONE
         @resolutions = action.resolutions
-      when EventConstants.RESOLUTION_CREATE_COMPLETED
+        @emitChange()
+      when EventConstants.RESOLUTION_CREATE_DONE
         @resolutions.push action.resolution
         @emitChange()
 

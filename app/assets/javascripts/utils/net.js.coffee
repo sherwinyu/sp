@@ -6,4 +6,6 @@ net =
       type: 'POST'
       url: url
 
+  getJSON: -> $.getJSON(arguments...)
+
 module.exports = net

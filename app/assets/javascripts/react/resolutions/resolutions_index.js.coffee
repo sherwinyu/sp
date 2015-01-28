@@ -27,7 +27,9 @@ ResolutionsIndex = React.createClass
 
   _resolutionsUpdateHandler: -> @setState ResolutionsStore.getState()
 
-  componentDidMount: -> ResolutionsStore.addChangeListener @_resolutionsUpdateHandler
+  componentDidMount: ->
+    ResolutionActions.loadResolutions()
+    ResolutionsStore.addChangeListener @_resolutionsUpdateHandler
 
   componentWillUnmountMount: -> ResolutionsStore.removeChangeListener @_resolutionsUpdateHandler
 
