@@ -1,10 +1,7 @@
 Store = require 'react/flux/store'
 Dispatcher = require 'react/flux/dispatcher'
 EventEmitter = require('events').EventEmitter
-
-EventConstants = {
-  RESOLUTIONS_LOADED: 'RESOLUTIONS_LOADED'
-}
+EventConstants = require 'react/event_constants'
 
 class ResolutionsStore extends Store
 
@@ -39,8 +36,7 @@ class ResolutionsStore extends Store
       when EventConstants.RESOLUTIONS_LOADED
         @resolutions = action.resolutions
       when EventConstants.RESOLUTION_CREATE_COMPLETED
-        debugger
-        @resolutions.push action.response
+        @resolutions.push action.resolution
         @emitChange()
 
 module.exports =  new ResolutionsStore(Dispatcher)

@@ -1,4 +1,6 @@
+Dispatcher = require 'react/flux/dispatcher'
 net = require 'utils/net'
+EventConstants = require 'react/event_constants'
 
 ResolutionDAO =
   create: (resolution) ->
@@ -16,7 +18,9 @@ ResolutionActions =
     ResolutionDAO.create resolution
       .done (response) ->
         Dispatcher.dispatch
-          actionType: RESOLUTION_CREATE_COMPLETED
-          resolution: resolution
+          actionType: EventConstants.RESOLUTION_CREATE_COMPLETED
+          resolution: response.resolution
 
   updateResolution: (resolutionId, resolution) ->
+
+module.exports = ResolutionActions

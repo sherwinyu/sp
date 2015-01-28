@@ -1,6 +1,8 @@
 React = require 'react'
 
+ResolutionActions = require 'react/resolutions/resolution_actions'
 ResolutionsStore = require 'react/flux/resolutions_store'
+
 bs = require 'utils/bs'
 rd = React.DOM
 
@@ -56,11 +58,17 @@ ResolutionsIndex = React.createClass
       text: text
       options: options
 
+  newResolution: ->
+    ResolutionActions.createResolution()
+
   renderResolutions: ->
     rd.div className: 'resolutions',
       rd.h3 null,
         'Resolutions'
-
+      rd.button {
+        onClick: @newResolution
+      },
+        'Create resolution'
 
       rd.div className: 'panel panel-default resolution-theme',
         rd.div className: 'panel-heading',
