@@ -117,6 +117,7 @@ ResolutionItem = React.createClass
 
   getInitialState: ->
     expanded: false
+    editing: false
 
   toggleExpanded: ->
     @setState expanded: not @state.expanded
@@ -124,7 +125,8 @@ ResolutionItem = React.createClass
   render: ->
     text = @props.text
     {
-      trackFrequency, routine, helpText, count, goal, doneInInterval
+      trackFrequency, routine, helpText, count, goal, doneInInterval,
+      group
     } = @props.options
 
     rd.li
@@ -135,11 +137,33 @@ ResolutionItem = React.createClass
         rd.p null,
           text
 
-      if @state.expanded
+      if @state.editing
+        bs.FormGroup null,
+          bs.Label null,
+            'Text'
+          bs.FormInput
+            defaultValue: text
+
+          bs.Label null,
+            'Group'
+          bs.FormInput
+            defaultValue: group
+          rd.button className: 'btn btn-success',
+            'Save'
+
+
+      if @state.expanded and not @state.editing
         bs.Row null,
           bs.Col sm: 7,
             rd.p null,
               text
+
+              rd.button
+                className: 'btn btn-default btn-sm'
+                onClick: => @setState editing: true
+              ,
+                'Edit'
+
 
               if trackFrequency
                 rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
