@@ -34,6 +34,27 @@ describe ResolutionsController do
     end
   end
 
+  describe "api#index" do
+    let (:resolutions) {
+      r1 = Resolution.create text: 'r1'
+      r2 = Resolution.create text: 'r2'
+      r3 = Resolution.create text: 'r3'
+      [r1, r2, r3]
+    }
+
+    before :each do
+      resolutions
+    end
+
+    it 'lists all resolutions' do
+      get :index, format: :json
+      resolutions_json = Hashie::Mash.new(JSON.parse response.body).resolutions
+      expect(resolutions_json[0].text).to eq 'r1'
+      expect(resolutions_json[1].text).to eq 'r2'
+      expect(resolutions_json[2].text).to eq 'r3'
+    end
+  end
+
   describe "api#update" do
   end
 

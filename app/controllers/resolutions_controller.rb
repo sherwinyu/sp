@@ -4,7 +4,6 @@ class ResolutionsController < ApplicationController
   respond_to :json
 
   def prepare_props
-    @react_props = Activity.first.as_j
     @react_props = {
         activities: ActiveModel::ArraySerializer.new(Activity.recent).as_json
     }
