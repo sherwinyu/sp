@@ -126,18 +126,36 @@ ResolutionItem = React.createClass
       doneInInterval: React.PropTypes.boolean
     )
 
+  statics:
+    UI_STATES:
+      'COLLAPSED': 'COLLAPSED'
+      'EXPANDED': 'EXPANDED'
+      'EDITING': 'EDITING'
+      'SAVING': 'SAVING'
+
+  expanded: -> @state.ui == ResolutionItem.UI_STATES.EXPANDED
+  collapsed: -> @state.ui == ResolutionItem.UI_STATES.COLLAPSED
+  saving: -> @state.ui == ResolutionItem.UI_STATES.SAVING
+  editing: -> @state.ui == ResolutionItem.UI_STATES.EDITING
+
+  toggleExpand: ->
+    if @collapsed()
+      @setState ui: ResolutionItem.UI_STATES.EXPANDED
+    if @expanded()
+      @setState ui: ResolutionItem.UI_STATES.COLLAPSED
+
+  edit: (e) ->
+    e.stopPropagation()
+    @setState ui: ResolutionItem.UI_STATES.EDITING
+
   getInitialState: ->
-    expanded: false
-    editing: false
+    ui: ResolutionItem.UI_STATES.COLLAPSED
     resolution: @props.resolution
 
-  toggleExpanded: ->
-    if not @state.editing
-      @setState expanded: not @state.expanded
-
   saveResolution: ->
-    console.assert @props.resolution.id?
+    @setState ui: ResolutionItem.UI_STATES.SAVING
     ResolutionActions.updateResolution @props.resolution.id, @state.resolution
+      .done => @setState ui: ResolutionItem.UI_STATES.EXPANDED
 
   _resolutionLinkState: (key) ->
     return {
@@ -148,75 +166,127 @@ ResolutionItem = React.createClass
         return
     }
 
-  render: ->
+  renderCollapsed: ->
     resolution = @props.resolution
-    {currentCount, targetCount} = resolution
+    rd.p null,
+      resolution.text
+
+  renderExpanded: ->
+    resolution = @props.resolution
+    rd.div null,
+      rd.p null,
+        resolution.text
+      rd.p null, 'wala wala'
+      rd.button
+        className: 'btn btn-default btn-sm'
+        onClick: @edit
+      ,
+        'Edit'
+
+  renderEditing: ->
+    resolution = @props.resolution
+    bs.FormGroup null,
+      bs.Label null,
+        'Text'
+      bs.FormInput
+        valueLink: @_resolutionLinkState 'text'
+      bs.Label null,
+        'Group'
+      bs.FormInput
+        valueLink: @_resolutionLinkState 'group'
+      if @editing()
+        rd.button
+          className: 'btn btn-success btn-sm u-tiny-spacing-top'
+          onClick: @saveResolution
+        ,
+          'Save'
+      if @saving()
+        rd.button
+          className: 'btn btn-success btn-sm u-tiny-spacing-top'
+          disabled: true
+        ,
+          'Saving'
+
+  render: ->
+    # {currentCount, targetCount} = resolution
 
     rd.li
       className: 'list-group-item',
-      onClick: @toggleExpanded
+      onClick: @toggleExpand
     ,
-      if not @state.expanded
-        rd.p null,
-          resolution.text
-
-      if @state.editing
-        bs.FormGroup null,
-          bs.Label null,
-            'Text'
-          bs.FormInput
-            valueLink: @_resolutionLinkState 'text'
-
-          bs.Label null,
-            'Group'
-          bs.FormInput
-            valueLink: @_resolutionLinkState 'group'
-
-          rd.button
-            className: 'btn btn-success u-spacing-top',
-            onClick: @saveResolution
-          ,
-            'Save'
+      if @collapsed()
+        @renderCollapsed()
+      if @expanded()
+        @renderExpanded()
+      if @editing() or @saving()
+        @renderEditing()
 
 
-      if @state.expanded and not @state.editing
-        bs.Row null,
-          bs.Col sm: 7,
-            rd.p null,
-              resolution.text
 
-              rd.button
-                className: 'btn btn-default btn-sm'
-                onClick: => @setState editing: true
-              ,
-                'Edit'
+      # if @expanded()
 
-              if resolution.trackFrequency
-                rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
 
-          bs.Col sm: 5,
-            if currentCount? and targetCount?
-              rd.div className: 'progress',
-                rd.div
-                  className: 'progress-bar'
-                  'aria-valuemin': 0
-                  'aria-valuenow': currentCount
-                  'aria-valuemax': targetCount
-                  style:
-                    width: "#{currentCount/ targetCount * 100}%"
-                ,
-                  "#{currentCount}/#{targetCount}"
+      # else if @editing() or @saving()
+      #   rd.div null,
+      #     rd.button
+      #       className: 'btn btn-default btn-sm'
+      #       onClick: => @setState editing: true
+      #     ,
+      #       'Edit'
+      #     if resolution.trackFrequency
+      #       rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
 
-            if not resolution.type == 'help'
-              rd.button
-                className: 'btn btn-primary btn-sm'
-                type: 'button'
-              ,
-                'Track now '
-              if not resolution.doneInInterval
-                rd.span
-                  className: 'badge u-tiny-spacing-left'
-                ,
-                  '!'
+
+
+      # if @state.editing
+      #   bs.FormGroup null,
+      #     bs.Label null,
+      #       'Text'
+      #     bs.FormInput
+      #       valueLink: @_resolutionLinkState 'text'
+
+      #     bs.Label null,
+      #       'Group'
+      #     bs.FormInput
+      #       valueLink: @_resolutionLinkState 'group'
+
+      #     rd.button
+      #       className: 'btn btn-success u-spacing-top',
+      #       onClick: @saveResolution
+      #     ,
+      #       'Save'
+
+
+      # if @state.expanded and not @state.editing
+        # bs.Row null,
+        #   bs.Col sm: 7,
+        #     rd.p null,
+        #       resolution.text
+
+
+          # bs.Col sm: 5,
+          #   if currentCount? and targetCount?
+          #     rd.div className: 'progress',
+          #       rd.div
+          #         className: 'progress-bar'
+          #         'aria-valuemin': 0
+          #         'aria-valuenow': currentCount
+          #         'aria-valuemax': targetCount
+          #         style:
+          #           width: "#{currentCount/ targetCount * 100}%"
+          #       ,
+          #         "#{currentCount}/#{targetCount}"
+
+            # if not resolution.type == 'help'
+            #   rd.button
+            #     className: 'btn btn-primary btn-sm'
+            #     type: 'button'
+            #   ,
+            #     'Track now '
+            #   if not resolution.doneInInterval
+            #     rd.span
+            #       className: 'badge u-tiny-spacing-left'
+            #     ,
+            #       '!'
 
 module.exports = ResolutionsIndex
