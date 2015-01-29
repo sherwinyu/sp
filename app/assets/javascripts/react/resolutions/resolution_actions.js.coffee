@@ -12,12 +12,19 @@ ResolutionDAO =
       data:
         resolution: resolution
 
+  update: (id, resolution) ->
+    net.patchJSON
+      url: "/resolutions/#{id}.json"
+      data:
+        resolution: resolution
+
+
 ResolutionActions =
   loadResolutions: ->
     ResolutionDAO.all()
       .done (response) ->
         Dispatcher.dispatch
-          actionType: EventConstants.RESOLUTION_LOAD_COMPLETED
+          actionType: EventConstants.RESOLUTIONS_LOAD_DONE
           resolutions: response.resolutions
 
   createResolution: (resolution = {}) ->
@@ -31,6 +38,12 @@ ResolutionActions =
           actionType: EventConstants.RESOLUTION_CREATE_DONE
           resolution: response.resolution
 
-  updateResolution: (resolutionId, resolution) ->
+  updateResolution: (id, resolution) ->
+    ResolutionDAO.update id, resolution
+      .done (response) ->
+        Dispatcher.dispatch
+          actionType: EventConstants.RESOLUTION_UPDATE_DONE
+          resolutionId: response.resolution.id
+          resolution: response.resolution
 
 module.exports = ResolutionActions

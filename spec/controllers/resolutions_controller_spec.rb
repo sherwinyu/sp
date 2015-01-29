@@ -11,13 +11,17 @@ describe ResolutionsController do
 
   let :resolution_params do
     {
+      text: 'Commit by 5pm',
+      group: 'Sherwin Sundays',
+      frequency: 'weekly',
+      type: 'resolution'
+    }
+  end
+
+  let :params do
+    {
       format: :json,
-      resolution: {
-        text: 'Commit by 5pm',
-        group: 'Sherwin Sundays',
-        frequency: 'weekly',
-        type: 'resolution'
-      }
+      resolution: resolution_params
     }
   end
 
@@ -28,7 +32,7 @@ describe ResolutionsController do
 
   describe "api#create" do
     it 'creates a resolution' do
-      post :create, resolution_params
+      post :create, params
       resolution = Resolution.last
       expect(resolution.text).to eq 'Commit by 5pm'
     end
@@ -56,6 +60,34 @@ describe ResolutionsController do
   end
 
   describe "api#update" do
+    let (:existing_resolution) { Resolution.create text: 'r1' }
+
+    let (:resolution_params) do
+      {
+        group: 'this is a group',
+      }
+    end
+    let (:params) do
+      {
+        format: :json,
+        resolution: resolution_params,
+        id: existing_resolution.id
+      }
+    end
+
+    it 'patches the attributes' do
+      patch :update, params
+      resolution = Resolution.find existing_resolution.id
+      expect(resolution.text).to eq 'r1'
+      expect(resolution.group).to eq 'this is a group'
+    end
+
+    it 'responds with the json of the resolution' do
+      patch :update, params
+      resolution_json = Hashie::Mash.new(JSON.parse response.body).resolution
+      expect(resolution_json.group).to eq 'this is a group'
+      expect(resolution_json.text).to eq 'r1'
+    end
   end
 
   describe "api#show" do

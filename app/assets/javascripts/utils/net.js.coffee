@@ -1,11 +1,20 @@
 net =
   postJSON: ({url, data}) ->
-    return $.ajax
+    $.ajax
       contentType: 'application/json'
       data: JSON.stringify(data)
       type: 'POST'
       url: url
 
-  getJSON: -> $.getJSON(arguments...)
+  patchJSON: ({url, data}) ->
+    $.ajax
+      contentType: 'application/json'
+      data: JSON.stringify(data)
+      type: 'PATCH'
+      url: url
+
+
+  getJSON: ->
+    $.getJSON(arguments...)
 
 module.exports = net

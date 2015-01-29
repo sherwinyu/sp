@@ -27,11 +27,11 @@ class ResolutionsController < ApplicationController
   end
 
   def update
-    @activity = Activity.find params[:id]
-    if @activity.update_attributes activity_params
-      render json: nil, status: :no_content
+    @resolution = Resolution.find params[:id]
+    if @resolution.update_attributes resolution_params
+      render json: @resolution
     else
-      render json: @activity.errors, status: :unprocessable_entity
+      render json: @resolution.errors, status: :unprocessable_entity
     end
   end
 

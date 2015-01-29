@@ -55,10 +55,8 @@ ResolutionsIndex = React.createClass
   renderResolutionTitle: (title) ->
     rd.h4 null, title
 
-  renderResolutionItem: (text, options) ->
-    ResolutionItem
-      text: text
-      options: options
+  renderResolutionItem: (resolution) ->
+    return
 
   newResolution: ->
     ResolutionActions.createResolution()
@@ -77,57 +75,82 @@ ResolutionsIndex = React.createClass
           @renderResolutionTitle 'I. Be more appreciative'
         rd.ul className: 'list-group',
           for resolution in @state.resolutions
-            @renderResolutionItem resolution.text, resolution
-          @renderResolutionItem 'Commit by Friday 5pm',
-            trackFrequency: 'weekly'
-            count: 23
-            goal: 150
-            doneInInterval: true
-          @renderResolutionItem 'Once either sunday or saturday', trackFrequency: 'weekly'
-          @renderResolutionItem 'Scehdule',
-            routine: ['30m mindfulness meditation', '30m express appreciation', '120m play/work session']
-          @renderResolutionItem 'Treat this as higher priority over other things',
-            helpText: true
+            console.log resolution
+            ResolutionItem resolution: resolution
+          ResolutionItem
+            resolution:
+              text: 'Commit by Friday 5pm',
+              trackFrequency: 'weekly'
+              count: 23
+              goal: 150
+              doneInInterval: true
+          ResolutionItem
+            resolution:
+              text: 'Once either sunday or saturday',
+              trackFrequency: 'weekly'
+              count: 23
+              goal: 150
+              doneInInterval: true
+          ResolutionItem
+            resolution:
+              text: 'Schedule'
+              routine: ['30m mindfulness meditation', '30m express appreciation', '120m play/work session']
+          ResolutionItem
+            resolution:
+              text: 'Treat this as a higher priority over other things'
+              type: 'help'
 
 
-      rd.div className: 'resolution',
+      rd.div null,
         @renderResolutionTitle 'II. Utilize Sherwin Points'
 
-      rd.div className: 'resolultion-theme',
+      rd.div null,
         @renderResolutionTitle 'III. Utilize Sherwin Points'
 
-      rd.div className: '',
+      rd.div null,
         @renderResolutionTitle 'IV. Personal projects'
 
-      rd.div className: '',
+      rd.div null,
         @renderResolutionTitle 'IV. Persoal projects'
 
 ResolutionItem = React.createClass
 
   propTypes:
-    text: React.PropTypes.string.isRequired
-    options: React.PropTypes.shape(
+    resolution: React.PropTypes.shape(
+      text: React.PropTypes.string.isRequired
       trackFrequency: React.PropTypes.string
       routine: React.PropTypes.object
-      helpText: React.PropTypes.boolean
-      count: React.PropTypes.number
-      goal: React.PropTypes.number
+      type: React.PropTypes.string
+      currentCount: React.PropTypes.number
+      targetCount: React.PropTypes.number
       doneInInterval: React.PropTypes.boolean
     )
 
   getInitialState: ->
     expanded: false
     editing: false
+    resolution: @props.resolution
 
   toggleExpanded: ->
-    @setState expanded: not @state.expanded
+    if not @state.editing
+      @setState expanded: not @state.expanded
+
+  saveResolution: ->
+    console.assert @props.resolution.id?
+    ResolutionActions.updateResolution @props.resolution.id, @state.resolution
+
+  _resolutionLinkState: (key) ->
+    return {
+      value: @state.resolution[key]
+      requestChange: (newValue) =>
+        newResolution = React.addons.update @state.resolution, _.object([key], [{$set: newValue}])
+        @setState {resolution: newResolution}
+        return
+    }
 
   render: ->
-    text = @props.text
-    {
-      trackFrequency, routine, helpText, count, goal, doneInInterval,
-      group
-    } = @props.options
+    resolution = @props.resolution
+    {currentCount, targetCount} = resolution
 
     rd.li
       className: 'list-group-item',
@@ -135,20 +158,24 @@ ResolutionItem = React.createClass
     ,
       if not @state.expanded
         rd.p null,
-          text
+          resolution.text
 
       if @state.editing
         bs.FormGroup null,
           bs.Label null,
             'Text'
           bs.FormInput
-            defaultValue: text
+            valueLink: @_resolutionLinkState 'text'
 
           bs.Label null,
             'Group'
           bs.FormInput
-            defaultValue: group
-          rd.button className: 'btn btn-success',
+            valueLink: @_resolutionLinkState 'group'
+
+          rd.button
+            className: 'btn btn-success u-spacing-top',
+            onClick: @saveResolution
+          ,
             'Save'
 
 
@@ -156,7 +183,7 @@ ResolutionItem = React.createClass
         bs.Row null,
           bs.Col sm: 7,
             rd.p null,
-              text
+              resolution.text
 
               rd.button
                 className: 'btn btn-default btn-sm'
@@ -164,35 +191,29 @@ ResolutionItem = React.createClass
               ,
                 'Edit'
 
-
-              if trackFrequency
+              if resolution.trackFrequency
                 rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
 
-              if routine
-                rd.ol null,
-                  for step in routine
-                    rd.li null, step
-
           bs.Col sm: 5,
-            if count? and goal?
+            if currentCount? and targetCount?
               rd.div className: 'progress',
                 rd.div
                   className: 'progress-bar'
                   'aria-valuemin': 0
-                  'aria-valuenow': count
-                  'aria-valuemax': goal
+                  'aria-valuenow': currentCount
+                  'aria-valuemax': targetCount
                   style:
-                    width: "#{count / goal * 100}%"
+                    width: "#{currentCount/ targetCount * 100}%"
                 ,
-                  "#{count}/#{goal}"
+                  "#{currentCount}/#{targetCount}"
 
-            if not helpText
+            if not resolution.type == 'help'
               rd.button
                 className: 'btn btn-primary btn-sm'
                 type: 'button'
               ,
                 'Track now '
-              if not doneInInterval
+              if not resolution.doneInInterval
                 rd.span
                   className: 'badge u-tiny-spacing-left'
                 ,
