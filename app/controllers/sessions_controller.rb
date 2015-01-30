@@ -25,4 +25,9 @@ class SessionsController < ApplicationController
     }
   end
 
+  def new
+    redirect_to '/#/login'
+  end
+
+
 end
