@@ -182,7 +182,9 @@ ResolutionItem = React.createClass
             onClick: @trackResolutionCompletion
           ,
             'Track'
-        rd.input type: 'text', className: 'form-control', placeholder: 'Leave a comment'
+        bs.FormInput
+          className: 'u-z-up1 u-pos-relative'
+          placeholder: 'Leave a comment'
       rd.button
         className: 'btn btn-default btn-sm'
         onClick: @edit
@@ -217,7 +219,7 @@ ResolutionItem = React.createClass
     # {currentCount, targetCount} = resolution
 
     rd.li className: 'list-group-item',
-      rd.a onClick: @toggleExpand,
+      rd.a className: 'u-pointer', onClick: @toggleExpand,
         rd.h4 null, @props.resolution.text
       if @collapsed()
         @renderCollapsed()

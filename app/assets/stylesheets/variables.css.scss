@@ -1,0 +1,33 @@
+// From benchling
+$belize-hole: #2980b9;
+$clouds: #ecf0f1;
+$peter-river: #3498db;
+$silver: #bdc3c7;
+$sun-flower: #f1c40f;
+$orange: #f39c12;
+$alizarin: #e74c3c;
+$pomegranate: #c0392b;
+$emerald: #2ecc71;
+$nephritis: #27ae60;
+$amethyst: #9b59b6;
+$wisteria: #8e44ad;
+
+$bevel: rgba(255, 255, 255, 0.25);
+$shadow: rgba(0, 0, 0, 0.15);
+$active: lighten($sun-flower, 40%);
+$inactive: #eee;
+$active-blue: lighten($peter-river, 25%);
+$match-color: lighten($emerald, 20%);
+
+
+$font-family-sans-serif: 'proxima-nova', Helvetica, Arial, sans-serif;
+$font-family-monospaced: "Inconsolata", "Courier New";
+$font-family-headings: 'proxima-nova', Helvetica, Arial, sans-serif;
+$font-family-nimbus: "nimbus-sans-condensed", Helvetica, Arial, sans-serif;
+$font-size-tiny: 12px;
+$font-size-small: 13px;
+$font-size-base: 14px;
+$font-size-large: 16px;
+$font-size-monospaced-large: 16px;
+$font-size-monospaced-base: 15px;
+$font-size-monospaced-small: 12px;

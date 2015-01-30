@@ -1,0 +1,83 @@
+@import "variables";
+@import "base";
+@import "bootstrap/mixins";
+
+.form-control, .form-control:focus {
+  @include box-shadow(none);
+  @include transition(none);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  font-family: $font-family-headings;
+  margin: 10px 0;
+}
+
+h1, h2, h3 {
+  margin-top: 20px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 22px;
+  &.mini {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h6.all-caps {
+  font-size: $font-size-tiny;
+  letter-spacing: 1px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+  font-size: 13px;
+  @include box-shadow(none);
+  @include transition(none);
+  display: inline-block;
+
+  &:focus {
+    border-color: $peter-river;
+    outline: 0;
+    @include box-shadow(none);
+  }
+
+  &.input-small {
+    border-radius: $border-radius-base;
+  }
+}
+
+// Input group

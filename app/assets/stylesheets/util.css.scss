@@ -137,3 +137,45 @@
     color: $gray-light;
   }
 }
+.all-caps {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: $font-size-small;
+}
+
+.u-pointer {
+  cursor: pointer;
+}
+.u-cursor-text {
+  cursor: text;
+}
+
+.u-pos-relative {
+  position: relative;
+}
+// z-index
+.u-z-up1 {
+  z-index: 101
+}
+.u-z-up2 {
+  z-index: 102
+}
+.u-z-up3 {
+  z-index: 103
+}
+.u-z-up4 {
+  z-index: 104
+}
+
+.u-z-down1 {
+  z-index: 99
+}
+.u-z-down2 {
+  z-index: 98
+}
+.u-z-down3 {
+  z-index: 97
+}
+.u-z-down4 {
+  z-index: 96
+}
