@@ -168,15 +168,21 @@ ResolutionItem = React.createClass
 
   renderCollapsed: ->
     resolution = @props.resolution
-    rd.p null,
-      resolution.text
+    null
+
+  trackResolutionCompletion: ->
 
   renderExpanded: ->
     resolution = @props.resolution
     rd.div null,
-      rd.p null,
-        resolution.text
-      rd.p null, 'wala wala'
+      rd.div className: 'input-group',
+        rd.span className: 'input-group-btn',
+          rd.button
+            className: 'btn btn-default',
+            onClick: @trackResolutionCompletion
+          ,
+            'Track'
+        rd.input type: 'text', className: 'form-control', placeholder: 'Leave a comment'
       rd.button
         className: 'btn btn-default btn-sm'
         onClick: @edit
@@ -210,10 +216,9 @@ ResolutionItem = React.createClass
   render: ->
     # {currentCount, targetCount} = resolution
 
-    rd.li
-      className: 'list-group-item',
-      onClick: @toggleExpand
-    ,
+    rd.li className: 'list-group-item',
+      rd.a onClick: @toggleExpand,
+        rd.h4 null, @props.resolution.text
       if @collapsed()
         @renderCollapsed()
       if @expanded()
@@ -221,40 +226,6 @@ ResolutionItem = React.createClass
       if @editing() or @saving()
         @renderEditing()
 
-
-
-      # if @expanded()
-
-
-      # else if @editing() or @saving()
-      #   rd.div null,
-      #     rd.button
-      #       className: 'btn btn-default btn-sm'
-      #       onClick: => @setState editing: true
-      #     ,
-      #       'Edit'
-      #     if resolution.trackFrequency
-      #       rd.span className: 'label label-info u-tiny-spacing-left', trackFrequency
-
-
-
-      # if @state.editing
-      #   bs.FormGroup null,
-      #     bs.Label null,
-      #       'Text'
-      #     bs.FormInput
-      #       valueLink: @_resolutionLinkState 'text'
-
-      #     bs.Label null,
-      #       'Group'
-      #     bs.FormInput
-      #       valueLink: @_resolutionLinkState 'group'
-
-      #     rd.button
-      #       className: 'btn btn-success u-spacing-top',
-      #       onClick: @saveResolution
-      #     ,
-      #       'Save'
 
 
       # if @state.expanded and not @state.editing
