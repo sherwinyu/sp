@@ -31,5 +31,8 @@ class ResolutionsStore extends Store
       when EventConstants.RESOLUTION_UPDATE_DONE
         @resolutionsMap[action.resolution.id] = action.resolution
         @emitChange()
+      when EventConstants.RESOLUTION_COMPLETION_CREATE_DONE
+        @resolutionsMap[action.resolutionId] = action.resolution
+        @emitChange()
 
 module.exports =  new ResolutionsStore(Dispatcher)

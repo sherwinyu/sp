@@ -117,7 +117,12 @@ ResolutionItem = React.createClass
 
   propTypes:
     resolution: React.PropTypes.shape(
+      id: React.PropTypes.string.isRequired
       text: React.PropTypes.string.isRequired
+      completions: React.PropTypes.arrayOf(React.PropTypes.shape(
+        ts: React.PropTypes.instanceOf Date
+        comment: React.PropTypes.string
+      )).isRequired
       trackFrequency: React.PropTypes.string
       routine: React.PropTypes.object
       type: React.PropTypes.string
@@ -138,6 +143,7 @@ ResolutionItem = React.createClass
   saving: -> @state.ui == ResolutionItem.UI_STATES.SAVING
   editing: -> @state.ui == ResolutionItem.UI_STATES.EDITING
 
+  # TODO separate collapsed state from editing state
   toggleExpand: ->
     if @collapsed()
       @setState ui: ResolutionItem.UI_STATES.EXPANDED
@@ -171,6 +177,16 @@ ResolutionItem = React.createClass
     null
 
   trackResolutionCompletion: ->
+    val = @refs.completionComment.getDOMNode().value
+    ResolutionActions.createResolutionCompletion @props.resolution.id, comment: val
+
+  _renderCompletions: (completions) ->
+    rd.ul null,
+      for completion in completions
+        rd.li null,
+          completion.ts
+          completion.comment
+
 
   renderExpanded: ->
     resolution = @props.resolution
@@ -183,6 +199,7 @@ ResolutionItem = React.createClass
           ,
             'Track'
         bs.FormInput
+          ref: 'completionComment'
           className: 'u-z-up1 u-pos-relative'
           placeholder: 'Leave a comment'
       rd.button
@@ -190,6 +207,9 @@ ResolutionItem = React.createClass
         onClick: @edit
       ,
         'Edit'
+      @_renderCompletions resolution.completions
+
+
 
   renderEditing: ->
     resolution = @props.resolution

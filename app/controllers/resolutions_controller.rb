@@ -35,6 +35,28 @@ class ResolutionsController < ApplicationController
     end
   end
 
+
+  # POST /resolutions/resolution_completions
+  def create_resolution_completion
+    @resolution = Resolution.find params[:id]
+    completion = {
+      # TODO default to time.current, allow manual specify
+      ts: Time.current ,
+      comment: resolution_completion_params[:comment]
+    }
+    @resolution.completions << completion
+    if @resolution.save
+      render json: {completion: completion, resolution: @resolution.as_j(root: false)}
+    else
+      render json: @resolution.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH /resolutions/resolution_completions/:id_timestamp
+  def update_resolution_completion
+    @resolution = Resolution.find params[:id]
+  end
+
   def resolution_params
     p = params.require(:resolution).permit(
       :text,
@@ -43,6 +65,10 @@ class ResolutionsController < ApplicationController
       :type
     )
     p
+  end
+
+  def resolution_completion_params
+    params.require(:resolution_completion).permit!
   end
 
 end

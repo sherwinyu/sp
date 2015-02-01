@@ -18,7 +18,12 @@ Sysys::Application.routes.draw do
   get 'json_editor' => 'activities#json_editor'
 
   resources :activities
-  resources :resolutions
+  resources :resolutions do
+    member do
+      post 'create_resolution_completion'
+      patch 'update_resolution_completion'
+    end
+  end
   # get '/activities' => 'pages#activities_component'
   # get '/activities/:activity_id' => 'activities#show'
 

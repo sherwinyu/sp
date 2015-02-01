@@ -18,6 +18,12 @@ ResolutionDAO =
       data:
         resolution: resolution
 
+  addCompletion: (resolutionId, resolutionCompletion) ->
+    net.postJSON
+      url: "/resolutions/#{resolutionId}/create_resolution_completion.json"
+      data:
+        resolution_completion: resolutionCompletion
+
 
 ResolutionActions =
   loadResolutions: ->
@@ -45,5 +51,15 @@ ResolutionActions =
           actionType: EventConstants.RESOLUTION_UPDATE_DONE
           resolutionId: response.resolution.id
           resolution: response.resolution
+
+  createResolutionCompletion: (resolutionId, resolutionCompletion) ->
+    ResolutionDAO.addCompletion(resolutionId, resolutionCompletion)
+      .done (response) ->
+        Dispatcher.dispatch
+          actionType: EventConstants.RESOLUTION_COMPLETION_CREATE_DONE
+          resolutionId: resolutionId
+          completion: response.completion
+          resolution: response.resolution
+
 
 module.exports = ResolutionActions

@@ -61,7 +61,6 @@ describe ResolutionsController do
 
   describe "api#update" do
     let (:existing_resolution) { Resolution.create text: 'r1' }
-
     let (:resolution_params) do
       {
         group: 'this is a group',
@@ -90,35 +89,50 @@ describe ResolutionsController do
     end
   end
 
+  describe 'api#track_resolution_completion' do
+    let (:existing_resolution) { Resolution.create text: 'r1' }
+
+    let (:resolution_completion_params) do
+      {
+        resolution_completion: {
+          comment: 'This is a comment'
+        },
+        id: existing_resolution.id,
+        format: :json
+      }
+    end
+
+    it 'creates a resolution_completion for the proper resolution' do
+      post :create_resolution_completion, resolution_completion_params
+      expect(existing_resolution.reload.completions).to have(1).element
+    end
+
+    it 'returns the newly created completion' do
+      post :create_resolution_completion, resolution_completion_params
+      json = Hashie::Mash.new(JSON.parse response.body).completion
+      expect(json.comment).to eq 'This is a comment'
+      expect(json.ts).to_not be_nil
+    end
+
+    it 'returns the updated resolution' do
+      post :create_resolution_completion, resolution_completion_params
+      json = Hashie::Mash.new(JSON.parse response.body).resolution
+      expect(json.id).to eq existing_resolution.id.to_s
+    end
+
+    it 'defaults to saving the current timestamp' do
+      fake_time = Time.zone.parse('2015-01-01 09:00:00')
+      Time.stub(:current).and_return fake_time
+      post :create_resolution_completion, resolution_completion_params
+
+      json = Hashie::Mash.new(JSON.parse response.body).completion
+      expect(json.ts).to eq '2015-01-01T09:00:00.000Z'
+      expect(Time.zone.parse json.ts).to eq fake_time
+      expect(existing_resolution.reload.completions[0]['ts']).to eq fake_time
+    end
+  end
+
   describe "api#show" do
   end
 
-  # describe "api#index" do
-  #   it "returns 200" do
-  #     get :index, format: :json
-  #     response.status.should eq 200
-  #   end
-
-  #   it "fetches recent acts" do
-  #     Day.should_receive :recent
-  #     get :index, format: :json
-  #   end
-  # end
-
-  # describe "authentication" do
-  #   before(:each) { sign_out user }
-  #   specify "is required" do
-  #     get :index, format: :json
-  #     response.status.should eq 401
-
-  #     post :create, format: :json
-  #     response.status.should eq 401
-
-  #     get :show, format: :json, id: 1
-  #     response.status.should eq 401
-
-  #     put :update, format: :json, id: 1
-  #     response.status.should eq 401
-  #   end
-  # end
 end
