@@ -7,6 +7,7 @@ bs = require 'utils/bs'
 rd = React.DOM
 
 ResolutionsIndex = React.createClass
+  displayName: 'ResolutionsIndex'
 
   propTypes:
     # Resolution refers to a single trackable item, and they are grouped together
@@ -114,6 +115,7 @@ ResolutionsIndex = React.createClass
         @renderResolutionTitle 'IV. Persoal projects'
 
 ResolutionItem = React.createClass
+  displayName: 'ResolutionItem'
 
   propTypes:
     resolution: React.PropTypes.shape(
