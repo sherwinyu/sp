@@ -14,7 +14,7 @@ JsonEditorRoot = require 'react/json_editor'
 
 rd = React.DOM
 update = React.addons.update
-{Link, Route, Routes, DefaultRoute} = ReactRouter
+{Link, Route} = ReactRouter
 
 $(document).ready ->
   $.ajaxSetup
@@ -37,24 +37,17 @@ jQuery.extend
 
 $(document).ready ->
 
-  routes = Routes location: 'history',
-
-
+  routes =
+    Route name: 'application', path: '/', handler: ApplicationComponent,
       Route
-        name: 'application'
-        path: '/'
-        handler: ApplicationComponent
+        name: 'activities',
+        path: '/activities',
+        handler: ActivitiesIndex,
       ,
         Route
-          name: 'activities',
-          path: '/activities',
-          handler: ActivitiesIndex,
-          mostUsedActivities: window._sp_vars.props.activities
-        ,
-          Route
-            name: 'activity'
-            path: ':activityId'
-            handler: Activity
+          name: 'activity'
+          path: ':activityId'
+          handler: Activity
 
       Route
         name: 'json_editor'
@@ -67,10 +60,10 @@ $(document).ready ->
             f: 'asdf'
         handler: JsonEditorRoot
 
-
       Route
         name: 'resolutions'
         path: '/resolutions'
         handler: ResolutionsIndex
 
-  React.renderComponent(routes, $('.react-mount')[0])
+  ReactRouter.run routes, ReactRouter.HistoryLocation, (handler) ->
+    React.render handler(), $('.react-mount')[0]

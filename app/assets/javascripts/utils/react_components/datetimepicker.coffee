@@ -1,5 +1,4 @@
-# datetimepicker = require 'bootstrap-datetimepicker'
-
-DateTimePicker = DateReact.createClass
+React = require 'react'
+DateTimePicker = React.createClass
   render: ->
     rd.h1 'hi'

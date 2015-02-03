@@ -1,3 +1,5 @@
+moment = require 'moment'
+
 window.ts = -> utils.ts()
 
 window.getCursor = (node) ->
@@ -220,3 +222,4 @@ utils.datetime =
   isRailsDateString: (string) ->
     return moment(string, "YYYY-MM-DDTHH:mm:ss.SSSZ", true).isValid()
 
+module.exports = utils

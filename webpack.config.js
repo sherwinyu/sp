@@ -46,6 +46,7 @@ module.exports = {
   resolve: {
     alias: {
       'react$': 'react/addons'
+      // 'datetimepicker': 'node_modules/bootstrap-datetimepicker/build/js/bootstrap'
     },
     extensions: ['', '.js.coffee', '.coffee', '.js'],
     root: [

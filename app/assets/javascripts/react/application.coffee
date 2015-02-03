@@ -1,4 +1,8 @@
 React = require 'react'
+ReactRouter = require 'react-router'
+
+RouteHandler = ReactRouter.RouteHandler
+
 rd = React.DOM
 update = React.addons.update
 
@@ -20,7 +24,7 @@ ApplicationComponent = React.createClass
   render: ->
     rd.div className: 'container',
       @renderNotifications()
-      @props.activeRouteHandler
+      RouteHandler
         addNotification: @addNotification
 
 module.exports = ApplicationComponent
