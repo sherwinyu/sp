@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/sherwinyu/sp",
   "dependencies": {
-    "bootstrap-datetimepicker": "eonasdan/bootstrap-datetimepicker#1b2fe6ef0062e17238117852f2c6b3ec2c2b0710",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.8.0",
     "eonasdan-bootstrap-datetimepicker": "3.1.3",

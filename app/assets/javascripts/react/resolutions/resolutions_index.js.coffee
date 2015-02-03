@@ -2,6 +2,8 @@ React = require 'react'
 
 ResolutionActions = require 'react/resolutions/resolution_actions'
 ResolutionsStore = require 'react/flux/resolutions_store'
+# DateTimeField = require 'react-bootstrap-datetimepicker'
+# datetimefield = require 'eonasdan-bootstrap-datetimepicker'
 
 bs = require 'utils/bs'
 rd = React.DOM
@@ -189,6 +191,8 @@ ResolutionItem = React.createClass
           completion.ts
           completion.comment
 
+  componentDidUpdate: ->
+    $('#datetimepicker1').datetimepicker()
 
   renderExpanded: ->
     resolution = @props.resolution
@@ -204,6 +208,19 @@ ResolutionItem = React.createClass
           ref: 'completionComment'
           className: 'u-z-up1 u-pos-relative'
           placeholder: 'Leave a comment'
+
+      bs.FormGroup {},
+        rd.div className: 'input-group date', id: 'datetimepicker1',
+          bs.FormInput {}
+          rd.span className: 'input-group-addon',
+            rd.span className: 'glyphicon glyphicon-calendar'
+
+
+
+
+
+
+      # DateTimeField()
       rd.button
         className: 'btn btn-default btn-sm'
         onClick: @edit
