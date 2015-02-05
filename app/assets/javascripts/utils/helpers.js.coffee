@@ -1,4 +1,4 @@
-moment = require 'moment'
+# moment = require 'moment'
 
 window.ts = -> utils.ts()
 
@@ -222,4 +222,5 @@ utils.datetime =
   isRailsDateString: (string) ->
     return moment(string, "YYYY-MM-DDTHH:mm:ss.SSSZ", true).isValid()
 
-module.exports = utils
+if module?
+  module.exports = utils
