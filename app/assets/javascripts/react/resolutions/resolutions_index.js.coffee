@@ -2,8 +2,8 @@ React = require 'react'
 
 ResolutionActions = require 'react/resolutions/resolution_actions'
 ResolutionsStore = require 'react/flux/resolutions_store'
-# DateTimeField = require 'react-bootstrap-datetimepicker'
-# datetimefield = require 'eonasdan-bootstrap-datetimepicker'
+DateTimePicker = require 'react_components/date_time_picker'
+
 
 bs = require 'utils/bs'
 rd = React.DOM
@@ -22,7 +22,7 @@ ResolutionsIndex = React.createClass
     #   recentCompletions: array
     #   isHeader
     #   information
-    #   type: {info, header, goal}
+    #   type: {info, <>header, goal}
     # ).isRequired
     resolutions: React.PropTypes.array
 
@@ -182,6 +182,7 @@ ResolutionItem = React.createClass
 
   trackResolutionCompletion: ->
     val = @refs.completionComment.getDOMNode().value
+    time = @refs.completionDateTime.getValue()
     ResolutionActions.createResolutionCompletion @props.resolution.id, comment: val
 
   _renderCompletions: (completions) ->
@@ -190,9 +191,6 @@ ResolutionItem = React.createClass
         rd.li null,
           completion.ts
           completion.comment
-
-  componentDidUpdate: ->
-    $('#datetimepicker1').datetimepicker()
 
   renderExpanded: ->
     resolution = @props.resolution
@@ -208,19 +206,8 @@ ResolutionItem = React.createClass
           ref: 'completionComment'
           className: 'u-z-up1 u-pos-relative'
           placeholder: 'Leave a comment'
-
       bs.FormGroup {},
-        rd.div className: 'input-group date', id: 'datetimepicker1',
-          bs.FormInput {}
-          rd.span className: 'input-group-addon',
-            rd.span className: 'glyphicon glyphicon-calendar'
-
-
-
-
-
-
-      # DateTimeField()
+        DateTimePicker ref: 'completionDateTime'
       rd.button
         className: 'btn btn-default btn-sm'
         onClick: @edit
