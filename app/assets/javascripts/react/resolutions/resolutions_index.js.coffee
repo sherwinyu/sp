@@ -189,7 +189,7 @@ ResolutionItem = React.createClass
     rd.ul null,
       for completion in completions
         rd.li null,
-          completion.ts
+          completion.ts.calendar()
           completion.comment
 
   renderExpanded: ->
@@ -211,8 +211,7 @@ ResolutionItem = React.createClass
       rd.button
         className: 'btn btn-default btn-sm'
         onClick: @edit
-      ,
-        'Edit'
+      , 'Edit'
       @_renderCompletions resolution.completions
 
 
@@ -232,18 +231,14 @@ ResolutionItem = React.createClass
         rd.button
           className: 'btn btn-success btn-sm u-tiny-spacing-top'
           onClick: @saveResolution
-        ,
-          'Save'
+        , 'Save'
       if @saving()
         rd.button
           className: 'btn btn-success btn-sm u-tiny-spacing-top'
           disabled: true
-        ,
-          'Saving'
+        , 'Saving'
 
   render: ->
-    # {currentCount, targetCount} = resolution
-
     rd.li className: 'list-group-item',
       rd.a className: 'u-pointer', onClick: @toggleExpand,
         rd.h4 null, @props.resolution.text

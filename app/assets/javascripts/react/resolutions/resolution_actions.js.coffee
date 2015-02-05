@@ -5,6 +5,11 @@ EventConstants = require 'react/event_constants'
 ResolutionDAO =
   all: ->
     net.getJSON '/resolutions.json'
+      .then (response) =>
+        response.resolutions = response.resolutions.map (resolution) =>
+          @deserializeResolution resolution
+        response
+
 
   create: (resolution) ->
     net.postJSON
@@ -23,6 +28,20 @@ ResolutionDAO =
       url: "/resolutions/#{resolutionId}/create_resolution_completion.json"
       data:
         resolution_completion: resolutionCompletion
+
+  deserializeResolution: (resolution) ->
+    resolution.completions = resolution.completions.map (c) =>
+      @deserializeCompletion(c)
+    resolution
+
+  serializeCompletion: (resolutionCompletion) ->
+    resolutionCompletion.ts = resolutionCompletion.ts.toJSON()
+    resolutionCompletion
+
+  deserializeCompletion: (resolutionCompletion) ->
+    resolutionCompletion.ts = moment(resolutionCompletion.ts)
+    resolutionCompletion
+
 
 
 ResolutionActions =
