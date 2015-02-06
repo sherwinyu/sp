@@ -89,12 +89,12 @@ describe ResolutionsController do
     end
   end
 
-  describe 'api#track_resolution_completion' do
+  describe 'api#track_completion' do
     let (:existing_resolution) { Resolution.create text: 'r1' }
 
-    let (:resolution_completion_params) do
+    let (:completion_params) do
       {
-        resolution_completion: {
+        completion: {
           comment: 'This is a comment'
         },
         id: existing_resolution.id,
@@ -102,20 +102,20 @@ describe ResolutionsController do
       }
     end
 
-    it 'creates a resolution_completion for the proper resolution' do
-      post :create_resolution_completion, resolution_completion_params
+    it 'creates a completion for the proper resolution' do
+      post :create_completion, completion_params
       expect(existing_resolution.reload.completions).to have(1).element
     end
 
-    it 'returns the newly created completion' do
-      post :create_resolution_completion, resolution_completion_params
+    it 'responds with a dictionary with the newly created completion and the updated resolution' do
+      post :create_completion, completion_params
+
+      # completion is present
       json = Hashie::Mash.new(JSON.parse response.body).completion
       expect(json.comment).to eq 'This is a comment'
       expect(json.ts).to_not be_nil
-    end
 
-    it 'returns the updated resolution' do
-      post :create_resolution_completion, resolution_completion_params
+      # resolution is present
       json = Hashie::Mash.new(JSON.parse response.body).resolution
       expect(json.id).to eq existing_resolution.id.to_s
     end
@@ -123,12 +123,29 @@ describe ResolutionsController do
     it 'defaults to saving the current timestamp' do
       fake_time = Time.zone.parse('2015-01-01 09:00:00')
       Time.stub(:current).and_return fake_time
-      post :create_resolution_completion, resolution_completion_params
+      post :create_completion, completion_params
 
       json = Hashie::Mash.new(JSON.parse response.body).completion
       expect(json.ts).to eq '2015-01-01T09:00:00.000Z'
       expect(Time.zone.parse json.ts).to eq fake_time
       expect(existing_resolution.reload.completions[0]['ts']).to eq fake_time
+    end
+
+    context 'when ts is provided' do
+      let (:completion_params) do
+        completion_params = super()
+        completion_params[:completion][:ts] = '2015-02-12T06:47:12Z'
+        completion_params
+      end
+      it 'honors the ts as a json value' do
+        post :create_completion, completion_params
+
+        json = Hashie::Mash.new(JSON.parse response.body).completion
+        expect(json.ts).to eq '2015-02-12T06:47:12.000Z'
+        expected_time = Time.utc(2015, 2, 12, 6, 47, 12).in_time_zone
+        expect(Time.zone.parse json.ts).to eq expected_time
+        expect(existing_resolution.reload.completions[0]['ts']).to eq expected_time
+      end
     end
   end
 

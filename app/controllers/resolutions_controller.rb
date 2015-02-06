@@ -36,13 +36,17 @@ class ResolutionsController < ApplicationController
   end
 
 
-  # POST /resolutions/resolution_completions
-  def create_resolution_completion
+  # POST /resolutions/:id/completions
+  def create_completion
     @resolution = Resolution.find params[:id]
+    ts = Time.current
+    if completion_params[:ts]
+      ts = Time.zone.parse completion_params[:ts]
+    end
     completion = {
       # TODO default to time.current, allow manual specify
-      ts: Time.current ,
-      comment: resolution_completion_params[:comment]
+      ts: ts,
+      comment: completion_params[:comment]
     }
     @resolution.completions << completion
     if @resolution.save
@@ -52,8 +56,8 @@ class ResolutionsController < ApplicationController
     end
   end
 
-  # PATCH /resolutions/resolution_completions/:id_timestamp
-  def update_resolution_completion
+  # PATCH /resolutions/completions/:id_timestamp
+  def update_completion
     @resolution = Resolution.find params[:id]
   end
 
@@ -67,8 +71,8 @@ class ResolutionsController < ApplicationController
     p
   end
 
-  def resolution_completion_params
-    params.require(:resolution_completion).permit!
+  def completion_params
+    params.require(:completion).permit!
   end
 
 end

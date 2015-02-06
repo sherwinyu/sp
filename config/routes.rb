@@ -20,8 +20,8 @@ Sysys::Application.routes.draw do
   resources :activities
   resources :resolutions do
     member do
-      post 'create_resolution_completion'
-      patch 'update_resolution_completion'
+      post 'completions' => 'resolutions#create_completion'
+      patch 'completions/:ts' => 'resolutions#update_completion'
     end
   end
   # get '/activities' => 'pages#activities_component'

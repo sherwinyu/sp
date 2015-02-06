@@ -180,10 +180,11 @@ ResolutionItem = React.createClass
     resolution = @props.resolution
     null
 
-  trackResolutionCompletion: ->
-    val = @refs.completionComment.getDOMNode().value
-    time = @refs.completionDateTime.getValue()
-    ResolutionActions.createResolutionCompletion @props.resolution.id, comment: val
+  trackCompletion: ->
+    completion =
+      comment: @refs.completionComment.getDOMNode().value
+      ts: @refs.completionDateTime.getValue()
+    ResolutionActions.createCompletion @props.resolution.id, completion
 
   _renderCompletions: (completions) ->
     rd.ul null,
@@ -199,9 +200,8 @@ ResolutionItem = React.createClass
         rd.span className: 'input-group-btn',
           rd.button
             className: 'btn btn-default',
-            onClick: @trackResolutionCompletion
-          ,
-            'Track'
+            onClick: @trackCompletion
+          , 'Track'
         bs.FormInput
           ref: 'completionComment'
           className: 'u-z-up1 u-pos-relative'

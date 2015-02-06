@@ -5,10 +5,10 @@ EventConstants = require 'react/event_constants'
 ResolutionDAO =
   all: ->
     net.getJSON '/resolutions.json'
-      .then (response) =>
-        response.resolutions = response.resolutions.map (resolution) =>
-          @deserializeResolution resolution
-        response
+    .then (response) =>
+      response.resolutions = response.resolutions.map (resolution) =>
+        @deserializeResolution resolution
+      response
 
 
   create: (resolution) ->
@@ -23,24 +23,28 @@ ResolutionDAO =
       data:
         resolution: resolution
 
-  addCompletion: (resolutionId, resolutionCompletion) ->
+  addCompletion: (resolutionId, completion) ->
     net.postJSON
-      url: "/resolutions/#{resolutionId}/create_resolution_completion.json"
+      url: "/resolutions/#{resolutionId}/completions.json"
       data:
-        resolution_completion: resolutionCompletion
+        completion: @serializeCompletion completion
+    .then (response) =>
+      response.resolution = @deserializeResolution response.resolution
+      response.completion = @deserializeCompletion response.completion
+      response
 
   deserializeResolution: (resolution) ->
     resolution.completions = resolution.completions.map (c) =>
       @deserializeCompletion(c)
     resolution
 
-  serializeCompletion: (resolutionCompletion) ->
-    resolutionCompletion.ts = resolutionCompletion.ts.toJSON()
-    resolutionCompletion
+  serializeCompletion: (completion) ->
+    completion.ts = completion.ts?.toJSON()
+    completion
 
-  deserializeCompletion: (resolutionCompletion) ->
-    resolutionCompletion.ts = moment(resolutionCompletion.ts)
-    resolutionCompletion
+  deserializeCompletion: (completion) ->
+    completion.ts = moment(completion.ts)
+    completion
 
 
 
@@ -71,8 +75,8 @@ ResolutionActions =
           resolutionId: response.resolution.id
           resolution: response.resolution
 
-  createResolutionCompletion: (resolutionId, resolutionCompletion) ->
-    ResolutionDAO.addCompletion(resolutionId, resolutionCompletion)
+  createCompletion: (resolutionId, completion) ->
+    ResolutionDAO.addCompletion(resolutionId, completion)
       .done (response) ->
         Dispatcher.dispatch
           actionType: EventConstants.RESOLUTION_COMPLETION_CREATE_DONE
