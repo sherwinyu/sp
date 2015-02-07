@@ -22,6 +22,9 @@ ResolutionDAO =
       url: "/resolutions/#{id}.json"
       data:
         resolution: resolution
+    .then (response) =>
+      response.resolution = @deserializeResolution response.resolution
+      response
 
   addCompletion: (resolutionId, completion) ->
     net.postJSON

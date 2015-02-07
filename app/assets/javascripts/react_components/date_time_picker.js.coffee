@@ -6,6 +6,11 @@ DateTimePicker = React.createClass
   propTypes:
     onChange: React.PropTypes.func
     value: React.PropTypes.instanceOf(Date)
+    embedded: React.PropTypes.bool
+
+  getDefaultProps: ->
+    embedded: true
+    defaultValue: moment()
 
   handleChange: (e) ->
     e.preventDefault()
@@ -19,7 +24,11 @@ DateTimePicker = React.createClass
     @_dateTimePicker().date(@props.value)
 
   componentDidMount: ->
-    @$el().datetimepicker()
+    @$el().datetimepicker
+      defaultDate: @props.defaultValue
+      showTodayButton: true
+      sideBySide: true
+
 
     if @props.value?
       @$el().on 'dp.change', @handleChange.bind this
@@ -31,10 +40,22 @@ DateTimePicker = React.createClass
 
   getValue: -> @_dateTimePicker().date()
 
-  render: ->
-    rd.div ref: 'datetimepicker', className: 'input-group date',
-      bs.FormInput {}
+  renderEmbedded: ->
+    bs.FormInput ref: 'datetimepicker', style: @getStyle()
+
+  getStyle: ->
+    width: '22%'
+
+  renderGroup: ->
+    rd.span ref: 'datetimepicker', className: 'input-group date',
+      bs.FormInput {style: @getStyle()}
       rd.span className: 'input-group-addon',
         rd.span className: 'glyphicon glyphicon-calendar'
+
+  render: ->
+    if @props.embedded
+      @renderEmbedded()
+    else
+      @renderGroup()
 
 module.exports = DateTimePicker
