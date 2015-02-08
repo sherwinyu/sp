@@ -17,6 +17,8 @@ ResolutionDAO =
       data:
         resolution: resolution
 
+  updateGroup: ->
+
   update: (id, resolution) ->
     net.patchJSON
       url: "/resolutions/#{id}.json"

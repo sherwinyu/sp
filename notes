@@ -1,3 +1,7 @@
+NEXT STEPS
+  - figure out a proper webpack deploy to heroku staging
+  - Make the product usable. This is more important than getting engineering architecture right!!
+
 High priority: resolution management
 
 ++ IMPLEMENT FLUX ++

@@ -9,7 +9,7 @@ update = React.addons.update
 class ResolutionsStore extends Store
 
   _group: (resolutions) ->
-    _.groupBy resolutions, (resolution) -> resolution.group
+    _.groupBy resolutions, (resolution) -> resolution.group or 'New resolutions'
 
   getState: ->
     resolutions = _.values @resolutionsMap

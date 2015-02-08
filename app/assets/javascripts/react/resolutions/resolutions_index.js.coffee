@@ -67,18 +67,26 @@ ResolutionsIndex = React.createClass
 
   renderResolutions: ->
     rd.div className: 'resolutions',
-      rd.h3 null,
+      rd.h2 null,
         'Resolutions'
       rd.button {
+        className: 'btn btn-default u-spacing-bottom'
         onClick: @newResolution
       },
         'Create resolution'
 
-      rd.div className: 'panel panel-default resolution-theme',
-        rd.div className: 'panel-heading',
-          @renderResolutionTitle 'I. Be more appreciative'
-        rd.ul className: 'list-group',
-          for resolution in @state.resolutions
-            ResolutionItem key: resolution.id, resolution: resolution
+      for groupName, resolutions of @state.groupedResolutions
+        rd.div className: 'panel panel-default',
+          rd.div className: 'panel-heading',
+            @renderResolutionTitle groupName
+          rd.ul className: 'list-group',
+            for resolution in resolutions
+              ResolutionItem key: resolution.id, resolution: resolution
+
+        # rd.div className: 'panel-heading',
+        #   @renderResolutionTitle 'I. Be more appreciative'
+        # rd.ul className: 'list-group',
+        #   for resolution in @state.resolutions
+        #     ResolutionItem key: resolution.id, resolution: resolution
 
 module.exports = ResolutionsIndex
