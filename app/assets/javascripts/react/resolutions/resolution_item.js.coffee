@@ -120,6 +120,10 @@ ResolutionItem = React.createClass
         'Group'
       bs.FormInput
         valueLink: @_resolutionLinkState 'group'
+      bs.Label null,
+        'Target count'
+      bs.FormInput
+        valueLink: @_resolutionLinkState 'targetCount'
       if @editing()
         rd.button
           className: 'btn btn-success btn-sm u-tiny-spacing-top'
@@ -131,16 +135,29 @@ ResolutionItem = React.createClass
           disabled: true
         , 'Saving'
 
+  renderNumberCompleted: ->
+    if @props.resolution.targetCount?
+      "#{@props.resolution.currentCount}/#{@props.resolution.targetCount}"
+    else
+      "#{@props.resolution.currentCount} completed"
+
   render: ->
     rd.li className: 'list-group-item',
       rd.a className: 'u-pointer', onClick: @toggleExpand,
-        rd.h4 null,
+        rd.h4 className: 'u-display-inline',
           @props.resolution.text
-          if @expanded()
-            rd.button
-              className: 'btn btn-default btn-sm u-small-spacing-left'
-              onClick: @edit
-            , 'Edit'
+        rd.span className: 'faded u-cursor',
+          " #{@props.resolution.currentCount}/#{@props.resolution.targetCount}"
+      if @expanded()
+        rd.div className: 'u-small-spacing-bottom',
+          rd.button
+            className: 'btn btn-default btn-sm'
+            onClick: @edit
+          , 'Edit'
+          rd.button
+            className: 'btn btn-default btn-sm u-small-spacing-left'
+            onClick: null
+          , 'More...'
       if @collapsed()
         @renderCollapsed()
       if @expanded()

@@ -38,9 +38,14 @@ ResolutionDAO =
       response.completion = @deserializeCompletion response.completion
       response
 
+  serializeResolution: (resolution) ->
+    resolution.target_count = resolution.targetCount
+
   deserializeResolution: (resolution) ->
     resolution.completions = resolution.completions.map (c) =>
       @deserializeCompletion(c)
+    resolution.targetCount = resolution.target_count
+    resolution.currentCount = resolution.current_count
     resolution
 
   serializeCompletion: (completion) ->
@@ -73,7 +78,9 @@ ResolutionActions =
           resolution: response.resolution
 
   updateResolution: (id, resolution) ->
-    ResolutionDAO.update id, resolution
+    # TODO reject completions here
+    resolutionUpdate = _.pick resolution, 'text', 'targetCount', 'group'
+    ResolutionDAO.update id, resolutionUpdate
       .done (response) ->
         Dispatcher.dispatch
           actionType: EventConstants.RESOLUTION_UPDATE_DONE
