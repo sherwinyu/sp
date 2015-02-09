@@ -70,9 +70,12 @@ ResolutionItem = React.createClass
     null
 
   trackCompletion: ->
+    ts = @refs.completionDateTime.getValue()
+
     completion =
       comment: @refs.completionComment.getDOMNode().value
-      ts: @refs.completionDateTime.getValue()
+      ts: ts
+      day: ts.format('YYYY-MM-DD')
     ResolutionActions.createCompletion @props.resolution.id, completion
 
   _renderCompletions: (completions) ->
@@ -82,7 +85,8 @@ ResolutionItem = React.createClass
           rd.p null,
             completion.comment
           rd.p className: 'u-tiny-text faded',
-            completion.ts.calendar()
+            rd.a href: "/#/days/#{completion.date}",
+              completion.ts.calendar()
 
   renderTrackingWidget: ->
     rd.div className: 'input-group u-small-spacing-bottom',

@@ -43,17 +43,28 @@ class ResolutionsController < ApplicationController
     if completion_params[:ts]
       ts = Time.zone.parse completion_params[:ts]
     end
+
+
+    completion_date = Date.strptime completion_params[:day], '%Y-%m-%d'
+    day = Day.find_by date: completion_date
+
     completion = {
       # TODO default to time.current, allow manual specify
       ts: ts,
       comment: completion_params[:comment]
     }
+    # TODO shift to using Resolution#add_completion and do the validations there
+    completion[:day_id] = day.id if day
+    completion[:date] = completion_params[:day]
     @resolution.completions << completion
     if @resolution.save
       render json: {completion: completion, resolution: @resolution.as_j(root: false)}
     else
       render json: @resolution.errors, status: :unprocessable_entity
     end
+
+  rescue ArgumentError
+    render json: @resolution.errors, status: :unprocessable_entity
   end
 
   # PATCH /resolutions/completions/:id_timestamp
