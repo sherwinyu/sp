@@ -149,7 +149,7 @@ ResolutionItem = React.createClass
         rd.span className: 'faded u-cursor',
           " #{@props.resolution.currentCount}/#{@props.resolution.targetCount}"
       if @expanded()
-        rd.div className: 'u-small-spacing-bottom',
+        rd.div className: 'u-tiny-spacing-bottom',
           rd.button
             className: 'btn btn-default btn-sm'
             onClick: @edit

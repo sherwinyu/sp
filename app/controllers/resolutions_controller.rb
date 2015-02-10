@@ -77,6 +77,7 @@ class ResolutionsController < ApplicationController
       :text,
       :group,
       :frequency,
+      :target_count,
       :type
     )
     p

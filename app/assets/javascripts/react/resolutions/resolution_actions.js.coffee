@@ -23,7 +23,7 @@ ResolutionDAO =
     net.patchJSON
       url: "/resolutions/#{id}.json"
       data:
-        resolution: resolution
+        resolution: @serializeResolution resolution
     .then (response) =>
       response.resolution = @deserializeResolution response.resolution
       response
@@ -40,6 +40,7 @@ ResolutionDAO =
 
   serializeResolution: (resolution) ->
     resolution.target_count = resolution.targetCount
+    resolution
 
   deserializeResolution: (resolution) ->
     resolution.completions = resolution.completions.map (c) =>
