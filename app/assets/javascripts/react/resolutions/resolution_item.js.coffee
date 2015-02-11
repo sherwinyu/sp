@@ -2,6 +2,7 @@ React = require 'react'
 
 ResolutionActions = require 'react/resolutions/resolution_actions'
 DateTimePicker = require 'react_components/date_time_picker'
+Select2 = require 'react_components/select2'
 bs = require 'utils/bs'
 rd = React.DOM
 
@@ -118,8 +119,9 @@ ResolutionItem = React.createClass
         valueLink: @_resolutionLinkState 'text'
       bs.Label null,
         'Group'
-      bs.FormInput
-        valueLink: @_resolutionLinkState 'group'
+      Select2 options: [1, 2, 3]
+      # bs.FormInput
+      #   valueLink: @_resolutionLinkState 'group'
       bs.Label null,
         'Target count'
       bs.FormInput

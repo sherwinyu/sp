@@ -1,4 +1,6 @@
 NEXT STEPS
+  - Add select2 and make the edit group selector better
+  - figure out migration / syncing with Days model
   - figure out a proper webpack deploy to heroku staging
   - Make the product usable. This is more important than getting engineering architecture right!!
 

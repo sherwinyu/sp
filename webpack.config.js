@@ -29,6 +29,9 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.coffee$/, loader: "coffee-loader"  },
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.gif$/, loader: "url-loader" },
+      { test: /\.png$/, loader: "url-loader" },
       // {
       //   // Pattern to match only files with the '.js' or '.jsx' extension.
       //   // This tells the loader to only run for those files.
@@ -48,7 +51,7 @@ module.exports = {
       'react$': 'react/addons'
       // 'datetimepicker': 'node_modules/bootstrap-datetimepicker/build/js/bootstrap'
     },
-    extensions: ['', '.js.coffee', '.coffee', '.js'],
+    extensions: ['', '.js.coffee', '.coffee', '.js', '.css', '.scss'],
     root: [
       path.join(__dirname, 'app', 'assets', 'javascripts')
     ],

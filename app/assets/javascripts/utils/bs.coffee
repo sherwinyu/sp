@@ -1,5 +1,4 @@
 React = require 'react'
-DateTimePicker = require 'utils/react_components/datetimepicker'
 
 joinClasses = (className) ->
   className ?= ''

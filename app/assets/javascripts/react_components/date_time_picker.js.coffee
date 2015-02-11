@@ -1,7 +1,9 @@
 React = require 'react'
 bs = require 'utils/bs'
 rd = React.DOM
+
 DateTimePicker = React.createClass
+  displayName: 'DateTimePicker'
 
   propTypes:
     onChange: React.PropTypes.func
