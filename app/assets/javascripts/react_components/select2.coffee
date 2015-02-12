@@ -1,6 +1,7 @@
 React = require 'react'
 require 'select2'
 require 'select2/select2.css'
+require 'select2/select2-bootstrap.css'
 
 rd = React.DOM
 
@@ -11,13 +12,17 @@ Select2 = React.createClass {
     allowClear: React.PropTypes.bool.isRequired
     createSearchChoice: React.PropTypes.func
     formatSelection: React.PropTypes.func
-    options: React.PropTypes.array.isRequired
+    options: React.PropTypes.arrayOf(React.PropTypes.shape(
+      id: React.PropTypes.string.isRequired
+      text: React.PropTypes.string.isRequired
+    ))
     placeholder: React.PropTypes.string.isRequired
     multiple: React.PropTypes.bool
     value: React.PropTypes.any
     defaultValue: React.PropTypes.any
     onChange: React.PropTypes.func
     width: React.PropTypes.string.isRequired
+    allowUserCreated: React.PropTypes.bool
   }
 
   getDefaultProps: -> {
@@ -30,15 +35,22 @@ Select2 = React.createClass {
   dataFunc: -> {results: @props.options}
 
   componentDidMount: ->
-    $(@getDOMNode()).select2 {
+    select2Options =
       allowClear: @props.allowClear
       createSearchChoice: @props.createSearchChoice
       formatSelection: @props.formatSelection
       width: @props.width
       placeholder: @props.placeholder
-      data: @dataFunc
       multiple: @props.multiple
-    }
+      data: @dataFunc
+
+    if @props.allowUserCreated
+      select2Options.createSearchChoice = (term, data) ->
+        unless _.find data, _.matches(text: term)
+          return id: term, text: term
+
+    $(@getDOMNode()).select2 select2Options
+
     # When the component first mounts, it's possible that the caller has specified defaultValue
     # (indicating it's an uncontrolled component) or value (controlled component).
     # See http://facebook.github.io/react/docs/forms.html

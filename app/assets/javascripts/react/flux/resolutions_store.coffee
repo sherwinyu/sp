@@ -13,9 +13,11 @@ class ResolutionsStore extends Store
 
   getState: ->
     resolutions = _.values @resolutionsMap
+    groupedResolutions = @_group resolutions
     ret =
       resolutions: resolutions
-      groupedResolutions: @_group resolutions
+      groupedResolutions: groupedResolutions
+      groups: _.keys groupedResolutions
 
   resetState: ->
     @resolutionsMap = {}

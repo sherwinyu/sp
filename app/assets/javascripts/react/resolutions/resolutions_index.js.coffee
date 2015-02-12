@@ -75,13 +75,16 @@ ResolutionsIndex = React.createClass
       },
         'Create resolution'
 
-      for groupName, resolutions of @state.groupedResolutions
+      for group, resolutions of @state.groupedResolutions
         rd.div className: 'panel panel-default',
           rd.div className: 'panel-heading',
-            @renderResolutionTitle groupName
+            @renderResolutionTitle group
           rd.ul className: 'list-group',
             for resolution in resolutions
-              ResolutionItem key: resolution.id, resolution: resolution
+              ResolutionItem
+                key: resolution.id
+                resolution: resolution
+                initialGroups: @state.groups
 
         # rd.div className: 'panel-heading',
         #   @renderResolutionTitle 'I. Be more appreciative'

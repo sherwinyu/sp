@@ -24,6 +24,7 @@ ResolutionItem = React.createClass
       targetCount: React.PropTypes.number
       doneInInterval: React.PropTypes.boolean
     )
+    initialGroups: React.PropTypes.array.isRequired
 
   statics:
     UI_STATES:
@@ -109,8 +110,11 @@ ResolutionItem = React.createClass
       @renderTrackingWidget()
       @_renderCompletions resolution.completions
 
-
   renderEditing: ->
+    group = @state.resolution.group
+    groups = @props.initialGroups.map (name) -> id: name, text: name
+    unless group in @props.initialGroups
+      groups.push id: group, text: group
     resolution = @props.resolution
     bs.FormGroup null,
       bs.Label null,
@@ -119,7 +123,11 @@ ResolutionItem = React.createClass
         valueLink: @_resolutionLinkState 'text'
       bs.Label null,
         'Group'
-      Select2 options: [1, 2, 3]
+      Select2
+        options: groups
+        allowUserCreated: true
+        value: @_resolutionLinkState('group').value
+        onChange: @_resolutionLinkState('group').requestChange
       # bs.FormInput
       #   valueLink: @_resolutionLinkState 'group'
       bs.Label null,

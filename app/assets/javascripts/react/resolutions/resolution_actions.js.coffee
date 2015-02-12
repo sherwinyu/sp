@@ -70,6 +70,7 @@ ResolutionActions =
   createResolution: (resolution = {}) ->
     defaults =
       text: 'Untitled resolution'
+      group: 'New resolutions'
       type: 'goal'
     resolution = $.extend defaults, resolution
     ResolutionDAO.create resolution
