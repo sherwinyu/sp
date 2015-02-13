@@ -76,7 +76,7 @@ ResolutionsIndex = React.createClass
         'Create resolution'
 
       for group, resolutions of @state.groupedResolutions
-        rd.div className: 'panel panel-default',
+        rd.div className: 'panel panel-default', key: group,
           rd.div className: 'panel-heading',
             @renderResolutionTitle group
           rd.ul className: 'list-group',

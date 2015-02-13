@@ -6,6 +6,8 @@ Select2 = require 'react_components/select2'
 bs = require 'utils/bs'
 rd = React.DOM
 
+cx = React.addons.classSet
+
 ResolutionItem = React.createClass
   displayName: 'ResolutionItem'
 
@@ -52,11 +54,15 @@ ResolutionItem = React.createClass
   getInitialState: ->
     ui: ResolutionItem.UI_STATES.COLLAPSED
     resolution: @props.resolution
+    hover: false
 
   saveResolution: ->
-    @setState ui: ResolutionItem.UI_STATES.SAVING
+    if @isMounted()
+      @setState ui: ResolutionItem.UI_STATES.SAVING
     ResolutionActions.updateResolution @props.resolution.id, @state.resolution
-      .done => @setState ui: ResolutionItem.UI_STATES.EXPANDED
+      .done =>
+        if @isMounted()
+          @setState ui: ResolutionItem.UI_STATES.EXPANDED
 
   _resolutionLinkState: (key) ->
     return {
@@ -66,10 +72,6 @@ ResolutionItem = React.createClass
         @setState {resolution: newResolution}
         return
     }
-
-  renderCollapsed: ->
-    resolution = @props.resolution
-    null
 
   trackCompletion: ->
     ts = @refs.completionDateTime.getValue()
@@ -128,36 +130,74 @@ ResolutionItem = React.createClass
         allowUserCreated: true
         value: @_resolutionLinkState('group').value
         onChange: @_resolutionLinkState('group').requestChange
-      # bs.FormInput
-      #   valueLink: @_resolutionLinkState 'group'
       bs.Label null,
         'Target count'
       bs.FormInput
+        key: 'count-input'
         valueLink: @_resolutionLinkState 'targetCount'
-      if @editing()
-        rd.button
-          className: 'btn btn-success btn-sm u-tiny-spacing-top'
-          onClick: @saveResolution
-        , 'Save'
-      if @saving()
-        rd.button
-          className: 'btn btn-success btn-sm u-tiny-spacing-top'
-          disabled: true
-        , 'Saving'
+      bs.Label null,
+        'Frequency'
+      Select2
+        options: [
+          {id: 'daily', text: 'daily'}
+          {id: 'weekly', text: 'weekly'}
+          {id: 'weekend', text: 'weekend'}
+          {id: 'monthly', text: 'monthly'}
+        ]
+        value: @_resolutionLinkState('frequency').value
+        onChange: @_resolutionLinkState('frequency').requestChange
+      rd.button
+        key: 'save-button'
+        className: 'btn btn-success btn-sm u-tiny-spacing-top'
+        disabled: @saving()
+        onClick: @saveResolution
+      , if @saving() then 'Saving' else 'Save'
 
-  renderNumberCompleted: ->
-    if @props.resolution.targetCount?
-      "#{@props.resolution.currentCount}/#{@props.resolution.targetCount}"
-    else
-      "#{@props.resolution.currentCount} completed"
+  isOverdue: ->
+    durations =
+      weekly: moment.duration(7, 'days')
+      daily: moment.duration(1, 'days')
+    {completions, frequency} = @props.resolution
+    lastCompletedAt = completions[completions.length - 1]?.ts
+    if not lastCompletedAt? or not frequency?
+      return null
+    late = lastCompletedAt.isBefore moment().subtract(durations[frequency])
+    late
+
+  renderBadge: ->
+    {completions, frequency} = @props.resolution
+    late = @isOverdue()
+    classes = cx
+      'label-default': not late
+      'label-warning': late
+    if frequency?
+      rd.span
+        className: "label u-tiny-spacing-left #{classes}"
+        style:
+          float: 'none'
+          'font-weight': 'normal'
+      ,
+        frequency
 
   render: ->
-    rd.li className: 'list-group-item',
+    rd.li
+      className: 'list-group-item'
+      onMouseEnter: => @setState hover: true
+      onMouseLeave: => @setState hover: false
+    ,
       rd.a className: 'u-pointer', onClick: @toggleExpand,
         rd.h4 className: 'u-display-inline',
           @props.resolution.text
-        rd.span className: 'faded u-cursor',
-          " #{@props.resolution.currentCount}/#{@props.resolution.targetCount}"
+      if @isOverdue() or @state.hover or @expanded() or @editing()
+        @renderBadge()
+      if @state.hover or @expanded() or @editing()
+        rd.span null,
+          rd.span className: 'faded u-cursor pull-right',
+            " #{@props.resolution.currentCount}/#{@props.resolution.targetCount}"
+          rd.button
+            className: 'btn btn-default btn-xs pull-right u-tiny-spacing-right'
+          ,
+            'Track'
       if @expanded()
         rd.div className: 'u-tiny-spacing-bottom',
           rd.button
@@ -169,7 +209,7 @@ ResolutionItem = React.createClass
             onClick: null
           , 'More...'
       if @collapsed()
-        @renderCollapsed()
+        null
       if @expanded()
         @renderExpanded()
       if @editing() or @saving()
