@@ -79,5 +79,8 @@ input[type="color"] {
     border-radius: $border-radius-base;
   }
 }
+.btn:focus {
+  outline: none !important;
+}
 
 // Input group
