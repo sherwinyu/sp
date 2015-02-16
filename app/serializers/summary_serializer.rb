@@ -7,9 +7,13 @@ class SummarySerializer < ActiveModel::Serializer
     insight
     meditation
     work
-    coded
     uploaded_photos
     anki
+    coded
+    coded_in_am
+    mindfulness
+    in_bed_by_1130
+    chns_sentence
   ]
   def attributes
     hash = super

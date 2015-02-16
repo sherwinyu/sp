@@ -1,12 +1,18 @@
-#= require utils/bs
-window.sp ||= {}
+React = require 'react'
+ReactRouter = require 'react-router'
+bs = require 'utils/bs'
+util = require 'utils/helpers'
+
 rd = React.DOM
 update = React.addons.update
-{Link, Route, Routes, DefaultRoute} = ReactRouter
+{Link, RouteHandler} = ReactRouter
 
-sp.Activity = React.createClass
+Activity = React.createClass
 
-  _getState: (activityId = @props.params.activityId) ->
+  mixins: [ReactRouter.State]
+
+  _getState: (activityId = @getParams().activityId) ->
+    activityId ?= @getParams().activityId
     req = $.get "/activities/#{activityId}.json"
     req.done (response) =>
       @setState activity: response.activity
@@ -15,8 +21,7 @@ sp.Activity = React.createClass
     @_getState()
 
   componentWillReceiveProps: (nextProps) ->
-    if @props.params.activityId isnt nextProps.params.activityId
-      @_getState(nextProps.params.activityId)
+    @_getState(@getParams().activityId)
 
   getInitialState: (e) ->
     activity: null
@@ -27,7 +32,7 @@ sp.Activity = React.createClass
     @setState activity: update(@state.activity, $merge: merge)
 
   save: ->
-    req = $.putJSON "/activities/#{@props.params.activityId}.json",
+    req = $.putJSON "/activities/#{@getParams().activityId}.json",
       activity: @state.activity
     req.done (response) =>
       @props.addNotification "Successfully updated activity #{@state.activity.name}"
@@ -38,7 +43,7 @@ sp.Activity = React.createClass
     if @state.activity
       rd.div null,
         rd.h2 null, @state.activity.name
-        rd.h6 null,  "activity... #{@props.params.activityId}"
+        rd.h6 null,  "activity... #{@getParams().activityId}"
         rd.form null,
 
           bs.FormGroup null,
@@ -57,7 +62,7 @@ sp.Activity = React.createClass
 
           bs.FormGroup null,
             bs.Label null,
-              "Duration (#{utils.sToDurationString @state.activity.duration})"
+              "Duration (#{util.sToDurationString @state.activity.duration})"
             bs.FormInput
               value: @state.activity.duration
               onChange: @updateActivityProperty.bind null, 'duration'
@@ -78,10 +83,13 @@ sp.Activity = React.createClass
     else
       rd.h4 'loading...'
 
-sp.ActivitiesIndex = React.createClass
+ActivitiesIndex = React.createClass
 
   propTypes:
     mostUsedActivities: React.PropTypes.array.isRequired
+
+  getDefaultProps: ->
+    mostUsedActivities: window._sp_vars.props.activities
 
   render: ->
     rd.div className: 'container',
@@ -97,13 +105,11 @@ sp.ActivitiesIndex = React.createClass
               rd.button type: 'submit', className: 'btn btn-default',
                 'Go'
 
-
       bs.Row null,
         bs.Col sm: 3,
           @renderActivities()
         bs.Col sm: 9,
-          @props.activeRouteHandler
-            addNotification: @props.addNotification
+          RouteHandler addNotification: @props.addNotification
 
   renderActivities: ->
     rd.div className: 'activities',
@@ -112,7 +118,12 @@ sp.ActivitiesIndex = React.createClass
       for activity in @props.mostUsedActivities
         rd.div className: 'activity-summary', key: activity.id,
           rd.span null,
-            Link  to: 'activity', params: {activityId: activity.id},
+            Link to: 'activity', params: {activityId: activity.id},
               activity.name
           rd.span null,
             utils.sToDurationString activity.duration
+
+module.exports = {
+  Activity
+  ActivitiesIndex
+}

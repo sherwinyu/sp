@@ -1,0 +1,184 @@
+@import "base";
+
+.u-no-spacing-top {
+  margin-top: 0;
+}
+.u-spacing-top {
+  margin-top: 20px;
+}
+.u-small-spacing-top {
+  margin-top: 10px;
+}
+.u-tiny-spacing-top {
+  margin-top: 5px;
+}
+.u-no-spacing-bottom {
+  margin-bottom: 0;
+}
+.u-spacing-bottom {
+  margin-bottom: 20px;
+}
+.u-small-spacing-bottom {
+  margin-bottom: 10px;
+}
+.u-tiny-spacing-bottom {
+  margin-bottom: 5px;
+}
+.u-spacing-left {
+  margin-left: 20px;
+}
+.u-small-spacing-left {
+  margin-left: 10px;
+}
+.u-tiny-spacing-left {
+  margin-left: 5px;
+}
+.u-spacing-right {
+  margin-right: 20px;
+}
+.u-small-spacing-right {
+  margin-right: 10px;
+}
+.u-tiny-spacing-right {
+  margin-right: 5px;
+}
+.u-padding-top {
+  padding-top: 20px;
+}
+.u-small-padding {
+  padding: 10px;
+}
+.u-small-padding-top {
+  padding-top: 10px;
+}
+.u-small-padding-bottom {
+  padding-bottom: 10px;
+}
+.u-small-padding-left {
+  padding-left: 10px;
+}
+.u-small-padding-right {
+  padding-right: 10px;
+}
+.u-border-none {
+  border: none;
+}
+.u-border-collapse {
+  border-collapse: collapse;
+}
+.u-display-inline-block {
+  display: inline-block;
+}
+.u-display-inline {
+  display: inline;
+}
+.u-display-table {
+  display: table;
+}
+.u-display-table-cell {
+  display: table-cell;
+}
+.u-larger-text {
+  font-size: 1.5em;
+}
+.u-small-text {
+  font-size: $font-size-small;
+}
+.u-tiny-text {
+  font-size: $font-size-tiny;
+}
+.u-word-break-all {
+  word-break: break-all;
+}
+.u-no-text-transform {
+  text-transform: none;
+}
+.u-no-text-decoration:hover {
+  text-decoration: none;
+}
+.u-overflow-hidden {
+  overflow: hidden;
+}
+.u-input-line-height {
+  line-height: $input-height-small;
+}
+.u-disable-margin-collapse {
+  padding: 1px;
+  margin: -1px;
+}
+.u-danger-color,
+.btn.u-danger-color,
+.btn.u-danger-color:hover {
+  color: $brand-danger;
+}
+.u-warning-color,
+.btn.u-warning-color,
+.btn.u-warning-color:hover {
+  color: $brand-warning;
+}
+.u-success-color,
+.btn.u-success-color,
+.btn.u-success-color:hover {
+  color: $brand-success;
+}
+.u-primary-color,
+.btn.u-primary-color,
+.btn.u-primary-color:hover {
+  color: $brand-primary;
+}
+// Useful for clearing styling
+.u-black-color {
+  color: black;
+}
+.u-half-opacity {
+  opacity: 0.5;
+}
+// Classes that overwrite .faded:hover must be defined after this.
+.faded {
+  color: $gray-light;
+  &:hover {
+    color: $gray-light;
+  }
+}
+.all-caps {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: $font-size-small;
+}
+
+.u-pointer {
+  cursor: pointer;
+}
+.u-cursor-text {
+  cursor: text;
+}
+
+.u-pos-relative {
+  position: relative;
+}
+// z-index
+.u-z-up1 {
+  z-index: 101
+}
+.u-z-up2 {
+  z-index: 102
+}
+.u-z-up3 {
+  z-index: 103
+}
+.u-z-up4 {
+  z-index: 104
+}
+
+.u-z-down1 {
+  z-index: 99
+}
+.u-z-down2 {
+  z-index: 98
+}
+.u-z-down3 {
+  z-index: 97
+}
+.u-z-down4 {
+  z-index: 96
+}

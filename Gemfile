@@ -31,7 +31,7 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'bootstrap-sass', '~> 3.3.2'
 gem 'ember-source', '~> 1.2'
 gem 'ember-data-source'
 gem 'ember-bootstrap-rails'
@@ -39,7 +39,8 @@ gem 'ember-rails'
 gem 'emblem-rails', github: "alexspeller/emblem-rails"
 gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 
-gem 'momentjs-rails', '2.0.0.2'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 
 gem 'pry'
 gem 'spring', '0.9.0'

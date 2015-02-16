@@ -6,8 +6,9 @@
   <%= javascript_tag do %>
     window._sp_vars = <%=raw  @server_side_vars.to_json if @server_side_vars %>;
   <% end %>
-  <%= javascript_include_tag "react_deps" %>
-  <%= javascript_include_tag "sp_react" %>
+  <%# javascript_include_tag "react_deps" %>
+  <%# javascript_include_tag "sp_react" %>
+  <%= javascript_include_tag "application_webpack" %>
   <%= csrf_meta_tags %>
 
   <!-- mixpanel will be inserted here by the gem -->

@@ -1,11 +1,12 @@
-#= require utils/bs
-window.sp ||= {}
+React = require 'react'
+ReactRouter = require 'react-router'
+
+RouteHandler = ReactRouter.RouteHandler
+
 rd = React.DOM
 update = React.addons.update
 
-{Link, Route, Routes, DefaultRoute} = ReactRouter
-
-sp.ApplicationComponent = React.createClass
+ApplicationComponent = React.createClass
 
   getInitialState: ->
     notifications: []
@@ -19,8 +20,11 @@ sp.ApplicationComponent = React.createClass
       for notification in @state.notifications
         rd.div className: 'notification alert alert-success',
           notification
+
   render: ->
     rd.div className: 'container',
       @renderNotifications()
-      @props.activeRouteHandler
+      RouteHandler
         addNotification: @addNotification
+
+module.exports = ApplicationComponent

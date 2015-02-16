@@ -1,10 +1,88 @@
-Current TASK
----
-  add duration to activity.
----
-OTHER TASKS
-  -- Look into RescueTimeDp initial load (on dashboard) queries / activity caching.
+NEXT STEPS
+  - Add select2 and make the edit group selector better
+  - figure out migration / syncing with Days model
+  - figure out a proper webpack deploy to heroku staging
+  - Make the product usable. This is more important than getting engineering architecture right!!
 
+High priority: resolution management
+
+++ IMPLEMENT FLUX ++
+
+
+Resolution
+  - name
+  - description
+  - target
+  - start_date
+  - end_date
+
+ResolutionCompletion
+  - ts
+  - Resolution_id
+  - duration
+  - comment
+  - RoutineCompletion_id
+  - count [ optional ]
+
+----------------------------------------------------------------
+Interfaace for Resolution Management:
+  - goals and reslutions are the same?
+  - resolutions are just "pinned" goals?
+  - Nah. Probably can show on same page, but they're different things
+  - Shows list of resolutions
+    - add a completion to any of them
+  - Shows a feed
+  - By default, should be "clean display mode"
+  - Only go into detail for tracking / progress check
+  - Detail mode:
+      - allow editing name, is header, information only, etc
+
+  == List of resolutions
+  I. Be more appreciative
+
+  II. Utilize Sherwin Points
+    * Commit by Friday 5pm [ track weekly ]
+    * Once either sunday or saturday [ track weekly ]
+    * Schedule
+        - 30m mindfulness meditation
+        - 30m express appreciation
+        - 120m Play/work session
+    * Treat this as higher priority over other things [ nothing to track ]
+
+  III. Learning
+    * 1500 Anki HSK6 notes [ count progress ]
+    * At least 200 Chinese sentence cards [ track daily ]
+    * At least 75 new Anki notes [ track daily, weekly ]
+    * 6 non fiction book [ count progress  ]
+    * 2 classes [ count progress ]
+    * One lecture per week [ track weekly ]
+    * Reclaim time while podcasting [ count progress; track daily ]
+
+  IV. Personal Projects
+    * Commit on personal projects once per day [ track daily, count progress ]
+      * At least 75 before 10AM [[ how to do this one?? ]]
+    *
+
+  UI thoughts
+    - show what things I haven't hit yet (per day, per week, per month)
+    - show progress, percentage, projection stats
+    - button for filling out a tracking on any given resolution
+
+
+
+TENETS
+  - actions shouldn't be tracked twice
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------
 NEXT STEPS (for activity view)
   - add duration to activity view (master)
   - add activity lookup

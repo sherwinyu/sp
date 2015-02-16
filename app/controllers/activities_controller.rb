@@ -26,6 +26,14 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def json_editor
+    render layout: 'with_react_js', template: 'pages/home'
+  end
+
+  def resolutions
+    render layout: 'with_react_js', template: 'pages/home'
+  end
+
   def update
     @activity = Activity.find params[:id]
     if @activity.update_attributes activity_params

@@ -1,3 +1,9 @@
+## Data Points
+ - taking my medicine
+ - mood
+ - SP tracking for INSIDE THE APP (not via goole voice) -- should be super simple
+
+
 # Potential tools
 
 ## Work tracker
@@ -7,9 +13,6 @@
  - Featuer / spec estimation, planning, time estimation and mark up
    - can get a better picture of how accurate my estimation is
  - "velocity"
-## Data Points
- - taking my medicine
- - mood
 
 
 ## Multi day / week goals

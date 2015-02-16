@@ -14,7 +14,16 @@ Sysys::Application.routes.draw do
 
   root to: 'pages#home'
 
+  # get 'resolutions' => 'resolutions#resolutions'
+  get 'json_editor' => 'activities#json_editor'
+
   resources :activities
+  resources :resolutions do
+    member do
+      post 'completions' => 'resolutions#create_completion'
+      patch 'completions/:ts' => 'resolutions#update_completion'
+    end
+  end
   # get '/activities' => 'pages#activities_component'
   # get '/activities/:activity_id' => 'activities#show'
 
