@@ -19,7 +19,7 @@ ResolutionItem = React.createClass
         ts: React.PropTypes.instanceOf moment
         comment: React.PropTypes.string
       )).isRequired
-      trackFrequency: React.PropTypes.string
+      frequency: React.PropTypes.string
       routine: React.PropTypes.object
       type: React.PropTypes.string
       currentCount: React.PropTypes.number

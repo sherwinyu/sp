@@ -30,10 +30,19 @@ ResolutionsIndex = React.createClass
   getInitialState: ->
     state =
       filter:
-        all: true
-        daily: false
-        weekly: false
-  _.extend state, ResolutionsStore.getState()
+        filterOn: false
+        daily: true
+        weekly: true
+    _.extend state, ResolutionsStore.getState()
+
+  _filterLinkState: (key) ->
+    return {
+      value: @state.filter[key]
+      requestChange: (newValue) =>
+        filterState = React.addons.update @state.filter, _.object([key], [{$set: newValue}])
+        @setState {filter: filterState}
+        return
+    }
 
   _resolutionsUpdateHandler: -> @setState ResolutionsStore.getState()
 
@@ -42,6 +51,67 @@ ResolutionsIndex = React.createClass
     ResolutionsStore.addChangeListener @_resolutionsUpdateHandler
 
   componentWillUnmountMount: -> ResolutionsStore.removeChangeListener @_resolutionsUpdateHandler
+
+  renderResolutionTitle: (title) ->
+    rd.h4 null, title
+
+  renderResolutionItem: (resolution) ->
+    return
+
+  newResolution: ->
+    ResolutionActions.createResolution()
+
+  renderFilterBar: ->
+    rd.div null,
+      rd.label className: 'checkbox-inline',
+        rd.input
+          type: 'checkbox'
+          checkedLink: @_filterLinkState('filterOn')
+        'Filter resolutions?'
+      rd.label className: 'checkbox-inline',
+        rd.input
+          type: 'checkbox'
+          disabled: not @_filterLinkState('filterOn').value
+          checkedLink: @_filterLinkState('daily')
+        'Daily'
+      rd.label className: 'checkbox-inline',
+        rd.input
+          type: 'checkbox'
+          disabled: not @_filterLinkState('filterOn').value
+          checkedLink: @_filterLinkState('weekly')
+        'Weekly'
+
+  filterResolution: (resolution) ->
+    if not @state.filter.filterOn
+      true
+    else if @state.filter[resolution.frequency]
+      true
+    else
+      false
+
+  renderResolutions: ->
+    rd.div className: 'resolutions',
+      rd.h2 null,
+        'Resolutions'
+      rd.button {
+        className: 'btn btn-default u-spacing-bottom'
+        onClick: @newResolution
+      },
+        'Create resolution'
+
+      @renderFilterBar()
+
+      for group, resolutions of @state.groupedResolutions
+        rd.div className: 'panel panel-default', key: group,
+          rd.div className: 'panel-heading',
+            @renderResolutionTitle group
+          rd.ul className: 'list-group',
+            for resolution in resolutions
+              if @filterResolution resolution
+                ResolutionItem
+                  key: resolution.id
+                  resolution: resolution
+                  initialGroups: @state.groups
 
   render: ->
     rd.div className: 'container',
@@ -57,45 +127,9 @@ ResolutionsIndex = React.createClass
               rd.button type: 'submit', className: 'btn btn-default',
                 'Go'
 
-
       bs.Row null,
         bs.Col sm: 8,
           @renderResolutions()
 
-  renderResolutionTitle: (title) ->
-    rd.h4 null, title
-
-  renderResolutionItem: (resolution) ->
-    return
-
-  newResolution: ->
-    ResolutionActions.createResolution()
-
-  renderResolutions: ->
-    rd.div className: 'resolutions',
-      rd.h2 null,
-        'Resolutions'
-      rd.button {
-        className: 'btn btn-default u-spacing-bottom'
-        onClick: @newResolution
-      },
-        'Create resolution'
-
-      for group, resolutions of @state.groupedResolutions
-        rd.div className: 'panel panel-default', key: group,
-          rd.div className: 'panel-heading',
-            @renderResolutionTitle group
-          rd.ul className: 'list-group',
-            for resolution in resolutions
-              ResolutionItem
-                key: resolution.id
-                resolution: resolution
-                initialGroups: @state.groups
-
-        # rd.div className: 'panel-heading',
-        #   @renderResolutionTitle 'I. Be more appreciative'
-        # rd.ul className: 'list-group',
-        #   for resolution in @state.resolutions
-        #     ResolutionItem key: resolution.id, resolution: resolution
 
 module.exports = ResolutionsIndex
