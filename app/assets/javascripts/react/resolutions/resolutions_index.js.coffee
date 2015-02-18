@@ -27,7 +27,13 @@ ResolutionsIndex = React.createClass
     # ).isRequired
     resolutions: React.PropTypes.array
 
-  getInitialState: -> ResolutionsStore.getState()
+  getInitialState: ->
+    state =
+      filter:
+        all: true
+        daily: false
+        weekly: false
+  _.extend state, ResolutionsStore.getState()
 
   _resolutionsUpdateHandler: -> @setState ResolutionsStore.getState()
 
