@@ -23,14 +23,19 @@ Humon.Summary.reopenClass
 
     coded:
       name: 'boolean'
+      readOnly: true
     coded_in_am:
       name: 'boolean'
+      readOnly: true
     mindfulness:
       name: 'boolean'
+      readOnly: true
     in_bed_by_1130:
       name: 'boolean'
+      readOnly: true
     chns_sentence:
       name: 'boolean'
+      readOnly: true
 
   requiredAttributes: ['best'
                        'worst'
