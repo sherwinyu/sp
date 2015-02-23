@@ -52,6 +52,7 @@ ResolutionItem = React.createClass
     @setState ui: ResolutionItem.UI_STATES.EDITING
 
   getInitialState: ->
+    tracking: false
     ui: ResolutionItem.UI_STATES.COLLAPSED
     resolution: @props.resolution
     hover: false
@@ -80,7 +81,13 @@ ResolutionItem = React.createClass
       comment: @refs.completionComment.getDOMNode().value
       ts: ts
       day: ts.format('YYYY-MM-DD')
+    @setState tracking: true
     ResolutionActions.createCompletion @props.resolution.id, completion
+      .done =>
+        @setState tracking: false
+        $(@refs.completionComment.getDOMNode()).val ''
+        $(@refs.trackCompletion.getDOMNode()).blur()
+
 
   _renderCompletions: (completions) ->
     rd.ul null,
@@ -96,11 +103,14 @@ ResolutionItem = React.createClass
     rd.div className: 'input-group u-small-spacing-bottom',
       rd.span className: 'input-group-btn',
         rd.button
+          ref: 'trackCompletion'
           className: 'btn btn-default',
           onClick: @trackCompletion
+          disabled: @state.tracking
         , 'Track'
       DateTimePicker ref: 'completionDateTime'
       bs.FormInput
+        disabled: @state.tracking
         ref: 'completionComment'
         style: {width: '78%'}
         className: 'u-z-up1 u-pos-relative'
