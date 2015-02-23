@@ -1,3 +1,18 @@
+Linking up syncing with Days model:
+  - roll out plan
+    1. Day#Summary READONLY displays corresponding resolutions
+      - hard coded resolution lookup
+      - only if Day#summary#shit is not defined
+      - for each of the resolutions
+          - do a look up on daily resolutions
+          - if it's true, show it
+      - hard code / generate start / end time stamps for each day.
+    2. Migrate all resolutions into completion time-stamps
+    3. Migrate and remove all resolutions from summary
+    4. [Way down the line]
+
+
+
 NEXT STEPS
   - Add select2 and make the edit group selector better
   - figure out migration / syncing with Days model
@@ -30,7 +45,8 @@ Interfaace for Resolution Management:
   - resolutions are just "pinned" goals?
   - Nah. Probably can show on same page, but they're different things
   - Shows list of resolutions
-    - add a completion to any of them
+    - add a completion to any of
+      them<>
   - Shows a feed
   - By default, should be "clean display mode"
   - Only go into detail for tracking / progress check
