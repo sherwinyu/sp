@@ -25,4 +25,18 @@ class Summary
     super
   end
 
+  def resolutions
+    _old_resolutions
+  end
+
+  def _old_resolutions
+    {
+      coded: coded,
+      coded_in_am: coded_in_am,
+      mindfulness: mindfulness,
+      in_bed_by_1130: in_bed_by_1130,
+      chns_sentence: chns_sentence
+    }
+  end
+
 end

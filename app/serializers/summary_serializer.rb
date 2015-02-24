@@ -9,12 +9,8 @@ class SummarySerializer < ActiveModel::Serializer
     work
     uploaded_photos
     anki
-    coded
-    coded_in_am
-    mindfulness
-    in_bed_by_1130
-    chns_sentence
   ]
+
   def attributes
     hash = super
     puts "\n\n"
@@ -23,8 +19,10 @@ class SummarySerializer < ActiveModel::Serializer
     puts "Hash:"
     ap hash
     puts "\n\n"
-    hash
+    object._old_resolutions
+    hash.merge object.resolutions
   end
+
   def filter(keys)
     keys.reject{|key| object[key].nil?}
   end
