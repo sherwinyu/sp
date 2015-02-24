@@ -81,7 +81,7 @@ ResolutionActions =
 
   updateResolution: (id, resolution) ->
     # TODO reject completions here
-    resolutionUpdate = _.pick resolution, 'text', 'targetCount', 'group', 'frequency'
+    resolutionUpdate = _.pick resolution, 'text', 'key', 'targetCount', 'group', 'frequency'
     ResolutionDAO.update id, resolutionUpdate
       .done (response) ->
         Dispatcher.dispatch

@@ -134,6 +134,10 @@ ResolutionItem = React.createClass
       bs.FormInput
         valueLink: @_resolutionLinkState 'text'
       bs.Label null,
+        'Key'
+      bs.FormInput
+        valueLink: @_resolutionLinkState 'key'
+      bs.Label null,
         'Group'
       Select2
         options: groups
