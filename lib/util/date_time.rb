@@ -1,5 +1,13 @@
 module Util
   class DateTime
+    def self.tzi_tz
+      TZInfo::Timezone.get timezone
+    end
+
+    def self.as_tz
+      ActiveSupport::TimeZone.new timezone
+    end
+
     def self.timezone
       Option.current_timezone
     end

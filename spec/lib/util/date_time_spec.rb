@@ -20,7 +20,6 @@ end
 describe "Util: DateTime::timezone" do
   specify "read and write" do
     Option.current_timezone = "America/New_York"
-    # Util::DateTime.timezone =
     expect(Util::DateTime.timezone).to eq "America/New_York"
   end
 

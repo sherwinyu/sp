@@ -17,9 +17,13 @@ class Day
     up_energy
   ]
 
-  field :note, type: String
-  field :date, type: Date, default: -> {Date.today}
+  # Defaults to 4AM
+  field :start_at, type: Time, default: -> {_default_start_at}
 
+  field :note, type: String
+  field :date, type: Date, default: -> {Date.current}
+
+  validates_presence_of :start_at
   validates_uniqueness_of :date
   validates_presence_of :date
 
@@ -47,5 +51,11 @@ class Day
   def self.on arg
     date = Util::DateTime.to_date arg
     self.find_or_initialize_by date: date
+  end
+
+  private
+
+  def _default_start_at
+    Util::DateTime.as_tz.parse "04:00"
   end
 end

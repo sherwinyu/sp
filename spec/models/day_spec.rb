@@ -1,23 +1,37 @@
 require 'spec_helper'
 
 describe Day do
+  before :each do
+    setup
+  end
+
   describe "custom id" do
     let (:day) { Day.new note: "first" }
     let (:day2) { Day.new note: "first" }
 
     it "only allows one day with a given id" do
-      day.save
+      day.save!
       day2.save.should eq false
     end
 
     it "supports find by a Date object" do
-      day.save
-      found = Day.find_by date: Date.today
+      day.save!
+      found = Day.find_by date: Date.current
       found.should eq day
     end
 
     it "defaults to Date.today" do
-      day.date.should eq Date.today
+      expect(day.date).to eq Date.current
+    end
+  end
+  describe '#new' do
+    let (:day) { Day.new note: 'first' }
+    it 'has a default date' do
+      expect(day.date).to eq Date.current
+    end
+    it 'has a default date' do
+      time_4am = ActiveSupport::TimeZone.new(Option.current_timezone).parse '04:00'
+      expect(day.start_at).to eq time_4am
     end
   end
 
@@ -39,7 +53,7 @@ describe Day do
     end
 
     context "when current time matches an existing day" do
-      before(:each) {day_sunday.save}
+      before(:each) {day_sunday.save!}
 
       context "in the evening" do
         let (:current_time) { sunday_evening }
@@ -56,7 +70,7 @@ describe Day do
     end
 
     context "when current time is one day ahead (on a new day)" do
-      before (:each) {day_sunday.save}
+      before (:each) {day_sunday.save!}
 
       context "in the morning of the new day" do
         let (:current_time) { monday_morning }
@@ -84,9 +98,9 @@ describe Day do
     context "current time is more than one day behind" do
       let (:current_time) { monday_morning }
       before(:each) do
-        day_sunday.save
-        day_monday.save
-        day_tuesday.save
+        day_sunday.save!
+        day_monday.save!
+        day_tuesday.save!
       end
       it "throws an error" do
         expect{Day.latest}.to raise_error
@@ -94,6 +108,4 @@ describe Day do
     end
 
   end
-
-
 end
