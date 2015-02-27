@@ -12,6 +12,8 @@ class Resolution
   field :completions, type: Array, default: -> { [] }
 
   validates_uniqueness_of :key
+  validates_presence_of :key
+
   index({ key: 1 }, { unique: true, name: "resolution_key_index" })
 
   def as_j(opts={})

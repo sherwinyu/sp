@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Act do
+  before(:each) { setup }
   describe "::recent" do
     before(:each) do
       day = Day.create(date: Date.new(2014, 1, 1))

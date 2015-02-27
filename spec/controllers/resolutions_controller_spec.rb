@@ -14,7 +14,8 @@ describe ResolutionsController do
       text: 'Commit by 5pm',
       group: 'Sherwin Sundays',
       frequency: 'weekly',
-      type: 'resolution'
+      type: 'resolution',
+      key: '1'
     }
   end
 
@@ -40,9 +41,10 @@ describe ResolutionsController do
 
   describe "api#index" do
     let (:resolutions) {
-      r1 = Resolution.create text: 'r1'
-      r2 = Resolution.create text: 'r2'
-      r3 = Resolution.create text: 'r3'
+      r1 = Resolution.create! text: 'r1', key: '1'
+      r2 = Resolution.create! text: 'r2', key: '2'
+      r3 = Resolution.create! text: 'r3', key: '3'
+
       [r1, r2, r3]
     }
 
@@ -60,7 +62,7 @@ describe ResolutionsController do
   end
 
   describe "api#update" do
-    let (:existing_resolution) { Resolution.create text: 'r1' }
+    let (:existing_resolution) { Resolution.create! text: 'r1', key: 2 }
     let (:resolution_params) do
       {
         group: 'this is a group',
@@ -90,12 +92,13 @@ describe ResolutionsController do
   end
 
   describe 'api#track_completion' do
-    let (:existing_resolution) { Resolution.create text: 'r1' }
+    let (:existing_resolution) { Resolution.create! text: 'r1', key: '1' }
 
     let (:completion_params) do
       {
         completion: {
-          comment: 'This is a comment'
+          comment: 'This is a comment',
+          day: '2015-03-02',
         },
         id: existing_resolution.id,
         format: :json

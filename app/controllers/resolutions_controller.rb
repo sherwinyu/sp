@@ -44,7 +44,6 @@ class ResolutionsController < ApplicationController
       ts = Time.zone.parse completion_params[:ts]
     end
 
-
     completion_date = Date.strptime completion_params[:day], '%Y-%m-%d'
     day = Day.find_by date: completion_date
 
@@ -74,6 +73,7 @@ class ResolutionsController < ApplicationController
 
   def resolution_params
     p = params.require(:resolution).permit(
+      :key,
       :text,
       :group,
       :frequency,
