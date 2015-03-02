@@ -23,4 +23,8 @@ class Resolution
   def add_completion(completion)
 
   end
+
+  def completions_in_range(range)
+    self.completions.filter {|completion| range.cover? completion['ts']}
+  end
 end
