@@ -17,6 +17,9 @@ class Day
     up_energy
   ]
 
+  field :tz, type: String
+
+
   # Defaults to 4AM
   field :start_at, type: Time, default: -> {_default_start_at}
 
@@ -26,6 +29,23 @@ class Day
   validates_presence_of :start_at
   validates_uniqueness_of :date
   validates_presence_of :date
+
+  def timezone
+    Rollbar.warn "Day#timezone with #{date} defaulting to Option.current_timezone"
+    ActiveSupport::TimeZone.new(self.tz || Option.current_timezone)
+  end
+
+  def start
+    start_at or _default_start_at
+  end
+
+  def end_
+    tomorrow.try(:start) or _default_start_at + 1.day
+  end
+
+  def time_range
+    (start..end_)
+  end
 
   default_scope -> { asc(:date) }
 
@@ -38,6 +58,7 @@ class Day
   def self.latest
     date = Util::DateTime.dt_to_expd_date Time.now
     day = Day.find_or_create_by date: date
+    day
   end
 
   def yesterday
@@ -56,6 +77,9 @@ class Day
   private
 
   def _default_start_at
-    Util::DateTime.as_tz.parse "04:00"
+    # date.to_datetime gives it a UTC timestamp.
+    # Then we convert to_time (giving it a local timezone)
+    # Then we convert utc (shifting it back to utc, but now as a Time)
+    self.date.to_datetime.to_time.utc - timezone.utc_offset + 4.hours
   end
 end
