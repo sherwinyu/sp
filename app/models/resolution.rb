@@ -11,8 +11,12 @@ class Resolution
   field :target_count, type: Integer
   field :completions, type: Array, default: -> { [] }
 
-  validates_uniqueness_of :key
-  validates_presence_of :key
+  def validate_key
+    fail unless Resolution.where(key: self.key).count == 0
+    fail unless Resolution.where(key: self.key).first == self
+  end
+  # validates_uniqueness_of :key
+  # validates_presence_of :key
 
   index({ key: 1 }, { unique: true, name: "resolution_key_index" })
 
@@ -25,6 +29,6 @@ class Resolution
   end
 
   def completions_in_range(range)
-    self.completions.filter {|completion| range.cover? completion['ts']}
+    self.completions.select {|completion| range.cover? completion['ts']}
   end
 end
