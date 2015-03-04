@@ -21,10 +21,10 @@ class Day
 
 
   # Defaults to 4AM
+  field :date, type: Date, default: -> {Date.current}
   field :start_at, type: Time, default: -> {_default_start_at}
 
   field :note, type: String
-  field :date, type: Date, default: -> {Date.current}
 
   validates_presence_of :start_at
   validates_uniqueness_of :date
