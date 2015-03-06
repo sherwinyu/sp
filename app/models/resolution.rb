@@ -24,11 +24,42 @@ class Resolution
     ResolutionSerializer.new(self, opts).as_json
   end
 
-  def add_completion(completion)
+  def add_completion(completion_params)
+    if validate_completion completion_params
+      completion = compute_completion_hash_from_params(completion_params)
+      self.completions << completion
+      true
+    else
+      false
+    end
+  end
 
+  def validate_completion(completion_params)
+    compute_completion_hash_from_params(completion_params)
+    true
+  rescue => e
+    binding.pry
+    errors.add :completions, "Invalid completion '#{completion_params}': #{e.message}"
+    false
   end
 
   def completions_in_range(range)
     self.completions.select {|completion| range.cover? completion['ts']}
   end
+
+
+  private
+
+  def compute_completion_hash_from_params(completion_params)
+    ts = Time.zone.parse completion_params[:ts]
+    date = Date.strptime completion_params[:day]
+    day = Day.find_by date: date
+    completion = {
+      ts: ts,
+      comment: completion_params[:comment]
+    }
+    completion[:day_id] = day.id if day
+    completion
+  end
+
 end
