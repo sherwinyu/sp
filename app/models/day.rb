@@ -80,7 +80,8 @@ class Day
     # date.to_datetime gives it a UTC timestamp.
     # Then we convert to_time (giving it a local timezone)
     # Then we convert utc (shifting it back to utc, but now as a Time)
-    time = self.date.to_datetime.to_time.utc - timezone.utc_offset + 4.hours
+    # NOTE: use timezone.now to handle dst
+    time = self.date.to_datetime.to_time.utc - timezone.now.utc_offset + 4.hours
     time.in_time_zone Util::DateTime.as_tz
   end
 end

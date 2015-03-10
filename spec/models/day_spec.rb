@@ -29,8 +29,8 @@ describe Day do
     it 'has a default date' do
       expect(day.date).to eq Date.current
     end
-    it 'has a default date' do
-      time_4am = ActiveSupport::TimeZone.new(Option.current_timezone).parse '04:00'
+    it 'has a default start_at' do
+      time_4am = ActiveSupport::TimeZone.new(Option.current_timezone).parse "#{day.date} 04:00"
       expect(day.start_at).to eq time_4am
     end
   end
