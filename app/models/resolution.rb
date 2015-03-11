@@ -28,9 +28,9 @@ class Resolution
     if validate_completion completion_params
       completion = compute_completion_hash_from_params(completion_params)
       self.completions << completion
-      true
+      completion
     else
-      false
+      nil
     end
   end
 
