@@ -48,4 +48,39 @@ describe Resolution do
     end
     pending 'works agnostically of timezons'
   end
+
+  describe '#add_completion' do
+    let (:completion_params) do
+      {
+        ts: '2014-05-06T08:09:33.000Z',
+        day: '2015-03-10',
+        comment: 'This is a comment',
+      }
+    end
+
+    describe 'when valid' do
+      it 'adds the completion to the completions list' do
+        result = resolution.add_completion(completion_params)
+        expect(result).to eq true
+        expect(resolution.errors).to have(0).elements
+        expect(resolution.completions).to have(1).element
+        expect(resolution.completions[0]).to eq({
+          ts: Time.zone.parse('2014-05-06T08:09:33.000Z'),
+          comment: 'This is a comment',
+        })
+      end
+      pending 'adds includes the day_id when day is found'
+      pending 'sorts the completions by ts'
+    end
+
+    describe 'when invalid' do
+      it 'returns false' do
+        invalid_params = completion_params.merge ts: nil
+        result = resolution.add_completion(invalid_params)
+        expect(result).to eq false
+        expect(resolution.errors).to have(1).element
+        expect(resolution.completions).to have(0).elements
+      end
+    end
+  end
 end

@@ -34,11 +34,13 @@ class Resolution
     end
   end
 
+  ##
+  # Returns true if the completions specified by completion_params are valid, false otherwise
+  # If validation fails, they are added to the erros hash.
   def validate_completion(completion_params)
     compute_completion_hash_from_params(completion_params)
     true
   rescue => e
-    binding.pry
     errors.add :completions, "Invalid completion '#{completion_params}': #{e.message}"
     false
   end
