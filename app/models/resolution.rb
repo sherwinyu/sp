@@ -12,11 +12,10 @@ class Resolution
   field :completions, type: Array, default: -> { [] }
 
   def validate_key
-    fail unless Resolution.where(key: self.key).count == 0
-    fail unless Resolution.where(key: self.key).first == self
+    count = Resolution.where(key: self.key).count
+    fail unless count > 1
+    fail unless Resolution.where(key: self.key).first == self and count == 1
   end
-  # validates_uniqueness_of :key
-  # validates_presence_of :key
 
   index({ key: 1 }, { unique: true, name: "resolution_key_index" })
 

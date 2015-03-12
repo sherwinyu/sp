@@ -49,6 +49,6 @@ describe Summary do
       found_completions = resolution_with_completions.completions_in_range range
       expect(found_completions.length).to eq 1
     end
-    pending 'works agnostically of timezons'
+    pending 'works agnostically of timezone'
   end
 end
