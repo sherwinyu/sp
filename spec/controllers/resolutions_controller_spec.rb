@@ -99,6 +99,7 @@ describe ResolutionsController do
         completion: {
           comment: 'This is a comment',
           day: '2015-03-02',
+          ts: '2015-03-02 09:00:00'
         },
         id: existing_resolution.id,
         format: :json
@@ -116,14 +117,21 @@ describe ResolutionsController do
       # completion is present
       json = Hashie::Mash.new(JSON.parse response.body).completion
       expect(json.comment).to eq 'This is a comment'
-      expect(json.ts).to_not be_nil
+      expect(json.ts).to eq Time.zone.parse('2015-03-02 09:00:00').utc.iso8601(3)
 
       # resolution is present
       json = Hashie::Mash.new(JSON.parse response.body).resolution
       expect(json.id).to eq existing_resolution.id.to_s
     end
 
-    it 'defaults to saving the current timestamp' do
+    it 'fails if no ts is provided' do
+      completion_params_no_ts = completion_params
+      completion_params_no_ts[:completion] = completion_params[:completion].except :ts
+      post :create_completion, completion_params_no_ts
+      expect(response.status).to eq 422
+    end
+
+    xit 'defaults to saving the current timestamp' do
       fake_time = Time.zone.parse('2015-01-01 09:00:00')
       Time.stub(:current).and_return fake_time
       post :create_completion, completion_params

@@ -61,7 +61,7 @@ describe Resolution do
     describe 'when valid' do
       it 'adds the completion to the completions list' do
         result = resolution.add_completion(completion_params)
-        expect(result).to eq true
+        expect(result).to eq ts: Time.zone.parse(completion_params[:ts]), comment: 'This is a comment'
         expect(resolution.errors).to have(0).elements
         expect(resolution.completions).to have(1).element
         expect(resolution.completions[0]).to eq({
@@ -74,10 +74,10 @@ describe Resolution do
     end
 
     describe 'when invalid' do
-      it 'returns false' do
+      it 'returns nil' do
         invalid_params = completion_params.merge ts: nil
         result = resolution.add_completion(invalid_params)
-        expect(result).to eq false
+        expect(result).to eq nil
         expect(resolution.errors).to have(1).element
         expect(resolution.completions).to have(0).elements
       end
