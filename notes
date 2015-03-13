@@ -12,7 +12,7 @@ Linking up syncing with Days model:
     4. [Way down the line]
 
 NEXT STEPS
-  - Switch resolutions#create_completion to use add_completion
+  - Do proper day look ups (instead of just parsing day) for add_completion
 
 
 High priority: resolution management

@@ -61,6 +61,12 @@ class Day
     day
   end
 
+  ##
+  # @param time a physical time
+  def self.from_time time
+    Day.where(:start_at.lte => time).desc(:start_at).limit(1)
+  end
+
   def yesterday
     Day.find_by date: date.yesterday
   end
