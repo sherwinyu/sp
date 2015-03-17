@@ -35,10 +35,13 @@ module Util
     # Re-expresses the given `datetime` in `timezone`, then looks at the
     # hour and compares it with day_starts_at.
     #
+    # NOTE: this IGNNORES datetime's existing timezone.
+    #
     # @param [DateTime or Time] representing a physical time. Its timezone is ignored
     # @param [String] timezone  a timezone that can be passed to `TimeZone.new`
     #   - defaults to Option.current_timezone
     # @param [Integer] day_starts_at  the hour threshold for counting when the new day starts
+    #
     # @return [Date] the experienced date corresponding to `datetime`
     #
     # So dt_to_expd_date(Tuesday, 2AM) will give the experienced date of Monday
@@ -56,42 +59,13 @@ module Util
 
     # Necessary to convert dates to datetimes while perserving the offset
     # WARNING: this MODIFIES the universaltime
-    def self.d2dt date
-      date.to_datetime.change offset: Time.zone.now.formatted_offset
+    def self.d2dt date, timezone=nil
+      timezone ||= self.as_tz
+      date.to_datetime.change offset: as_tz.formatted_offset
     end
 
     ##
-    # @param experienced_date -- the day to bias toward
-    # @time A time. The date information is completely ignored. Timezone is respected
-    #   the normalization (rolling back a day) decision is based on time.zone
-    #
-    # @return A datetime biased toward experienced_date, with the same timezone as time
-    #
-    # ed_and_time2dt
-    def self.experienced_date_and_time_to_datetime experienced_date, time
-      dt = d2dt experienced_date
-
-      dt = dt.change(hour: time.hour, min: time.min, sec: time.sec)
-      if dt.hour < 4
-        dt = dt.in 1.day
-      end
-      dt
-    end
-
-    def day_normalize_time(time_or_datetime)
-      if dt.hour < 4
-        dt = dt.in 1.day
-      end
-    end
-
-    def self.zoned time_or_datetime
-      time_or_datetime.in_time_zone
-    end
-
-    ##
-    # @param arg [String | Date]
-    # @return [Date]
-    # Note that we don't support times, because of timezone issues!
+    # TODO(syu): This is only used once, by Day. Variable arg functions like this #   are probably a smell and should be eliminated # @param arg [String | Date] # @return [Date] # Note that we don't support times, because of timezone issues!
     def self.to_date arg
       date = case arg
         when String
