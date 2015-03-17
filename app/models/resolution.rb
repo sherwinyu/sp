@@ -39,7 +39,7 @@ class Resolution
   def validate_completion(completion_params)
     compute_completion_hash_from_params(completion_params)
     true
-  rescue => e
+  rescue ArgumentError, TypeError => e
     errors.add :completions, "Invalid completion '#{completion_params}': #{e.message}"
     false
   end
@@ -53,7 +53,8 @@ class Resolution
 
   def compute_completion_hash_from_params(completion_params)
     ts = Time.zone.parse completion_params[:ts]
-    date = Date.strptime completion_params[:day]
+    raise ArgumentError unless ts.is_a? Time
+    date = Util::DateTime.dt_to_expd_date ts.to_datetime
     day = Day.find_by date: date
     completion = {
       ts: ts,

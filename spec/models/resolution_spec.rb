@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Resolution do
+  before (:each) do
+    setup
+  end
   let (:resolution_params) do
     {
       key: 'resolution-key',
