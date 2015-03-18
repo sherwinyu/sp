@@ -11,8 +11,18 @@ Linking up syncing with Days model:
     3. Migrate and remove all resolutions from summary
     4. [Way down the line]
 
-NEXT STEPS
-  - Do proper day look ups (instead of just parsing day) for add_completion
+  - Resolution completions
+      - date should be experienced date [DONE]
+
+Next Steps
+  GOAL: link the Day-Summary-Resololutions field with the actual Resolutions model
+  - Hard coded resolution lookup. Specifically:
+      [  ] Spec and test Summary#_resolutions_via_completions
+      [  ] Add task to add keys to existing resolutions (or do it manually) -- on production
+      [  ] Switch over Day#summary#_resolutions to use _resolutions_via_completions
+      [  ] Test it on staging
+
+
 
 
 High priority: resolution management

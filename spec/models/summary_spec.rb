@@ -1,7 +1,29 @@
 require 'spec_helper'
 
 describe Summary do
+  let(:coded) do
+    r = Resolution.create key: 'coded'
+    r.reload
+  end
+  let(:coded_in_am) do
+    r = Resolution.create key: 'coded_in_am'
+    r.reload
+  end
+  let(:in_bed_by_1130) do
+    r = Resolution.create key: 'in_bed_by_1130'
+    r.reload
+  end
+  let(:mindfulness) do
+    r = Resolution.create key: 'mindfulness'
+    r.reload
+  end
+  let(:chns_sentence) do
+    r = Resolution.create key: 'chns_sentence'
+    r.reload
+  end
+
   describe '#_resolutions_via_completions' do
+
   end
 
   let (:resolution_params) do
