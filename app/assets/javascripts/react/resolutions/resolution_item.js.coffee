@@ -80,7 +80,6 @@ ResolutionItem = React.createClass
     completion =
       comment: @refs.completionComment.getDOMNode().value
       ts: ts
-      day: ts.format('YYYY-MM-DD')
     @setState tracking: true
     ResolutionActions.createCompletion @props.resolution.id, completion
       .done =>
