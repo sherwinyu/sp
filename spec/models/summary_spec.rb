@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Summary do
+  before :each do
+    setup
+  end
   let(:coded) do
     r = Resolution.create key: 'coded'
     r.reload
@@ -21,8 +24,37 @@ describe Summary do
     r = Resolution.create key: 'chns_sentence'
     r.reload
   end
+  let (:resolutions) do
+    [
+      coded,
+      coded_in_am,
+      in_bed_by_1130,
+      mindfulness,
+      chns_sentence
+    ]
+
+  end
+
 
   describe '#_resolutions_via_completions' do
+    it 'works' do
+      resolutions
+      day = Day.create date: '2015-03-02'
+      day.summary = Summary.new
+
+      ts1 = day.date.to_time.to_datetime + 7.hours
+      completion = chns_sentence.add_completion ts: ts1.to_s, comment: 'hello'
+      expect(completion).to be_present
+      chns_sentence.save!
+      expect(day.summary._resolutions_via_completions).to eq({
+        coded: false,
+        coded_in_am: false,
+        mindfulness: false,
+        in_bed_by_1130: false,
+        chns_sentence: true
+      })
+    end
+
 
   end
 

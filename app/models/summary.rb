@@ -31,12 +31,12 @@ class Summary
 
   def _resolutions_via_completions
     day_start = self.day.start_at
-    day_end = self.day.tomorrow.try(:start_at) or day_start + 1.day
+    day_end = self.day.tomorrow.try(:start_at) || day_start + 1.day
     range = day_start..day_end
     mapped = _old_resolutions.map do |resolution_key, v|
       resolution = Resolution.find_by key: resolution_key
       completed = !!resolution.completions_in_range(range).first
-      return [resolution_key, completed]
+      [resolution_key, completed]
     end
     Hash[mapped]
   end
