@@ -23,6 +23,8 @@ class Resolution
     ResolutionSerializer.new(self, opts).as_json
   end
 
+  # Returns completion if successful, nil otherwise.
+  # If unsuccessful, adds to errors
   def add_completion(completion_params)
     if validate_completion completion_params
       completion = compute_completion_hash_from_params completion_params

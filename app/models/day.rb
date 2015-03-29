@@ -75,6 +75,14 @@ class Day
     Day.find_by date: date.tomorrow
   end
 
+  def yesterday!
+    Day.on date.tomorrow
+  end
+
+  def tomorrow!
+    Day.on date.tomorrow
+  end
+
   def self.on arg
     date = Util::DateTime.to_date arg
     self.find_or_initialize_by date: date

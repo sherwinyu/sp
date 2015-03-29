@@ -42,7 +42,12 @@ describe Summary do
       day = Day.create date: '2015-03-02'
       day.summary = Summary.new
 
-      ts1 = day.date.to_time.to_datetime + 7.hours
+      day2 = day.tomorrow!
+      day2.summary = Summary.new
+      day2.save
+
+      # Need to call .to_time to get ISO string
+      ts1 = day.date.to_time + 7.hours
       completion = chns_sentence.add_completion ts: ts1.to_s, comment: 'hello'
       expect(completion).to be_present
       chns_sentence.save!
@@ -53,6 +58,39 @@ describe Summary do
         in_bed_by_1130: false,
         chns_sentence: true
       })
+
+      # Now add a date that isn't covered
+      ts2 = day.date.to_time.to_datetime + 1.day + 7.hours
+
+      completion = in_bed_by_1130.add_completion ts: ts2.to_s, comment: 'in bed'
+      expect(completion).to be_present
+
+      completion = coded_in_am.add_completion ts: ts2.to_s, comment: 'coded_in_am'
+      expect(completion).to be_present
+
+      completion = coded.add_completion ts: ts2.to_s, comment: 'coded'
+      expect(completion).to be_present
+      resolutions.each &:save!
+
+      # Still expect day 1 to only have chns_sentence
+      expect(day.summary._resolutions_via_completions).to eq({
+        coded: false,
+        coded_in_am: false,
+        mindfulness: false,
+        in_bed_by_1130: false,
+        chns_sentence: true
+      })
+
+      # But expect day 2 to have in_bed_by_1130, coded_in_am, and coded
+      expect(day2.summary._resolutions_via_completions).to eq({
+        coded: true,
+        coded_in_am: true,
+        mindfulness: false,
+        in_bed_by_1130: true,
+        chns_sentence: false
+      })
+
+
     end
 
 
