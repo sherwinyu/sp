@@ -26,7 +26,8 @@ class Summary
   end
 
   def resolutions
-    _old_resolutions
+    # _old_resolutions
+    _resolutions_via_completions
   end
 
   def _resolutions_via_completions
