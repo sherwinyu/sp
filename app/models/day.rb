@@ -76,7 +76,7 @@ class Day
   end
 
   def yesterday!
-    Day.on date.tomorrow
+    Day.on date.yesterday
   end
 
   def tomorrow!
