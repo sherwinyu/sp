@@ -15,14 +15,11 @@ Linking up syncing with Days model:
       - date should be experienced date [DONE]
 
 Next Steps
-  GOAL: link the Day-Summary-Resololutions field with the actual Resolutions model
-  - Hard coded resolution lookup. Specifically:
-      [x] Spec and test Summary#_resolutions_via_completions
-      [x] Add task to add keys to existing resolutions (or do it manually) -- on production
-      [x] Switch over Day#summary#_resolutions to use _resolutions_via_completions
-      [ ] Test it on staging
-
-
+  Deploy to prod:
+    - gpush prod
+    - run the rake task
+  Write task to convert old summary fields to resolutions
+  Add some new resolutions
 
 
 High priority: resolution management
