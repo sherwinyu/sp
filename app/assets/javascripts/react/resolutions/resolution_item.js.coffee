@@ -89,8 +89,10 @@ ResolutionItem = React.createClass
 
 
   _renderCompletions: (completions) ->
+    sampleCompletions = _.sortBy completions, (completion) -> -completion.ts.unix()
+    sampleCompletions = _.take sampleCompletions, 5
     rd.ul null,
-      for completion in completions
+      for completion in sampleCompletions
         rd.li null,
           rd.p null,
             completion.comment
@@ -227,18 +229,5 @@ ResolutionItem = React.createClass
         @renderExpanded()
       if @editing() or @saving()
         @renderEditing()
-
-          # bs.Col sm: 5,
-          #   if currentCount? and targetCount?
-          #     rd.div className: 'progress',
-          #       rd.div
-          #         className: 'progress-bar'
-          #         'aria-valuemin': 0
-          #         'aria-valuenow': currentCount
-          #         'aria-valuemax': targetCount
-          #         style:
-          #           width: "#{currentCount/ targetCount * 100}%"
-          #       ,
-          #         "#{currentCount}/#{targetCount}"
 
 module.exports = ResolutionItem
