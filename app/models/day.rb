@@ -31,7 +31,8 @@ class Day
   validates_presence_of :date
 
   def timezone
-    Rollbar.warn "Day#timezone with #{date} defaulting to Option.current_timezone"
+    # TODO(syu): Reenable this warning (when it is less aggressive)
+    # Rollbar.warn "Day#timezone with #{date} defaulting to Option.current_timezone"
     ActiveSupport::TimeZone.new(self.tz || Option.current_timezone)
   end
 
