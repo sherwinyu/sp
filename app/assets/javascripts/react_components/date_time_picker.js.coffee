@@ -7,20 +7,26 @@ DateTimePicker = React.createClass
 
   propTypes:
     onChange: React.PropTypes.func
+    # TODO (2015-04-16) unify (or standardize) whether value is a moment or a date
     value: React.PropTypes.instanceOf(Date)
     embedded: React.PropTypes.bool
+    syncWithCurrentTime: React.PropTypes.bool
 
   getDefaultProps: ->
     embedded: true
     defaultValue: moment()
+    syncWithCurrentTime: true
 
   handleChange: (e) ->
     e.preventDefault()
     @props.onChange? e
-    console.log e.date.toDate()
 
   $el: -> $(@refs.datetimepicker.getDOMNode())
   _dateTimePicker: -> @$el().data('DateTimePicker')
+
+  _syncWithCurrentTime: ->
+    console.log 'hello'
+    @_dateTimePicker().date new Date()
 
   syncValue: ->
     @_dateTimePicker().date(@props.value)
@@ -30,6 +36,12 @@ DateTimePicker = React.createClass
       defaultDate: @props.defaultValue
       showTodayButton: true
       sideBySide: true
+
+    # Only allow sync with current time if no value is specified
+    if @props.syncWithCurrentTime and not @props.value?
+      $(window).on 'focus.datetimepicker', => @_syncWithCurrentTime()
+
+    # TODO unmount the focus.datetimepicker
 
 
     if @props.value?
