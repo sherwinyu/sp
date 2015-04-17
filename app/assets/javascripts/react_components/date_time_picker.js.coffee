@@ -21,7 +21,7 @@ DateTimePicker = React.createClass
     e.preventDefault()
     @props.onChange? e
 
-  $el: -> $(@refs.datetimepicker.getDOMNode())
+  $el: -> $(@refs.dateTimePicker.getDOMNode())
   _dateTimePicker: -> @$el().data('DateTimePicker')
 
   _syncWithCurrentTime: ->
@@ -32,7 +32,7 @@ DateTimePicker = React.createClass
     @_dateTimePicker().date(@props.value)
 
   componentWillUnmount: ->
-    $(window).off 'focus.datetimepicker'
+    $(window).off 'focus.dateTimePicker'
 
   componentDidMount: ->
     @$el().datetimepicker
@@ -42,7 +42,7 @@ DateTimePicker = React.createClass
 
     # Only allow sync with current time if no value is specified
     if @props.syncWithCurrentTime and not @props.value?
-      $(window).on 'focus.datetimepicker', => @_syncWithCurrentTime()
+      $(window).on 'focus.dateTimePicker', => @_syncWithCurrentTime()
 
     if @props.value?
       @$el().on 'dp.change', @handleChange.bind this
@@ -55,13 +55,13 @@ DateTimePicker = React.createClass
   getValue: -> @_dateTimePicker().date()
 
   renderEmbedded: ->
-    bs.FormInput ref: 'datetimepicker', style: @getStyle()
+    bs.FormInput ref: 'dateTimePicker', style: @getStyle()
 
   getStyle: ->
     width: '22%'
 
   renderGroup: ->
-    rd.span ref: 'datetimepicker', className: 'input-group date',
+    rd.span ref: 'dateTimePicker', className: 'input-group date',
       bs.FormInput {style: @getStyle()}
       rd.span className: 'input-group-addon',
         rd.span className: 'glyphicon glyphicon-calendar'
