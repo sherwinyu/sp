@@ -31,6 +31,9 @@ DateTimePicker = React.createClass
   syncValue: ->
     @_dateTimePicker().date(@props.value)
 
+  componentWillUnmount: ->
+    $(window).off 'focus.datetimepicker'
+
   componentDidMount: ->
     @$el().datetimepicker
       defaultDate: @props.defaultValue
@@ -40,9 +43,6 @@ DateTimePicker = React.createClass
     # Only allow sync with current time if no value is specified
     if @props.syncWithCurrentTime and not @props.value?
       $(window).on 'focus.datetimepicker', => @_syncWithCurrentTime()
-
-    # TODO unmount the focus.datetimepicker
-
 
     if @props.value?
       @$el().on 'dp.change', @handleChange.bind this
