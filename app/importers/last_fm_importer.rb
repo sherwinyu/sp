@@ -54,7 +54,7 @@ class LastFmImporter
 
     last_fm_json = self.raw_query
 
-    tracks = last_fm_json.recenttracks.track
+    tracks = last_fm_json.try(:recenttracks).try(:track)
     # We're currently assuming that there will never be more than one page of the results
 
     # If tracks were found
@@ -66,7 +66,7 @@ class LastFmImporter
       end
     else
       report[:no_tracks_found] = true
-      Util::Log.warn "Last FM Import: no tracks returned", report
+      # Util::Log.warn "Last FM Import: no tracks returned", report
     end
 
     if tracks
