@@ -39,6 +39,12 @@ describe Resolution do
     r.reload
   end
 
+  describe "serializer" do
+    it "includes dates" do
+
+    end
+  end
+
   describe '#completions_in_range' do
     it 'returns all the completions in the range' do
       range = ((workout_time + 1.second)..workout_time + 1.day)

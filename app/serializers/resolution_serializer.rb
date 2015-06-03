@@ -9,4 +9,13 @@ class ResolutionSerializer < ActiveModel::Serializer
     object.completions.try :length
   end
 
+  def completions
+    object.completions.map do |completion|
+      if completion['ts'].present?
+        completion[:date] = Util::DateTime.dt_to_expd_date completion['ts'].to_datetime
+      end
+      completion
+    end
+  end
+
 end

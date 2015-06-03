@@ -34,7 +34,7 @@ window.setCursor = (node, pos) ->
     true
   false
 
-window.utils =
+utils =
 
   ##
   # @param obj The object to be cloned
@@ -116,7 +116,7 @@ window.utils =
       @tickIntervalId = setInterval((-> console.log utils.ts() ), milliseconds)
       @ticking = true
 
-window.utils.date =
+utils.date =
   mmt: (arg) ->
     console.warn "Expected moment or date" if arg.constructor != Date
     moment(arg)
@@ -181,9 +181,9 @@ window.utils.date =
   #
   # Raises an error if dateTime is not a valid date or moment
   dateTimeToExperiencedDate: (dateTime, dayStartsAt=4) ->
-    Ember.assert "dateTime must be specified", dateTime
+    console.assert "dateTime must be specified", dateTime
     mmt = moment dateTime
-    Ember.assert "dateTime is valid", mmt.isValid()
+    console.assert "dateTime is valid", mmt.isValid()
 
     if (mmt.hour() < dayStartsAt)
       mmt.subtract 1, 'days'
@@ -224,3 +224,5 @@ utils.datetime =
 
 if module?
   module.exports = utils
+else
+  window.utils = utils

@@ -4,6 +4,7 @@ ResolutionActions = require 'react/resolutions/resolution_actions'
 DateTimePicker = require 'react_components/date_time_picker'
 Select2 = require 'react_components/select2'
 bs = require 'utils/bs'
+utils = require 'utils/helpers'
 rd = React.DOM
 
 cx = React.addons.classSet
@@ -97,8 +98,11 @@ ResolutionItem = React.createClass
           rd.p null,
             completion.comment
           rd.p className: 'u-tiny-text faded',
-            rd.a href: "/#/days/#{completion.date}",
-              completion.ts.calendar()
+            rd.a href: "/#/days/#{completion.date}", title: completion.ts?.toString(),
+              if completion.ts.isAfter moment().subtract(1, 'day')
+                completion.ts.calendar()
+              else
+                utils.date.dateTimeToExperiencedDate(completion.ts).format 'YYYY-MM-DD'
 
   renderTrackingWidget: ->
     rd.div className: 'input-group u-small-spacing-bottom',
