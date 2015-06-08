@@ -1,3 +1,4 @@
+moment = require 'moment-timezone'
 Dispatcher = require 'react/flux/dispatcher'
 net = require 'utils/net'
 EventConstants = require 'react/event_constants'

@@ -1,32 +1,16 @@
-Linking up syncing with Days model:
-  - roll out plan
-    1. Day#Summary READONLY displays corresponding resolutions
-      - hard coded resolution lookup
-      - only if Day#summary#shit is not defined
-      - for each of the resolutions
-          - do a look up on daily resolutions
-          - if it's true, show it
-      - hard code / generate start / end time stamps for each day.
-    2. Migrate all resolutions into completion time-stamps
-    3. Migrate and remove all resolutions from summary
-    4. [Way down the line]
+JsonEditor
+  Big pushes
+    - JSON Schema validation
+    - read only view
 
-  - Resolution completions
-      - date should be experienced date [DONE]
-
-Next Steps
-  Deploy to prod:
-    - gpush prod
-    - run the rake task
-  Write task to convert old summary fields to resolutions
-  Add some new resolutions
+UP NEXT
+  - Fix "enter inserts a new child" --> limit it to shift enter?
+  - Digits get parsed as numbers so you can't add whitespace to them
 ====================================================================
   Projects:
     Rewrite main page in react (just clean up, basically)
       -> react json editor
           ONE WEEK
-          Tomorrow:
-            salvage the note editor branch
 
     Better goal setting and plan setting
 
@@ -44,12 +28,6 @@ Next Steps
     Freeform tracking:
       store "schemas", ability to edit a schema
         expose interface to edit a schema
-
-
-
-
-
-
 
 
 High priority: resolution management

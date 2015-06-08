@@ -32,6 +32,7 @@ module.exports = {
       { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.gif$/, loader: "url-loader" },
       { test: /\.png$/, loader: "url-loader" },
+      {include: /\.json$/, loaders: ["json-loader"]},
       // {
       //   // Pattern to match only files with the '.js' or '.jsx' extension.
       //   // This tells the loader to only run for those files.
@@ -51,7 +52,7 @@ module.exports = {
       'react$': 'react/addons'
       // 'datetimepicker': 'node_modules/bootstrap-datetimepicker/build/js/bootstrap'
     },
-    extensions: ['', '.js.coffee', '.coffee', '.js', '.css', '.scss'],
+    extensions: ['', '.js.coffee', '.coffee', '.js', '.css', '.scss', '.json'],
     root: [
       path.join(__dirname, 'app', 'assets', 'javascripts')
     ],
@@ -59,7 +60,10 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-        '_': 'lodash'
+        '_': 'lodash',
+        'moment': 'moment-timezone',
+        'mtz': 'moment-timezone',
+        'buttsLATER': 'react',
     })
   ]
 

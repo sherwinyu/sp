@@ -7,6 +7,8 @@ bs = require 'utils/bs'
 utils = require 'utils/helpers'
 rd = React.DOM
 
+console.log moment
+
 cx = React.addons.classSet
 
 ResolutionItem = React.createClass
