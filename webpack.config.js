@@ -62,8 +62,6 @@ module.exports = {
     new webpack.ProvidePlugin({
         '_': 'lodash',
         'moment': 'moment-timezone',
-        'mtz': 'moment-timezone',
-        'buttsLATER': 'react',
     })
   ]
 
