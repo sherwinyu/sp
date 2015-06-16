@@ -121,7 +121,7 @@ ActivitiesIndex = React.createClass
             Link to: 'activity', params: {activityId: activity.id},
               activity.name
           rd.span null,
-            utils.sToDurationString activity.duration
+            util.sToDurationString activity.duration
 
 module.exports = {
   Activity
